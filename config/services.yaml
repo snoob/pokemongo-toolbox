@@ -1,0 +1,65 @@
+# Le découpage DDD de GUIDELINES.md §5 se reflète ici : le conteneur ne connaît que
+# des services, jamais le modèle. Les ports (§6) sont aliasés sur leur adapter.
+parameters:
+    pogo.data_dir: '%kernel.project_dir%/data'
+    pogo.cache_dir: '%kernel.project_dir%/var/pogo'
+    # Les classements bougent à chaque mise à jour du méta, pas à chaque heure.
+    pogo.rankings_ttl: 86400
+    # Langues embarquées : un nom tapé dans l'une ou l'autre doit résoudre (§6).
+    pogo.locales: ['fr', 'en']
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/Kernel.php'
+            # Le domaine n'est pas un sac à services : modèle, ports et exceptions
+            # ne sont jamais instanciés par le conteneur.
+            - '../src/Domain/*/Model/'
+            - '../src/Domain/*/Port/'
+            - '../src/Domain/*/Exception/'
+            # Query, Result et Outcome sont des messages, pas des services.
+            - '../src/Application/*/*/*Query.php'
+            - '../src/Application/*/*/*Result.php'
+            - '../src/Application/*/*/*Outcome.php'
+            - '../src/Infrastructure/Json/JsonFetchFailed.php'
+
+    # --- Ports → adapters -------------------------------------------------------
+
+    App\Domain\Pokemon\Port\SpeciesCatalog: '@App\Infrastructure\Catalog\JsonFileSpeciesCatalog'
+    App\Domain\Pvp\Port\CpMultiplierTable: '@App\Infrastructure\Cpm\JsonFileCpMultiplierTable'
+    App\Domain\Pvp\Port\PvpRankingCatalog: '@App\Infrastructure\Pvpoke\PvpokeRankingCatalog'
+    # Le dumper XLIFF est fourni par FrameworkBundle : on l'alias plutôt que d'écrire
+    # un générateur XML maison (§8).
+    Symfony\Component\Translation\Dumper\XliffFileDumper: '@translation.dumper.xliff'
+
+    # Le cache décore le fournisseur JSON : les adapters ignorent qu'il existe.
+    App\Infrastructure\Json\JsonFetcher: '@App\Infrastructure\Json\CachedJsonFetcher'
+
+    App\Infrastructure\Json\CachedJsonFetcher:
+        arguments:
+            $inner: '@App\Infrastructure\Json\HttpJsonFetcher'
+            $cacheDirectory: '%pogo.cache_dir%'
+            $ttlSeconds: '%pogo.rankings_ttl%'
+
+    App\Infrastructure\Catalog\SpeciesFileReader:
+        arguments:
+            $file: '%pogo.data_dir%/species.json'
+
+    App\Infrastructure\Naming\LocalisedSpeciesNames:
+        arguments:
+            $locales: '%pogo.locales%'
+
+    App\Infrastructure\Cpm\JsonFileCpMultiplierTable:
+        arguments:
+            $file: '%pogo.data_dir%/cpm.json'
+
+    App\UI\Cli\Command\BuildGameDataCommand:
+        arguments:
+            $speciesFile: '%pogo.data_dir%/species.json'
+            $cpMultiplierFile: '%pogo.data_dir%/cpm.json'
+            $translationsDir: '%kernel.project_dir%/translations'

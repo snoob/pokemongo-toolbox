@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="pokemon_form.en.xlf">
+    <body>
+      <trans-unit id="1" resname="shadow"><source>shadow</source><target>Shadow</target></trans-unit>
+      <trans-unit id="2" resname="mega"><source>mega</source><target>Mega</target></trans-unit>
+      <trans-unit id="3" resname="altered"><source>altered</source><target>Altered</target></trans-unit>
+      <trans-unit id="4" resname="origin"><source>origin</source><target>Origin</target></trans-unit>
+    </body>
+  </file>
+</xliff>

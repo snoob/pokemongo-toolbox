@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Catalogue tenu à la main : "Shadow", "Mega" ou "Alolan" n'ont pas d'équivalent dans
+  le Pokédex, donc aucune source ne les traduit. `pogo:data:build` ne réécrit PAS ce
+  fichier. Ce qui n'y figure pas retombe sur l'anglais via framework.translator.fallbacks.
+-->
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="pokemon_form.fr.xlf">
+    <body>
+      <trans-unit id="1" resname="shadow"><source>shadow</source><target>Obscur</target></trans-unit>
+      <trans-unit id="2" resname="purified"><source>purified</source><target>Purifié</target></trans-unit>
+      <trans-unit id="3" resname="mega"><source>mega</source><target>Méga</target></trans-unit>
+      <trans-unit id="4" resname="mega_x"><source>mega_x</source><target>Méga X</target></trans-unit>
+      <trans-unit id="5" resname="mega_y"><source>mega_y</source><target>Méga Y</target></trans-unit>
+      <trans-unit id="6" resname="primal"><source>primal</source><target>Primo</target></trans-unit>
+      <trans-unit id="7" resname="alolan"><source>alolan</source><target>d'Alola</target></trans-unit>
+      <trans-unit id="8" resname="galarian"><source>galarian</source><target>de Galar</target></trans-unit>
+      <trans-unit id="9" resname="hisuian"><source>hisuian</source><target>de Hisui</target></trans-unit>
+      <trans-unit id="10" resname="paldean"><source>paldean</source><target>de Paldea</target></trans-unit>
+      <trans-unit id="11" resname="origin"><source>origin</source><target>Origine</target></trans-unit>
+      <trans-unit id="12" resname="altered"><source>altered</source><target>Alternative</target></trans-unit>
+      <trans-unit id="13" resname="therian"><source>therian</source><target>Totémique</target></trans-unit>
+      <trans-unit id="14" resname="incarnate"><source>incarnate</source><target>Avatar</target></trans-unit>
+      <trans-unit id="15" resname="female"><source>female</source><target>♀</target></trans-unit>
+      <trans-unit id="16" resname="male"><source>male</source><target>♂</target></trans-unit>
+      <trans-unit id="17" resname="normal"><source>normal</source><target>Normale</target></trans-unit>
+      <trans-unit id="18" resname="attack"><source>attack</source><target>Attaque</target></trans-unit>
+      <trans-unit id="19" resname="defense"><source>defense</source><target>Défense</target></trans-unit>
+      <trans-unit id="20" resname="speed"><source>speed</source><target>Vitesse</target></trans-unit>
+      <trans-unit id="21" resname="plant"><source>plant</source><target>Plante</target></trans-unit>
+      <trans-unit id="22" resname="sandy"><source>sandy</source><target>Sable</target></trans-unit>
+      <trans-unit id="23" resname="trash"><source>trash</source><target>Déchet</target></trans-unit>
+      <trans-unit id="24" resname="sunny"><source>sunny</source><target>Soleil</target></trans-unit>
+      <trans-unit id="25" resname="rainy"><source>rainy</source><target>Pluie</target></trans-unit>
+      <trans-unit id="26" resname="snowy"><source>snowy</source><target>Neige</target></trans-unit>
+      <trans-unit id="27" resname="average"><source>average</source><target>Moyenne</target></trans-unit>
+      <trans-unit id="28" resname="large"><source>large</source><target>Grande</target></trans-unit>
+      <trans-unit id="29" resname="small"><source>small</source><target>Petite</target></trans-unit>
+      <trans-unit id="30" resname="super"><source>super</source><target>Géante</target></trans-unit>
+      <trans-unit id="31" resname="bug"><source>bug</source><target>Insecte</target></trans-unit>
+      <trans-unit id="32" resname="dark"><source>dark</source><target>Ténèbres</target></trans-unit>
+      <trans-unit id="33" resname="dragon"><source>dragon</source><target>Dragon</target></trans-unit>
+      <trans-unit id="34" resname="electric"><source>electric</source><target>Électrik</target></trans-unit>
+      <trans-unit id="35" resname="fairy"><source>fairy</source><target>Fée</target></trans-unit>
+      <trans-unit id="36" resname="fighting"><source>fighting</source><target>Combat</target></trans-unit>
+      <trans-unit id="37" resname="fire"><source>fire</source><target>Feu</target></trans-unit>
+      <trans-unit id="38" resname="flying"><source>flying</source><target>Vol</target></trans-unit>
+      <trans-unit id="39" resname="ghost"><source>ghost</source><target>Spectre</target></trans-unit>
+      <trans-unit id="40" resname="grass"><source>grass</source><target>Plante</target></trans-unit>
+      <trans-unit id="41" resname="ground"><source>ground</source><target>Sol</target></trans-unit>
+      <trans-unit id="42" resname="ice"><source>ice</source><target>Glace</target></trans-unit>
+      <trans-unit id="43" resname="poison"><source>poison</source><target>Poison</target></trans-unit>
+      <trans-unit id="44" resname="psychic"><source>psychic</source><target>Psy</target></trans-unit>
+      <trans-unit id="45" resname="rock"><source>rock</source><target>Roche</target></trans-unit>
+      <trans-unit id="46" resname="steel"><source>steel</source><target>Acier</target></trans-unit>
+      <trans-unit id="47" resname="water"><source>water</source><target>Eau</target></trans-unit>
+    </body>
+  </file>
+</xliff>

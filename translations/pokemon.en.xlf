@@ -1,0 +1,4110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="3zznhNh" resname="1">
+        <source>1</source>
+        <target>Bulbasaur</target>
+      </trans-unit>
+      <trans-unit id="yzWPzuD" resname="2">
+        <source>2</source>
+        <target>Ivysaur</target>
+      </trans-unit>
+      <trans-unit id="X83cnAg" resname="3">
+        <source>3</source>
+        <target>Venusaur</target>
+      </trans-unit>
+      <trans-unit id="R1mCr7y" resname="4">
+        <source>4</source>
+        <target>Charmander</target>
+      </trans-unit>
+      <trans-unit id="ViWRMjt" resname="5">
+        <source>5</source>
+        <target>Charmeleon</target>
+      </trans-unit>
+      <trans-unit id="vpBSZ00" resname="6">
+        <source>6</source>
+        <target>Charizard</target>
+      </trans-unit>
+      <trans-unit id="29ah5xQ" resname="7">
+        <source>7</source>
+        <target>Squirtle</target>
+      </trans-unit>
+      <trans-unit id="_U8TbRu" resname="8">
+        <source>8</source>
+        <target>Wartortle</target>
+      </trans-unit>
+      <trans-unit id="fGvbGbo" resname="9">
+        <source>9</source>
+        <target>Blastoise</target>
+      </trans-unit>
+      <trans-unit id="zGYnYa0" resname="10">
+        <source>10</source>
+        <target>Caterpie</target>
+      </trans-unit>
+      <trans-unit id="Tlz303H" resname="11">
+        <source>11</source>
+        <target>Metapod</target>
+      </trans-unit>
+      <trans-unit id="P5nAEsg" resname="12">
+        <source>12</source>
+        <target>Butterfree</target>
+      </trans-unit>
+      <trans-unit id="cWF5Qi_" resname="13">
+        <source>13</source>
+        <target>Weedle</target>
+      </trans-unit>
+      <trans-unit id="wa5yuyZ" resname="14">
+        <source>14</source>
+        <target>Kakuna</target>
+      </trans-unit>
+      <trans-unit id="OTkgl5n" resname="15">
+        <source>15</source>
+        <target>Beedrill</target>
+      </trans-unit>
+      <trans-unit id="gGZfkM." resname="16">
+        <source>16</source>
+        <target>Pidgey</target>
+      </trans-unit>
+      <trans-unit id="JVG8xIn" resname="17">
+        <source>17</source>
+        <target>Pidgeotto</target>
+      </trans-unit>
+      <trans-unit id="s1avwYr" resname="18">
+        <source>18</source>
+        <target>Pidgeot</target>
+      </trans-unit>
+      <trans-unit id="R4riVJw" resname="19">
+        <source>19</source>
+        <target>Rattata</target>
+      </trans-unit>
+      <trans-unit id="U4D5wdo" resname="20">
+        <source>20</source>
+        <target>Raticate</target>
+      </trans-unit>
+      <trans-unit id="tlHzIE7" resname="21">
+        <source>21</source>
+        <target>Spearow</target>
+      </trans-unit>
+      <trans-unit id="QbylzDR" resname="22">
+        <source>22</source>
+        <target>Fearow</target>
+      </trans-unit>
+      <trans-unit id="KdYVKs." resname="23">
+        <source>23</source>
+        <target>Ekans</target>
+      </trans-unit>
+      <trans-unit id="diTlIIW" resname="24">
+        <source>24</source>
+        <target>Arbok</target>
+      </trans-unit>
+      <trans-unit id="LqvxD3O" resname="25">
+        <source>25</source>
+        <target>Pikachu</target>
+      </trans-unit>
+      <trans-unit id="pssZxC9" resname="26">
+        <source>26</source>
+        <target>Raichu</target>
+      </trans-unit>
+      <trans-unit id="5vmbA13" resname="27">
+        <source>27</source>
+        <target>Sandshrew</target>
+      </trans-unit>
+      <trans-unit id="vSUpLQU" resname="28">
+        <source>28</source>
+        <target>Sandslash</target>
+      </trans-unit>
+      <trans-unit id="V73.X0Y" resname="29">
+        <source>29</source>
+        <target>Nidoran♀</target>
+      </trans-unit>
+      <trans-unit id="CxZdI2v" resname="30">
+        <source>30</source>
+        <target>Nidorina</target>
+      </trans-unit>
+      <trans-unit id="CRa9dAl" resname="31">
+        <source>31</source>
+        <target>Nidoqueen</target>
+      </trans-unit>
+      <trans-unit id="_eNL6v7" resname="32">
+        <source>32</source>
+        <target>Nidoran♂</target>
+      </trans-unit>
+      <trans-unit id="dNDhTYC" resname="33">
+        <source>33</source>
+        <target>Nidorino</target>
+      </trans-unit>
+      <trans-unit id="A52_L7o" resname="34">
+        <source>34</source>
+        <target>Nidoking</target>
+      </trans-unit>
+      <trans-unit id="wPoYUIa" resname="35">
+        <source>35</source>
+        <target>Clefairy</target>
+      </trans-unit>
+      <trans-unit id="LH9PMV." resname="36">
+        <source>36</source>
+        <target>Clefable</target>
+      </trans-unit>
+      <trans-unit id="inu3AfI" resname="37">
+        <source>37</source>
+        <target>Vulpix</target>
+      </trans-unit>
+      <trans-unit id="zgDcc3T" resname="38">
+        <source>38</source>
+        <target>Ninetales</target>
+      </trans-unit>
+      <trans-unit id="zOC5r4T" resname="39">
+        <source>39</source>
+        <target>Jigglypuff</target>
+      </trans-unit>
+      <trans-unit id="2wYkSMV" resname="40">
+        <source>40</source>
+        <target>Wigglytuff</target>
+      </trans-unit>
+      <trans-unit id="92PXRSn" resname="41">
+        <source>41</source>
+        <target>Zubat</target>
+      </trans-unit>
+      <trans-unit id="sIDM1Ex" resname="42">
+        <source>42</source>
+        <target>Golbat</target>
+      </trans-unit>
+      <trans-unit id="5hs0ZuC" resname="43">
+        <source>43</source>
+        <target>Oddish</target>
+      </trans-unit>
+      <trans-unit id="n7dkj98" resname="44">
+        <source>44</source>
+        <target>Gloom</target>
+      </trans-unit>
+      <trans-unit id="VKu2FsT" resname="45">
+        <source>45</source>
+        <target>Vileplume</target>
+      </trans-unit>
+      <trans-unit id="bsG2MEd" resname="46">
+        <source>46</source>
+        <target>Paras</target>
+      </trans-unit>
+      <trans-unit id="m7n2pyo" resname="47">
+        <source>47</source>
+        <target>Parasect</target>
+      </trans-unit>
+      <trans-unit id="InXXE5J" resname="48">
+        <source>48</source>
+        <target>Venonat</target>
+      </trans-unit>
+      <trans-unit id="5th8QqJ" resname="49">
+        <source>49</source>
+        <target>Venomoth</target>
+      </trans-unit>
+      <trans-unit id="30S8WKI" resname="50">
+        <source>50</source>
+        <target>Diglett</target>
+      </trans-unit>
+      <trans-unit id="YdHrJNS" resname="51">
+        <source>51</source>
+        <target>Dugtrio</target>
+      </trans-unit>
+      <trans-unit id="WabPDH8" resname="52">
+        <source>52</source>
+        <target>Meowth</target>
+      </trans-unit>
+      <trans-unit id="bOvQk9s" resname="53">
+        <source>53</source>
+        <target>Persian</target>
+      </trans-unit>
+      <trans-unit id="xzV_yZ1" resname="54">
+        <source>54</source>
+        <target>Psyduck</target>
+      </trans-unit>
+      <trans-unit id="rVrnaRH" resname="55">
+        <source>55</source>
+        <target>Golduck</target>
+      </trans-unit>
+      <trans-unit id="xbk0OWC" resname="56">
+        <source>56</source>
+        <target>Mankey</target>
+      </trans-unit>
+      <trans-unit id="9G1c_tA" resname="57">
+        <source>57</source>
+        <target>Primeape</target>
+      </trans-unit>
+      <trans-unit id="RbaJsao" resname="58">
+        <source>58</source>
+        <target>Growlithe</target>
+      </trans-unit>
+      <trans-unit id="j10rmaj" resname="59">
+        <source>59</source>
+        <target>Arcanine</target>
+      </trans-unit>
+      <trans-unit id="gIVqQWK" resname="60">
+        <source>60</source>
+        <target>Poliwag</target>
+      </trans-unit>
+      <trans-unit id="U0Wwvkz" resname="61">
+        <source>61</source>
+        <target>Poliwhirl</target>
+      </trans-unit>
+      <trans-unit id="vkxO8Da" resname="62">
+        <source>62</source>
+        <target>Poliwrath</target>
+      </trans-unit>
+      <trans-unit id="a6z1294" resname="63">
+        <source>63</source>
+        <target>Abra</target>
+      </trans-unit>
+      <trans-unit id=".WG_mSV" resname="64">
+        <source>64</source>
+        <target>Kadabra</target>
+      </trans-unit>
+      <trans-unit id="FG1TNP9" resname="65">
+        <source>65</source>
+        <target>Alakazam</target>
+      </trans-unit>
+      <trans-unit id="IjeRpWr" resname="66">
+        <source>66</source>
+        <target>Machop</target>
+      </trans-unit>
+      <trans-unit id="il_NExY" resname="67">
+        <source>67</source>
+        <target>Machoke</target>
+      </trans-unit>
+      <trans-unit id="Hb74yC." resname="68">
+        <source>68</source>
+        <target>Machamp</target>
+      </trans-unit>
+      <trans-unit id="q1Fjqo1" resname="69">
+        <source>69</source>
+        <target>Bellsprout</target>
+      </trans-unit>
+      <trans-unit id="mMtzpLR" resname="70">
+        <source>70</source>
+        <target>Weepinbell</target>
+      </trans-unit>
+      <trans-unit id="HlL1o._" resname="71">
+        <source>71</source>
+        <target>Victreebel</target>
+      </trans-unit>
+      <trans-unit id="jhQZfug" resname="72">
+        <source>72</source>
+        <target>Tentacool</target>
+      </trans-unit>
+      <trans-unit id="oF4snsw" resname="73">
+        <source>73</source>
+        <target>Tentacruel</target>
+      </trans-unit>
+      <trans-unit id="xZ6fk7d" resname="74">
+        <source>74</source>
+        <target>Geodude</target>
+      </trans-unit>
+      <trans-unit id="3vPR_ge" resname="75">
+        <source>75</source>
+        <target>Graveler</target>
+      </trans-unit>
+      <trans-unit id="zJeot4f" resname="76">
+        <source>76</source>
+        <target>Golem</target>
+      </trans-unit>
+      <trans-unit id="VL0QoC1" resname="77">
+        <source>77</source>
+        <target>Ponyta</target>
+      </trans-unit>
+      <trans-unit id="kClNef4" resname="78">
+        <source>78</source>
+        <target>Rapidash</target>
+      </trans-unit>
+      <trans-unit id="Q8W0J5Q" resname="79">
+        <source>79</source>
+        <target>Slowpoke</target>
+      </trans-unit>
+      <trans-unit id="g5CFbEe" resname="80">
+        <source>80</source>
+        <target>Slowbro</target>
+      </trans-unit>
+      <trans-unit id=".IXBaGt" resname="81">
+        <source>81</source>
+        <target>Magnemite</target>
+      </trans-unit>
+      <trans-unit id="Opc.NGL" resname="82">
+        <source>82</source>
+        <target>Magneton</target>
+      </trans-unit>
+      <trans-unit id="Yq4Vy1r" resname="83">
+        <source>83</source>
+        <target>Farfetch’d</target>
+      </trans-unit>
+      <trans-unit id="LKffbmI" resname="84">
+        <source>84</source>
+        <target>Doduo</target>
+      </trans-unit>
+      <trans-unit id="paUiVFO" resname="85">
+        <source>85</source>
+        <target>Dodrio</target>
+      </trans-unit>
+      <trans-unit id="P_Uc5mm" resname="86">
+        <source>86</source>
+        <target>Seel</target>
+      </trans-unit>
+      <trans-unit id="Ijlo7ot" resname="87">
+        <source>87</source>
+        <target>Dewgong</target>
+      </trans-unit>
+      <trans-unit id="SZoNOyU" resname="88">
+        <source>88</source>
+        <target>Grimer</target>
+      </trans-unit>
+      <trans-unit id="YnMwG0t" resname="89">
+        <source>89</source>
+        <target>Muk</target>
+      </trans-unit>
+      <trans-unit id="GDCfLmZ" resname="90">
+        <source>90</source>
+        <target>Shellder</target>
+      </trans-unit>
+      <trans-unit id="HXLnM6r" resname="91">
+        <source>91</source>
+        <target>Cloyster</target>
+      </trans-unit>
+      <trans-unit id="c0kZJFD" resname="92">
+        <source>92</source>
+        <target>Gastly</target>
+      </trans-unit>
+      <trans-unit id="9kT61NK" resname="93">
+        <source>93</source>
+        <target>Haunter</target>
+      </trans-unit>
+      <trans-unit id="8owJLMV" resname="94">
+        <source>94</source>
+        <target>Gengar</target>
+      </trans-unit>
+      <trans-unit id="XKhM7iW" resname="95">
+        <source>95</source>
+        <target>Onix</target>
+      </trans-unit>
+      <trans-unit id="FnfFAFU" resname="96">
+        <source>96</source>
+        <target>Drowzee</target>
+      </trans-unit>
+      <trans-unit id="O.cXJo7" resname="97">
+        <source>97</source>
+        <target>Hypno</target>
+      </trans-unit>
+      <trans-unit id="YTzKd8Y" resname="98">
+        <source>98</source>
+        <target>Krabby</target>
+      </trans-unit>
+      <trans-unit id="KH1orKU" resname="99">
+        <source>99</source>
+        <target>Kingler</target>
+      </trans-unit>
+      <trans-unit id="rq7UaEk" resname="100">
+        <source>100</source>
+        <target>Voltorb</target>
+      </trans-unit>
+      <trans-unit id="xpdOoHl" resname="101">
+        <source>101</source>
+        <target>Electrode</target>
+      </trans-unit>
+      <trans-unit id="fsDJqqJ" resname="102">
+        <source>102</source>
+        <target>Exeggcute</target>
+      </trans-unit>
+      <trans-unit id="iJumbhY" resname="103">
+        <source>103</source>
+        <target>Exeggutor</target>
+      </trans-unit>
+      <trans-unit id="mrkB_hX" resname="104">
+        <source>104</source>
+        <target>Cubone</target>
+      </trans-unit>
+      <trans-unit id="zKh_qUH" resname="105">
+        <source>105</source>
+        <target>Marowak</target>
+      </trans-unit>
+      <trans-unit id="8ITpG57" resname="106">
+        <source>106</source>
+        <target>Hitmonlee</target>
+      </trans-unit>
+      <trans-unit id="UC5dG7A" resname="107">
+        <source>107</source>
+        <target>Hitmonchan</target>
+      </trans-unit>
+      <trans-unit id="ikA52xU" resname="108">
+        <source>108</source>
+        <target>Lickitung</target>
+      </trans-unit>
+      <trans-unit id="bup33S." resname="109">
+        <source>109</source>
+        <target>Koffing</target>
+      </trans-unit>
+      <trans-unit id="uPb14Ha" resname="110">
+        <source>110</source>
+        <target>Weezing</target>
+      </trans-unit>
+      <trans-unit id="iZdZY3x" resname="111">
+        <source>111</source>
+        <target>Rhyhorn</target>
+      </trans-unit>
+      <trans-unit id="PuzR4_5" resname="112">
+        <source>112</source>
+        <target>Rhydon</target>
+      </trans-unit>
+      <trans-unit id="_SdfBte" resname="113">
+        <source>113</source>
+        <target>Chansey</target>
+      </trans-unit>
+      <trans-unit id="2O_9l.k" resname="114">
+        <source>114</source>
+        <target>Tangela</target>
+      </trans-unit>
+      <trans-unit id="0Isc0Xc" resname="115">
+        <source>115</source>
+        <target>Kangaskhan</target>
+      </trans-unit>
+      <trans-unit id=".qR6Hsy" resname="116">
+        <source>116</source>
+        <target>Horsea</target>
+      </trans-unit>
+      <trans-unit id="z_k72Lv" resname="117">
+        <source>117</source>
+        <target>Seadra</target>
+      </trans-unit>
+      <trans-unit id="h7yb.CM" resname="118">
+        <source>118</source>
+        <target>Goldeen</target>
+      </trans-unit>
+      <trans-unit id="5a4mxMc" resname="119">
+        <source>119</source>
+        <target>Seaking</target>
+      </trans-unit>
+      <trans-unit id="_Du5f1c" resname="120">
+        <source>120</source>
+        <target>Staryu</target>
+      </trans-unit>
+      <trans-unit id="BAgmpXr" resname="121">
+        <source>121</source>
+        <target>Starmie</target>
+      </trans-unit>
+      <trans-unit id="mccGVq5" resname="122">
+        <source>122</source>
+        <target>Mr. Mime</target>
+      </trans-unit>
+      <trans-unit id="DkX3KwJ" resname="123">
+        <source>123</source>
+        <target>Scyther</target>
+      </trans-unit>
+      <trans-unit id="yThmzqJ" resname="124">
+        <source>124</source>
+        <target>Jynx</target>
+      </trans-unit>
+      <trans-unit id="fmhIE3r" resname="125">
+        <source>125</source>
+        <target>Electabuzz</target>
+      </trans-unit>
+      <trans-unit id="I4zfHhe" resname="126">
+        <source>126</source>
+        <target>Magmar</target>
+      </trans-unit>
+      <trans-unit id="35O.IIf" resname="127">
+        <source>127</source>
+        <target>Pinsir</target>
+      </trans-unit>
+      <trans-unit id="7LdMCHz" resname="128">
+        <source>128</source>
+        <target>Tauros</target>
+      </trans-unit>
+      <trans-unit id="CihpdNc" resname="129">
+        <source>129</source>
+        <target>Magikarp</target>
+      </trans-unit>
+      <trans-unit id="1Q731Oa" resname="130">
+        <source>130</source>
+        <target>Gyarados</target>
+      </trans-unit>
+      <trans-unit id="o3LiKR8" resname="131">
+        <source>131</source>
+        <target>Lapras</target>
+      </trans-unit>
+      <trans-unit id="a.QvFxE" resname="132">
+        <source>132</source>
+        <target>Ditto</target>
+      </trans-unit>
+      <trans-unit id="C_FeIld" resname="133">
+        <source>133</source>
+        <target>Eevee</target>
+      </trans-unit>
+      <trans-unit id="cSP_tV1" resname="134">
+        <source>134</source>
+        <target>Vaporeon</target>
+      </trans-unit>
+      <trans-unit id="qzTJKqF" resname="135">
+        <source>135</source>
+        <target>Jolteon</target>
+      </trans-unit>
+      <trans-unit id="P08_qBH" resname="136">
+        <source>136</source>
+        <target>Flareon</target>
+      </trans-unit>
+      <trans-unit id="H8dz_r7" resname="137">
+        <source>137</source>
+        <target>Porygon</target>
+      </trans-unit>
+      <trans-unit id="KXvrSZv" resname="138">
+        <source>138</source>
+        <target>Omanyte</target>
+      </trans-unit>
+      <trans-unit id="xcOneiR" resname="139">
+        <source>139</source>
+        <target>Omastar</target>
+      </trans-unit>
+      <trans-unit id="IhKwgDr" resname="140">
+        <source>140</source>
+        <target>Kabuto</target>
+      </trans-unit>
+      <trans-unit id="VBe_m0q" resname="141">
+        <source>141</source>
+        <target>Kabutops</target>
+      </trans-unit>
+      <trans-unit id="W5jcaMU" resname="142">
+        <source>142</source>
+        <target>Aerodactyl</target>
+      </trans-unit>
+      <trans-unit id="rsyegoH" resname="143">
+        <source>143</source>
+        <target>Snorlax</target>
+      </trans-unit>
+      <trans-unit id="tHW8LIQ" resname="144">
+        <source>144</source>
+        <target>Articuno</target>
+      </trans-unit>
+      <trans-unit id="1mtfiir" resname="145">
+        <source>145</source>
+        <target>Zapdos</target>
+      </trans-unit>
+      <trans-unit id="SDNprNl" resname="146">
+        <source>146</source>
+        <target>Moltres</target>
+      </trans-unit>
+      <trans-unit id="cOh.2vM" resname="147">
+        <source>147</source>
+        <target>Dratini</target>
+      </trans-unit>
+      <trans-unit id="qi6Sjly" resname="148">
+        <source>148</source>
+        <target>Dragonair</target>
+      </trans-unit>
+      <trans-unit id="IAkqH9W" resname="149">
+        <source>149</source>
+        <target>Dragonite</target>
+      </trans-unit>
+      <trans-unit id="MfTcxFX" resname="150">
+        <source>150</source>
+        <target>Mewtwo</target>
+      </trans-unit>
+      <trans-unit id="sxg6baa" resname="151">
+        <source>151</source>
+        <target>Mew</target>
+      </trans-unit>
+      <trans-unit id="wiFE5Z9" resname="152">
+        <source>152</source>
+        <target>Chikorita</target>
+      </trans-unit>
+      <trans-unit id="myCBNq6" resname="153">
+        <source>153</source>
+        <target>Bayleef</target>
+      </trans-unit>
+      <trans-unit id="XkaDCb1" resname="154">
+        <source>154</source>
+        <target>Meganium</target>
+      </trans-unit>
+      <trans-unit id="xuvqrne" resname="155">
+        <source>155</source>
+        <target>Cyndaquil</target>
+      </trans-unit>
+      <trans-unit id="WFivZCK" resname="156">
+        <source>156</source>
+        <target>Quilava</target>
+      </trans-unit>
+      <trans-unit id="1vv.CZ1" resname="157">
+        <source>157</source>
+        <target>Typhlosion</target>
+      </trans-unit>
+      <trans-unit id="sV_6mxk" resname="158">
+        <source>158</source>
+        <target>Totodile</target>
+      </trans-unit>
+      <trans-unit id="smAtP78" resname="159">
+        <source>159</source>
+        <target>Croconaw</target>
+      </trans-unit>
+      <trans-unit id="miWZvBR" resname="160">
+        <source>160</source>
+        <target>Feraligatr</target>
+      </trans-unit>
+      <trans-unit id="gWSvUOe" resname="161">
+        <source>161</source>
+        <target>Sentret</target>
+      </trans-unit>
+      <trans-unit id="rrNV8qA" resname="162">
+        <source>162</source>
+        <target>Furret</target>
+      </trans-unit>
+      <trans-unit id="U9KflL7" resname="163">
+        <source>163</source>
+        <target>Hoothoot</target>
+      </trans-unit>
+      <trans-unit id="A2eWVBK" resname="164">
+        <source>164</source>
+        <target>Noctowl</target>
+      </trans-unit>
+      <trans-unit id="pHb85qc" resname="165">
+        <source>165</source>
+        <target>Ledyba</target>
+      </trans-unit>
+      <trans-unit id="K95fJYV" resname="166">
+        <source>166</source>
+        <target>Ledian</target>
+      </trans-unit>
+      <trans-unit id="pZkGInJ" resname="167">
+        <source>167</source>
+        <target>Spinarak</target>
+      </trans-unit>
+      <trans-unit id="AH_41ti" resname="168">
+        <source>168</source>
+        <target>Ariados</target>
+      </trans-unit>
+      <trans-unit id="jbasUEF" resname="169">
+        <source>169</source>
+        <target>Crobat</target>
+      </trans-unit>
+      <trans-unit id="ci8ks3g" resname="170">
+        <source>170</source>
+        <target>Chinchou</target>
+      </trans-unit>
+      <trans-unit id="wUkyUhj" resname="171">
+        <source>171</source>
+        <target>Lanturn</target>
+      </trans-unit>
+      <trans-unit id="M1BH5F5" resname="172">
+        <source>172</source>
+        <target>Pichu</target>
+      </trans-unit>
+      <trans-unit id="sPyPwCW" resname="173">
+        <source>173</source>
+        <target>Cleffa</target>
+      </trans-unit>
+      <trans-unit id="NteknLb" resname="174">
+        <source>174</source>
+        <target>Igglybuff</target>
+      </trans-unit>
+      <trans-unit id="3TKTNs_" resname="175">
+        <source>175</source>
+        <target>Togepi</target>
+      </trans-unit>
+      <trans-unit id="SD.cj9m" resname="176">
+        <source>176</source>
+        <target>Togetic</target>
+      </trans-unit>
+      <trans-unit id="onMiUmE" resname="177">
+        <source>177</source>
+        <target>Natu</target>
+      </trans-unit>
+      <trans-unit id="OPRWS2p" resname="178">
+        <source>178</source>
+        <target>Xatu</target>
+      </trans-unit>
+      <trans-unit id="zS_eM9e" resname="179">
+        <source>179</source>
+        <target>Mareep</target>
+      </trans-unit>
+      <trans-unit id="IDiseZJ" resname="180">
+        <source>180</source>
+        <target>Flaaffy</target>
+      </trans-unit>
+      <trans-unit id="UVTgXQg" resname="181">
+        <source>181</source>
+        <target>Ampharos</target>
+      </trans-unit>
+      <trans-unit id="NMc.xAE" resname="182">
+        <source>182</source>
+        <target>Bellossom</target>
+      </trans-unit>
+      <trans-unit id="hNjiVYu" resname="183">
+        <source>183</source>
+        <target>Marill</target>
+      </trans-unit>
+      <trans-unit id="h319ofs" resname="184">
+        <source>184</source>
+        <target>Azumarill</target>
+      </trans-unit>
+      <trans-unit id="fy4t2c7" resname="185">
+        <source>185</source>
+        <target>Sudowoodo</target>
+      </trans-unit>
+      <trans-unit id="wTwVJ8h" resname="186">
+        <source>186</source>
+        <target>Politoed</target>
+      </trans-unit>
+      <trans-unit id="mNIM._8" resname="187">
+        <source>187</source>
+        <target>Hoppip</target>
+      </trans-unit>
+      <trans-unit id="pK6uiLT" resname="188">
+        <source>188</source>
+        <target>Skiploom</target>
+      </trans-unit>
+      <trans-unit id="JtjQtQf" resname="189">
+        <source>189</source>
+        <target>Jumpluff</target>
+      </trans-unit>
+      <trans-unit id="J3nNDM3" resname="190">
+        <source>190</source>
+        <target>Aipom</target>
+      </trans-unit>
+      <trans-unit id="kzCl8EW" resname="191">
+        <source>191</source>
+        <target>Sunkern</target>
+      </trans-unit>
+      <trans-unit id="TBJ9c7Z" resname="192">
+        <source>192</source>
+        <target>Sunflora</target>
+      </trans-unit>
+      <trans-unit id="JuuOJqg" resname="193">
+        <source>193</source>
+        <target>Yanma</target>
+      </trans-unit>
+      <trans-unit id="s_SJoSt" resname="194">
+        <source>194</source>
+        <target>Wooper</target>
+      </trans-unit>
+      <trans-unit id="37tnNgL" resname="195">
+        <source>195</source>
+        <target>Quagsire</target>
+      </trans-unit>
+      <trans-unit id="Hg1aGaS" resname="196">
+        <source>196</source>
+        <target>Espeon</target>
+      </trans-unit>
+      <trans-unit id="_XgokfG" resname="197">
+        <source>197</source>
+        <target>Umbreon</target>
+      </trans-unit>
+      <trans-unit id="BRuR4lS" resname="198">
+        <source>198</source>
+        <target>Murkrow</target>
+      </trans-unit>
+      <trans-unit id="5A4uEze" resname="199">
+        <source>199</source>
+        <target>Slowking</target>
+      </trans-unit>
+      <trans-unit id="NaMxTLR" resname="200">
+        <source>200</source>
+        <target>Misdreavus</target>
+      </trans-unit>
+      <trans-unit id="i0D_rAP" resname="201">
+        <source>201</source>
+        <target>Unown</target>
+      </trans-unit>
+      <trans-unit id="SeSahVA" resname="202">
+        <source>202</source>
+        <target>Wobbuffet</target>
+      </trans-unit>
+      <trans-unit id="PfE5lxD" resname="203">
+        <source>203</source>
+        <target>Girafarig</target>
+      </trans-unit>
+      <trans-unit id="FNlEBnU" resname="204">
+        <source>204</source>
+        <target>Pineco</target>
+      </trans-unit>
+      <trans-unit id="Isz5VTf" resname="205">
+        <source>205</source>
+        <target>Forretress</target>
+      </trans-unit>
+      <trans-unit id=".FumtSi" resname="206">
+        <source>206</source>
+        <target>Dunsparce</target>
+      </trans-unit>
+      <trans-unit id="JwjdVcg" resname="207">
+        <source>207</source>
+        <target>Gligar</target>
+      </trans-unit>
+      <trans-unit id="Djt8xGN" resname="208">
+        <source>208</source>
+        <target>Steelix</target>
+      </trans-unit>
+      <trans-unit id="sj7BEef" resname="209">
+        <source>209</source>
+        <target>Snubbull</target>
+      </trans-unit>
+      <trans-unit id="4UZsewo" resname="210">
+        <source>210</source>
+        <target>Granbull</target>
+      </trans-unit>
+      <trans-unit id="rdunT5a" resname="211">
+        <source>211</source>
+        <target>Qwilfish</target>
+      </trans-unit>
+      <trans-unit id="wpDMljt" resname="212">
+        <source>212</source>
+        <target>Scizor</target>
+      </trans-unit>
+      <trans-unit id="KNjaUqM" resname="213">
+        <source>213</source>
+        <target>Shuckle</target>
+      </trans-unit>
+      <trans-unit id="o.GqWhZ" resname="214">
+        <source>214</source>
+        <target>Heracross</target>
+      </trans-unit>
+      <trans-unit id=".M.kxV0" resname="215">
+        <source>215</source>
+        <target>Sneasel</target>
+      </trans-unit>
+      <trans-unit id="5hucne9" resname="216">
+        <source>216</source>
+        <target>Teddiursa</target>
+      </trans-unit>
+      <trans-unit id="YcB2aRG" resname="217">
+        <source>217</source>
+        <target>Ursaring</target>
+      </trans-unit>
+      <trans-unit id="yNM.pvO" resname="218">
+        <source>218</source>
+        <target>Slugma</target>
+      </trans-unit>
+      <trans-unit id="hrVDwpD" resname="219">
+        <source>219</source>
+        <target>Magcargo</target>
+      </trans-unit>
+      <trans-unit id="4vfz6UM" resname="220">
+        <source>220</source>
+        <target>Swinub</target>
+      </trans-unit>
+      <trans-unit id="322lo9A" resname="221">
+        <source>221</source>
+        <target>Piloswine</target>
+      </trans-unit>
+      <trans-unit id="JlvzVoY" resname="222">
+        <source>222</source>
+        <target>Corsola</target>
+      </trans-unit>
+      <trans-unit id="1Rc6b1u" resname="223">
+        <source>223</source>
+        <target>Remoraid</target>
+      </trans-unit>
+      <trans-unit id="P9Twc_U" resname="224">
+        <source>224</source>
+        <target>Octillery</target>
+      </trans-unit>
+      <trans-unit id="18hYu2j" resname="225">
+        <source>225</source>
+        <target>Delibird</target>
+      </trans-unit>
+      <trans-unit id="M8WSrOe" resname="226">
+        <source>226</source>
+        <target>Mantine</target>
+      </trans-unit>
+      <trans-unit id="Bwz2EYw" resname="227">
+        <source>227</source>
+        <target>Skarmory</target>
+      </trans-unit>
+      <trans-unit id="O1pxxof" resname="228">
+        <source>228</source>
+        <target>Houndour</target>
+      </trans-unit>
+      <trans-unit id="BmytLIW" resname="229">
+        <source>229</source>
+        <target>Houndoom</target>
+      </trans-unit>
+      <trans-unit id="gw58eXL" resname="230">
+        <source>230</source>
+        <target>Kingdra</target>
+      </trans-unit>
+      <trans-unit id="dLPr2Wa" resname="231">
+        <source>231</source>
+        <target>Phanpy</target>
+      </trans-unit>
+      <trans-unit id="gu_ZU8t" resname="232">
+        <source>232</source>
+        <target>Donphan</target>
+      </trans-unit>
+      <trans-unit id="pT.vgMZ" resname="233">
+        <source>233</source>
+        <target>Porygon2</target>
+      </trans-unit>
+      <trans-unit id="kBglJPm" resname="234">
+        <source>234</source>
+        <target>Stantler</target>
+      </trans-unit>
+      <trans-unit id="cenDLpw" resname="235">
+        <source>235</source>
+        <target>Smeargle</target>
+      </trans-unit>
+      <trans-unit id="bgcjYZ1" resname="236">
+        <source>236</source>
+        <target>Tyrogue</target>
+      </trans-unit>
+      <trans-unit id=".yGm_3F" resname="237">
+        <source>237</source>
+        <target>Hitmontop</target>
+      </trans-unit>
+      <trans-unit id="k5MGZUo" resname="238">
+        <source>238</source>
+        <target>Smoochum</target>
+      </trans-unit>
+      <trans-unit id="95FKr.r" resname="239">
+        <source>239</source>
+        <target>Elekid</target>
+      </trans-unit>
+      <trans-unit id="HaPnFy6" resname="240">
+        <source>240</source>
+        <target>Magby</target>
+      </trans-unit>
+      <trans-unit id="ZUiwZzU" resname="241">
+        <source>241</source>
+        <target>Miltank</target>
+      </trans-unit>
+      <trans-unit id="9p9j5aw" resname="242">
+        <source>242</source>
+        <target>Blissey</target>
+      </trans-unit>
+      <trans-unit id="F8FOh4u" resname="243">
+        <source>243</source>
+        <target>Raikou</target>
+      </trans-unit>
+      <trans-unit id="cZwMTty" resname="244">
+        <source>244</source>
+        <target>Entei</target>
+      </trans-unit>
+      <trans-unit id="psZW1Cz" resname="245">
+        <source>245</source>
+        <target>Suicune</target>
+      </trans-unit>
+      <trans-unit id="4QK9e65" resname="246">
+        <source>246</source>
+        <target>Larvitar</target>
+      </trans-unit>
+      <trans-unit id="nDRmsU3" resname="247">
+        <source>247</source>
+        <target>Pupitar</target>
+      </trans-unit>
+      <trans-unit id="B8nJQI." resname="248">
+        <source>248</source>
+        <target>Tyranitar</target>
+      </trans-unit>
+      <trans-unit id="ej92mdl" resname="249">
+        <source>249</source>
+        <target>Lugia</target>
+      </trans-unit>
+      <trans-unit id="R7ma_xD" resname="250">
+        <source>250</source>
+        <target>Ho-Oh</target>
+      </trans-unit>
+      <trans-unit id="JIXPWGL" resname="251">
+        <source>251</source>
+        <target>Celebi</target>
+      </trans-unit>
+      <trans-unit id="HNSOTKn" resname="252">
+        <source>252</source>
+        <target>Treecko</target>
+      </trans-unit>
+      <trans-unit id="sWg4sDR" resname="253">
+        <source>253</source>
+        <target>Grovyle</target>
+      </trans-unit>
+      <trans-unit id="ds2MRwu" resname="254">
+        <source>254</source>
+        <target>Sceptile</target>
+      </trans-unit>
+      <trans-unit id="ndevgEi" resname="255">
+        <source>255</source>
+        <target>Torchic</target>
+      </trans-unit>
+      <trans-unit id="RGt7Q.b" resname="256">
+        <source>256</source>
+        <target>Combusken</target>
+      </trans-unit>
+      <trans-unit id="DteM0BR" resname="257">
+        <source>257</source>
+        <target>Blaziken</target>
+      </trans-unit>
+      <trans-unit id=".hYK9Hn" resname="258">
+        <source>258</source>
+        <target>Mudkip</target>
+      </trans-unit>
+      <trans-unit id="OdUjeAi" resname="259">
+        <source>259</source>
+        <target>Marshtomp</target>
+      </trans-unit>
+      <trans-unit id="pDZs.Zj" resname="260">
+        <source>260</source>
+        <target>Swampert</target>
+      </trans-unit>
+      <trans-unit id="F2N3umz" resname="261">
+        <source>261</source>
+        <target>Poochyena</target>
+      </trans-unit>
+      <trans-unit id="yY3vyHJ" resname="262">
+        <source>262</source>
+        <target>Mightyena</target>
+      </trans-unit>
+      <trans-unit id="c60RYPQ" resname="263">
+        <source>263</source>
+        <target>Zigzagoon</target>
+      </trans-unit>
+      <trans-unit id="48IA0vb" resname="264">
+        <source>264</source>
+        <target>Linoone</target>
+      </trans-unit>
+      <trans-unit id="I5reuaT" resname="265">
+        <source>265</source>
+        <target>Wurmple</target>
+      </trans-unit>
+      <trans-unit id="3a4Wpm." resname="266">
+        <source>266</source>
+        <target>Silcoon</target>
+      </trans-unit>
+      <trans-unit id=".81_38N" resname="267">
+        <source>267</source>
+        <target>Beautifly</target>
+      </trans-unit>
+      <trans-unit id=".WUbyIY" resname="268">
+        <source>268</source>
+        <target>Cascoon</target>
+      </trans-unit>
+      <trans-unit id="NsCy5Gi" resname="269">
+        <source>269</source>
+        <target>Dustox</target>
+      </trans-unit>
+      <trans-unit id="6jv1sc4" resname="270">
+        <source>270</source>
+        <target>Lotad</target>
+      </trans-unit>
+      <trans-unit id="DHMqjXY" resname="271">
+        <source>271</source>
+        <target>Lombre</target>
+      </trans-unit>
+      <trans-unit id="Fw4N90N" resname="272">
+        <source>272</source>
+        <target>Ludicolo</target>
+      </trans-unit>
+      <trans-unit id="f2zttee" resname="273">
+        <source>273</source>
+        <target>Seedot</target>
+      </trans-unit>
+      <trans-unit id="MDoz_qA" resname="274">
+        <source>274</source>
+        <target>Nuzleaf</target>
+      </trans-unit>
+      <trans-unit id="NEhPqqi" resname="275">
+        <source>275</source>
+        <target>Shiftry</target>
+      </trans-unit>
+      <trans-unit id="UXzUwmf" resname="276">
+        <source>276</source>
+        <target>Taillow</target>
+      </trans-unit>
+      <trans-unit id="hqsfQrs" resname="277">
+        <source>277</source>
+        <target>Swellow</target>
+      </trans-unit>
+      <trans-unit id="EK.alap" resname="278">
+        <source>278</source>
+        <target>Wingull</target>
+      </trans-unit>
+      <trans-unit id="KgCECl3" resname="279">
+        <source>279</source>
+        <target>Pelipper</target>
+      </trans-unit>
+      <trans-unit id="rldkXkx" resname="280">
+        <source>280</source>
+        <target>Ralts</target>
+      </trans-unit>
+      <trans-unit id="0k1_Cry" resname="281">
+        <source>281</source>
+        <target>Kirlia</target>
+      </trans-unit>
+      <trans-unit id="pKxCb7v" resname="282">
+        <source>282</source>
+        <target>Gardevoir</target>
+      </trans-unit>
+      <trans-unit id="Pv8ggAL" resname="283">
+        <source>283</source>
+        <target>Surskit</target>
+      </trans-unit>
+      <trans-unit id="neyjDeW" resname="284">
+        <source>284</source>
+        <target>Masquerain</target>
+      </trans-unit>
+      <trans-unit id="EdEKd21" resname="285">
+        <source>285</source>
+        <target>Shroomish</target>
+      </trans-unit>
+      <trans-unit id="LfxeHML" resname="286">
+        <source>286</source>
+        <target>Breloom</target>
+      </trans-unit>
+      <trans-unit id="5jSxpgX" resname="287">
+        <source>287</source>
+        <target>Slakoth</target>
+      </trans-unit>
+      <trans-unit id="lSvR76A" resname="288">
+        <source>288</source>
+        <target>Vigoroth</target>
+      </trans-unit>
+      <trans-unit id="Zr6ZtLt" resname="289">
+        <source>289</source>
+        <target>Slaking</target>
+      </trans-unit>
+      <trans-unit id="X7L.jES" resname="290">
+        <source>290</source>
+        <target>Nincada</target>
+      </trans-unit>
+      <trans-unit id="DUf8u9i" resname="291">
+        <source>291</source>
+        <target>Ninjask</target>
+      </trans-unit>
+      <trans-unit id="2mEuQvd" resname="292">
+        <source>292</source>
+        <target>Shedinja</target>
+      </trans-unit>
+      <trans-unit id="FSBhQPI" resname="293">
+        <source>293</source>
+        <target>Whismur</target>
+      </trans-unit>
+      <trans-unit id="b86gwCg" resname="294">
+        <source>294</source>
+        <target>Loudred</target>
+      </trans-unit>
+      <trans-unit id="iszvCon" resname="295">
+        <source>295</source>
+        <target>Exploud</target>
+      </trans-unit>
+      <trans-unit id="KDoUrHt" resname="296">
+        <source>296</source>
+        <target>Makuhita</target>
+      </trans-unit>
+      <trans-unit id="d4yD6a9" resname="297">
+        <source>297</source>
+        <target>Hariyama</target>
+      </trans-unit>
+      <trans-unit id="KvGNZDp" resname="298">
+        <source>298</source>
+        <target>Azurill</target>
+      </trans-unit>
+      <trans-unit id="7QuK2FE" resname="299">
+        <source>299</source>
+        <target>Nosepass</target>
+      </trans-unit>
+      <trans-unit id="XFM4tVa" resname="300">
+        <source>300</source>
+        <target>Skitty</target>
+      </trans-unit>
+      <trans-unit id="BvqdP0q" resname="301">
+        <source>301</source>
+        <target>Delcatty</target>
+      </trans-unit>
+      <trans-unit id="88d.yr6" resname="302">
+        <source>302</source>
+        <target>Sableye</target>
+      </trans-unit>
+      <trans-unit id="zJfOICb" resname="303">
+        <source>303</source>
+        <target>Mawile</target>
+      </trans-unit>
+      <trans-unit id=".JpLMCu" resname="304">
+        <source>304</source>
+        <target>Aron</target>
+      </trans-unit>
+      <trans-unit id="nfRRXIB" resname="305">
+        <source>305</source>
+        <target>Lairon</target>
+      </trans-unit>
+      <trans-unit id="7tRj7Vg" resname="306">
+        <source>306</source>
+        <target>Aggron</target>
+      </trans-unit>
+      <trans-unit id="wKf.Ol." resname="307">
+        <source>307</source>
+        <target>Meditite</target>
+      </trans-unit>
+      <trans-unit id="iDk.mgm" resname="308">
+        <source>308</source>
+        <target>Medicham</target>
+      </trans-unit>
+      <trans-unit id="P11n.Go" resname="309">
+        <source>309</source>
+        <target>Electrike</target>
+      </trans-unit>
+      <trans-unit id="_MzYrhW" resname="310">
+        <source>310</source>
+        <target>Manectric</target>
+      </trans-unit>
+      <trans-unit id="itJNPpr" resname="311">
+        <source>311</source>
+        <target>Plusle</target>
+      </trans-unit>
+      <trans-unit id="17ObSHA" resname="312">
+        <source>312</source>
+        <target>Minun</target>
+      </trans-unit>
+      <trans-unit id="IwN2B2d" resname="313">
+        <source>313</source>
+        <target>Volbeat</target>
+      </trans-unit>
+      <trans-unit id="HA0GBza" resname="314">
+        <source>314</source>
+        <target>Illumise</target>
+      </trans-unit>
+      <trans-unit id="Z3XgsY0" resname="315">
+        <source>315</source>
+        <target>Roselia</target>
+      </trans-unit>
+      <trans-unit id="gZ.cZkd" resname="316">
+        <source>316</source>
+        <target>Gulpin</target>
+      </trans-unit>
+      <trans-unit id="JlDp240" resname="317">
+        <source>317</source>
+        <target>Swalot</target>
+      </trans-unit>
+      <trans-unit id="5IGaNJH" resname="318">
+        <source>318</source>
+        <target>Carvanha</target>
+      </trans-unit>
+      <trans-unit id="sLqPgg9" resname="319">
+        <source>319</source>
+        <target>Sharpedo</target>
+      </trans-unit>
+      <trans-unit id="Gq0yu7U" resname="320">
+        <source>320</source>
+        <target>Wailmer</target>
+      </trans-unit>
+      <trans-unit id="kOgCM8_" resname="321">
+        <source>321</source>
+        <target>Wailord</target>
+      </trans-unit>
+      <trans-unit id="s9aGGg5" resname="322">
+        <source>322</source>
+        <target>Numel</target>
+      </trans-unit>
+      <trans-unit id="aHmrl7V" resname="323">
+        <source>323</source>
+        <target>Camerupt</target>
+      </trans-unit>
+      <trans-unit id="01I6sJU" resname="324">
+        <source>324</source>
+        <target>Torkoal</target>
+      </trans-unit>
+      <trans-unit id="rhgvpEX" resname="325">
+        <source>325</source>
+        <target>Spoink</target>
+      </trans-unit>
+      <trans-unit id="HrUMi5J" resname="326">
+        <source>326</source>
+        <target>Grumpig</target>
+      </trans-unit>
+      <trans-unit id="yFnpW13" resname="327">
+        <source>327</source>
+        <target>Spinda</target>
+      </trans-unit>
+      <trans-unit id="QkxlvsY" resname="328">
+        <source>328</source>
+        <target>Trapinch</target>
+      </trans-unit>
+      <trans-unit id="rGBoFkH" resname="329">
+        <source>329</source>
+        <target>Vibrava</target>
+      </trans-unit>
+      <trans-unit id="fhd2SfW" resname="330">
+        <source>330</source>
+        <target>Flygon</target>
+      </trans-unit>
+      <trans-unit id="0KWEY4w" resname="331">
+        <source>331</source>
+        <target>Cacnea</target>
+      </trans-unit>
+      <trans-unit id="gJp7hGc" resname="332">
+        <source>332</source>
+        <target>Cacturne</target>
+      </trans-unit>
+      <trans-unit id="z.63LOX" resname="333">
+        <source>333</source>
+        <target>Swablu</target>
+      </trans-unit>
+      <trans-unit id="pko57z9" resname="334">
+        <source>334</source>
+        <target>Altaria</target>
+      </trans-unit>
+      <trans-unit id="Z.4aj.c" resname="335">
+        <source>335</source>
+        <target>Zangoose</target>
+      </trans-unit>
+      <trans-unit id="vDV4Jrv" resname="336">
+        <source>336</source>
+        <target>Seviper</target>
+      </trans-unit>
+      <trans-unit id="E0Q3Y4." resname="337">
+        <source>337</source>
+        <target>Lunatone</target>
+      </trans-unit>
+      <trans-unit id="ZofSdN." resname="338">
+        <source>338</source>
+        <target>Solrock</target>
+      </trans-unit>
+      <trans-unit id="7TbLtSa" resname="339">
+        <source>339</source>
+        <target>Barboach</target>
+      </trans-unit>
+      <trans-unit id="yD3XTq8" resname="340">
+        <source>340</source>
+        <target>Whiscash</target>
+      </trans-unit>
+      <trans-unit id="WiRmSdy" resname="341">
+        <source>341</source>
+        <target>Corphish</target>
+      </trans-unit>
+      <trans-unit id="bk1Xt3J" resname="342">
+        <source>342</source>
+        <target>Crawdaunt</target>
+      </trans-unit>
+      <trans-unit id="Aiv3yMs" resname="343">
+        <source>343</source>
+        <target>Baltoy</target>
+      </trans-unit>
+      <trans-unit id="gal4JuN" resname="344">
+        <source>344</source>
+        <target>Claydol</target>
+      </trans-unit>
+      <trans-unit id="8l.HtkH" resname="345">
+        <source>345</source>
+        <target>Lileep</target>
+      </trans-unit>
+      <trans-unit id="m8NkqLN" resname="346">
+        <source>346</source>
+        <target>Cradily</target>
+      </trans-unit>
+      <trans-unit id="Gox3C80" resname="347">
+        <source>347</source>
+        <target>Anorith</target>
+      </trans-unit>
+      <trans-unit id="Jo3tKNy" resname="348">
+        <source>348</source>
+        <target>Armaldo</target>
+      </trans-unit>
+      <trans-unit id="KxrhHgF" resname="349">
+        <source>349</source>
+        <target>Feebas</target>
+      </trans-unit>
+      <trans-unit id="gBgbOjK" resname="350">
+        <source>350</source>
+        <target>Milotic</target>
+      </trans-unit>
+      <trans-unit id="QC9XaGH" resname="351">
+        <source>351</source>
+        <target>Castform</target>
+      </trans-unit>
+      <trans-unit id="UKohF26" resname="352">
+        <source>352</source>
+        <target>Kecleon</target>
+      </trans-unit>
+      <trans-unit id="S2_G7VF" resname="353">
+        <source>353</source>
+        <target>Shuppet</target>
+      </trans-unit>
+      <trans-unit id="_OOqN6B" resname="354">
+        <source>354</source>
+        <target>Banette</target>
+      </trans-unit>
+      <trans-unit id="YqbSYEt" resname="355">
+        <source>355</source>
+        <target>Duskull</target>
+      </trans-unit>
+      <trans-unit id="r9y5jKf" resname="356">
+        <source>356</source>
+        <target>Dusclops</target>
+      </trans-unit>
+      <trans-unit id="8XcEEd1" resname="357">
+        <source>357</source>
+        <target>Tropius</target>
+      </trans-unit>
+      <trans-unit id="2uOOg1Q" resname="358">
+        <source>358</source>
+        <target>Chimecho</target>
+      </trans-unit>
+      <trans-unit id="e.L3Q9H" resname="359">
+        <source>359</source>
+        <target>Absol</target>
+      </trans-unit>
+      <trans-unit id="uQM1qi." resname="360">
+        <source>360</source>
+        <target>Wynaut</target>
+      </trans-unit>
+      <trans-unit id="DV8qqvs" resname="361">
+        <source>361</source>
+        <target>Snorunt</target>
+      </trans-unit>
+      <trans-unit id="IBo6FSE" resname="362">
+        <source>362</source>
+        <target>Glalie</target>
+      </trans-unit>
+      <trans-unit id="1xpe6Gu" resname="363">
+        <source>363</source>
+        <target>Spheal</target>
+      </trans-unit>
+      <trans-unit id="FHozW0H" resname="364">
+        <source>364</source>
+        <target>Sealeo</target>
+      </trans-unit>
+      <trans-unit id="ixA0dBg" resname="365">
+        <source>365</source>
+        <target>Walrein</target>
+      </trans-unit>
+      <trans-unit id="oMEkKtM" resname="366">
+        <source>366</source>
+        <target>Clamperl</target>
+      </trans-unit>
+      <trans-unit id="2k5FG8O" resname="367">
+        <source>367</source>
+        <target>Huntail</target>
+      </trans-unit>
+      <trans-unit id="Hh6eCeE" resname="368">
+        <source>368</source>
+        <target>Gorebyss</target>
+      </trans-unit>
+      <trans-unit id="PU7Nu2N" resname="369">
+        <source>369</source>
+        <target>Relicanth</target>
+      </trans-unit>
+      <trans-unit id="H2D5nhN" resname="370">
+        <source>370</source>
+        <target>Luvdisc</target>
+      </trans-unit>
+      <trans-unit id="kobM4ED" resname="371">
+        <source>371</source>
+        <target>Bagon</target>
+      </trans-unit>
+      <trans-unit id="G5My4sj" resname="372">
+        <source>372</source>
+        <target>Shelgon</target>
+      </trans-unit>
+      <trans-unit id="M0vloPQ" resname="373">
+        <source>373</source>
+        <target>Salamence</target>
+      </trans-unit>
+      <trans-unit id="qzwUR1j" resname="374">
+        <source>374</source>
+        <target>Beldum</target>
+      </trans-unit>
+      <trans-unit id="sOdAgGt" resname="375">
+        <source>375</source>
+        <target>Metang</target>
+      </trans-unit>
+      <trans-unit id="Se3CqcG" resname="376">
+        <source>376</source>
+        <target>Metagross</target>
+      </trans-unit>
+      <trans-unit id="Zsr.iCq" resname="377">
+        <source>377</source>
+        <target>Regirock</target>
+      </trans-unit>
+      <trans-unit id="PKBs8Es" resname="378">
+        <source>378</source>
+        <target>Regice</target>
+      </trans-unit>
+      <trans-unit id="eVzb5dG" resname="379">
+        <source>379</source>
+        <target>Registeel</target>
+      </trans-unit>
+      <trans-unit id="yquS.1f" resname="380">
+        <source>380</source>
+        <target>Latias</target>
+      </trans-unit>
+      <trans-unit id="gzfu34N" resname="381">
+        <source>381</source>
+        <target>Latios</target>
+      </trans-unit>
+      <trans-unit id="tGY3CLx" resname="382">
+        <source>382</source>
+        <target>Kyogre</target>
+      </trans-unit>
+      <trans-unit id="fBrg4VG" resname="383">
+        <source>383</source>
+        <target>Groudon</target>
+      </trans-unit>
+      <trans-unit id="Wv6cJVN" resname="384">
+        <source>384</source>
+        <target>Rayquaza</target>
+      </trans-unit>
+      <trans-unit id="IoH7Bu9" resname="385">
+        <source>385</source>
+        <target>Jirachi</target>
+      </trans-unit>
+      <trans-unit id="_6AUyPL" resname="386">
+        <source>386</source>
+        <target>Deoxys</target>
+      </trans-unit>
+      <trans-unit id="LhRnLk8" resname="387">
+        <source>387</source>
+        <target>Turtwig</target>
+      </trans-unit>
+      <trans-unit id="AQFz_KQ" resname="388">
+        <source>388</source>
+        <target>Grotle</target>
+      </trans-unit>
+      <trans-unit id="I.vM7RD" resname="389">
+        <source>389</source>
+        <target>Torterra</target>
+      </trans-unit>
+      <trans-unit id="LadCvMW" resname="390">
+        <source>390</source>
+        <target>Chimchar</target>
+      </trans-unit>
+      <trans-unit id="H4lo_WH" resname="391">
+        <source>391</source>
+        <target>Monferno</target>
+      </trans-unit>
+      <trans-unit id="AnfsifK" resname="392">
+        <source>392</source>
+        <target>Infernape</target>
+      </trans-unit>
+      <trans-unit id="mIhu6Sd" resname="393">
+        <source>393</source>
+        <target>Piplup</target>
+      </trans-unit>
+      <trans-unit id="AcLkhIS" resname="394">
+        <source>394</source>
+        <target>Prinplup</target>
+      </trans-unit>
+      <trans-unit id="tQXofwX" resname="395">
+        <source>395</source>
+        <target>Empoleon</target>
+      </trans-unit>
+      <trans-unit id="2d1EHdO" resname="396">
+        <source>396</source>
+        <target>Starly</target>
+      </trans-unit>
+      <trans-unit id="rUcNjk_" resname="397">
+        <source>397</source>
+        <target>Staravia</target>
+      </trans-unit>
+      <trans-unit id="opfqY7n" resname="398">
+        <source>398</source>
+        <target>Staraptor</target>
+      </trans-unit>
+      <trans-unit id="qhVp1wi" resname="399">
+        <source>399</source>
+        <target>Bidoof</target>
+      </trans-unit>
+      <trans-unit id="KgurBVl" resname="400">
+        <source>400</source>
+        <target>Bibarel</target>
+      </trans-unit>
+      <trans-unit id="odOLdpg" resname="401">
+        <source>401</source>
+        <target>Kricketot</target>
+      </trans-unit>
+      <trans-unit id="xzndK1l" resname="402">
+        <source>402</source>
+        <target>Kricketune</target>
+      </trans-unit>
+      <trans-unit id="1SAv9L_" resname="403">
+        <source>403</source>
+        <target>Shinx</target>
+      </trans-unit>
+      <trans-unit id="BBpP7Gz" resname="404">
+        <source>404</source>
+        <target>Luxio</target>
+      </trans-unit>
+      <trans-unit id="o_4rLcx" resname="405">
+        <source>405</source>
+        <target>Luxray</target>
+      </trans-unit>
+      <trans-unit id="Q7ZlD_n" resname="406">
+        <source>406</source>
+        <target>Budew</target>
+      </trans-unit>
+      <trans-unit id="iXUkJc1" resname="407">
+        <source>407</source>
+        <target>Roserade</target>
+      </trans-unit>
+      <trans-unit id="AWwnhz6" resname="408">
+        <source>408</source>
+        <target>Cranidos</target>
+      </trans-unit>
+      <trans-unit id="qpdznAi" resname="409">
+        <source>409</source>
+        <target>Rampardos</target>
+      </trans-unit>
+      <trans-unit id="McDlUao" resname="410">
+        <source>410</source>
+        <target>Shieldon</target>
+      </trans-unit>
+      <trans-unit id="aRy__kY" resname="411">
+        <source>411</source>
+        <target>Bastiodon</target>
+      </trans-unit>
+      <trans-unit id="SYHcVDK" resname="412">
+        <source>412</source>
+        <target>Burmy</target>
+      </trans-unit>
+      <trans-unit id="pWUXC7F" resname="413">
+        <source>413</source>
+        <target>Wormadam</target>
+      </trans-unit>
+      <trans-unit id="kVGlGln" resname="414">
+        <source>414</source>
+        <target>Mothim</target>
+      </trans-unit>
+      <trans-unit id="A_5ufCU" resname="415">
+        <source>415</source>
+        <target>Combee</target>
+      </trans-unit>
+      <trans-unit id="jXcvptS" resname="416">
+        <source>416</source>
+        <target>Vespiquen</target>
+      </trans-unit>
+      <trans-unit id=".25M9sI" resname="417">
+        <source>417</source>
+        <target>Pachirisu</target>
+      </trans-unit>
+      <trans-unit id="C8vPJXj" resname="418">
+        <source>418</source>
+        <target>Buizel</target>
+      </trans-unit>
+      <trans-unit id="1RyIgJk" resname="419">
+        <source>419</source>
+        <target>Floatzel</target>
+      </trans-unit>
+      <trans-unit id="AGCb8.0" resname="420">
+        <source>420</source>
+        <target>Cherubi</target>
+      </trans-unit>
+      <trans-unit id="cJCM.7e" resname="421">
+        <source>421</source>
+        <target>Cherrim</target>
+      </trans-unit>
+      <trans-unit id="ajVmzBJ" resname="422">
+        <source>422</source>
+        <target>Shellos</target>
+      </trans-unit>
+      <trans-unit id="FOR68bf" resname="423">
+        <source>423</source>
+        <target>Gastrodon</target>
+      </trans-unit>
+      <trans-unit id="Hsc0RLT" resname="424">
+        <source>424</source>
+        <target>Ambipom</target>
+      </trans-unit>
+      <trans-unit id="HvzLD9_" resname="425">
+        <source>425</source>
+        <target>Drifloon</target>
+      </trans-unit>
+      <trans-unit id="XSdTmBC" resname="426">
+        <source>426</source>
+        <target>Drifblim</target>
+      </trans-unit>
+      <trans-unit id="XiHNzfQ" resname="427">
+        <source>427</source>
+        <target>Buneary</target>
+      </trans-unit>
+      <trans-unit id="zL9tqzw" resname="428">
+        <source>428</source>
+        <target>Lopunny</target>
+      </trans-unit>
+      <trans-unit id="N4fWeul" resname="429">
+        <source>429</source>
+        <target>Mismagius</target>
+      </trans-unit>
+      <trans-unit id="hyYx2HW" resname="430">
+        <source>430</source>
+        <target>Honchkrow</target>
+      </trans-unit>
+      <trans-unit id="H9gaZHM" resname="431">
+        <source>431</source>
+        <target>Glameow</target>
+      </trans-unit>
+      <trans-unit id="I7eTQeO" resname="432">
+        <source>432</source>
+        <target>Purugly</target>
+      </trans-unit>
+      <trans-unit id="ZfCR_co" resname="433">
+        <source>433</source>
+        <target>Chingling</target>
+      </trans-unit>
+      <trans-unit id="NMAeVF4" resname="434">
+        <source>434</source>
+        <target>Stunky</target>
+      </trans-unit>
+      <trans-unit id="1jPnhQp" resname="435">
+        <source>435</source>
+        <target>Skuntank</target>
+      </trans-unit>
+      <trans-unit id="se08qGk" resname="436">
+        <source>436</source>
+        <target>Bronzor</target>
+      </trans-unit>
+      <trans-unit id="VDwjF7D" resname="437">
+        <source>437</source>
+        <target>Bronzong</target>
+      </trans-unit>
+      <trans-unit id="v2HQLZG" resname="438">
+        <source>438</source>
+        <target>Bonsly</target>
+      </trans-unit>
+      <trans-unit id="xMA7InR" resname="439">
+        <source>439</source>
+        <target>Mime Jr.</target>
+      </trans-unit>
+      <trans-unit id="cR17kgk" resname="440">
+        <source>440</source>
+        <target>Happiny</target>
+      </trans-unit>
+      <trans-unit id=".C1U3AY" resname="441">
+        <source>441</source>
+        <target>Chatot</target>
+      </trans-unit>
+      <trans-unit id="AuscGzd" resname="442">
+        <source>442</source>
+        <target>Spiritomb</target>
+      </trans-unit>
+      <trans-unit id="mGY6kFv" resname="443">
+        <source>443</source>
+        <target>Gible</target>
+      </trans-unit>
+      <trans-unit id="ze3FKqy" resname="444">
+        <source>444</source>
+        <target>Gabite</target>
+      </trans-unit>
+      <trans-unit id="ITsZaoX" resname="445">
+        <source>445</source>
+        <target>Garchomp</target>
+      </trans-unit>
+      <trans-unit id="_kzPgIS" resname="446">
+        <source>446</source>
+        <target>Munchlax</target>
+      </trans-unit>
+      <trans-unit id="xudEHpR" resname="447">
+        <source>447</source>
+        <target>Riolu</target>
+      </trans-unit>
+      <trans-unit id="RrCCK6a" resname="448">
+        <source>448</source>
+        <target>Lucario</target>
+      </trans-unit>
+      <trans-unit id="3Fr60GK" resname="449">
+        <source>449</source>
+        <target>Hippopotas</target>
+      </trans-unit>
+      <trans-unit id="Q5cTEEl" resname="450">
+        <source>450</source>
+        <target>Hippowdon</target>
+      </trans-unit>
+      <trans-unit id="RVpS4FN" resname="451">
+        <source>451</source>
+        <target>Skorupi</target>
+      </trans-unit>
+      <trans-unit id="ZIl6_la" resname="452">
+        <source>452</source>
+        <target>Drapion</target>
+      </trans-unit>
+      <trans-unit id="Fnb5Lyr" resname="453">
+        <source>453</source>
+        <target>Croagunk</target>
+      </trans-unit>
+      <trans-unit id="OlMTIvU" resname="454">
+        <source>454</source>
+        <target>Toxicroak</target>
+      </trans-unit>
+      <trans-unit id="Gktcch4" resname="455">
+        <source>455</source>
+        <target>Carnivine</target>
+      </trans-unit>
+      <trans-unit id="o4RCQ6y" resname="456">
+        <source>456</source>
+        <target>Finneon</target>
+      </trans-unit>
+      <trans-unit id="9RqKK2h" resname="457">
+        <source>457</source>
+        <target>Lumineon</target>
+      </trans-unit>
+      <trans-unit id="V29j4vr" resname="458">
+        <source>458</source>
+        <target>Mantyke</target>
+      </trans-unit>
+      <trans-unit id="Q3GOiLJ" resname="459">
+        <source>459</source>
+        <target>Snover</target>
+      </trans-unit>
+      <trans-unit id="NkHf6Z4" resname="460">
+        <source>460</source>
+        <target>Abomasnow</target>
+      </trans-unit>
+      <trans-unit id="aNu0_EG" resname="461">
+        <source>461</source>
+        <target>Weavile</target>
+      </trans-unit>
+      <trans-unit id="wc3eFd1" resname="462">
+        <source>462</source>
+        <target>Magnezone</target>
+      </trans-unit>
+      <trans-unit id="WRexqWX" resname="463">
+        <source>463</source>
+        <target>Lickilicky</target>
+      </trans-unit>
+      <trans-unit id="1zpAlWP" resname="464">
+        <source>464</source>
+        <target>Rhyperior</target>
+      </trans-unit>
+      <trans-unit id="Mbulbdw" resname="465">
+        <source>465</source>
+        <target>Tangrowth</target>
+      </trans-unit>
+      <trans-unit id="twZWJgn" resname="466">
+        <source>466</source>
+        <target>Electivire</target>
+      </trans-unit>
+      <trans-unit id="62hjnIy" resname="467">
+        <source>467</source>
+        <target>Magmortar</target>
+      </trans-unit>
+      <trans-unit id="EQDvAbC" resname="468">
+        <source>468</source>
+        <target>Togekiss</target>
+      </trans-unit>
+      <trans-unit id="DHDcBfE" resname="469">
+        <source>469</source>
+        <target>Yanmega</target>
+      </trans-unit>
+      <trans-unit id="EZ7MI_v" resname="470">
+        <source>470</source>
+        <target>Leafeon</target>
+      </trans-unit>
+      <trans-unit id="LQQEXhG" resname="471">
+        <source>471</source>
+        <target>Glaceon</target>
+      </trans-unit>
+      <trans-unit id="uZGfSzd" resname="472">
+        <source>472</source>
+        <target>Gliscor</target>
+      </trans-unit>
+      <trans-unit id="nkH.Vd8" resname="473">
+        <source>473</source>
+        <target>Mamoswine</target>
+      </trans-unit>
+      <trans-unit id="4ip4E1S" resname="474">
+        <source>474</source>
+        <target>Porygon-Z</target>
+      </trans-unit>
+      <trans-unit id=".VlE8xr" resname="475">
+        <source>475</source>
+        <target>Gallade</target>
+      </trans-unit>
+      <trans-unit id="4uMjwDv" resname="476">
+        <source>476</source>
+        <target>Probopass</target>
+      </trans-unit>
+      <trans-unit id="H4Zjanf" resname="477">
+        <source>477</source>
+        <target>Dusknoir</target>
+      </trans-unit>
+      <trans-unit id="27I5J7a" resname="478">
+        <source>478</source>
+        <target>Froslass</target>
+      </trans-unit>
+      <trans-unit id="U_mzlO3" resname="479">
+        <source>479</source>
+        <target>Rotom</target>
+      </trans-unit>
+      <trans-unit id="j1HOsaC" resname="480">
+        <source>480</source>
+        <target>Uxie</target>
+      </trans-unit>
+      <trans-unit id="lo8iBVa" resname="481">
+        <source>481</source>
+        <target>Mesprit</target>
+      </trans-unit>
+      <trans-unit id="XdVuI62" resname="482">
+        <source>482</source>
+        <target>Azelf</target>
+      </trans-unit>
+      <trans-unit id="sS48vTG" resname="483">
+        <source>483</source>
+        <target>Dialga</target>
+      </trans-unit>
+      <trans-unit id="xdC2hrK" resname="484">
+        <source>484</source>
+        <target>Palkia</target>
+      </trans-unit>
+      <trans-unit id="wYBchi0" resname="485">
+        <source>485</source>
+        <target>Heatran</target>
+      </trans-unit>
+      <trans-unit id="9H.K8ox" resname="486">
+        <source>486</source>
+        <target>Regigigas</target>
+      </trans-unit>
+      <trans-unit id="jZk8WgO" resname="487">
+        <source>487</source>
+        <target>Giratina</target>
+      </trans-unit>
+      <trans-unit id="7htju3G" resname="488">
+        <source>488</source>
+        <target>Cresselia</target>
+      </trans-unit>
+      <trans-unit id="PTHsCrQ" resname="489">
+        <source>489</source>
+        <target>Phione</target>
+      </trans-unit>
+      <trans-unit id="7KqliwV" resname="490">
+        <source>490</source>
+        <target>Manaphy</target>
+      </trans-unit>
+      <trans-unit id="mRXtH.J" resname="491">
+        <source>491</source>
+        <target>Darkrai</target>
+      </trans-unit>
+      <trans-unit id="Sfe5AFI" resname="492">
+        <source>492</source>
+        <target>Shaymin</target>
+      </trans-unit>
+      <trans-unit id="y48SBhi" resname="493">
+        <source>493</source>
+        <target>Arceus</target>
+      </trans-unit>
+      <trans-unit id="5ZcqBHk" resname="494">
+        <source>494</source>
+        <target>Victini</target>
+      </trans-unit>
+      <trans-unit id="ogn4CTQ" resname="495">
+        <source>495</source>
+        <target>Snivy</target>
+      </trans-unit>
+      <trans-unit id="RCMPee8" resname="496">
+        <source>496</source>
+        <target>Servine</target>
+      </trans-unit>
+      <trans-unit id="rP3UbnM" resname="497">
+        <source>497</source>
+        <target>Serperior</target>
+      </trans-unit>
+      <trans-unit id="ZRjfMOL" resname="498">
+        <source>498</source>
+        <target>Tepig</target>
+      </trans-unit>
+      <trans-unit id="m3Uv_N2" resname="499">
+        <source>499</source>
+        <target>Pignite</target>
+      </trans-unit>
+      <trans-unit id="tdO6Vnk" resname="500">
+        <source>500</source>
+        <target>Emboar</target>
+      </trans-unit>
+      <trans-unit id="92UCoow" resname="501">
+        <source>501</source>
+        <target>Oshawott</target>
+      </trans-unit>
+      <trans-unit id="Ha.x0jY" resname="502">
+        <source>502</source>
+        <target>Dewott</target>
+      </trans-unit>
+      <trans-unit id="bMiX58E" resname="503">
+        <source>503</source>
+        <target>Samurott</target>
+      </trans-unit>
+      <trans-unit id="DT72W4e" resname="504">
+        <source>504</source>
+        <target>Patrat</target>
+      </trans-unit>
+      <trans-unit id="sX.v.hI" resname="505">
+        <source>505</source>
+        <target>Watchog</target>
+      </trans-unit>
+      <trans-unit id="O3tcGrQ" resname="506">
+        <source>506</source>
+        <target>Lillipup</target>
+      </trans-unit>
+      <trans-unit id="WCjTrsY" resname="507">
+        <source>507</source>
+        <target>Herdier</target>
+      </trans-unit>
+      <trans-unit id="61L2Z6S" resname="508">
+        <source>508</source>
+        <target>Stoutland</target>
+      </trans-unit>
+      <trans-unit id="CosAhHM" resname="509">
+        <source>509</source>
+        <target>Purrloin</target>
+      </trans-unit>
+      <trans-unit id="7wkP9GD" resname="510">
+        <source>510</source>
+        <target>Liepard</target>
+      </trans-unit>
+      <trans-unit id="8ofvrC3" resname="511">
+        <source>511</source>
+        <target>Pansage</target>
+      </trans-unit>
+      <trans-unit id="7TtvFJc" resname="512">
+        <source>512</source>
+        <target>Simisage</target>
+      </trans-unit>
+      <trans-unit id="whwUwLF" resname="513">
+        <source>513</source>
+        <target>Pansear</target>
+      </trans-unit>
+      <trans-unit id="NNkUllq" resname="514">
+        <source>514</source>
+        <target>Simisear</target>
+      </trans-unit>
+      <trans-unit id="cDEQlT4" resname="515">
+        <source>515</source>
+        <target>Panpour</target>
+      </trans-unit>
+      <trans-unit id="p8SZ4Fx" resname="516">
+        <source>516</source>
+        <target>Simipour</target>
+      </trans-unit>
+      <trans-unit id="hTdzOvj" resname="517">
+        <source>517</source>
+        <target>Munna</target>
+      </trans-unit>
+      <trans-unit id="aK.wn7r" resname="518">
+        <source>518</source>
+        <target>Musharna</target>
+      </trans-unit>
+      <trans-unit id="urmtjaa" resname="519">
+        <source>519</source>
+        <target>Pidove</target>
+      </trans-unit>
+      <trans-unit id="YmmMKHf" resname="520">
+        <source>520</source>
+        <target>Tranquill</target>
+      </trans-unit>
+      <trans-unit id="eDF0N_I" resname="521">
+        <source>521</source>
+        <target>Unfezant</target>
+      </trans-unit>
+      <trans-unit id="uGPvM91" resname="522">
+        <source>522</source>
+        <target>Blitzle</target>
+      </trans-unit>
+      <trans-unit id="Ct2tdO5" resname="523">
+        <source>523</source>
+        <target>Zebstrika</target>
+      </trans-unit>
+      <trans-unit id="FW61GWQ" resname="524">
+        <source>524</source>
+        <target>Roggenrola</target>
+      </trans-unit>
+      <trans-unit id="3VWcu4e" resname="525">
+        <source>525</source>
+        <target>Boldore</target>
+      </trans-unit>
+      <trans-unit id="Ta3YFES" resname="526">
+        <source>526</source>
+        <target>Gigalith</target>
+      </trans-unit>
+      <trans-unit id="InupAbM" resname="527">
+        <source>527</source>
+        <target>Woobat</target>
+      </trans-unit>
+      <trans-unit id="2UUDDpO" resname="528">
+        <source>528</source>
+        <target>Swoobat</target>
+      </trans-unit>
+      <trans-unit id="372E2aX" resname="529">
+        <source>529</source>
+        <target>Drilbur</target>
+      </trans-unit>
+      <trans-unit id="9n59yTW" resname="530">
+        <source>530</source>
+        <target>Excadrill</target>
+      </trans-unit>
+      <trans-unit id="5Vh92iF" resname="531">
+        <source>531</source>
+        <target>Audino</target>
+      </trans-unit>
+      <trans-unit id="eTcvcNy" resname="532">
+        <source>532</source>
+        <target>Timburr</target>
+      </trans-unit>
+      <trans-unit id="0byMxDG" resname="533">
+        <source>533</source>
+        <target>Gurdurr</target>
+      </trans-unit>
+      <trans-unit id="O79XfL4" resname="534">
+        <source>534</source>
+        <target>Conkeldurr</target>
+      </trans-unit>
+      <trans-unit id="iqN5Kzt" resname="535">
+        <source>535</source>
+        <target>Tympole</target>
+      </trans-unit>
+      <trans-unit id="_HfZct." resname="536">
+        <source>536</source>
+        <target>Palpitoad</target>
+      </trans-unit>
+      <trans-unit id="FxI2tUc" resname="537">
+        <source>537</source>
+        <target>Seismitoad</target>
+      </trans-unit>
+      <trans-unit id="ibU3NWk" resname="538">
+        <source>538</source>
+        <target>Throh</target>
+      </trans-unit>
+      <trans-unit id="rJg7xvj" resname="539">
+        <source>539</source>
+        <target>Sawk</target>
+      </trans-unit>
+      <trans-unit id="XLn_Ifg" resname="540">
+        <source>540</source>
+        <target>Sewaddle</target>
+      </trans-unit>
+      <trans-unit id="Yx0_ITr" resname="541">
+        <source>541</source>
+        <target>Swadloon</target>
+      </trans-unit>
+      <trans-unit id="SxWeYgm" resname="542">
+        <source>542</source>
+        <target>Leavanny</target>
+      </trans-unit>
+      <trans-unit id="ZROdG3_" resname="543">
+        <source>543</source>
+        <target>Venipede</target>
+      </trans-unit>
+      <trans-unit id="eLetxHL" resname="544">
+        <source>544</source>
+        <target>Whirlipede</target>
+      </trans-unit>
+      <trans-unit id="xUty5Zp" resname="545">
+        <source>545</source>
+        <target>Scolipede</target>
+      </trans-unit>
+      <trans-unit id="ePmOCjQ" resname="546">
+        <source>546</source>
+        <target>Cottonee</target>
+      </trans-unit>
+      <trans-unit id=".3n2tU0" resname="547">
+        <source>547</source>
+        <target>Whimsicott</target>
+      </trans-unit>
+      <trans-unit id="pKuUqJY" resname="548">
+        <source>548</source>
+        <target>Petilil</target>
+      </trans-unit>
+      <trans-unit id="sXf.DKS" resname="549">
+        <source>549</source>
+        <target>Lilligant</target>
+      </trans-unit>
+      <trans-unit id="v4HbLnC" resname="550">
+        <source>550</source>
+        <target>Basculin</target>
+      </trans-unit>
+      <trans-unit id="wEKie6v" resname="551">
+        <source>551</source>
+        <target>Sandile</target>
+      </trans-unit>
+      <trans-unit id="bZ2.sru" resname="552">
+        <source>552</source>
+        <target>Krokorok</target>
+      </trans-unit>
+      <trans-unit id="gWO9zpM" resname="553">
+        <source>553</source>
+        <target>Krookodile</target>
+      </trans-unit>
+      <trans-unit id="iG9SkXd" resname="554">
+        <source>554</source>
+        <target>Darumaka</target>
+      </trans-unit>
+      <trans-unit id="z8zw0Sd" resname="555">
+        <source>555</source>
+        <target>Darmanitan</target>
+      </trans-unit>
+      <trans-unit id="MKlRZMC" resname="556">
+        <source>556</source>
+        <target>Maractus</target>
+      </trans-unit>
+      <trans-unit id="fVsvGGH" resname="557">
+        <source>557</source>
+        <target>Dwebble</target>
+      </trans-unit>
+      <trans-unit id="6kZ2yDj" resname="558">
+        <source>558</source>
+        <target>Crustle</target>
+      </trans-unit>
+      <trans-unit id="3TYNjke" resname="559">
+        <source>559</source>
+        <target>Scraggy</target>
+      </trans-unit>
+      <trans-unit id="oXKEgJ8" resname="560">
+        <source>560</source>
+        <target>Scrafty</target>
+      </trans-unit>
+      <trans-unit id="5kqwXzt" resname="561">
+        <source>561</source>
+        <target>Sigilyph</target>
+      </trans-unit>
+      <trans-unit id="wfckuSn" resname="562">
+        <source>562</source>
+        <target>Yamask</target>
+      </trans-unit>
+      <trans-unit id="DRwy9es" resname="563">
+        <source>563</source>
+        <target>Cofagrigus</target>
+      </trans-unit>
+      <trans-unit id="1Xe7xtl" resname="564">
+        <source>564</source>
+        <target>Tirtouga</target>
+      </trans-unit>
+      <trans-unit id="Rm_MH.o" resname="565">
+        <source>565</source>
+        <target>Carracosta</target>
+      </trans-unit>
+      <trans-unit id="zrbXZu4" resname="566">
+        <source>566</source>
+        <target>Archen</target>
+      </trans-unit>
+      <trans-unit id="FGcr4jS" resname="567">
+        <source>567</source>
+        <target>Archeops</target>
+      </trans-unit>
+      <trans-unit id="GK5hM0y" resname="568">
+        <source>568</source>
+        <target>Trubbish</target>
+      </trans-unit>
+      <trans-unit id="qm_tbLn" resname="569">
+        <source>569</source>
+        <target>Garbodor</target>
+      </trans-unit>
+      <trans-unit id="J1a8IFG" resname="570">
+        <source>570</source>
+        <target>Zorua</target>
+      </trans-unit>
+      <trans-unit id="T3onftc" resname="571">
+        <source>571</source>
+        <target>Zoroark</target>
+      </trans-unit>
+      <trans-unit id="mGZe6iY" resname="572">
+        <source>572</source>
+        <target>Minccino</target>
+      </trans-unit>
+      <trans-unit id="_exunh5" resname="573">
+        <source>573</source>
+        <target>Cinccino</target>
+      </trans-unit>
+      <trans-unit id="1LW4s.n" resname="574">
+        <source>574</source>
+        <target>Gothita</target>
+      </trans-unit>
+      <trans-unit id="x7bC4ct" resname="575">
+        <source>575</source>
+        <target>Gothorita</target>
+      </trans-unit>
+      <trans-unit id="BC4LiJO" resname="576">
+        <source>576</source>
+        <target>Gothitelle</target>
+      </trans-unit>
+      <trans-unit id="yCTapIa" resname="577">
+        <source>577</source>
+        <target>Solosis</target>
+      </trans-unit>
+      <trans-unit id="K5ToyAi" resname="578">
+        <source>578</source>
+        <target>Duosion</target>
+      </trans-unit>
+      <trans-unit id="w4ny.93" resname="579">
+        <source>579</source>
+        <target>Reuniclus</target>
+      </trans-unit>
+      <trans-unit id="a7azuC7" resname="580">
+        <source>580</source>
+        <target>Ducklett</target>
+      </trans-unit>
+      <trans-unit id="AHOiFfG" resname="581">
+        <source>581</source>
+        <target>Swanna</target>
+      </trans-unit>
+      <trans-unit id="T1LL8hj" resname="582">
+        <source>582</source>
+        <target>Vanillite</target>
+      </trans-unit>
+      <trans-unit id="mrsCcXC" resname="583">
+        <source>583</source>
+        <target>Vanillish</target>
+      </trans-unit>
+      <trans-unit id="o8GWgnO" resname="584">
+        <source>584</source>
+        <target>Vanilluxe</target>
+      </trans-unit>
+      <trans-unit id="1RN1yK5" resname="585">
+        <source>585</source>
+        <target>Deerling</target>
+      </trans-unit>
+      <trans-unit id="kY7q98w" resname="586">
+        <source>586</source>
+        <target>Sawsbuck</target>
+      </trans-unit>
+      <trans-unit id="gzrsl1G" resname="587">
+        <source>587</source>
+        <target>Emolga</target>
+      </trans-unit>
+      <trans-unit id="QbxQLoz" resname="588">
+        <source>588</source>
+        <target>Karrablast</target>
+      </trans-unit>
+      <trans-unit id="6vGUl70" resname="589">
+        <source>589</source>
+        <target>Escavalier</target>
+      </trans-unit>
+      <trans-unit id="mQEOhnC" resname="590">
+        <source>590</source>
+        <target>Foongus</target>
+      </trans-unit>
+      <trans-unit id="yIdOngs" resname="591">
+        <source>591</source>
+        <target>Amoonguss</target>
+      </trans-unit>
+      <trans-unit id="N.N1VwJ" resname="592">
+        <source>592</source>
+        <target>Frillish</target>
+      </trans-unit>
+      <trans-unit id="g_D1Rpb" resname="593">
+        <source>593</source>
+        <target>Jellicent</target>
+      </trans-unit>
+      <trans-unit id="m8v6Pnd" resname="594">
+        <source>594</source>
+        <target>Alomomola</target>
+      </trans-unit>
+      <trans-unit id="HRL.489" resname="595">
+        <source>595</source>
+        <target>Joltik</target>
+      </trans-unit>
+      <trans-unit id="HxFy849" resname="596">
+        <source>596</source>
+        <target>Galvantula</target>
+      </trans-unit>
+      <trans-unit id="4Kea5WC" resname="597">
+        <source>597</source>
+        <target>Ferroseed</target>
+      </trans-unit>
+      <trans-unit id="yI5u72w" resname="598">
+        <source>598</source>
+        <target>Ferrothorn</target>
+      </trans-unit>
+      <trans-unit id="nnf5uRA" resname="599">
+        <source>599</source>
+        <target>Klink</target>
+      </trans-unit>
+      <trans-unit id=".EmkVYP" resname="600">
+        <source>600</source>
+        <target>Klang</target>
+      </trans-unit>
+      <trans-unit id="zKekSQy" resname="601">
+        <source>601</source>
+        <target>Klinklang</target>
+      </trans-unit>
+      <trans-unit id="MFMVMr9" resname="602">
+        <source>602</source>
+        <target>Tynamo</target>
+      </trans-unit>
+      <trans-unit id="9DSbdz3" resname="603">
+        <source>603</source>
+        <target>Eelektrik</target>
+      </trans-unit>
+      <trans-unit id="w_dErin" resname="604">
+        <source>604</source>
+        <target>Eelektross</target>
+      </trans-unit>
+      <trans-unit id="beSRJtT" resname="605">
+        <source>605</source>
+        <target>Elgyem</target>
+      </trans-unit>
+      <trans-unit id="nG5u9eP" resname="606">
+        <source>606</source>
+        <target>Beheeyem</target>
+      </trans-unit>
+      <trans-unit id="46H0.Ak" resname="607">
+        <source>607</source>
+        <target>Litwick</target>
+      </trans-unit>
+      <trans-unit id="qEca6qp" resname="608">
+        <source>608</source>
+        <target>Lampent</target>
+      </trans-unit>
+      <trans-unit id="N6jRiNL" resname="609">
+        <source>609</source>
+        <target>Chandelure</target>
+      </trans-unit>
+      <trans-unit id="855jsZ9" resname="610">
+        <source>610</source>
+        <target>Axew</target>
+      </trans-unit>
+      <trans-unit id="3pqQn1L" resname="611">
+        <source>611</source>
+        <target>Fraxure</target>
+      </trans-unit>
+      <trans-unit id="0IL.iy0" resname="612">
+        <source>612</source>
+        <target>Haxorus</target>
+      </trans-unit>
+      <trans-unit id="B9m7fga" resname="613">
+        <source>613</source>
+        <target>Cubchoo</target>
+      </trans-unit>
+      <trans-unit id="rI1Wy8i" resname="614">
+        <source>614</source>
+        <target>Beartic</target>
+      </trans-unit>
+      <trans-unit id="O0BTCT_" resname="615">
+        <source>615</source>
+        <target>Cryogonal</target>
+      </trans-unit>
+      <trans-unit id="gSN78mr" resname="616">
+        <source>616</source>
+        <target>Shelmet</target>
+      </trans-unit>
+      <trans-unit id="7ouFKvs" resname="617">
+        <source>617</source>
+        <target>Accelgor</target>
+      </trans-unit>
+      <trans-unit id="ZZCWRs_" resname="618">
+        <source>618</source>
+        <target>Stunfisk</target>
+      </trans-unit>
+      <trans-unit id="tMSYC6Z" resname="619">
+        <source>619</source>
+        <target>Mienfoo</target>
+      </trans-unit>
+      <trans-unit id="mCxA4N4" resname="620">
+        <source>620</source>
+        <target>Mienshao</target>
+      </trans-unit>
+      <trans-unit id="nNc7kRE" resname="621">
+        <source>621</source>
+        <target>Druddigon</target>
+      </trans-unit>
+      <trans-unit id="EWmhv4Y" resname="622">
+        <source>622</source>
+        <target>Golett</target>
+      </trans-unit>
+      <trans-unit id="Nmmj93i" resname="623">
+        <source>623</source>
+        <target>Golurk</target>
+      </trans-unit>
+      <trans-unit id="lFZz3b0" resname="624">
+        <source>624</source>
+        <target>Pawniard</target>
+      </trans-unit>
+      <trans-unit id="Frsl275" resname="625">
+        <source>625</source>
+        <target>Bisharp</target>
+      </trans-unit>
+      <trans-unit id="QFfY7K3" resname="626">
+        <source>626</source>
+        <target>Bouffalant</target>
+      </trans-unit>
+      <trans-unit id="pxE.1fW" resname="627">
+        <source>627</source>
+        <target>Rufflet</target>
+      </trans-unit>
+      <trans-unit id="fFIBO5R" resname="628">
+        <source>628</source>
+        <target>Braviary</target>
+      </trans-unit>
+      <trans-unit id="z9Pc76c" resname="629">
+        <source>629</source>
+        <target>Vullaby</target>
+      </trans-unit>
+      <trans-unit id="d3H64yQ" resname="630">
+        <source>630</source>
+        <target>Mandibuzz</target>
+      </trans-unit>
+      <trans-unit id="qXE.WxZ" resname="631">
+        <source>631</source>
+        <target>Heatmor</target>
+      </trans-unit>
+      <trans-unit id="uz.RGqd" resname="632">
+        <source>632</source>
+        <target>Durant</target>
+      </trans-unit>
+      <trans-unit id="ITPnqWy" resname="633">
+        <source>633</source>
+        <target>Deino</target>
+      </trans-unit>
+      <trans-unit id=".ACni1L" resname="634">
+        <source>634</source>
+        <target>Zweilous</target>
+      </trans-unit>
+      <trans-unit id="VUiqC.H" resname="635">
+        <source>635</source>
+        <target>Hydreigon</target>
+      </trans-unit>
+      <trans-unit id="uPsN3ia" resname="636">
+        <source>636</source>
+        <target>Larvesta</target>
+      </trans-unit>
+      <trans-unit id="fOjzR.y" resname="637">
+        <source>637</source>
+        <target>Volcarona</target>
+      </trans-unit>
+      <trans-unit id="oDJcqQF" resname="638">
+        <source>638</source>
+        <target>Cobalion</target>
+      </trans-unit>
+      <trans-unit id="d_8JeFl" resname="639">
+        <source>639</source>
+        <target>Terrakion</target>
+      </trans-unit>
+      <trans-unit id="qgMYt1j" resname="640">
+        <source>640</source>
+        <target>Virizion</target>
+      </trans-unit>
+      <trans-unit id="LUqhqtt" resname="641">
+        <source>641</source>
+        <target>Tornadus</target>
+      </trans-unit>
+      <trans-unit id="wpRMbpd" resname="642">
+        <source>642</source>
+        <target>Thundurus</target>
+      </trans-unit>
+      <trans-unit id="o0bBld." resname="643">
+        <source>643</source>
+        <target>Reshiram</target>
+      </trans-unit>
+      <trans-unit id="aqQOTnL" resname="644">
+        <source>644</source>
+        <target>Zekrom</target>
+      </trans-unit>
+      <trans-unit id="f3bkfQ1" resname="645">
+        <source>645</source>
+        <target>Landorus</target>
+      </trans-unit>
+      <trans-unit id="lE4g6AL" resname="646">
+        <source>646</source>
+        <target>Kyurem</target>
+      </trans-unit>
+      <trans-unit id="0dZxouy" resname="647">
+        <source>647</source>
+        <target>Keldeo</target>
+      </trans-unit>
+      <trans-unit id="EjfXsdG" resname="648">
+        <source>648</source>
+        <target>Meloetta</target>
+      </trans-unit>
+      <trans-unit id="AYQRYhi" resname="649">
+        <source>649</source>
+        <target>Genesect</target>
+      </trans-unit>
+      <trans-unit id="ZThqH_0" resname="650">
+        <source>650</source>
+        <target>Chespin</target>
+      </trans-unit>
+      <trans-unit id="18GDGH5" resname="651">
+        <source>651</source>
+        <target>Quilladin</target>
+      </trans-unit>
+      <trans-unit id="3Ku2_pL" resname="652">
+        <source>652</source>
+        <target>Chesnaught</target>
+      </trans-unit>
+      <trans-unit id="57UvUCM" resname="653">
+        <source>653</source>
+        <target>Fennekin</target>
+      </trans-unit>
+      <trans-unit id="1uedMCI" resname="654">
+        <source>654</source>
+        <target>Braixen</target>
+      </trans-unit>
+      <trans-unit id="v_9wpTP" resname="655">
+        <source>655</source>
+        <target>Delphox</target>
+      </trans-unit>
+      <trans-unit id="3g7O.k9" resname="656">
+        <source>656</source>
+        <target>Froakie</target>
+      </trans-unit>
+      <trans-unit id="lJakE1P" resname="657">
+        <source>657</source>
+        <target>Frogadier</target>
+      </trans-unit>
+      <trans-unit id="gOEwUtK" resname="658">
+        <source>658</source>
+        <target>Greninja</target>
+      </trans-unit>
+      <trans-unit id="bMOvbhi" resname="659">
+        <source>659</source>
+        <target>Bunnelby</target>
+      </trans-unit>
+      <trans-unit id="h4WLF6K" resname="660">
+        <source>660</source>
+        <target>Diggersby</target>
+      </trans-unit>
+      <trans-unit id="p0bsvti" resname="661">
+        <source>661</source>
+        <target>Fletchling</target>
+      </trans-unit>
+      <trans-unit id="5sBxEaR" resname="662">
+        <source>662</source>
+        <target>Fletchinder</target>
+      </trans-unit>
+      <trans-unit id="w5DvTzr" resname="663">
+        <source>663</source>
+        <target>Talonflame</target>
+      </trans-unit>
+      <trans-unit id="AIZyyuj" resname="664">
+        <source>664</source>
+        <target>Scatterbug</target>
+      </trans-unit>
+      <trans-unit id="vmTRmOt" resname="665">
+        <source>665</source>
+        <target>Spewpa</target>
+      </trans-unit>
+      <trans-unit id="ozczJce" resname="666">
+        <source>666</source>
+        <target>Vivillon</target>
+      </trans-unit>
+      <trans-unit id="gpUnUcj" resname="667">
+        <source>667</source>
+        <target>Litleo</target>
+      </trans-unit>
+      <trans-unit id="N830qH8" resname="668">
+        <source>668</source>
+        <target>Pyroar</target>
+      </trans-unit>
+      <trans-unit id="nOFoa7i" resname="669">
+        <source>669</source>
+        <target>Flabébé</target>
+      </trans-unit>
+      <trans-unit id="WXUcw7." resname="670">
+        <source>670</source>
+        <target>Floette</target>
+      </trans-unit>
+      <trans-unit id="I.A22St" resname="671">
+        <source>671</source>
+        <target>Florges</target>
+      </trans-unit>
+      <trans-unit id="DcWTyju" resname="672">
+        <source>672</source>
+        <target>Skiddo</target>
+      </trans-unit>
+      <trans-unit id="pfy7KBn" resname="673">
+        <source>673</source>
+        <target>Gogoat</target>
+      </trans-unit>
+      <trans-unit id="l7g.TsU" resname="674">
+        <source>674</source>
+        <target>Pancham</target>
+      </trans-unit>
+      <trans-unit id="Id1ecWn" resname="675">
+        <source>675</source>
+        <target>Pangoro</target>
+      </trans-unit>
+      <trans-unit id="S4zBJtD" resname="676">
+        <source>676</source>
+        <target>Furfrou</target>
+      </trans-unit>
+      <trans-unit id="dRGlQ_g" resname="677">
+        <source>677</source>
+        <target>Espurr</target>
+      </trans-unit>
+      <trans-unit id="zciDzdp" resname="678">
+        <source>678</source>
+        <target>Meowstic</target>
+      </trans-unit>
+      <trans-unit id="l30ikqn" resname="679">
+        <source>679</source>
+        <target>Honedge</target>
+      </trans-unit>
+      <trans-unit id="ElW5uaA" resname="680">
+        <source>680</source>
+        <target>Doublade</target>
+      </trans-unit>
+      <trans-unit id="5SSvuI5" resname="681">
+        <source>681</source>
+        <target>Aegislash</target>
+      </trans-unit>
+      <trans-unit id="_.KPUsx" resname="682">
+        <source>682</source>
+        <target>Spritzee</target>
+      </trans-unit>
+      <trans-unit id="F6QWTN6" resname="683">
+        <source>683</source>
+        <target>Aromatisse</target>
+      </trans-unit>
+      <trans-unit id="Y3blejU" resname="684">
+        <source>684</source>
+        <target>Swirlix</target>
+      </trans-unit>
+      <trans-unit id="p3SCuit" resname="685">
+        <source>685</source>
+        <target>Slurpuff</target>
+      </trans-unit>
+      <trans-unit id="5R6aOei" resname="686">
+        <source>686</source>
+        <target>Inkay</target>
+      </trans-unit>
+      <trans-unit id="J8ISDk_" resname="687">
+        <source>687</source>
+        <target>Malamar</target>
+      </trans-unit>
+      <trans-unit id="84fbvVO" resname="688">
+        <source>688</source>
+        <target>Binacle</target>
+      </trans-unit>
+      <trans-unit id="rEjRi_u" resname="689">
+        <source>689</source>
+        <target>Barbaracle</target>
+      </trans-unit>
+      <trans-unit id="x5tCxIw" resname="690">
+        <source>690</source>
+        <target>Skrelp</target>
+      </trans-unit>
+      <trans-unit id="MVIpDJ2" resname="691">
+        <source>691</source>
+        <target>Dragalge</target>
+      </trans-unit>
+      <trans-unit id="OSjmu56" resname="692">
+        <source>692</source>
+        <target>Clauncher</target>
+      </trans-unit>
+      <trans-unit id="1LbgBP4" resname="693">
+        <source>693</source>
+        <target>Clawitzer</target>
+      </trans-unit>
+      <trans-unit id="ZgbkzkT" resname="694">
+        <source>694</source>
+        <target>Helioptile</target>
+      </trans-unit>
+      <trans-unit id="btwOJHm" resname="695">
+        <source>695</source>
+        <target>Heliolisk</target>
+      </trans-unit>
+      <trans-unit id="zGWzZgF" resname="696">
+        <source>696</source>
+        <target>Tyrunt</target>
+      </trans-unit>
+      <trans-unit id="tEsG.vx" resname="697">
+        <source>697</source>
+        <target>Tyrantrum</target>
+      </trans-unit>
+      <trans-unit id="1OTLlwK" resname="698">
+        <source>698</source>
+        <target>Amaura</target>
+      </trans-unit>
+      <trans-unit id="lk3F2v5" resname="699">
+        <source>699</source>
+        <target>Aurorus</target>
+      </trans-unit>
+      <trans-unit id="_.p4P3D" resname="700">
+        <source>700</source>
+        <target>Sylveon</target>
+      </trans-unit>
+      <trans-unit id="qs.5LD2" resname="701">
+        <source>701</source>
+        <target>Hawlucha</target>
+      </trans-unit>
+      <trans-unit id="LlrhAJi" resname="702">
+        <source>702</source>
+        <target>Dedenne</target>
+      </trans-unit>
+      <trans-unit id="_yLn_JZ" resname="703">
+        <source>703</source>
+        <target>Carbink</target>
+      </trans-unit>
+      <trans-unit id="ld78uGg" resname="704">
+        <source>704</source>
+        <target>Goomy</target>
+      </trans-unit>
+      <trans-unit id="HUmB0Fk" resname="705">
+        <source>705</source>
+        <target>Sliggoo</target>
+      </trans-unit>
+      <trans-unit id="MMK4DGc" resname="706">
+        <source>706</source>
+        <target>Goodra</target>
+      </trans-unit>
+      <trans-unit id="1ToJ_CV" resname="707">
+        <source>707</source>
+        <target>Klefki</target>
+      </trans-unit>
+      <trans-unit id="vhxEA54" resname="708">
+        <source>708</source>
+        <target>Phantump</target>
+      </trans-unit>
+      <trans-unit id="H5YJkuh" resname="709">
+        <source>709</source>
+        <target>Trevenant</target>
+      </trans-unit>
+      <trans-unit id="oXqZ6VS" resname="710">
+        <source>710</source>
+        <target>Pumpkaboo</target>
+      </trans-unit>
+      <trans-unit id="Vn5uKOj" resname="711">
+        <source>711</source>
+        <target>Gourgeist</target>
+      </trans-unit>
+      <trans-unit id="ThOJjnj" resname="712">
+        <source>712</source>
+        <target>Bergmite</target>
+      </trans-unit>
+      <trans-unit id="5gSzgRa" resname="713">
+        <source>713</source>
+        <target>Avalugg</target>
+      </trans-unit>
+      <trans-unit id="6dNtpu5" resname="714">
+        <source>714</source>
+        <target>Noibat</target>
+      </trans-unit>
+      <trans-unit id="ohK7CNk" resname="715">
+        <source>715</source>
+        <target>Noivern</target>
+      </trans-unit>
+      <trans-unit id="pDbXUTE" resname="716">
+        <source>716</source>
+        <target>Xerneas</target>
+      </trans-unit>
+      <trans-unit id="m4pyK72" resname="717">
+        <source>717</source>
+        <target>Yveltal</target>
+      </trans-unit>
+      <trans-unit id="JHBxbV_" resname="718">
+        <source>718</source>
+        <target>Zygarde</target>
+      </trans-unit>
+      <trans-unit id="VXv3vLM" resname="719">
+        <source>719</source>
+        <target>Diancie</target>
+      </trans-unit>
+      <trans-unit id="y_wHZVa" resname="720">
+        <source>720</source>
+        <target>Hoopa</target>
+      </trans-unit>
+      <trans-unit id="4hTjhe6" resname="721">
+        <source>721</source>
+        <target>Volcanion</target>
+      </trans-unit>
+      <trans-unit id="IfQXfbm" resname="722">
+        <source>722</source>
+        <target>Rowlet</target>
+      </trans-unit>
+      <trans-unit id="xZxTa.J" resname="723">
+        <source>723</source>
+        <target>Dartrix</target>
+      </trans-unit>
+      <trans-unit id="NimPqa7" resname="724">
+        <source>724</source>
+        <target>Decidueye</target>
+      </trans-unit>
+      <trans-unit id="QOl.VDz" resname="725">
+        <source>725</source>
+        <target>Litten</target>
+      </trans-unit>
+      <trans-unit id="eiLWkde" resname="726">
+        <source>726</source>
+        <target>Torracat</target>
+      </trans-unit>
+      <trans-unit id="uMSS0RC" resname="727">
+        <source>727</source>
+        <target>Incineroar</target>
+      </trans-unit>
+      <trans-unit id="9OoRXid" resname="728">
+        <source>728</source>
+        <target>Popplio</target>
+      </trans-unit>
+      <trans-unit id="kbcBOOi" resname="729">
+        <source>729</source>
+        <target>Brionne</target>
+      </trans-unit>
+      <trans-unit id="PGaKWmF" resname="730">
+        <source>730</source>
+        <target>Primarina</target>
+      </trans-unit>
+      <trans-unit id="qmiXHdq" resname="731">
+        <source>731</source>
+        <target>Pikipek</target>
+      </trans-unit>
+      <trans-unit id="Iw3qgl1" resname="732">
+        <source>732</source>
+        <target>Trumbeak</target>
+      </trans-unit>
+      <trans-unit id="6HrM8sa" resname="733">
+        <source>733</source>
+        <target>Toucannon</target>
+      </trans-unit>
+      <trans-unit id="qpvMqkl" resname="734">
+        <source>734</source>
+        <target>Yungoos</target>
+      </trans-unit>
+      <trans-unit id="3zTj4fk" resname="735">
+        <source>735</source>
+        <target>Gumshoos</target>
+      </trans-unit>
+      <trans-unit id="buycYQV" resname="736">
+        <source>736</source>
+        <target>Grubbin</target>
+      </trans-unit>
+      <trans-unit id="KlKTTRq" resname="737">
+        <source>737</source>
+        <target>Charjabug</target>
+      </trans-unit>
+      <trans-unit id="vCIi0yH" resname="738">
+        <source>738</source>
+        <target>Vikavolt</target>
+      </trans-unit>
+      <trans-unit id="jizU6rY" resname="739">
+        <source>739</source>
+        <target>Crabrawler</target>
+      </trans-unit>
+      <trans-unit id="EqxrMQP" resname="740">
+        <source>740</source>
+        <target>Crabominable</target>
+      </trans-unit>
+      <trans-unit id="13jlM0q" resname="741">
+        <source>741</source>
+        <target>Oricorio</target>
+      </trans-unit>
+      <trans-unit id="1lX3_Ie" resname="742">
+        <source>742</source>
+        <target>Cutiefly</target>
+      </trans-unit>
+      <trans-unit id="XxKz4L_" resname="743">
+        <source>743</source>
+        <target>Ribombee</target>
+      </trans-unit>
+      <trans-unit id="c4n1IlJ" resname="744">
+        <source>744</source>
+        <target>Rockruff</target>
+      </trans-unit>
+      <trans-unit id="VZW8oBl" resname="745">
+        <source>745</source>
+        <target>Lycanroc</target>
+      </trans-unit>
+      <trans-unit id="JraPlUS" resname="746">
+        <source>746</source>
+        <target>Wishiwashi</target>
+      </trans-unit>
+      <trans-unit id="_6PWUzf" resname="747">
+        <source>747</source>
+        <target>Mareanie</target>
+      </trans-unit>
+      <trans-unit id="XsRJGdo" resname="748">
+        <source>748</source>
+        <target>Toxapex</target>
+      </trans-unit>
+      <trans-unit id="l0al5l_" resname="749">
+        <source>749</source>
+        <target>Mudbray</target>
+      </trans-unit>
+      <trans-unit id="6X9WtLf" resname="750">
+        <source>750</source>
+        <target>Mudsdale</target>
+      </trans-unit>
+      <trans-unit id="qS.eT3E" resname="751">
+        <source>751</source>
+        <target>Dewpider</target>
+      </trans-unit>
+      <trans-unit id="agcUBUe" resname="752">
+        <source>752</source>
+        <target>Araquanid</target>
+      </trans-unit>
+      <trans-unit id="cB1HmgR" resname="753">
+        <source>753</source>
+        <target>Fomantis</target>
+      </trans-unit>
+      <trans-unit id="o_vTpkA" resname="754">
+        <source>754</source>
+        <target>Lurantis</target>
+      </trans-unit>
+      <trans-unit id="om4KcY." resname="755">
+        <source>755</source>
+        <target>Morelull</target>
+      </trans-unit>
+      <trans-unit id="ik7gEjm" resname="756">
+        <source>756</source>
+        <target>Shiinotic</target>
+      </trans-unit>
+      <trans-unit id="klkdBZt" resname="757">
+        <source>757</source>
+        <target>Salandit</target>
+      </trans-unit>
+      <trans-unit id="y6.hdHq" resname="758">
+        <source>758</source>
+        <target>Salazzle</target>
+      </trans-unit>
+      <trans-unit id="4j7ceKY" resname="759">
+        <source>759</source>
+        <target>Stufful</target>
+      </trans-unit>
+      <trans-unit id="ydjHoLK" resname="760">
+        <source>760</source>
+        <target>Bewear</target>
+      </trans-unit>
+      <trans-unit id="ipbwpBS" resname="761">
+        <source>761</source>
+        <target>Bounsweet</target>
+      </trans-unit>
+      <trans-unit id="yFp6NPz" resname="762">
+        <source>762</source>
+        <target>Steenee</target>
+      </trans-unit>
+      <trans-unit id="furZ.uf" resname="763">
+        <source>763</source>
+        <target>Tsareena</target>
+      </trans-unit>
+      <trans-unit id="XlfbMBZ" resname="764">
+        <source>764</source>
+        <target>Comfey</target>
+      </trans-unit>
+      <trans-unit id="g8kLa1c" resname="765">
+        <source>765</source>
+        <target>Oranguru</target>
+      </trans-unit>
+      <trans-unit id="zPd.m46" resname="766">
+        <source>766</source>
+        <target>Passimian</target>
+      </trans-unit>
+      <trans-unit id="C_bmN9c" resname="767">
+        <source>767</source>
+        <target>Wimpod</target>
+      </trans-unit>
+      <trans-unit id="xqh.1yT" resname="768">
+        <source>768</source>
+        <target>Golisopod</target>
+      </trans-unit>
+      <trans-unit id="CMp1MnZ" resname="769">
+        <source>769</source>
+        <target>Sandygast</target>
+      </trans-unit>
+      <trans-unit id="GYSWIBb" resname="770">
+        <source>770</source>
+        <target>Palossand</target>
+      </trans-unit>
+      <trans-unit id="GQgPm4R" resname="771">
+        <source>771</source>
+        <target>Pyukumuku</target>
+      </trans-unit>
+      <trans-unit id="zi_W6.C" resname="772">
+        <source>772</source>
+        <target>Type: Null</target>
+      </trans-unit>
+      <trans-unit id="aMBbMul" resname="773">
+        <source>773</source>
+        <target>Silvally</target>
+      </trans-unit>
+      <trans-unit id="53dIOJs" resname="774">
+        <source>774</source>
+        <target>Minior</target>
+      </trans-unit>
+      <trans-unit id="CX4ilz4" resname="775">
+        <source>775</source>
+        <target>Komala</target>
+      </trans-unit>
+      <trans-unit id="P_UTOpE" resname="776">
+        <source>776</source>
+        <target>Turtonator</target>
+      </trans-unit>
+      <trans-unit id="4tzivX2" resname="777">
+        <source>777</source>
+        <target>Togedemaru</target>
+      </trans-unit>
+      <trans-unit id="sLUIUai" resname="778">
+        <source>778</source>
+        <target>Mimikyu</target>
+      </trans-unit>
+      <trans-unit id="4n.ihQq" resname="779">
+        <source>779</source>
+        <target>Bruxish</target>
+      </trans-unit>
+      <trans-unit id="tEv6PAT" resname="780">
+        <source>780</source>
+        <target>Drampa</target>
+      </trans-unit>
+      <trans-unit id="nXUT2Gw" resname="781">
+        <source>781</source>
+        <target>Dhelmise</target>
+      </trans-unit>
+      <trans-unit id="xGVb10M" resname="782">
+        <source>782</source>
+        <target>Jangmo-o</target>
+      </trans-unit>
+      <trans-unit id="8zpHR9q" resname="783">
+        <source>783</source>
+        <target>Hakamo-o</target>
+      </trans-unit>
+      <trans-unit id="ElWqJ2r" resname="784">
+        <source>784</source>
+        <target>Kommo-o</target>
+      </trans-unit>
+      <trans-unit id="3fcawl5" resname="785">
+        <source>785</source>
+        <target>Tapu Koko</target>
+      </trans-unit>
+      <trans-unit id="_xkNQC0" resname="786">
+        <source>786</source>
+        <target>Tapu Lele</target>
+      </trans-unit>
+      <trans-unit id="3HZZPPm" resname="787">
+        <source>787</source>
+        <target>Tapu Bulu</target>
+      </trans-unit>
+      <trans-unit id="NkqkZmA" resname="788">
+        <source>788</source>
+        <target>Tapu Fini</target>
+      </trans-unit>
+      <trans-unit id="SQkan_O" resname="789">
+        <source>789</source>
+        <target>Cosmog</target>
+      </trans-unit>
+      <trans-unit id="8Cyqthg" resname="790">
+        <source>790</source>
+        <target>Cosmoem</target>
+      </trans-unit>
+      <trans-unit id="j_L2vhm" resname="791">
+        <source>791</source>
+        <target>Solgaleo</target>
+      </trans-unit>
+      <trans-unit id="K1oYn2N" resname="792">
+        <source>792</source>
+        <target>Lunala</target>
+      </trans-unit>
+      <trans-unit id="lS.nzTS" resname="793">
+        <source>793</source>
+        <target>Nihilego</target>
+      </trans-unit>
+      <trans-unit id="rTulU0S" resname="794">
+        <source>794</source>
+        <target>Buzzwole</target>
+      </trans-unit>
+      <trans-unit id="UAdoK.3" resname="795">
+        <source>795</source>
+        <target>Pheromosa</target>
+      </trans-unit>
+      <trans-unit id="gmN722N" resname="796">
+        <source>796</source>
+        <target>Xurkitree</target>
+      </trans-unit>
+      <trans-unit id="XZa.SiR" resname="797">
+        <source>797</source>
+        <target>Celesteela</target>
+      </trans-unit>
+      <trans-unit id="2E6LQcT" resname="798">
+        <source>798</source>
+        <target>Kartana</target>
+      </trans-unit>
+      <trans-unit id="toU.0Fl" resname="799">
+        <source>799</source>
+        <target>Guzzlord</target>
+      </trans-unit>
+      <trans-unit id="ZuF9Qu9" resname="800">
+        <source>800</source>
+        <target>Necrozma</target>
+      </trans-unit>
+      <trans-unit id="sOGyPCw" resname="801">
+        <source>801</source>
+        <target>Magearna</target>
+      </trans-unit>
+      <trans-unit id="JkdbvVu" resname="802">
+        <source>802</source>
+        <target>Marshadow</target>
+      </trans-unit>
+      <trans-unit id="SyPi6bZ" resname="803">
+        <source>803</source>
+        <target>Poipole</target>
+      </trans-unit>
+      <trans-unit id="6O2R1OS" resname="804">
+        <source>804</source>
+        <target>Naganadel</target>
+      </trans-unit>
+      <trans-unit id="vRY2HZ3" resname="805">
+        <source>805</source>
+        <target>Stakataka</target>
+      </trans-unit>
+      <trans-unit id="0y0MynY" resname="806">
+        <source>806</source>
+        <target>Blacephalon</target>
+      </trans-unit>
+      <trans-unit id="LcxHYWZ" resname="807">
+        <source>807</source>
+        <target>Zeraora</target>
+      </trans-unit>
+      <trans-unit id="WO85Svj" resname="808">
+        <source>808</source>
+        <target>Meltan</target>
+      </trans-unit>
+      <trans-unit id="umUlfcw" resname="809">
+        <source>809</source>
+        <target>Melmetal</target>
+      </trans-unit>
+      <trans-unit id="GA7c8h5" resname="810">
+        <source>810</source>
+        <target>Grookey</target>
+      </trans-unit>
+      <trans-unit id="m1EfFe." resname="811">
+        <source>811</source>
+        <target>Thwackey</target>
+      </trans-unit>
+      <trans-unit id="p4aLFPi" resname="812">
+        <source>812</source>
+        <target>Rillaboom</target>
+      </trans-unit>
+      <trans-unit id="eQ1bA5R" resname="813">
+        <source>813</source>
+        <target>Scorbunny</target>
+      </trans-unit>
+      <trans-unit id="bm5hich" resname="814">
+        <source>814</source>
+        <target>Raboot</target>
+      </trans-unit>
+      <trans-unit id="437EZX9" resname="815">
+        <source>815</source>
+        <target>Cinderace</target>
+      </trans-unit>
+      <trans-unit id="5i1KRKb" resname="816">
+        <source>816</source>
+        <target>Sobble</target>
+      </trans-unit>
+      <trans-unit id="fY4bTaT" resname="817">
+        <source>817</source>
+        <target>Drizzile</target>
+      </trans-unit>
+      <trans-unit id="LPh6IY6" resname="818">
+        <source>818</source>
+        <target>Inteleon</target>
+      </trans-unit>
+      <trans-unit id="NABvLcf" resname="819">
+        <source>819</source>
+        <target>Skwovet</target>
+      </trans-unit>
+      <trans-unit id="OYhqEqD" resname="820">
+        <source>820</source>
+        <target>Greedent</target>
+      </trans-unit>
+      <trans-unit id="By9YiuO" resname="821">
+        <source>821</source>
+        <target>Rookidee</target>
+      </trans-unit>
+      <trans-unit id="Ai0rLPU" resname="822">
+        <source>822</source>
+        <target>Corvisquire</target>
+      </trans-unit>
+      <trans-unit id="1ofHyPh" resname="823">
+        <source>823</source>
+        <target>Corviknight</target>
+      </trans-unit>
+      <trans-unit id="V7vRVA7" resname="824">
+        <source>824</source>
+        <target>Blipbug</target>
+      </trans-unit>
+      <trans-unit id="vhUNiEF" resname="825">
+        <source>825</source>
+        <target>Dottler</target>
+      </trans-unit>
+      <trans-unit id="0kbgnae" resname="826">
+        <source>826</source>
+        <target>Orbeetle</target>
+      </trans-unit>
+      <trans-unit id="jZPjkBI" resname="827">
+        <source>827</source>
+        <target>Nickit</target>
+      </trans-unit>
+      <trans-unit id="m7mAN.1" resname="828">
+        <source>828</source>
+        <target>Thievul</target>
+      </trans-unit>
+      <trans-unit id="d7IK5bb" resname="829">
+        <source>829</source>
+        <target>Gossifleur</target>
+      </trans-unit>
+      <trans-unit id="vLVkK79" resname="830">
+        <source>830</source>
+        <target>Eldegoss</target>
+      </trans-unit>
+      <trans-unit id="YkmRRX9" resname="831">
+        <source>831</source>
+        <target>Wooloo</target>
+      </trans-unit>
+      <trans-unit id="NlhuHkx" resname="832">
+        <source>832</source>
+        <target>Dubwool</target>
+      </trans-unit>
+      <trans-unit id="EWUEp5o" resname="833">
+        <source>833</source>
+        <target>Chewtle</target>
+      </trans-unit>
+      <trans-unit id="MTeNr4R" resname="834">
+        <source>834</source>
+        <target>Drednaw</target>
+      </trans-unit>
+      <trans-unit id="2u9tLS8" resname="835">
+        <source>835</source>
+        <target>Yamper</target>
+      </trans-unit>
+      <trans-unit id="5ZvjtwG" resname="836">
+        <source>836</source>
+        <target>Boltund</target>
+      </trans-unit>
+      <trans-unit id="7ltbpaa" resname="837">
+        <source>837</source>
+        <target>Rolycoly</target>
+      </trans-unit>
+      <trans-unit id="i9roodv" resname="838">
+        <source>838</source>
+        <target>Carkol</target>
+      </trans-unit>
+      <trans-unit id="f51I.yi" resname="839">
+        <source>839</source>
+        <target>Coalossal</target>
+      </trans-unit>
+      <trans-unit id="zXW3xwN" resname="840">
+        <source>840</source>
+        <target>Applin</target>
+      </trans-unit>
+      <trans-unit id="PZ.F_0l" resname="841">
+        <source>841</source>
+        <target>Flapple</target>
+      </trans-unit>
+      <trans-unit id="5BYVuoJ" resname="842">
+        <source>842</source>
+        <target>Appletun</target>
+      </trans-unit>
+      <trans-unit id="U6o.Rwr" resname="843">
+        <source>843</source>
+        <target>Silicobra</target>
+      </trans-unit>
+      <trans-unit id="kxclrTc" resname="844">
+        <source>844</source>
+        <target>Sandaconda</target>
+      </trans-unit>
+      <trans-unit id="lieLm3q" resname="845">
+        <source>845</source>
+        <target>Cramorant</target>
+      </trans-unit>
+      <trans-unit id="DguXRxG" resname="846">
+        <source>846</source>
+        <target>Arrokuda</target>
+      </trans-unit>
+      <trans-unit id="Eh4ji03" resname="847">
+        <source>847</source>
+        <target>Barraskewda</target>
+      </trans-unit>
+      <trans-unit id="uAR39nr" resname="848">
+        <source>848</source>
+        <target>Toxel</target>
+      </trans-unit>
+      <trans-unit id="uGGB3EY" resname="849">
+        <source>849</source>
+        <target>Toxtricity</target>
+      </trans-unit>
+      <trans-unit id="NAYVbId" resname="850">
+        <source>850</source>
+        <target>Sizzlipede</target>
+      </trans-unit>
+      <trans-unit id="qt6JQ9D" resname="851">
+        <source>851</source>
+        <target>Centiskorch</target>
+      </trans-unit>
+      <trans-unit id="CIRV80." resname="852">
+        <source>852</source>
+        <target>Clobbopus</target>
+      </trans-unit>
+      <trans-unit id="LrD2Cpy" resname="853">
+        <source>853</source>
+        <target>Grapploct</target>
+      </trans-unit>
+      <trans-unit id="b106rOn" resname="854">
+        <source>854</source>
+        <target>Sinistea</target>
+      </trans-unit>
+      <trans-unit id="7QHR000" resname="855">
+        <source>855</source>
+        <target>Polteageist</target>
+      </trans-unit>
+      <trans-unit id="nfnvejN" resname="856">
+        <source>856</source>
+        <target>Hatenna</target>
+      </trans-unit>
+      <trans-unit id="UXwIqlr" resname="857">
+        <source>857</source>
+        <target>Hattrem</target>
+      </trans-unit>
+      <trans-unit id="1zs.NMX" resname="858">
+        <source>858</source>
+        <target>Hatterene</target>
+      </trans-unit>
+      <trans-unit id="McgC6g7" resname="859">
+        <source>859</source>
+        <target>Impidimp</target>
+      </trans-unit>
+      <trans-unit id="6aWV_Q3" resname="860">
+        <source>860</source>
+        <target>Morgrem</target>
+      </trans-unit>
+      <trans-unit id="D_psXDf" resname="861">
+        <source>861</source>
+        <target>Grimmsnarl</target>
+      </trans-unit>
+      <trans-unit id="3_ucftS" resname="862">
+        <source>862</source>
+        <target>Obstagoon</target>
+      </trans-unit>
+      <trans-unit id="2gF8Skx" resname="863">
+        <source>863</source>
+        <target>Perrserker</target>
+      </trans-unit>
+      <trans-unit id="C5j1.6w" resname="864">
+        <source>864</source>
+        <target>Cursola</target>
+      </trans-unit>
+      <trans-unit id="v1iEMjl" resname="865">
+        <source>865</source>
+        <target>Sirfetch’d</target>
+      </trans-unit>
+      <trans-unit id="8pMlCX5" resname="866">
+        <source>866</source>
+        <target>Mr. Rime</target>
+      </trans-unit>
+      <trans-unit id="Tql9At3" resname="867">
+        <source>867</source>
+        <target>Runerigus</target>
+      </trans-unit>
+      <trans-unit id="99g0SkR" resname="868">
+        <source>868</source>
+        <target>Milcery</target>
+      </trans-unit>
+      <trans-unit id="pAM2Ng." resname="869">
+        <source>869</source>
+        <target>Alcremie</target>
+      </trans-unit>
+      <trans-unit id="dxKJhzA" resname="870">
+        <source>870</source>
+        <target>Falinks</target>
+      </trans-unit>
+      <trans-unit id="kGDFtYF" resname="871">
+        <source>871</source>
+        <target>Pincurchin</target>
+      </trans-unit>
+      <trans-unit id="Soo5Zwe" resname="872">
+        <source>872</source>
+        <target>Snom</target>
+      </trans-unit>
+      <trans-unit id="Jo1aNgD" resname="873">
+        <source>873</source>
+        <target>Frosmoth</target>
+      </trans-unit>
+      <trans-unit id="JkcK5Vh" resname="874">
+        <source>874</source>
+        <target>Stonjourner</target>
+      </trans-unit>
+      <trans-unit id="cmKsS57" resname="875">
+        <source>875</source>
+        <target>Eiscue</target>
+      </trans-unit>
+      <trans-unit id="UOwJ7gU" resname="876">
+        <source>876</source>
+        <target>Indeedee</target>
+      </trans-unit>
+      <trans-unit id="Y9hwuUR" resname="877">
+        <source>877</source>
+        <target>Morpeko</target>
+      </trans-unit>
+      <trans-unit id="1275h_Z" resname="878">
+        <source>878</source>
+        <target>Cufant</target>
+      </trans-unit>
+      <trans-unit id="TlNoIPn" resname="879">
+        <source>879</source>
+        <target>Copperajah</target>
+      </trans-unit>
+      <trans-unit id="4ITf42T" resname="880">
+        <source>880</source>
+        <target>Dracozolt</target>
+      </trans-unit>
+      <trans-unit id="FIS29QG" resname="881">
+        <source>881</source>
+        <target>Arctozolt</target>
+      </trans-unit>
+      <trans-unit id="OsMxcSG" resname="882">
+        <source>882</source>
+        <target>Dracovish</target>
+      </trans-unit>
+      <trans-unit id="MwdQxQr" resname="883">
+        <source>883</source>
+        <target>Arctovish</target>
+      </trans-unit>
+      <trans-unit id="091AIHX" resname="884">
+        <source>884</source>
+        <target>Duraludon</target>
+      </trans-unit>
+      <trans-unit id="HFpYuhb" resname="885">
+        <source>885</source>
+        <target>Dreepy</target>
+      </trans-unit>
+      <trans-unit id="gLs8kAu" resname="886">
+        <source>886</source>
+        <target>Drakloak</target>
+      </trans-unit>
+      <trans-unit id="Fpa79Q0" resname="887">
+        <source>887</source>
+        <target>Dragapult</target>
+      </trans-unit>
+      <trans-unit id="GpP9hV7" resname="888">
+        <source>888</source>
+        <target>Zacian</target>
+      </trans-unit>
+      <trans-unit id="tJgfb0W" resname="889">
+        <source>889</source>
+        <target>Zamazenta</target>
+      </trans-unit>
+      <trans-unit id="JrlYW5y" resname="890">
+        <source>890</source>
+        <target>Eternatus</target>
+      </trans-unit>
+      <trans-unit id="ese3Tny" resname="891">
+        <source>891</source>
+        <target>Kubfu</target>
+      </trans-unit>
+      <trans-unit id="a0cA5xi" resname="892">
+        <source>892</source>
+        <target>Urshifu</target>
+      </trans-unit>
+      <trans-unit id="JD27oWD" resname="893">
+        <source>893</source>
+        <target>Zarude</target>
+      </trans-unit>
+      <trans-unit id="_6OAqD7" resname="894">
+        <source>894</source>
+        <target>Regieleki</target>
+      </trans-unit>
+      <trans-unit id="1zPfTRO" resname="895">
+        <source>895</source>
+        <target>Regidrago</target>
+      </trans-unit>
+      <trans-unit id="05NqxSr" resname="896">
+        <source>896</source>
+        <target>Glastrier</target>
+      </trans-unit>
+      <trans-unit id="jsEiOq_" resname="897">
+        <source>897</source>
+        <target>Spectrier</target>
+      </trans-unit>
+      <trans-unit id="V62W9ga" resname="898">
+        <source>898</source>
+        <target>Calyrex</target>
+      </trans-unit>
+      <trans-unit id="VCD0Dkg" resname="899">
+        <source>899</source>
+        <target>Wyrdeer</target>
+      </trans-unit>
+      <trans-unit id="gatU0rw" resname="900">
+        <source>900</source>
+        <target>Kleavor</target>
+      </trans-unit>
+      <trans-unit id="pjzaCuk" resname="901">
+        <source>901</source>
+        <target>Ursaluna</target>
+      </trans-unit>
+      <trans-unit id="wMH_e.U" resname="902">
+        <source>902</source>
+        <target>Basculegion</target>
+      </trans-unit>
+      <trans-unit id="Ii1.RJo" resname="903">
+        <source>903</source>
+        <target>Sneasler</target>
+      </trans-unit>
+      <trans-unit id="GV3CrGg" resname="904">
+        <source>904</source>
+        <target>Overqwil</target>
+      </trans-unit>
+      <trans-unit id="bMQkinj" resname="905">
+        <source>905</source>
+        <target>Enamorus</target>
+      </trans-unit>
+      <trans-unit id="me7CQ8h" resname="906">
+        <source>906</source>
+        <target>Sprigatito</target>
+      </trans-unit>
+      <trans-unit id="tyM2kC." resname="907">
+        <source>907</source>
+        <target>Floragato</target>
+      </trans-unit>
+      <trans-unit id="F4.cO0i" resname="908">
+        <source>908</source>
+        <target>Meowscarada</target>
+      </trans-unit>
+      <trans-unit id="6LBVN5E" resname="909">
+        <source>909</source>
+        <target>Fuecoco</target>
+      </trans-unit>
+      <trans-unit id="2jxidM0" resname="910">
+        <source>910</source>
+        <target>Crocalor</target>
+      </trans-unit>
+      <trans-unit id="HWCgy1R" resname="911">
+        <source>911</source>
+        <target>Skeledirge</target>
+      </trans-unit>
+      <trans-unit id="M3yuPSG" resname="912">
+        <source>912</source>
+        <target>Quaxly</target>
+      </trans-unit>
+      <trans-unit id="dzPLm96" resname="913">
+        <source>913</source>
+        <target>Quaxwell</target>
+      </trans-unit>
+      <trans-unit id="9zimtTZ" resname="914">
+        <source>914</source>
+        <target>Quaquaval</target>
+      </trans-unit>
+      <trans-unit id="3bXfQPc" resname="915">
+        <source>915</source>
+        <target>Lechonk</target>
+      </trans-unit>
+      <trans-unit id="zhbccsK" resname="916">
+        <source>916</source>
+        <target>Oinkologne</target>
+      </trans-unit>
+      <trans-unit id="h.BsaQ1" resname="917">
+        <source>917</source>
+        <target>Tarountula</target>
+      </trans-unit>
+      <trans-unit id="s4YGrDy" resname="918">
+        <source>918</source>
+        <target>Spidops</target>
+      </trans-unit>
+      <trans-unit id="zzJdcTl" resname="919">
+        <source>919</source>
+        <target>Nymble</target>
+      </trans-unit>
+      <trans-unit id="0.hfItx" resname="920">
+        <source>920</source>
+        <target>Lokix</target>
+      </trans-unit>
+      <trans-unit id="egCK2Z1" resname="921">
+        <source>921</source>
+        <target>Pawmi</target>
+      </trans-unit>
+      <trans-unit id="_DfftyA" resname="922">
+        <source>922</source>
+        <target>Pawmo</target>
+      </trans-unit>
+      <trans-unit id="m5t6lG9" resname="923">
+        <source>923</source>
+        <target>Pawmot</target>
+      </trans-unit>
+      <trans-unit id="ggcaxzx" resname="924">
+        <source>924</source>
+        <target>Tandemaus</target>
+      </trans-unit>
+      <trans-unit id="S4kSdmQ" resname="925">
+        <source>925</source>
+        <target>Maushold</target>
+      </trans-unit>
+      <trans-unit id="7YqlPLp" resname="926">
+        <source>926</source>
+        <target>Fidough</target>
+      </trans-unit>
+      <trans-unit id="yj_q52Z" resname="927">
+        <source>927</source>
+        <target>Dachsbun</target>
+      </trans-unit>
+      <trans-unit id="83UWAOR" resname="928">
+        <source>928</source>
+        <target>Smoliv</target>
+      </trans-unit>
+      <trans-unit id=".LxjrQo" resname="929">
+        <source>929</source>
+        <target>Dolliv</target>
+      </trans-unit>
+      <trans-unit id="NYUxhQA" resname="930">
+        <source>930</source>
+        <target>Arboliva</target>
+      </trans-unit>
+      <trans-unit id="uPHCOaU" resname="931">
+        <source>931</source>
+        <target>Squawkabilly</target>
+      </trans-unit>
+      <trans-unit id="7zkG0YM" resname="932">
+        <source>932</source>
+        <target>Nacli</target>
+      </trans-unit>
+      <trans-unit id="1kimBBg" resname="933">
+        <source>933</source>
+        <target>Naclstack</target>
+      </trans-unit>
+      <trans-unit id="_Zk6uY0" resname="934">
+        <source>934</source>
+        <target>Garganacl</target>
+      </trans-unit>
+      <trans-unit id="39AZkHW" resname="935">
+        <source>935</source>
+        <target>Charcadet</target>
+      </trans-unit>
+      <trans-unit id="OQn9OAt" resname="936">
+        <source>936</source>
+        <target>Armarouge</target>
+      </trans-unit>
+      <trans-unit id="IQADvhM" resname="937">
+        <source>937</source>
+        <target>Ceruledge</target>
+      </trans-unit>
+      <trans-unit id="8IHS9sZ" resname="938">
+        <source>938</source>
+        <target>Tadbulb</target>
+      </trans-unit>
+      <trans-unit id="SEQMEjL" resname="939">
+        <source>939</source>
+        <target>Bellibolt</target>
+      </trans-unit>
+      <trans-unit id="yQb36zk" resname="940">
+        <source>940</source>
+        <target>Wattrel</target>
+      </trans-unit>
+      <trans-unit id="4hvIaoA" resname="941">
+        <source>941</source>
+        <target>Kilowattrel</target>
+      </trans-unit>
+      <trans-unit id="iwGrLDN" resname="942">
+        <source>942</source>
+        <target>Maschiff</target>
+      </trans-unit>
+      <trans-unit id="4SwoDsS" resname="943">
+        <source>943</source>
+        <target>Mabosstiff</target>
+      </trans-unit>
+      <trans-unit id="bFgv0F1" resname="944">
+        <source>944</source>
+        <target>Shroodle</target>
+      </trans-unit>
+      <trans-unit id="QLBEnCr" resname="945">
+        <source>945</source>
+        <target>Grafaiai</target>
+      </trans-unit>
+      <trans-unit id="P_wLIb5" resname="946">
+        <source>946</source>
+        <target>Bramblin</target>
+      </trans-unit>
+      <trans-unit id="2nl87MR" resname="947">
+        <source>947</source>
+        <target>Brambleghast</target>
+      </trans-unit>
+      <trans-unit id="uHqZtBY" resname="948">
+        <source>948</source>
+        <target>Toedscool</target>
+      </trans-unit>
+      <trans-unit id="c21tzzi" resname="949">
+        <source>949</source>
+        <target>Toedscruel</target>
+      </trans-unit>
+      <trans-unit id="BappAvJ" resname="950">
+        <source>950</source>
+        <target>Klawf</target>
+      </trans-unit>
+      <trans-unit id="I3bXnyG" resname="951">
+        <source>951</source>
+        <target>Capsakid</target>
+      </trans-unit>
+      <trans-unit id="SGpXwxI" resname="952">
+        <source>952</source>
+        <target>Scovillain</target>
+      </trans-unit>
+      <trans-unit id="0FqV60c" resname="953">
+        <source>953</source>
+        <target>Rellor</target>
+      </trans-unit>
+      <trans-unit id="deNopaf" resname="954">
+        <source>954</source>
+        <target>Rabsca</target>
+      </trans-unit>
+      <trans-unit id="_5sv6_t" resname="955">
+        <source>955</source>
+        <target>Flittle</target>
+      </trans-unit>
+      <trans-unit id="1P5xWfK" resname="956">
+        <source>956</source>
+        <target>Espathra</target>
+      </trans-unit>
+      <trans-unit id="8pAqzgo" resname="957">
+        <source>957</source>
+        <target>Tinkatink</target>
+      </trans-unit>
+      <trans-unit id="1xym3T9" resname="958">
+        <source>958</source>
+        <target>Tinkatuff</target>
+      </trans-unit>
+      <trans-unit id="aMYAgoz" resname="959">
+        <source>959</source>
+        <target>Tinkaton</target>
+      </trans-unit>
+      <trans-unit id=".UwAHfN" resname="960">
+        <source>960</source>
+        <target>Wiglett</target>
+      </trans-unit>
+      <trans-unit id="OuNVWpW" resname="961">
+        <source>961</source>
+        <target>Wugtrio</target>
+      </trans-unit>
+      <trans-unit id="UEgGX3g" resname="962">
+        <source>962</source>
+        <target>Bombirdier</target>
+      </trans-unit>
+      <trans-unit id="SLazBLq" resname="963">
+        <source>963</source>
+        <target>Finizen</target>
+      </trans-unit>
+      <trans-unit id="Es6tzBi" resname="964">
+        <source>964</source>
+        <target>Palafin</target>
+      </trans-unit>
+      <trans-unit id="D1.MceL" resname="965">
+        <source>965</source>
+        <target>Varoom</target>
+      </trans-unit>
+      <trans-unit id="U7bcN.U" resname="966">
+        <source>966</source>
+        <target>Revavroom</target>
+      </trans-unit>
+      <trans-unit id="1YsAe10" resname="967">
+        <source>967</source>
+        <target>Cyclizar</target>
+      </trans-unit>
+      <trans-unit id="fgQDLL3" resname="968">
+        <source>968</source>
+        <target>Orthworm</target>
+      </trans-unit>
+      <trans-unit id="qdfJGcI" resname="969">
+        <source>969</source>
+        <target>Glimmet</target>
+      </trans-unit>
+      <trans-unit id="JgrOmVh" resname="970">
+        <source>970</source>
+        <target>Glimmora</target>
+      </trans-unit>
+      <trans-unit id="Ei3atlA" resname="971">
+        <source>971</source>
+        <target>Greavard</target>
+      </trans-unit>
+      <trans-unit id=".RVcBFa" resname="972">
+        <source>972</source>
+        <target>Houndstone</target>
+      </trans-unit>
+      <trans-unit id="k_BMgET" resname="973">
+        <source>973</source>
+        <target>Flamigo</target>
+      </trans-unit>
+      <trans-unit id="iISYMtg" resname="974">
+        <source>974</source>
+        <target>Cetoddle</target>
+      </trans-unit>
+      <trans-unit id="ZOjHcSf" resname="975">
+        <source>975</source>
+        <target>Cetitan</target>
+      </trans-unit>
+      <trans-unit id="3jTGZFm" resname="976">
+        <source>976</source>
+        <target>Veluza</target>
+      </trans-unit>
+      <trans-unit id="BjwSNb." resname="977">
+        <source>977</source>
+        <target>Dondozo</target>
+      </trans-unit>
+      <trans-unit id="YA1DEau" resname="978">
+        <source>978</source>
+        <target>Tatsugiri</target>
+      </trans-unit>
+      <trans-unit id="X7gzWEE" resname="979">
+        <source>979</source>
+        <target>Annihilape</target>
+      </trans-unit>
+      <trans-unit id="HQQ3Uop" resname="980">
+        <source>980</source>
+        <target>Clodsire</target>
+      </trans-unit>
+      <trans-unit id="._qx5kV" resname="981">
+        <source>981</source>
+        <target>Farigiraf</target>
+      </trans-unit>
+      <trans-unit id="o_K0CcZ" resname="982">
+        <source>982</source>
+        <target>Dudunsparce</target>
+      </trans-unit>
+      <trans-unit id="NZrERiK" resname="983">
+        <source>983</source>
+        <target>Kingambit</target>
+      </trans-unit>
+      <trans-unit id="CjlrRpl" resname="984">
+        <source>984</source>
+        <target>Great Tusk</target>
+      </trans-unit>
+      <trans-unit id="83_GsjC" resname="985">
+        <source>985</source>
+        <target>Scream Tail</target>
+      </trans-unit>
+      <trans-unit id="idW2RKs" resname="986">
+        <source>986</source>
+        <target>Brute Bonnet</target>
+      </trans-unit>
+      <trans-unit id="KH.X2z." resname="987">
+        <source>987</source>
+        <target>Flutter Mane</target>
+      </trans-unit>
+      <trans-unit id="kAHz2xM" resname="988">
+        <source>988</source>
+        <target>Slither Wing</target>
+      </trans-unit>
+      <trans-unit id="UWWwDwJ" resname="989">
+        <source>989</source>
+        <target>Sandy Shocks</target>
+      </trans-unit>
+      <trans-unit id="pyrNxLW" resname="990">
+        <source>990</source>
+        <target>Iron Treads</target>
+      </trans-unit>
+      <trans-unit id="L5_WmPS" resname="991">
+        <source>991</source>
+        <target>Iron Bundle</target>
+      </trans-unit>
+      <trans-unit id="eTCaZZM" resname="992">
+        <source>992</source>
+        <target>Iron Hands</target>
+      </trans-unit>
+      <trans-unit id="HwznkdB" resname="993">
+        <source>993</source>
+        <target>Iron Jugulis</target>
+      </trans-unit>
+      <trans-unit id="kfPb27F" resname="994">
+        <source>994</source>
+        <target>Iron Moth</target>
+      </trans-unit>
+      <trans-unit id="cEYzGaZ" resname="995">
+        <source>995</source>
+        <target>Iron Thorns</target>
+      </trans-unit>
+      <trans-unit id="74jPpmM" resname="996">
+        <source>996</source>
+        <target>Frigibax</target>
+      </trans-unit>
+      <trans-unit id="s4chY3P" resname="997">
+        <source>997</source>
+        <target>Arctibax</target>
+      </trans-unit>
+      <trans-unit id="QyvPYGx" resname="998">
+        <source>998</source>
+        <target>Baxcalibur</target>
+      </trans-unit>
+      <trans-unit id="IHa2MrF" resname="999">
+        <source>999</source>
+        <target>Gimmighoul</target>
+      </trans-unit>
+      <trans-unit id="O.DyuxD" resname="1000">
+        <source>1000</source>
+        <target>Gholdengo</target>
+      </trans-unit>
+      <trans-unit id="b22P8c5" resname="1001">
+        <source>1001</source>
+        <target>Wo-Chien</target>
+      </trans-unit>
+      <trans-unit id="V40sDC5" resname="1002">
+        <source>1002</source>
+        <target>Chien-Pao</target>
+      </trans-unit>
+      <trans-unit id="I5VnwYU" resname="1003">
+        <source>1003</source>
+        <target>Ting-Lu</target>
+      </trans-unit>
+      <trans-unit id="eS3y.ve" resname="1004">
+        <source>1004</source>
+        <target>Chi-Yu</target>
+      </trans-unit>
+      <trans-unit id="EcvAKaP" resname="1005">
+        <source>1005</source>
+        <target>Roaring Moon</target>
+      </trans-unit>
+      <trans-unit id="4qekLV8" resname="1006">
+        <source>1006</source>
+        <target>Iron Valiant</target>
+      </trans-unit>
+      <trans-unit id="r65mQma" resname="1007">
+        <source>1007</source>
+        <target>Koraidon</target>
+      </trans-unit>
+      <trans-unit id="_1XkQEA" resname="1008">
+        <source>1008</source>
+        <target>Miraidon</target>
+      </trans-unit>
+      <trans-unit id="lsll5ni" resname="1009">
+        <source>1009</source>
+        <target>Walking Wake</target>
+      </trans-unit>
+      <trans-unit id="Q6wKr3_" resname="1010">
+        <source>1010</source>
+        <target>Iron Leaves</target>
+      </trans-unit>
+      <trans-unit id="W5tpuVW" resname="1011">
+        <source>1011</source>
+        <target>Dipplin</target>
+      </trans-unit>
+      <trans-unit id="vV6Q6uC" resname="1012">
+        <source>1012</source>
+        <target>Poltchageist</target>
+      </trans-unit>
+      <trans-unit id="QUMKzhr" resname="1013">
+        <source>1013</source>
+        <target>Sinistcha</target>
+      </trans-unit>
+      <trans-unit id="Ccxpr2V" resname="1014">
+        <source>1014</source>
+        <target>Okidogi</target>
+      </trans-unit>
+      <trans-unit id="FUXMJSN" resname="1015">
+        <source>1015</source>
+        <target>Munkidori</target>
+      </trans-unit>
+      <trans-unit id="pbwjkAo" resname="1016">
+        <source>1016</source>
+        <target>Fezandipiti</target>
+      </trans-unit>
+      <trans-unit id="9P60Oqm" resname="1017">
+        <source>1017</source>
+        <target>Ogerpon</target>
+      </trans-unit>
+      <trans-unit id="GZ8Q3I1" resname="1018">
+        <source>1018</source>
+        <target>Archaludon</target>
+      </trans-unit>
+      <trans-unit id="i_yoF0N" resname="1019">
+        <source>1019</source>
+        <target>Hydrapple</target>
+      </trans-unit>
+      <trans-unit id="8hlB8LB" resname="1020">
+        <source>1020</source>
+        <target>Gouging Fire</target>
+      </trans-unit>
+      <trans-unit id="6wnUjS4" resname="1021">
+        <source>1021</source>
+        <target>Raging Bolt</target>
+      </trans-unit>
+      <trans-unit id="iOveAZ0" resname="1022">
+        <source>1022</source>
+        <target>Iron Boulder</target>
+      </trans-unit>
+      <trans-unit id="Uex39Fd" resname="1023">
+        <source>1023</source>
+        <target>Iron Crown</target>
+      </trans-unit>
+      <trans-unit id="omFV1.R" resname="1024">
+        <source>1024</source>
+        <target>Terapagos</target>
+      </trans-unit>
+      <trans-unit id="8S6z8jT" resname="1025">
+        <source>1025</source>
+        <target>Pecharunt</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

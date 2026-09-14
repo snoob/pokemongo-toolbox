@@ -1,0 +1,45 @@
+version = "1"
+# Version d'exécution du projet ; doit rester alignée sur require.php de composer.json.
+php-version = "8.5"
+
+[source]
+paths = ["src", "tests"]
+includes = ["vendor"]
+
+[linter.rules]
+# Règles désactivées par défaut que l'on veut (GUIDELINES.md §8).
+no-redundant-use = { enabled = true }
+no-redundant-readonly = { enabled = true }
+sensitive-parameter = { enabled = true }
+
+# Les objets valeur du domaine sont immuables et nommés à la construction : sept
+# paramètres nommés y sont plus lisibles qu'un tableau de forme. Voir §11, décision 10.
+excessive-parameter-list = { threshold = 8 }
+
+# Une classe de test a naturellement une méthode par cas ; le seuil vise le code de
+# production, pas la couverture.
+too-many-methods = { exclude = ["tests"] }
+
+# Fichier généré par `pogo:data:build` : 101 constantes issues du jeu, pas du code écrit.
+readable-literal = { exclude = ["tests/Fake/RealCpMultiplierTable.php"] }
+
+# Désactivée en amont dans le mago.toml de Mago lui-même : exiger un argument nommé
+# pour chaque littéral alourdit les appels de la bibliothèque standard.
+literal-named-argument = { enabled = false }
+
+[analyzer]
+find-unused-expressions = true
+find-unused-definitions = true
+analyze-dead-code = true
+check-missing-override = true
+find-unused-parameters = true
+check-missing-type-hints = true
+check-closure-missing-type-hints = true
+check-arrow-function-missing-type-hints = true
+strict-list-index-checks = true
+no-boolean-literal-comparison = true
+# Remplace allow-possibly-undefined-array-keys, déprécié en 1.48 : contrôle plus large
+# (listes, shapes, array<K, V>) et élargit le type de retour à T|null.
+strict-array-index-existence = true
+trust-existence-checks = false
+check-use-statements = true

@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="7V5Yrpw" resname="shadow">
+        <source>shadow</source>
+        <target>Shadow</target>
+      </trans-unit>
+      <trans-unit id="Jmjedo_" resname="mega">
+        <source>mega</source>
+        <target>Mega</target>
+      </trans-unit>
+      <trans-unit id="ce5BwC." resname="mega_x">
+        <source>mega_x</source>
+        <target>Mega X</target>
+      </trans-unit>
+      <trans-unit id="NAtL0v7" resname="mega_y">
+        <source>mega_y</source>
+        <target>Mega Y</target>
+      </trans-unit>
+      <trans-unit id="SRqE1aW" resname="alolan">
+        <source>alolan</source>
+        <target>Alolan</target>
+      </trans-unit>
+      <trans-unit id="YrPf4Ic" resname="5th_anniversary">
+        <source>5th_anniversary</source>
+        <target>5th Anniversary</target>
+      </trans-unit>
+      <trans-unit id="BRUIDNG" resname="flying">
+        <source>flying</source>
+        <target>Flying</target>
+      </trans-unit>
+      <trans-unit id="jpme2Pp" resname="horizons">
+        <source>horizons</source>
+        <target>Horizons</target>
+      </trans-unit>
+      <trans-unit id="ai3HgsU" resname="kariyushi">
+        <source>kariyushi</source>
+        <target>Kariyushi</target>
+      </trans-unit>
+      <trans-unit id="TFS4XXj" resname="libre">
+        <source>libre</source>
+        <target>Libre</target>
+      </trans-unit>
+      <trans-unit id="mmGQDo." resname="pop_star">
+        <source>pop_star</source>
+        <target>Pop Star</target>
+      </trans-unit>
+      <trans-unit id="duW2IXY" resname="rock_star">
+        <source>rock_star</source>
+        <target>Rock Star</target>
+      </trans-unit>
+      <trans-unit id="c3.j3vg" resname="shaymin_scarf">
+        <source>shaymin_scarf</source>
+        <target>Shaymin Scarf</target>
+      </trans-unit>
+      <trans-unit id="nCa6wbZ" resname="galarian">
+        <source>galarian</source>
+        <target>Galarian</target>
+      </trans-unit>
+      <trans-unit id="9OVCOnQ" resname="hisuian">
+        <source>hisuian</source>
+        <target>Hisuian</target>
+      </trans-unit>
+      <trans-unit id="8mroV9l" resname="aqua">
+        <source>aqua</source>
+        <target>Aqua</target>
+      </trans-unit>
+      <trans-unit id=".vuJk3c" resname="blaze">
+        <source>blaze</source>
+        <target>Blaze</target>
+      </trans-unit>
+      <trans-unit id="mQVyCOL" resname="combat">
+        <source>combat</source>
+        <target>Combat</target>
+      </trans-unit>
+      <trans-unit id="E6D8hTe" resname="armored">
+        <source>armored</source>
+        <target>Armored</target>
+      </trans-unit>
+      <trans-unit id="oj2N40M" resname="paldean">
+        <source>paldean</source>
+        <target>Paldean</target>
+      </trans-unit>
+      <trans-unit id="dPjU5.A" resname="rainy">
+        <source>rainy</source>
+        <target>Rainy</target>
+      </trans-unit>
+      <trans-unit id="Dijb2AL" resname="snowy">
+        <source>snowy</source>
+        <target>Snowy</target>
+      </trans-unit>
+      <trans-unit id="3gUcZgy" resname="sunny">
+        <source>sunny</source>
+        <target>Sunny</target>
+      </trans-unit>
+      <trans-unit id="YTSo6ui" resname="primal">
+        <source>primal</source>
+        <target>Primal</target>
+      </trans-unit>
+      <trans-unit id="MTAXmJJ" resname="attack">
+        <source>attack</source>
+        <target>Attack</target>
+      </trans-unit>
+      <trans-unit id="vvkU5gz" resname="defense">
+        <source>defense</source>
+        <target>Defense</target>
+      </trans-unit>
+      <trans-unit id="y2z9zRH" resname="speed">
+        <source>speed</source>
+        <target>Speed</target>
+      </trans-unit>
+      <trans-unit id="HT__Vbo" resname="plant">
+        <source>plant</source>
+        <target>Plant</target>
+      </trans-unit>
+      <trans-unit id="lFeSyQg" resname="sandy">
+        <source>sandy</source>
+        <target>Sandy</target>
+      </trans-unit>
+      <trans-unit id="Bnzb4Vb" resname="trash">
+        <source>trash</source>
+        <target>Trash</target>
+      </trans-unit>
+      <trans-unit id="rtKywu0" resname="overcast">
+        <source>overcast</source>
+        <target>Overcast</target>
+      </trans-unit>
+      <trans-unit id="L2e2CFL" resname="sunshine">
+        <source>sunshine</source>
+        <target>Sunshine</target>
+      </trans-unit>
+      <trans-unit id="MO9to7Y" resname="jr">
+        <source>jr</source>
+        <target>Jr</target>
+      </trans-unit>
+      <trans-unit id="18CML2h" resname="fan">
+        <source>fan</source>
+        <target>Fan</target>
+      </trans-unit>
+      <trans-unit id="QhPsRh_" resname="frost">
+        <source>frost</source>
+        <target>Frost</target>
+      </trans-unit>
+      <trans-unit id="NWQtZ2d" resname="heat">
+        <source>heat</source>
+        <target>Heat</target>
+      </trans-unit>
+      <trans-unit id="vh6RdJ1" resname="mow">
+        <source>mow</source>
+        <target>Mow</target>
+      </trans-unit>
+      <trans-unit id="u.m2tK." resname="wash">
+        <source>wash</source>
+        <target>Wash</target>
+      </trans-unit>
+      <trans-unit id="eZ2IMpf" resname="origin">
+        <source>origin</source>
+        <target>Origin</target>
+      </trans-unit>
+      <trans-unit id="yx5Bz9L" resname="altered">
+        <source>altered</source>
+        <target>Altered</target>
+      </trans-unit>
+      <trans-unit id="5AZnADo" resname="land">
+        <source>land</source>
+        <target>Land</target>
+      </trans-unit>
+      <trans-unit id="hJdblrC" resname="sky">
+        <source>sky</source>
+        <target>Sky</target>
+      </trans-unit>
+      <trans-unit id="mAoLUH4" resname="bug">
+        <source>bug</source>
+        <target>Bug</target>
+      </trans-unit>
+      <trans-unit id="rnGZUVS" resname="dark">
+        <source>dark</source>
+        <target>Dark</target>
+      </trans-unit>
+      <trans-unit id="_pMUWy3" resname="dragon">
+        <source>dragon</source>
+        <target>Dragon</target>
+      </trans-unit>
+      <trans-unit id="u7BciHd" resname="electric">
+        <source>electric</source>
+        <target>Electric</target>
+      </trans-unit>
+      <trans-unit id="h6bQOy6" resname="fairy">
+        <source>fairy</source>
+        <target>Fairy</target>
+      </trans-unit>
+      <trans-unit id="921rOUi" resname="fighting">
+        <source>fighting</source>
+        <target>Fighting</target>
+      </trans-unit>
+      <trans-unit id="r5voskl" resname="fire">
+        <source>fire</source>
+        <target>Fire</target>
+      </trans-unit>
+      <trans-unit id="DbESvUH" resname="ghost">
+        <source>ghost</source>
+        <target>Ghost</target>
+      </trans-unit>
+      <trans-unit id="cdOpBiC" resname="grass">
+        <source>grass</source>
+        <target>Grass</target>
+      </trans-unit>
+      <trans-unit id="HW_ct8c" resname="ground">
+        <source>ground</source>
+        <target>Ground</target>
+      </trans-unit>
+      <trans-unit id="i.jd._a" resname="ice">
+        <source>ice</source>
+        <target>Ice</target>
+      </trans-unit>
+      <trans-unit id="Oo6xhPu" resname="poison">
+        <source>poison</source>
+        <target>Poison</target>
+      </trans-unit>
+      <trans-unit id="LNkyKh9" resname="psychic">
+        <source>psychic</source>
+        <target>Psychic</target>
+      </trans-unit>
+      <trans-unit id="NEvonKt" resname="rock">
+        <source>rock</source>
+        <target>Rock</target>
+      </trans-unit>
+      <trans-unit id="QuwWgvO" resname="steel">
+        <source>steel</source>
+        <target>Steel</target>
+      </trans-unit>
+      <trans-unit id="4mav.R4" resname="water">
+        <source>water</source>
+        <target>Water</target>
+      </trans-unit>
+      <trans-unit id="xUJ70bt" resname="galarian_zen">
+        <source>galarian_zen</source>
+        <target>Galarian Zen</target>
+      </trans-unit>
+      <trans-unit id="WmM4Vsh" resname="standard">
+        <source>standard</source>
+        <target>Standard</target>
+      </trans-unit>
+      <trans-unit id="knMrUtG" resname="zen">
+        <source>zen</source>
+        <target>Zen</target>
+      </trans-unit>
+      <trans-unit id="QLEQ8eZ" resname="incarnate">
+        <source>incarnate</source>
+        <target>Incarnate</target>
+      </trans-unit>
+      <trans-unit id="atnbN0Z" resname="therian">
+        <source>therian</source>
+        <target>Therian</target>
+      </trans-unit>
+      <trans-unit id="TIG8a.u" resname="black">
+        <source>black</source>
+        <target>Black</target>
+      </trans-unit>
+      <trans-unit id="2lx8CbU" resname="white">
+        <source>white</source>
+        <target>White</target>
+      </trans-unit>
+      <trans-unit id="YLX.Vbb" resname="ordinary">
+        <source>ordinary</source>
+        <target>Ordinary</target>
+      </trans-unit>
+      <trans-unit id="oqo74Qk" resname="resolute">
+        <source>resolute</source>
+        <target>Resolute</target>
+      </trans-unit>
+      <trans-unit id="iXPGDhy" resname="aria">
+        <source>aria</source>
+        <target>Aria</target>
+      </trans-unit>
+      <trans-unit id="VpsnSbo" resname="pirouette">
+        <source>pirouette</source>
+        <target>Pirouette</target>
+      </trans-unit>
+      <trans-unit id="da_nA_X" resname="burn">
+        <source>burn</source>
+        <target>Burn</target>
+      </trans-unit>
+      <trans-unit id="9YlWSVF" resname="chill">
+        <source>chill</source>
+        <target>Chill</target>
+      </trans-unit>
+      <trans-unit id="EaimVcy" resname="douse">
+        <source>douse</source>
+        <target>Douse</target>
+      </trans-unit>
+      <trans-unit id="tW.lX0k" resname="shock">
+        <source>shock</source>
+        <target>Shock</target>
+      </trans-unit>
+      <trans-unit id="aWZBEZd" resname="female">
+        <source>female</source>
+        <target>Female</target>
+      </trans-unit>
+      <trans-unit id=".ZF5pdP" resname="male">
+        <source>male</source>
+        <target>Male</target>
+      </trans-unit>
+      <trans-unit id="TwaviKo" resname="blade">
+        <source>blade</source>
+        <target>Blade</target>
+      </trans-unit>
+      <trans-unit id=".lZ1vkD" resname="shield">
+        <source>shield</source>
+        <target>Shield</target>
+      </trans-unit>
+      <trans-unit id=".JlnPKS" resname="average">
+        <source>average</source>
+        <target>Average</target>
+      </trans-unit>
+      <trans-unit id="2A00ea7" resname="large">
+        <source>large</source>
+        <target>Large</target>
+      </trans-unit>
+      <trans-unit id="sjhYjJB" resname="small">
+        <source>small</source>
+        <target>Small</target>
+      </trans-unit>
+      <trans-unit id="K1Hrwhp" resname="super">
+        <source>super</source>
+        <target>Super</target>
+      </trans-unit>
+      <trans-unit id="dRc4Aes" resname="10_forme">
+        <source>10_forme</source>
+        <target>10% Forme</target>
+      </trans-unit>
+      <trans-unit id="3GHqB3I" resname="50_forme">
+        <source>50_forme</source>
+        <target>50% Forme</target>
+      </trans-unit>
+      <trans-unit id="ZbcvQVo" resname="complete_forme">
+        <source>complete_forme</source>
+        <target>Complete Forme</target>
+      </trans-unit>
+      <trans-unit id="uDWeCtf" resname="confined">
+        <source>confined</source>
+        <target>Confined</target>
+      </trans-unit>
+      <trans-unit id="ych2LkR" resname="unbound">
+        <source>unbound</source>
+        <target>Unbound</target>
+      </trans-unit>
+      <trans-unit id="hpJ9WVq" resname="baile">
+        <source>baile</source>
+        <target>Baile</target>
+      </trans-unit>
+      <trans-unit id="bzem0GL" resname="pa_u">
+        <source>pa_u</source>
+        <target>Pa'u</target>
+      </trans-unit>
+      <trans-unit id="sKRGiGu" resname="pom_pom">
+        <source>pom_pom</source>
+        <target>Pom-Pom</target>
+      </trans-unit>
+      <trans-unit id="m.OQa2w" resname="sensu">
+        <source>sensu</source>
+        <target>Sensu</target>
+      </trans-unit>
+      <trans-unit id="Cp5TB_h" resname="dusk">
+        <source>dusk</source>
+        <target>Dusk</target>
+      </trans-unit>
+      <trans-unit id="utxghzx" resname="midday">
+        <source>midday</source>
+        <target>Midday</target>
+      </trans-unit>
+      <trans-unit id="ikQYJj1" resname="midnight">
+        <source>midnight</source>
+        <target>Midnight</target>
+      </trans-unit>
+      <trans-unit id="NsfbQNe" resname="school">
+        <source>school</source>
+        <target>School</target>
+      </trans-unit>
+      <trans-unit id="B68L9jR" resname="solo">
+        <source>solo</source>
+        <target>Solo</target>
+      </trans-unit>
+      <trans-unit id="3DJTfid" resname="null">
+        <source>null</source>
+        <target>Null</target>
+      </trans-unit>
+      <trans-unit id="je8SUma" resname="core">
+        <source>core</source>
+        <target>Core</target>
+      </trans-unit>
+      <trans-unit id="Rft6xbm" resname="meteor">
+        <source>meteor</source>
+        <target>Meteor</target>
+      </trans-unit>
+      <trans-unit id="MbVW85V" resname="busted">
+        <source>busted</source>
+        <target>Busted</target>
+      </trans-unit>
+      <trans-unit id="7AYeke7" resname="dawn_wings">
+        <source>dawn_wings</source>
+        <target>Dawn Wings</target>
+      </trans-unit>
+      <trans-unit id="6Z_5jsC" resname="dusk_mane">
+        <source>dusk_mane</source>
+        <target>Dusk Mane</target>
+      </trans-unit>
+      <trans-unit id="pqvhxz0" resname="ultra">
+        <source>ultra</source>
+        <target>Ultra</target>
+      </trans-unit>
+      <trans-unit id="LfTVlDT" resname="gulping">
+        <source>gulping</source>
+        <target>Gulping</target>
+      </trans-unit>
+      <trans-unit id="3QY43TW" resname="gorging">
+        <source>gorging</source>
+        <target>Gorging</target>
+      </trans-unit>
+      <trans-unit id="NjRfAaZ" resname="amped">
+        <source>amped</source>
+        <target>Amped</target>
+      </trans-unit>
+      <trans-unit id="2ToG2UY" resname="low_key">
+        <source>low_key</source>
+        <target>Low Key</target>
+      </trans-unit>
+      <trans-unit id="x2ODoMq" resname="noice">
+        <source>noice</source>
+        <target>Noice</target>
+      </trans-unit>
+      <trans-unit id="3SLpzTm" resname="full_belly">
+        <source>full_belly</source>
+        <target>Full Belly</target>
+      </trans-unit>
+      <trans-unit id="u5JWP9p" resname="hangry">
+        <source>hangry</source>
+        <target>Hangry</target>
+      </trans-unit>
+      <trans-unit id="V5PEozy" resname="crowned_sword">
+        <source>crowned_sword</source>
+        <target>Crowned Sword</target>
+      </trans-unit>
+      <trans-unit id="MPGTzRy" resname="hero">
+        <source>hero</source>
+        <target>Hero</target>
+      </trans-unit>
+      <trans-unit id="TK5symk" resname="crowned_shield">
+        <source>crowned_shield</source>
+        <target>Crowned Shield</target>
+      </trans-unit>
+      <trans-unit id="ON4Osek" resname="eternamax">
+        <source>eternamax</source>
+        <target>Eternamax</target>
+      </trans-unit>
+      <trans-unit id="amBgMOc" resname="rapid_strike">
+        <source>rapid_strike</source>
+        <target>Rapid Strike</target>
+      </trans-unit>
+      <trans-unit id="xrQMzp5" resname="single_strike">
+        <source>single_strike</source>
+        <target>Single Strike</target>
+      </trans-unit>
+      <trans-unit id="8dCFyZ6" resname="ice_rider">
+        <source>ice_rider</source>
+        <target>Ice Rider</target>
+      </trans-unit>
+      <trans-unit id="X6MOO9b" resname="curly">
+        <source>curly</source>
+        <target>Curly</target>
+      </trans-unit>
+      <trans-unit id="tKrw403" resname="droopy">
+        <source>droopy</source>
+        <target>Droopy</target>
+      </trans-unit>
+      <trans-unit id="lyxMflL" resname="stretchy">
+        <source>stretchy</source>
+        <target>Stretchy</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

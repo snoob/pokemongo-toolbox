@@ -1,0 +1,8 @@
+framework:
+    # Toolbox à usage personnel : le français est la langue de travail, l'anglais sert
+    # de repli pour tout ce qui n'est pas traduit (suffixes de forme rares).
+    default_locale: fr
+    translator:
+        default_path: '%kernel.project_dir%/translations'
+        fallbacks:
+            - en

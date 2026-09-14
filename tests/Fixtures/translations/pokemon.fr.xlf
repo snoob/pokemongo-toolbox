@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="pokemon.fr.xlf">
+    <body>
+      <trans-unit id="1" resname="94"><source>94</source><target>Ectoplasma</target></trans-unit>
+      <trans-unit id="2" resname="29"><source>29</source><target>Nidoran♀</target></trans-unit>
+      <trans-unit id="3" resname="32"><source>32</source><target>Nidoran♂</target></trans-unit>
+      <trans-unit id="4" resname="487"><source>487</source><target>Giratina</target></trans-unit>
+    </body>
+  </file>
+</xliff>
