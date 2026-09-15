@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="pokemon_move.en.xlf">
+    <body>
+      <trans-unit id="1" resname="SHADOW_CLAW"><source>SHADOW_CLAW</source><target>Shadow Claw</target></trans-unit>
+      <trans-unit id="2" resname="SHADOW_PUNCH"><source>SHADOW_PUNCH</source><target>Shadow Punch</target></trans-unit>
+      <trans-unit id="3" resname="DARK_PULSE"><source>DARK_PULSE</source><target>Dark Pulse</target></trans-unit>
+      <trans-unit id="4" resname="PSYBEAM_PLUS"><source>PSYBEAM_PLUS</source><target>Psybeam+</target></trans-unit>
+    </body>
+  </file>
+</xliff>

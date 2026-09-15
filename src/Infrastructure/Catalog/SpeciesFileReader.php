@@ -6,6 +6,7 @@ namespace App\Infrastructure\Catalog;
 
 use App\Domain\Pokemon\Model\BaseStats;
 use App\Domain\Pokemon\Model\DexNumber;
+use App\Domain\Pokemon\Model\MoveId;
 use App\Domain\Pokemon\Model\Species;
 use App\Domain\Pokemon\Model\SpeciesId;
 use App\Infrastructure\Json\JsonPath;
@@ -44,12 +45,12 @@ final readonly class SpeciesFileReader
             ));
         }
 
-        /** @var list<array{id: string, dex: int, atk: int, def: int, sta: int, shadow: bool, base: bool, forms: list<string>}> $entries */
+        /** @var list<array{id: string, dex: int, atk: int, def: int, sta: int, shadow: bool, super: bool, base: bool, forms: list<string>, elite: list<string>}> $entries */
         return array_map($this->toSpecies(...), $entries);
     }
 
     /**
-     * @param array{id: string, dex: int, atk: int, def: int, sta: int, shadow: bool, base: bool, forms: list<string>} $entry
+     * @param array{id: string, dex: int, atk: int, def: int, sta: int, shadow: bool, super: bool, base: bool, forms: list<string>, elite: list<string>} $entry
      */
     private function toSpecies(array $entry): Species
     {
@@ -58,7 +59,9 @@ final readonly class SpeciesFileReader
             dex: new DexNumber($entry['dex']),
             baseStats: new BaseStats($entry['atk'], $entry['def'], $entry['sta']),
             shadowEligible: $entry['shadow'],
+            superMega: $entry['super'],
             forms: $entry['forms'],
+            eliteMoves: array_map(static fn(string $move): MoveId => new MoveId($move), $entry['elite']),
         );
     }
 }

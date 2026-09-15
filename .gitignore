@@ -15,3 +15,5 @@
 ###> carthage-software/mago ###
 /.mago/
 ###< carthage-software/mago ###
+build/
+tools/

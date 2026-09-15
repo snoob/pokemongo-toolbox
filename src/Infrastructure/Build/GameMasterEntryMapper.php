@@ -21,7 +21,7 @@ final readonly class GameMasterEntryMapper
     /**
      * @param array<array-key, mixed> $entry
      *
-     * @return array{id: string, dex: int, atk: int, def: int, sta: int, shadow: bool, base: bool, forms: list<string>}|null null when the entry is unusable
+     * @return array{id: string, dex: int, atk: int, def: int, sta: int, shadow: bool, super: bool, base: bool, forms: list<string>, elite: list<string>}|null null when the entry is unusable
      */
     public function map(array $entry): ?array
     {
@@ -42,6 +42,7 @@ final readonly class GameMasterEntryMapper
         // A parenthesised segment marks an alternate form: "Gengar (Shadow)",
         // "Raichu (Alolan) (Shadow)". A bare name is the form people mean by default.
         $forms = $this->formLabels->of($name);
+        $tags = JsonValue::asStringList($entry['tags'] ?? null);
 
         return [
             'id' => $id,
@@ -50,7 +51,12 @@ final readonly class GameMasterEntryMapper
             'atk' => $stats['atk'],
             'def' => $stats['def'],
             'sta' => $stats['sta'],
-            'shadow' => \in_array('shadoweligible', JsonValue::asStringList($entry['tags'] ?? null), true),
+            'shadow' => \in_array('shadoweligible', $tags, true),
+            // "supermega" marks the megas that carry an extra charged move.
+            'super' => \in_array('supermega', $tags, true),
+            // Elite moves are the ones an Elite TM unlocks: worth knowing before
+            // spending one on a recommended moveset.
+            'elite' => JsonValue::asStringList($entry['eliteMoves'] ?? null),
             'base' => [] === $forms,
         ];
     }

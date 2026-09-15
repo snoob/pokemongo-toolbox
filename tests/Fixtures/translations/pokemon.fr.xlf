@@ -6,6 +6,7 @@
       <trans-unit id="2" resname="29"><source>29</source><target>Nidoran♀</target></trans-unit>
       <trans-unit id="3" resname="32"><source>32</source><target>Nidoran♂</target></trans-unit>
       <trans-unit id="4" resname="487"><source>487</source><target>Giratina</target></trans-unit>
+      <trans-unit id="5" resname="26"><source>26</source><target>Raichu</target></trans-unit>
     </body>
   </file>
 </xliff>

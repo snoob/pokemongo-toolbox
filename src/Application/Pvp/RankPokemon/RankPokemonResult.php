@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace App\Application\Pvp\RankPokemon;
 
 use App\Domain\Pokemon\Model\IvSpread;
+use App\Domain\Pokemon\Model\Move;
 use App\Domain\Pokemon\Model\Species;
 use App\Domain\Pvp\Model\League;
+use App\Domain\Pvp\Model\MegaLevel;
+use App\Domain\Pvp\Model\MegaLevelEffects;
 use App\Domain\Pvp\Model\PokemonLevel;
 
 final readonly class RankPokemonResult
@@ -20,6 +23,9 @@ final readonly class RankPokemonResult
         public PokemonLevel $levelCap,
         /** @var non-empty-list<LeagueOutcome> */
         public array $outcomes,
+        public ?MegaLevel $megaLevel = null,
+        public ?MegaLevelEffects $megaLevelEffects = null,
+        public ?Move $exclusiveMove = null,
     ) {}
 
     /**

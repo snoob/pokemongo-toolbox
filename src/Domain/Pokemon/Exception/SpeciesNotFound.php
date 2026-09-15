@@ -6,6 +6,11 @@ namespace App\Domain\Pokemon\Exception;
 
 final class SpeciesNotFound extends \RuntimeException
 {
+    public static function withoutMegaForm(string $identifier): self
+    {
+        return new self(\sprintf('"%s" has no Mega Evolution.', $identifier));
+    }
+
     public static function forIdentifier(string $identifier): self
     {
         return new self(\sprintf(

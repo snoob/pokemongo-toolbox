@@ -28,7 +28,7 @@ final readonly class LocalisedSpeciesNames
         $names = [];
 
         foreach ($this->locales as $locale) {
-            $names[] = $this->resolver->name($species, $locale);
+            $names[] = $this->resolver->searchName($species, $locale);
         }
 
         return array_values(array_unique($names));

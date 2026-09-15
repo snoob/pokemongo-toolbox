@@ -1,0 +1,2462 @@
+{
+    "generatedAt": "2026-09-15T12:09:11+00:00",
+    "moves": [
+        {
+            "id": "ACID",
+            "name": "Acid",
+            "power": 6,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "ACID_SPRAY",
+            "name": "Acid Spray",
+            "power": 20,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "ACID_SPRAY_PLUS",
+            "name": "Acid Spray+",
+            "power": 20,
+            "energy": 40,
+            "mega": true
+        },
+        {
+            "id": "ACROBATICS",
+            "name": "Acrobatics",
+            "power": 110,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "AERIAL_ACE",
+            "name": "Aerial Ace",
+            "power": 60,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "AEROBLAST",
+            "name": "Aeroblast",
+            "power": 170,
+            "energy": 75,
+            "mega": false
+        },
+        {
+            "id": "AIR_CUTTER",
+            "name": "Air Cutter",
+            "power": 60,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "AIR_SLASH",
+            "name": "Air Slash",
+            "power": 9,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "ANCIENT_POWER",
+            "name": "Ancient Power",
+            "power": 60,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "AQUA_JET",
+            "name": "Aqua Jet",
+            "power": 70,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "AQUA_STEP",
+            "name": "Aqua Step",
+            "power": 55,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "AQUA_TAIL",
+            "name": "Aqua Tail",
+            "power": 55,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "ASTONISH",
+            "name": "Astonish",
+            "power": 12,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "AURA_SPHERE",
+            "name": "Aura Sphere",
+            "power": 80,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "AURA_WHEEL_DARK",
+            "name": "Aura Wheel",
+            "power": 100,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "AURA_WHEEL_ELECTRIC",
+            "name": "Aura Wheel",
+            "power": 100,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "AURORA_BEAM",
+            "name": "Aurora Beam",
+            "power": 80,
+            "energy": 60,
+            "mega": false
+        },
+        {
+            "id": "AVALANCHE",
+            "name": "Avalanche",
+            "power": 90,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "BEAK_BLAST",
+            "name": "Beak Blast",
+            "power": 110,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "BEHEMOTH_BASH",
+            "name": "Behemoth Bash",
+            "power": 80,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "BEHEMOTH_BLADE",
+            "name": "Behemoth Blade",
+            "power": 100,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "BITE",
+            "name": "Bite",
+            "power": 2,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "BLAST_BURN",
+            "name": "Blast Burn",
+            "power": 110,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "BLAZE_KICK",
+            "name": "Blaze Kick",
+            "power": 60,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "BLEAKWIND_STORM",
+            "name": "Bleakwind Storm",
+            "power": 60,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "BLIZZARD",
+            "name": "Blizzard",
+            "power": 140,
+            "energy": 75,
+            "mega": false
+        },
+        {
+            "id": "BODY_SLAM",
+            "name": "Body Slam",
+            "power": 65,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "BONE_CLUB",
+            "name": "Bone Club",
+            "power": 55,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "BOOMBURST",
+            "name": "Boomburst",
+            "power": 150,
+            "energy": 70,
+            "mega": false
+        },
+        {
+            "id": "BRAVE_BIRD",
+            "name": "Brave Bird",
+            "power": 130,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "BREAKING_SWIPE",
+            "name": "Breaking Swipe",
+            "power": 50,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "BRICK_BREAK",
+            "name": "Brick Break",
+            "power": 50,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "BRICK_BREAK_PLUS",
+            "name": "Brick Break+",
+            "power": 40,
+            "energy": 35,
+            "mega": true
+        },
+        {
+            "id": "BRINE",
+            "name": "Brine",
+            "power": 100,
+            "energy": 60,
+            "mega": false
+        },
+        {
+            "id": "BRUTAL_SWING",
+            "name": "Brutal Swing",
+            "power": 55,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "BUBBLE",
+            "name": "Bubble",
+            "power": 8,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "BUBBLE_BEAM",
+            "name": "Bubble Beam",
+            "power": 50,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "BUG_BITE",
+            "name": "Bug Bite",
+            "power": 4,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "BUG_BUZZ",
+            "name": "Bug Buzz",
+            "power": 100,
+            "energy": 60,
+            "mega": false
+        },
+        {
+            "id": "BULLDOZE",
+            "name": "Bulldoze",
+            "power": 80,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "BULLET_PUNCH",
+            "name": "Bullet Punch",
+            "power": 7,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "BULLET_SEED",
+            "name": "Bullet Seed",
+            "power": 5,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "CHARGE_BEAM",
+            "name": "Charge Beam",
+            "power": 6,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "CHARM",
+            "name": "Charm",
+            "power": 12,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "CHILLING_WATER",
+            "name": "Chilling Water",
+            "power": 60,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "CLANGING_SCALES",
+            "name": "Clanging Scales",
+            "power": 120,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "CLOSE_COMBAT",
+            "name": "Close Combat",
+            "power": 100,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "CONFUSION",
+            "name": "Confusion",
+            "power": 16,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "COUNTER",
+            "name": "Counter",
+            "power": 8,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "CRABHAMMER",
+            "name": "Crabhammer",
+            "power": 85,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "CROSS_CHOP",
+            "name": "Cross Chop",
+            "power": 55,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "CROSS_POISON",
+            "name": "Cross Poison",
+            "power": 50,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "CRUNCH",
+            "name": "Crunch",
+            "power": 70,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "CRUSH_GRIP",
+            "name": "Crush Grip",
+            "power": 110,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "CUT",
+            "name": "Cut",
+            "power": 3,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "DARKEST_LARIAT",
+            "name": "Darkest Lariat",
+            "power": 120,
+            "energy": 60,
+            "mega": false
+        },
+        {
+            "id": "DARK_PULSE",
+            "name": "Dark Pulse",
+            "power": 80,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "DARK_PULSE_PLUS",
+            "name": "Dark Pulse+",
+            "power": 60,
+            "energy": 40,
+            "mega": true
+        },
+        {
+            "id": "DAZZLING_GLEAM",
+            "name": "Dazzling Gleam",
+            "power": 90,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "DIG",
+            "name": "Dig",
+            "power": 70,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "DISARMING_VOICE",
+            "name": "Disarming Voice",
+            "power": 70,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "DISCHARGE",
+            "name": "Discharge",
+            "power": 55,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "DIVE",
+            "name": "Dive",
+            "power": 50,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "DOOM_DESIRE",
+            "name": "Doom Desire",
+            "power": 80,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "DOUBLE_IRON_BASH",
+            "name": "Double Iron Bash",
+            "power": 70,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "DOUBLE_KICK",
+            "name": "Double Kick",
+            "power": 8,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "DRACO_METEOR",
+            "name": "Draco Meteor",
+            "power": 150,
+            "energy": 65,
+            "mega": false
+        },
+        {
+            "id": "DRAGON_ASCENT",
+            "name": "Dragon Ascent",
+            "power": 110,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "DRAGON_BREATH",
+            "name": "Dragon Breath",
+            "power": 3,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "DRAGON_CLAW",
+            "name": "Dragon Claw",
+            "power": 80,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "DRAGON_ENERGY",
+            "name": "Dragon Energy",
+            "power": 90,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "DRAGON_PULSE",
+            "name": "Dragon Pulse",
+            "power": 90,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "DRAGON_TAIL",
+            "name": "Dragon Tail",
+            "power": 9,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "DRAINING_KISS",
+            "name": "Draining Kiss",
+            "power": 80,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "DRAIN_PUNCH",
+            "name": "Drain Punch",
+            "power": 40,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "DRILL_PECK",
+            "name": "Drill Peck",
+            "power": 70,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "DRILL_PECK_PLUS",
+            "name": "Drill Peck+",
+            "power": 60,
+            "energy": 35,
+            "mega": true
+        },
+        {
+            "id": "DRILL_RUN",
+            "name": "Drill Run",
+            "power": 70,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "DRUM_BEATING",
+            "name": "Drum Beating",
+            "power": 60,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "DYNAMAX_CANNON",
+            "name": "Dynamax Cannon",
+            "power": 80,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "DYNAMIC_PUNCH",
+            "name": "Dynamic Punch",
+            "power": 90,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "DYNAMIC_PUNCH_PLUS",
+            "name": "Dynamic Punch+",
+            "power": 130,
+            "energy": 80,
+            "mega": true
+        },
+        {
+            "id": "EARTHQUAKE",
+            "name": "Earthquake",
+            "power": 120,
+            "energy": 65,
+            "mega": false
+        },
+        {
+            "id": "EARTH_POWER",
+            "name": "Earth Power",
+            "power": 90,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "EMBER",
+            "name": "Ember",
+            "power": 4,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "ENERGY_BALL",
+            "name": "Energy Ball",
+            "power": 80,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "EXTRASENSORY",
+            "name": "Extrasensory",
+            "power": 8,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "FAIRY_WIND",
+            "name": "Fairy Wind",
+            "power": 4,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "FEATHER_DANCE",
+            "name": "Feather Dance",
+            "power": 35,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "FEINT_ATTACK",
+            "name": "Feint Attack",
+            "power": 6,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "FELL_STINGER",
+            "name": "Fell Stinger",
+            "power": 20,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "FELL_STINGER_PLUS",
+            "name": "Fell Stinger+",
+            "power": 40,
+            "energy": 35,
+            "mega": true
+        },
+        {
+            "id": "FIRE_BLAST",
+            "name": "Fire Blast",
+            "power": 140,
+            "energy": 80,
+            "mega": false
+        },
+        {
+            "id": "FIRE_FANG",
+            "name": "Fire Fang",
+            "power": 8,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "FIRE_PUNCH",
+            "name": "Fire Punch",
+            "power": 60,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "FIRE_SPIN",
+            "name": "Fire Spin",
+            "power": 11,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "FLAMETHROWER",
+            "name": "Flamethrower",
+            "power": 90,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "FLAME_BURST",
+            "name": "Flame Burst",
+            "power": 70,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "FLAME_CHARGE",
+            "name": "Flame Charge",
+            "power": 65,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "FLAME_WHEEL",
+            "name": "Flame Wheel",
+            "power": 80,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "FLASH_CANNON",
+            "name": "Flash Cannon",
+            "power": 110,
+            "energy": 65,
+            "mega": false
+        },
+        {
+            "id": "FLOWER_TRICK",
+            "name": "Flower Trick",
+            "power": 30,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "FLY",
+            "name": "Fly",
+            "power": 80,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "FLYING_PRESS",
+            "name": "Flying Press",
+            "power": 90,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "FOCUS_BLAST",
+            "name": "Focus Blast",
+            "power": 150,
+            "energy": 75,
+            "mega": false
+        },
+        {
+            "id": "FORCE_PALM",
+            "name": "Force Palm",
+            "power": 13,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "FOUL_PLAY",
+            "name": "Foul Play",
+            "power": 65,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "FREEZE_SHOCK",
+            "name": "Freeze Shock",
+            "power": 120,
+            "energy": 60,
+            "mega": false
+        },
+        {
+            "id": "FRENZY_PLANT",
+            "name": "Frenzy Plant",
+            "power": 100,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "FROST_BREATH",
+            "name": "Frost Breath",
+            "power": 7,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "FRUSTRATION",
+            "name": "Frustration",
+            "power": 10,
+            "energy": 70,
+            "mega": false
+        },
+        {
+            "id": "FURY_CUTTER",
+            "name": "Fury Cutter",
+            "power": 3,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "FUSION_BOLT",
+            "name": "Fusion Bolt",
+            "power": 90,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "FUSION_FLARE",
+            "name": "Fusion Flare",
+            "power": 90,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "FUTURE_SIGHT",
+            "name": "Future Sight",
+            "power": 110,
+            "energy": 65,
+            "mega": false
+        },
+        {
+            "id": "FUTURE_SIGHT_PLUS",
+            "name": "Future Sight+",
+            "power": 130,
+            "energy": 80,
+            "mega": true
+        },
+        {
+            "id": "GEOMANCY",
+            "name": "Geomancy",
+            "power": 8,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "GIGATON_HAMMER",
+            "name": "Gigaton Hammer",
+            "power": 130,
+            "energy": 60,
+            "mega": false
+        },
+        {
+            "id": "GIGA_DRAIN",
+            "name": "Giga Drain",
+            "power": 50,
+            "energy": 80,
+            "mega": false
+        },
+        {
+            "id": "GIGA_IMPACT",
+            "name": "Giga Impact",
+            "power": 150,
+            "energy": 80,
+            "mega": false
+        },
+        {
+            "id": "GLACIATE",
+            "name": "Glaciate",
+            "power": 60,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "GLAIVE_RUSH",
+            "name": "Glaive Rush",
+            "power": 90,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "GRASS_KNOT",
+            "name": "Grass Knot",
+            "power": 90,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "GULP_MISSILE_ARROKUDA",
+            "name": "Gulp Missile (Arrokuda)",
+            "power": 15,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "GULP_MISSILE_PIKACHU",
+            "name": "Gulp Missile (Pikachu)",
+            "power": 15,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "GUNK_SHOT",
+            "name": "Gunk Shot",
+            "power": 130,
+            "energy": 75,
+            "mega": false
+        },
+        {
+            "id": "GUST",
+            "name": "Gust",
+            "power": 16,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "GYRO_BALL",
+            "name": "Gyro Ball",
+            "power": 80,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "HEART_STAMP",
+            "name": "Heart Stamp",
+            "power": 40,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "HEAT_WAVE",
+            "name": "Heat Wave",
+            "power": 75,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "HEAVY_SLAM",
+            "name": "Heavy Slam",
+            "power": 70,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "HEX",
+            "name": "Hex",
+            "power": 7,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "HIDDEN_POWER_BUG",
+            "name": "Hidden Power (Bug)",
+            "power": 9,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "HIDDEN_POWER_DARK",
+            "name": "Hidden Power (Dark)",
+            "power": 9,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "HIDDEN_POWER_DRAGON",
+            "name": "Hidden Power (Dragon)",
+            "power": 9,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "HIDDEN_POWER_ELECTRIC",
+            "name": "Hidden Power (Electric)",
+            "power": 9,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "HIDDEN_POWER_FIGHTING",
+            "name": "Hidden Power (Fighting)",
+            "power": 9,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "HIDDEN_POWER_FIRE",
+            "name": "Hidden Power (Fire)",
+            "power": 9,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "HIDDEN_POWER_FLYING",
+            "name": "Hidden Power (Flying)",
+            "power": 9,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "HIDDEN_POWER_GHOST",
+            "name": "Hidden Power (Ghost)",
+            "power": 9,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "HIDDEN_POWER_GRASS",
+            "name": "Hidden Power (Grass)",
+            "power": 9,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "HIDDEN_POWER_GROUND",
+            "name": "Hidden Power (Ground)",
+            "power": 9,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "HIDDEN_POWER_ICE",
+            "name": "Hidden Power (Ice)",
+            "power": 9,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "HIDDEN_POWER_NORMAL",
+            "name": "Hidden Power",
+            "power": 9,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "HIDDEN_POWER_POISON",
+            "name": "Hidden Power (Poison)",
+            "power": 9,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "HIDDEN_POWER_PSYCHIC",
+            "name": "Hidden Power (Psychic)",
+            "power": 9,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "HIDDEN_POWER_ROCK",
+            "name": "Hidden Power (Rock)",
+            "power": 9,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "HIDDEN_POWER_STEEL",
+            "name": "Hidden Power (Steel)",
+            "power": 9,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "HIDDEN_POWER_WATER",
+            "name": "Hidden Power (Water)",
+            "power": 9,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "HIGH_HORSEPOWER",
+            "name": "High Horsepower",
+            "power": 100,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "HIGH_JUMP_KICK",
+            "name": "High Jump Kick",
+            "power": 110,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "HORN_ATTACK",
+            "name": "Horn Attack",
+            "power": 40,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "HURRICANE",
+            "name": "Hurricane",
+            "power": 110,
+            "energy": 60,
+            "mega": false
+        },
+        {
+            "id": "HYDRO_CANNON",
+            "name": "Hydro Cannon",
+            "power": 80,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "HYDRO_PUMP",
+            "name": "Hydro Pump",
+            "power": 130,
+            "energy": 75,
+            "mega": false
+        },
+        {
+            "id": "HYDRO_PUMP_BLASTOISE",
+            "name": "Hydro Pump Blastoise",
+            "power": 90,
+            "energy": 80,
+            "mega": false
+        },
+        {
+            "id": "HYPER_BEAM",
+            "name": "Hyper Beam",
+            "power": 150,
+            "energy": 80,
+            "mega": false
+        },
+        {
+            "id": "HYPER_FANG",
+            "name": "Hyper Fang",
+            "power": 80,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "ICE_BEAM",
+            "name": "Ice Beam",
+            "power": 90,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "ICE_BURN",
+            "name": "Ice Burn",
+            "power": 120,
+            "energy": 60,
+            "mega": false
+        },
+        {
+            "id": "ICE_FANG",
+            "name": "Ice Fang",
+            "power": 8,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "ICE_PUNCH",
+            "name": "Ice Punch",
+            "power": 60,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "ICE_SHARD",
+            "name": "Ice Shard",
+            "power": 9,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "ICICLE_SPEAR",
+            "name": "Icicle Spear",
+            "power": 70,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "ICY_WIND",
+            "name": "Icy Wind",
+            "power": 60,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "INCINERATE",
+            "name": "Incinerate",
+            "power": 20,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "INFESTATION",
+            "name": "Infestation",
+            "power": 10,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "IRON_HEAD",
+            "name": "Iron Head",
+            "power": 85,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "IRON_TAIL",
+            "name": "Iron Tail",
+            "power": 10,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "KARATE_CHOP",
+            "name": "Karate Chop",
+            "power": 5,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "LAST_RESORT",
+            "name": "Last Resort",
+            "power": 90,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "LEAFAGE",
+            "name": "Leafage",
+            "power": 6,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "LEAF_BLADE",
+            "name": "Leaf Blade",
+            "power": 70,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "LEAF_STORM",
+            "name": "Leaf Storm",
+            "power": 130,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "LEAF_TORNADO",
+            "name": "Leaf Tornado",
+            "power": 45,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "LICK",
+            "name": "Lick",
+            "power": 3,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "LIQUIDATION",
+            "name": "Liquidation",
+            "power": 70,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "LIQUIDATION_PLUS",
+            "name": "Liquidation+",
+            "power": 55,
+            "energy": 40,
+            "mega": true
+        },
+        {
+            "id": "LOCK_ON",
+            "name": "Lock On",
+            "power": 1,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "LOW_KICK",
+            "name": "Low Kick",
+            "power": 6,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "LOW_SWEEP",
+            "name": "Low Sweep",
+            "power": 40,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "LUNGE",
+            "name": "Lunge",
+            "power": 70,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "LUSTER_PURGE",
+            "name": "Luster Purge",
+            "power": 120,
+            "energy": 60,
+            "mega": false
+        },
+        {
+            "id": "MAGICAL_LEAF",
+            "name": "Magical Leaf",
+            "power": 10,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "MAGMA_STORM",
+            "name": "Magma Storm",
+            "power": 65,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "MAGNET_BOMB",
+            "name": "Magnet Bomb",
+            "power": 70,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "MEGAHORN",
+            "name": "Megahorn",
+            "power": 110,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "MEGA_DRAIN",
+            "name": "Mega Drain",
+            "power": 25,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "METAL_CLAW",
+            "name": "Metal Claw",
+            "power": 5,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "METAL_SOUND",
+            "name": "Metal Sound",
+            "power": 5,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "METEOR_BEAM",
+            "name": "Meteor Beam",
+            "power": 120,
+            "energy": 60,
+            "mega": false
+        },
+        {
+            "id": "METEOR_MASH",
+            "name": "Meteor Mash",
+            "power": 100,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "MIND_BLOWN",
+            "name": "Mind Blown",
+            "power": 90,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "MIRROR_COAT",
+            "name": "Mirror Coat",
+            "power": 75,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "MIRROR_SHOT",
+            "name": "Mirror Shot",
+            "power": 35,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "MIST_BALL",
+            "name": "Mist Ball",
+            "power": 120,
+            "energy": 60,
+            "mega": false
+        },
+        {
+            "id": "MOONBLAST",
+            "name": "Moonblast",
+            "power": 90,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "MOONGEIST_BEAM",
+            "name": "Moongeist Beam",
+            "power": 135,
+            "energy": 65,
+            "mega": false
+        },
+        {
+            "id": "MUDDY_WATER",
+            "name": "Muddy Water",
+            "power": 35,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "MUD_BOMB",
+            "name": "Mud Bomb",
+            "power": 65,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "MUD_SHOT",
+            "name": "Mud Shot",
+            "power": 3,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "MUD_SLAP",
+            "name": "Mud Slap",
+            "power": 11,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "MYSTICAL_FIRE",
+            "name": "Mystical Fire",
+            "power": 60,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "MYSTICAL_FIRE_PLUS",
+            "name": "Mystical Fire+",
+            "power": 50,
+            "energy": 40,
+            "mega": true
+        },
+        {
+            "id": "NATURES_MADNESS",
+            "name": "Nature's Madness",
+            "power": 80,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "NIGHT_SHADE",
+            "name": "Night Shade",
+            "power": 70,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "NIGHT_SLASH",
+            "name": "Night Slash",
+            "power": 50,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "OBLIVION_WING",
+            "name": "Oblivion Wing",
+            "power": 85,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "OBSTRUCT",
+            "name": "Obstruct",
+            "power": 15,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "OCTAZOOKA",
+            "name": "Octazooka",
+            "power": 50,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "OMINOUS_WIND",
+            "name": "Ominous Wind",
+            "power": 45,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "ORIGIN_PULSE",
+            "name": "Origin Pulse",
+            "power": 130,
+            "energy": 60,
+            "mega": false
+        },
+        {
+            "id": "OUTRAGE",
+            "name": "Outrage",
+            "power": 110,
+            "energy": 60,
+            "mega": false
+        },
+        {
+            "id": "OUTRAGE_PLUS",
+            "name": "Outrage+",
+            "power": 80,
+            "energy": 50,
+            "mega": true
+        },
+        {
+            "id": "OVERHEAT",
+            "name": "Overheat",
+            "power": 130,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "PARABOLIC_CHARGE",
+            "name": "Parabolic Charge",
+            "power": 70,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "PAYBACK",
+            "name": "Payback",
+            "power": 110,
+            "energy": 60,
+            "mega": false
+        },
+        {
+            "id": "PECK",
+            "name": "Peck",
+            "power": 6,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "PETAL_BLIZZARD",
+            "name": "Petal Blizzard",
+            "power": 110,
+            "energy": 65,
+            "mega": false
+        },
+        {
+            "id": "PLASMA_FISTS",
+            "name": "Plasma Fists",
+            "power": 60,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "PLAY_ROUGH",
+            "name": "Play Rough",
+            "power": 90,
+            "energy": 60,
+            "mega": false
+        },
+        {
+            "id": "POISON_FANG",
+            "name": "Poison Fang",
+            "power": 50,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "POISON_JAB",
+            "name": "Poison Jab",
+            "power": 7,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "POISON_STING",
+            "name": "Poison Sting",
+            "power": 4,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "POLTERGEIST",
+            "name": "Poltergeist",
+            "power": 150,
+            "energy": 75,
+            "mega": false
+        },
+        {
+            "id": "POUND",
+            "name": "Pound",
+            "power": 4,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "POWDER_SNOW",
+            "name": "Powder Snow",
+            "power": 6,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "POWER_GEM",
+            "name": "Power Gem",
+            "power": 85,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "POWER_UP_PUNCH",
+            "name": "Power-Up Punch",
+            "power": 20,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "POWER_WHIP",
+            "name": "Power Whip",
+            "power": 90,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "PRECIPICE_BLADES",
+            "name": "Precipice Blades",
+            "power": 130,
+            "energy": 60,
+            "mega": false
+        },
+        {
+            "id": "PRESENT",
+            "name": "Present",
+            "power": 3,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "PSYBEAM",
+            "name": "Psybeam",
+            "power": 70,
+            "energy": 60,
+            "mega": false
+        },
+        {
+            "id": "PSYBEAM_PLUS",
+            "name": "Psybeam+",
+            "power": 60,
+            "energy": 45,
+            "mega": true
+        },
+        {
+            "id": "PSYCHIC",
+            "name": "Psychic",
+            "power": 75,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "PSYCHIC_FANGS",
+            "name": "Psychic Fangs",
+            "power": 40,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "PSYCHO_BOOST",
+            "name": "Psycho Boost",
+            "power": 85,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "PSYCHO_CUT",
+            "name": "Psycho Cut",
+            "power": 4,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "PSYSHOCK",
+            "name": "Psyshock",
+            "power": 70,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "PSYSTRIKE",
+            "name": "Psystrike",
+            "power": 90,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "PSYWAVE",
+            "name": "Psywave",
+            "power": 3,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "PYRO_BALL",
+            "name": "Pyro Ball",
+            "power": 75,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "QUICK_ATTACK",
+            "name": "Quick Attack",
+            "power": 5,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "RAGE_FIST",
+            "name": "Rage Fist",
+            "power": 55,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "RAZOR_LEAF",
+            "name": "Razor Leaf",
+            "power": 9,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "RAZOR_SHELL",
+            "name": "Razor Shell",
+            "power": 35,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "REST",
+            "name": "Rest",
+            "power": 50,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "RETURN",
+            "name": "Return",
+            "power": 130,
+            "energy": 70,
+            "mega": false
+        },
+        {
+            "id": "ROAR_OF_TIME",
+            "name": "Roar of Time",
+            "power": 150,
+            "energy": 65,
+            "mega": false
+        },
+        {
+            "id": "ROCK_BLAST",
+            "name": "Rock Blast",
+            "power": 50,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "ROCK_SLIDE",
+            "name": "Rock Slide",
+            "power": 75,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "ROCK_SMASH",
+            "name": "Rock Smash",
+            "power": 9,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "ROCK_THROW",
+            "name": "Rock Throw",
+            "power": 8,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "ROCK_TOMB",
+            "name": "Rock Tomb",
+            "power": 75,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "ROCK_WRECKER",
+            "name": "Rock Wrecker",
+            "power": 110,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "ROLLOUT",
+            "name": "Rollout",
+            "power": 7,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "SACRED_FIRE",
+            "name": "Sacred Fire",
+            "power": 130,
+            "energy": 65,
+            "mega": false
+        },
+        {
+            "id": "SACRED_SWORD",
+            "name": "Sacred Sword",
+            "power": 60,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "SANDSEAR_STORM",
+            "name": "Sandsear Storm",
+            "power": 60,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "SAND_ATTACK",
+            "name": "Sand Attack",
+            "power": 2,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "SAND_TOMB",
+            "name": "Sand Tomb",
+            "power": 55,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "SCALD",
+            "name": "Scald",
+            "power": 85,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "SCORCHING_SANDS",
+            "name": "Scorching Sands",
+            "power": 80,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "SCRATCH",
+            "name": "Scratch",
+            "power": 3,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "SECRET_SWORD",
+            "name": "Secret Sword",
+            "power": 70,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "SEED_BOMB",
+            "name": "Seed Bomb",
+            "power": 55,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "SEED_BOMB_PLUS",
+            "name": "Seed Bomb+",
+            "power": 60,
+            "energy": 40,
+            "mega": true
+        },
+        {
+            "id": "SEED_FLARE",
+            "name": "Seed Flare",
+            "power": 130,
+            "energy": 75,
+            "mega": false
+        },
+        {
+            "id": "SHADOW_BALL",
+            "name": "Shadow Ball",
+            "power": 90,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "SHADOW_BONE",
+            "name": "Shadow Bone",
+            "power": 80,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "SHADOW_CLAW",
+            "name": "Shadow Claw",
+            "power": 6,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "SHADOW_FORCE",
+            "name": "Shadow Force",
+            "power": 120,
+            "energy": 65,
+            "mega": false
+        },
+        {
+            "id": "SHADOW_PUNCH",
+            "name": "Shadow Punch",
+            "power": 55,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "SHADOW_SNEAK",
+            "name": "Shadow Sneak",
+            "power": 75,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "SIGNAL_BEAM",
+            "name": "Signal Beam",
+            "power": 75,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "SILVER_WIND",
+            "name": "Silver Wind",
+            "power": 75,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "SKULL_BASH",
+            "name": "Skull Bash",
+            "power": 130,
+            "energy": 75,
+            "mega": false
+        },
+        {
+            "id": "SKY_ATTACK",
+            "name": "Sky Attack",
+            "power": 75,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "SLUDGE",
+            "name": "Sludge",
+            "power": 70,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "SLUDGE_BOMB",
+            "name": "Sludge Bomb",
+            "power": 80,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "SLUDGE_WAVE",
+            "name": "Sludge Wave",
+            "power": 110,
+            "energy": 65,
+            "mega": false
+        },
+        {
+            "id": "SMACK_DOWN",
+            "name": "Smack Down",
+            "power": 11,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "SNARL",
+            "name": "Snarl",
+            "power": 5,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "SNIPE_SHOT",
+            "name": "Snipe Shot",
+            "power": 65,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "SOLAR_BEAM",
+            "name": "Solar Beam",
+            "power": 150,
+            "energy": 80,
+            "mega": false
+        },
+        {
+            "id": "SPACIAL_REND",
+            "name": "Spacial Rend",
+            "power": 95,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "SPARK",
+            "name": "Spark",
+            "power": 5,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "SPARKLING_ARIA",
+            "name": "Sparkling Aria",
+            "power": 80,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "SPIRIT_SHACKLE",
+            "name": "Spirit Shackle",
+            "power": 50,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "SPLASH",
+            "name": "Splash",
+            "power": 0,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "SPRINGTIDE_STORM",
+            "name": "Springtide Storm (Speculative)",
+            "power": 60,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "STEEL_WING",
+            "name": "Steel Wing",
+            "power": 7,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "STOMP",
+            "name": "Stomp",
+            "power": 55,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "STONE_EDGE",
+            "name": "Stone Edge",
+            "power": 100,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "STRUGGLE",
+            "name": "Struggle",
+            "power": 35,
+            "energy": 100,
+            "mega": false
+        },
+        {
+            "id": "STRUGGLE_BUG",
+            "name": "Struggle Bug",
+            "power": 9,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "SUBMISSION",
+            "name": "Submission",
+            "power": 60,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "SUCKER_PUNCH",
+            "name": "Sucker Punch",
+            "power": 8,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "SUNSTEEL_STRIKE",
+            "name": "Sunsteel Strike",
+            "power": 135,
+            "energy": 65,
+            "mega": false
+        },
+        {
+            "id": "SUPER_POWER",
+            "name": "Superpower",
+            "power": 85,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "SURF",
+            "name": "Surf",
+            "power": 75,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "SURF_PLUS",
+            "name": "Surf+",
+            "power": 55,
+            "energy": 35,
+            "mega": true
+        },
+        {
+            "id": "SWIFT",
+            "name": "Swift",
+            "power": 55,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "SYNCHRONOISE",
+            "name": "Synchronoise",
+            "power": 80,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "TACKLE",
+            "name": "Tackle",
+            "power": 3,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "TAKE_DOWN",
+            "name": "Take Down",
+            "power": 14,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "TECHNO_BLAST_BURN",
+            "name": "Techno Blast (Burn)",
+            "power": 120,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "TECHNO_BLAST_CHILL",
+            "name": "Techno Blast (Chill)",
+            "power": 120,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "TECHNO_BLAST_DOUSE",
+            "name": "Techno Blast (Douse)",
+            "power": 120,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "TECHNO_BLAST_NORMAL",
+            "name": "Techno Blast (Normal)",
+            "power": 120,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "TECHNO_BLAST_SHOCK",
+            "name": "Techno Blast (Shock)",
+            "power": 120,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "THUNDER",
+            "name": "Thunder",
+            "power": 100,
+            "energy": 60,
+            "mega": false
+        },
+        {
+            "id": "THUNDERBOLT",
+            "name": "Thunderbolt",
+            "power": 90,
+            "energy": 55,
+            "mega": false
+        },
+        {
+            "id": "THUNDER_CAGE",
+            "name": "Thunder Cage",
+            "power": 60,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "THUNDER_FANG",
+            "name": "Thunder Fang",
+            "power": 8,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "THUNDER_PUNCH",
+            "name": "Thunder Punch",
+            "power": 60,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "THUNDER_SHOCK",
+            "name": "Thunder Shock",
+            "power": 4,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "TORCH_SONG",
+            "name": "Torch Song",
+            "power": 70,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "TRAILBLAZE",
+            "name": "Trailblaze",
+            "power": 65,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "TRANSFORM",
+            "name": "Transform",
+            "power": 0,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "TRIPLE_AXEL",
+            "name": "Triple Axel",
+            "power": 60,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "TRI_ATTACK",
+            "name": "Tri Attack",
+            "power": 65,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "TWISTER",
+            "name": "Twister",
+            "power": 70,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "UPPER_HAND",
+            "name": "Upper Hand",
+            "power": 70,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "VICE_GRIP",
+            "name": "Vise Grip",
+            "power": 70,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "VINE_WHIP",
+            "name": "Vine Whip",
+            "power": 5,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "VOLT_SWITCH",
+            "name": "Volt Switch",
+            "power": 14,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "VOLT_TACKLE",
+            "name": "Volt Tackle",
+            "power": 90,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "VOLT_TACKLE_PLUS",
+            "name": "Volt Tackle+",
+            "power": 65,
+            "energy": 35,
+            "mega": true
+        },
+        {
+            "id": "V_CREATE",
+            "name": "V-Create",
+            "power": 95,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "WATERFALL",
+            "name": "Waterfall",
+            "power": 11,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "WATER_GUN",
+            "name": "Water Gun",
+            "power": 3,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "WATER_GUN_FAST_BLASTOISE",
+            "name": "Water Gun Fast Blastoise",
+            "power": 6,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "WATER_PULSE",
+            "name": "Water Pulse",
+            "power": 80,
+            "energy": 50,
+            "mega": false
+        },
+        {
+            "id": "WATER_SHURIKEN",
+            "name": "Water Shuriken",
+            "power": 6,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "WEATHER_BALL_FIRE",
+            "name": "Weather Ball (Fire)",
+            "power": 60,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "WEATHER_BALL_ICE",
+            "name": "Weather Ball (Ice)",
+            "power": 60,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "WEATHER_BALL_NORMAL",
+            "name": "Weather Ball (Normal)",
+            "power": 60,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "WEATHER_BALL_ROCK",
+            "name": "Weather Ball (Rock)",
+            "power": 60,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "WEATHER_BALL_WATER",
+            "name": "Weather Ball (Water)",
+            "power": 60,
+            "energy": 35,
+            "mega": false
+        },
+        {
+            "id": "WILDBOLT_STORM",
+            "name": "Wildbolt Storm",
+            "power": 60,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "WILD_CHARGE",
+            "name": "Wild Charge",
+            "power": 100,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "WING_ATTACK",
+            "name": "Wing Attack",
+            "power": 5,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "WRAP",
+            "name": "Wrap",
+            "power": 70,
+            "energy": 45,
+            "mega": false
+        },
+        {
+            "id": "X_SCISSOR",
+            "name": "X-Scissor",
+            "power": 65,
+            "energy": 40,
+            "mega": false
+        },
+        {
+            "id": "YAWN",
+            "name": "Yawn",
+            "power": 0,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "ZAP_CANNON",
+            "name": "Zap Cannon",
+            "power": 150,
+            "energy": 80,
+            "mega": false
+        },
+        {
+            "id": "ZAP_CANNON_PLUS",
+            "name": "Zap Cannon+",
+            "power": 70,
+            "energy": 45,
+            "mega": true
+        },
+        {
+            "id": "ZEN_HEADBUTT",
+            "name": "Zen Headbutt",
+            "power": 8,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "AEGISLASH_CHARGE_AIR_SLASH",
+            "name": "Air Slash",
+            "power": 0,
+            "energy": 0,
+            "mega": false
+        },
+        {
+            "id": "AEGISLASH_CHARGE_PSYCHO_CUT",
+            "name": "Psycho Cut",
+            "power": 0,
+            "energy": 0,
+            "mega": false
+        }
+    ]
+}

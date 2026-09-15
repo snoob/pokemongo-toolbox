@@ -2,7 +2,9 @@
 # des services, jamais le modèle. Les ports (§6) sont aliasés sur leur adapter.
 parameters:
     pogo.data_dir: '%kernel.project_dir%/data'
-    pogo.cache_dir: '%kernel.project_dir%/var/pogo'
+    # Sits beside the container cache rather than under it, so `cache:clear` does not
+    # throw away the rankings — and so it stays writable inside a read-only PHAR.
+    pogo.cache_dir: '%kernel.cache_dir%/../pogo'
     # Les classements bougent à chaque mise à jour du méta, pas à chaque heure.
     pogo.rankings_ttl: 86400
     # Langues embarquées : un nom tapé dans l'une ou l'autre doit résoudre (§6).
@@ -14,24 +16,29 @@ services:
         autoconfigure: true
 
     App\:
-        resource: '../src/'
+        # No trailing slash: under the phar:// stream a prefix ending in "/" makes
+        # Symfony's GlobResource yield nothing, and the whole application registers
+        # zero services without a word of warning.
+        resource: '%kernel.project_dir%/src'
         exclude:
-            - '../src/Kernel.php'
+            - '%kernel.project_dir%/src/Kernel.php'
             # Le domaine n'est pas un sac à services : modèle, ports et exceptions
             # ne sont jamais instanciés par le conteneur.
-            - '../src/Domain/*/Model/'
-            - '../src/Domain/*/Port/'
-            - '../src/Domain/*/Exception/'
+            - '%kernel.project_dir%/src/Domain/*/Model/'
+            - '%kernel.project_dir%/src/Domain/*/Port/'
+            - '%kernel.project_dir%/src/Domain/*/Exception/'
             # Query, Result et Outcome sont des messages, pas des services.
-            - '../src/Application/*/*/*Query.php'
-            - '../src/Application/*/*/*Result.php'
-            - '../src/Application/*/*/*Outcome.php'
-            - '../src/Infrastructure/Json/JsonFetchFailed.php'
+            - '%kernel.project_dir%/src/Application/*/*/*Query.php'
+            - '%kernel.project_dir%/src/Application/*/*/*Result.php'
+            - '%kernel.project_dir%/src/Application/*/*/*Outcome.php'
+            - '%kernel.project_dir%/src/Infrastructure/Json/JsonFetchFailed.php'
 
     # --- Ports → adapters -------------------------------------------------------
 
     App\Domain\Pokemon\Port\SpeciesCatalog: '@App\Infrastructure\Catalog\JsonFileSpeciesCatalog'
     App\Domain\Pvp\Port\CpMultiplierTable: '@App\Infrastructure\Cpm\JsonFileCpMultiplierTable'
+    App\Domain\Pvp\Port\MegaLevelTable: '@App\Infrastructure\Cpm\JsonFileMegaLevelTable'
+    App\Domain\Pokemon\Port\MoveCatalog: '@App\Infrastructure\Catalog\JsonFileMoveCatalog'
     App\Domain\Pvp\Port\PvpRankingCatalog: '@App\Infrastructure\Pvpoke\PvpokeRankingCatalog'
     # Le dumper XLIFF est fourni par FrameworkBundle : on l'alias plutôt que d'écrire
     # un générateur XML maison (§8).
@@ -54,12 +61,27 @@ services:
         arguments:
             $locales: '%pogo.locales%'
 
+    App\Infrastructure\Naming\InputLocale:
+        arguments:
+            $locales: '%pogo.locales%'
+            $default: '%kernel.default_locale%'
+
     App\Infrastructure\Cpm\JsonFileCpMultiplierTable:
         arguments:
             $file: '%pogo.data_dir%/cpm.json'
 
-    App\UI\Cli\Command\BuildGameDataCommand:
+    App\Infrastructure\Cpm\JsonFileMegaLevelTable:
         arguments:
-            $speciesFile: '%pogo.data_dir%/species.json'
-            $cpMultiplierFile: '%pogo.data_dir%/cpm.json'
-            $translationsDir: '%kernel.project_dir%/translations'
+            $file: '%pogo.data_dir%/mega-levels.json'
+
+    App\Infrastructure\Catalog\JsonFileMoveCatalog:
+        arguments:
+            $file: '%pogo.data_dir%/moves.json'
+
+    App\Infrastructure\Build\GameDataPaths:
+        arguments:
+            $species: '%pogo.data_dir%/species.json'
+            $cpMultipliers: '%pogo.data_dir%/cpm.json'
+            $megaLevels: '%pogo.data_dir%/mega-levels.json'
+            $moves: '%pogo.data_dir%/moves.json'
+            $translations: '%kernel.project_dir%/translations'

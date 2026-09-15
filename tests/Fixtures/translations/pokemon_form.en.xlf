@@ -6,6 +6,7 @@
       <trans-unit id="2" resname="mega"><source>mega</source><target>Mega</target></trans-unit>
       <trans-unit id="3" resname="altered"><source>altered</source><target>Altered</target></trans-unit>
       <trans-unit id="4" resname="origin"><source>origin</source><target>Origin</target></trans-unit>
+      <trans-unit id="5" resname="alolan"><source>alolan</source><target>Alolan</target></trans-unit>
     </body>
   </file>
 </xliff>

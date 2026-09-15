@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Catalog;
 
+use App\Domain\Pokemon\Model\DexNumber;
 use App\Domain\Pokemon\Model\Species;
 use App\Domain\Pokemon\Model\SpeciesId;
 use App\Domain\Pokemon\Port\SpeciesCatalog;
@@ -41,6 +42,27 @@ final class JsonFileSpeciesCatalog implements SpeciesCatalog
         return $this->index()->byIdentity($id);
     }
 
+    #[\Override]
+    public function megaFormsOf(DexNumber $dex): array
+    {
+        return array_values(array_filter(
+            $this->index()->byDex($dex->value),
+            static fn(Species $species): bool => $species->isMega(),
+        ));
+    }
+
+    #[\Override]
+    public function baseFormOf(DexNumber $dex): ?Species
+    {
+        foreach ($this->index()->byDex($dex->value) as $species) {
+            if ($species->isBaseForm()) {
+                return $species;
+            }
+        }
+
+        return null;
+    }
+
     /**
      * @return list<Species>
      */
@@ -65,9 +87,9 @@ final class JsonFileSpeciesCatalog implements SpeciesCatalog
     }
 
     /**
-     * "94" and "Ectoplasma" both cover Gengar, Mega Gengar and Shadow Gengar. When a
-     * plain form exists it is what the user meant; alternate forms are reached through
-     * their own name or through an explicit flag.
+     * "94" and "Ectoplasma" both cover Gengar, Mega Gengar and Shadow Gengar; "Raichu
+     * (d'Alola)" covers the Alolan form and its shadow. In both cases the user means the
+     * one without a mega or shadow segment — those are reached through their own flag.
      *
      * @param list<Species> $candidates
      *
@@ -75,9 +97,9 @@ final class JsonFileSpeciesCatalog implements SpeciesCatalog
      */
     private function preferBaseForm(array $candidates): array
     {
-        $base = array_values(array_filter($candidates, static fn(Species $s): bool => $s->isBaseForm()));
+        $plain = array_values(array_filter($candidates, static fn(Species $s): bool => 0 === $s->flagFormCount()));
 
-        return [] !== $base ? $base : $candidates;
+        return [] !== $plain ? $plain : $candidates;
     }
 
     private function index(): SpeciesIndex

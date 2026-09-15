@@ -1,12 +1,144 @@
 {
     "generatedAt": "2026-09-15T00:00:00+00:00",
     "species": [
-        {"id": "gengar", "dex": 94, "atk": 261, "def": 149, "sta": 155, "shadow": true, "base": true, "forms": []},
-        {"id": "gengar_mega", "dex": 94, "atk": 349, "def": 199, "sta": 155, "shadow": false, "base": false, "forms": ["mega"]},
-        {"id": "gengar_shadow", "dex": 94, "atk": 261, "def": 149, "sta": 155, "shadow": false, "base": false, "forms": ["shadow"]},
-        {"id": "nidoran_female", "dex": 29, "atk": 86, "def": 89, "sta": 146, "shadow": true, "base": true, "forms": []},
-        {"id": "nidoran_male", "dex": 32, "atk": 105, "def": 76, "sta": 130, "shadow": true, "base": true, "forms": []},
-        {"id": "giratina_altered", "dex": 487, "atk": 187, "def": 225, "sta": 284, "shadow": false, "base": false, "forms": ["altered"]},
-        {"id": "giratina_origin", "dex": 487, "atk": 225, "def": 187, "sta": 284, "shadow": false, "base": false, "forms": ["origin"]}
+        {
+            "id": "gengar",
+            "dex": 94,
+            "atk": 261,
+            "def": 149,
+            "sta": 155,
+            "shadow": true,
+            "base": true,
+            "forms": [],
+            "elite": [
+                "SHADOW_PUNCH"
+            ],
+            "super": false
+        },
+        {
+            "id": "gengar_mega",
+            "dex": 94,
+            "atk": 349,
+            "def": 199,
+            "sta": 155,
+            "shadow": false,
+            "base": false,
+            "forms": [
+                "mega"
+            ],
+            "elite": [
+                "SHADOW_PUNCH"
+            ],
+            "super": true
+        },
+        {
+            "id": "gengar_shadow",
+            "dex": 94,
+            "atk": 261,
+            "def": 149,
+            "sta": 155,
+            "shadow": false,
+            "base": false,
+            "forms": [
+                "shadow"
+            ],
+            "elite": [
+                "SHADOW_PUNCH"
+            ],
+            "super": false
+        },
+        {
+            "id": "nidoran_female",
+            "dex": 29,
+            "atk": 86,
+            "def": 89,
+            "sta": 146,
+            "shadow": true,
+            "base": true,
+            "forms": [],
+            "elite": [],
+            "super": false
+        },
+        {
+            "id": "nidoran_male",
+            "dex": 32,
+            "atk": 105,
+            "def": 76,
+            "sta": 130,
+            "shadow": true,
+            "base": true,
+            "forms": [],
+            "elite": [],
+            "super": false
+        },
+        {
+            "id": "giratina_altered",
+            "dex": 487,
+            "atk": 187,
+            "def": 225,
+            "sta": 284,
+            "shadow": false,
+            "base": false,
+            "forms": [
+                "altered"
+            ],
+            "elite": [],
+            "super": false
+        },
+        {
+            "id": "giratina_origin",
+            "dex": 487,
+            "atk": 225,
+            "def": 187,
+            "sta": 284,
+            "shadow": false,
+            "base": false,
+            "forms": [
+                "origin"
+            ],
+            "elite": [],
+            "super": false
+        },
+        {
+            "id": "raichu_alolan",
+            "dex": 26,
+            "atk": 201,
+            "def": 154,
+            "sta": 155,
+            "shadow": false,
+            "super": false,
+            "base": false,
+            "forms": [
+                "alolan"
+            ],
+            "elite": []
+        },
+        {
+            "id": "raichu_alolan_shadow",
+            "dex": 26,
+            "atk": 201,
+            "def": 154,
+            "sta": 155,
+            "shadow": false,
+            "super": false,
+            "base": false,
+            "forms": [
+                "alolan",
+                "shadow"
+            ],
+            "elite": []
+        },
+        {
+            "id": "raichu",
+            "dex": 26,
+            "atk": 193,
+            "def": 151,
+            "sta": 155,
+            "shadow": true,
+            "super": false,
+            "base": true,
+            "forms": [],
+            "elite": []
+        }
     ]
 }

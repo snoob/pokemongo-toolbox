@@ -62,14 +62,18 @@ final readonly class IvRankCalculator
             throw new SpeciesIneligibleForLeague($league);
         }
 
-        // Stable sort: equal stat products keep the deterministic IvSpread::all() order.
+        // Exact ties happen: at the level cap, 15/15/15 and 15/15/14 can floor to the
+        // same HP and so to the same stat product. Such spreads are interchangeable in
+        // play, so the higher IVs win the tie — that is the one a player recognises.
         usort(
             $ranked,
             /**
              * @param array{iv: IvSpread, level: PokemonLevel, cp: Cp, statProduct: float} $a
              * @param array{iv: IvSpread, level: PokemonLevel, cp: Cp, statProduct: float} $b
              */
-            static fn(array $a, array $b): int => $b['statProduct'] <=> $a['statProduct'],
+            static fn(array $a, array $b): int => (
+                [$b['statProduct'], self::ivTotal($b['iv'])] <=> [$a['statProduct'], self::ivTotal($a['iv'])]
+            ),
         );
 
         $best = $ranked[0]['statProduct'];
@@ -89,6 +93,11 @@ final readonly class IvRankCalculator
         }
 
         return new IvRanking($league, $spreads);
+    }
+
+    private static function ivTotal(IvSpread $iv): int
+    {
+        return $iv->attack + $iv->defense + $iv->stamina;
     }
 
     /**

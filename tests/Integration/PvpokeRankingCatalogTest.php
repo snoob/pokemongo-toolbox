@@ -40,6 +40,36 @@ final class PvpokeRankingCatalogTest extends TestCase
         self::assertSame(League::Great, $rank->league);
     }
 
+    public function testItReadsTheRecommendedMoveset(): void
+    {
+        $moveset = $this->catalog()->rankOf(new SpeciesId('gengar'), League::Great)?->moveset;
+
+        self::assertNotNull($moveset);
+        self::assertSame('SHADOW_CLAW', (string) $moveset->fast, 'the source lists the fast move first');
+        self::assertSame(['SHADOW_PUNCH', 'DARK_PULSE'], array_map(strval(...), $moveset->charged));
+    }
+
+    public function testAMegaCarryingAThirdChargedMoveIsReadAsSuch(): void
+    {
+        $payload = json_encode(
+            [[
+                'speciesId' => 'malamar_mega',
+                'score' => 80,
+                'moveset' => ['PSYWAVE', 'FOUL_PLAY', 'SUPER_POWER', 'PSYBEAM_PLUS'],
+            ]],
+            \JSON_THROW_ON_ERROR,
+        );
+
+        $moveset = $this->catalog($payload)->rankOf(new SpeciesId('malamar_mega'), League::Great)?->moveset;
+
+        self::assertNotNull($moveset);
+        self::assertSame(
+            ['FOUL_PLAY', 'SUPER_POWER', 'PSYBEAM_PLUS'],
+            array_map(strval(...), $moveset->charged),
+            'super megas carry a third charged move, and it is the mega-only one',
+        );
+    }
+
     public function testAnUnrankedSpeciesReturnsNothing(): void
     {
         self::assertNull($this->catalog()->rankOf(new SpeciesId('mewtwo'), League::Great));
@@ -71,9 +101,20 @@ final class PvpokeRankingCatalogTest extends TestCase
             $catalog->rankOf(new SpeciesId('gengar'), $league);
         }
 
+        // The standard leagues live under the "all" cup, the Mega Editions under "mega".
         self::assertSame(
-            ['rankings-1500.json', 'rankings-2500.json', 'rankings-10000.json'],
-            array_map(static fn(string $url): string => basename($url), $this->urls),
+            [
+                'all/overall/rankings-1500.json',
+                'all/overall/rankings-2500.json',
+                'all/overall/rankings-10000.json',
+                'mega/overall/rankings-1500.json',
+                'mega/overall/rankings-2500.json',
+                'mega/overall/rankings-10000.json',
+            ],
+            array_map(static fn(string $url): string => implode('/', \array_slice(
+                explode('/', $url),
+                -3,
+            )), $this->urls),
         );
     }
 

@@ -10,15 +10,29 @@ enum League: string
     case Ultra = 'ultra';
     case Master = 'master';
 
+    // Mega Evolutions are barred from the standard leagues; since the Twilight Trails
+    // season they have their own editions, where one mega per team is allowed.
+    case MegaGreat = 'mega-great';
+    case MegaUltra = 'mega-ultra';
+    case MegaMaster = 'mega-master';
+
     /**
      * CP ceiling a Pokémon may not exceed to enter the league; null when uncapped.
      */
     public function cpCap(): ?int
     {
         return match ($this) {
-            self::Great => 1500,
-            self::Ultra => 2500,
-            self::Master => null,
+            self::Great, self::MegaGreat => 1500,
+            self::Ultra, self::MegaUltra => 2500,
+            self::Master, self::MegaMaster => null,
+        };
+    }
+
+    public function allowsMega(): bool
+    {
+        return match ($this) {
+            self::MegaGreat, self::MegaUltra, self::MegaMaster => true,
+            default => false,
         };
     }
 
@@ -28,16 +42,22 @@ enum League: string
             self::Great => 'Great League',
             self::Ultra => 'Ultra League',
             self::Master => 'Master League',
+            self::MegaGreat => 'Mega Great League',
+            self::MegaUltra => 'Mega Ultra League',
+            self::MegaMaster => 'Mega Master League',
         };
     }
 
-    /**
-     * In an uncapped league every Pokémon reaches the level cap, so ranking IV spreads
-     * by stat product degenerates into ordering raw IVs: 15/15/15 always wins.
-     */
-    public function ranksIvSpreads(): bool
+    /** @return non-empty-list<self> */
+    public static function standard(): array
     {
-        return null !== $this->cpCap();
+        return [self::Great, self::Ultra, self::Master];
+    }
+
+    /** @return non-empty-list<self> */
+    public static function megaEditions(): array
+    {
+        return [self::MegaGreat, self::MegaUltra, self::MegaMaster];
     }
 
     /** @return non-empty-list<self> */

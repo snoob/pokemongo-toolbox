@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Fake;
 
+use App\Domain\Pokemon\Model\DexNumber;
 use App\Domain\Pokemon\Model\Species;
 use App\Domain\Pokemon\Model\SpeciesId;
 use App\Domain\Pokemon\Port\SpeciesCatalog;
@@ -41,6 +42,27 @@ final readonly class InMemorySpeciesCatalog implements SpeciesCatalog
         $base = array_values(array_filter($matches, static fn(Species $s): bool => $s->isBaseForm()));
 
         return [] !== $base ? $base : $matches;
+    }
+
+    #[\Override]
+    public function megaFormsOf(DexNumber $dex): array
+    {
+        return array_values(array_filter(
+            $this->species,
+            static fn(Species $s): bool => $s->dex->value === $dex->value && $s->isMega(),
+        ));
+    }
+
+    #[\Override]
+    public function baseFormOf(DexNumber $dex): ?Species
+    {
+        foreach ($this->species as $species) {
+            if ($species->dex->value === $dex->value && $species->isBaseForm()) {
+                return $species;
+            }
+        }
+
+        return null;
     }
 
     #[\Override]

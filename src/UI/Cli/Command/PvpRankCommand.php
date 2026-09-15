@@ -5,16 +5,15 @@ declare(strict_types=1);
 namespace App\UI\Cli\Command;
 
 use App\Application\Pvp\RankPokemon\RankPokemonHandler;
-use App\Application\Pvp\RankPokemon\RankPokemonQuery;
 use App\Domain\Pokemon\Exception\AmbiguousSpecies;
 use App\Domain\Pokemon\Exception\InvalidIv;
 use App\Domain\Pokemon\Exception\SpeciesNotFound;
-use App\Domain\Pokemon\Model\IvSpread;
 use App\Domain\Pokemon\Model\Species;
-use App\Domain\Pvp\Model\League;
-use App\Domain\Pvp\Model\PokemonLevel;
+use App\Domain\Pvp\Model\MegaLevel;
 use App\Infrastructure\Json\JsonValue;
+use App\Infrastructure\Naming\InputLocale;
 use App\Infrastructure\Naming\SpeciesNameResolver;
+use App\UI\Cli\Input\RankPokemonQueryFactory;
 use App\UI\Cli\Presenter\PvpRankJsonPresenter;
 use App\UI\Cli\Presenter\PvpRankTextPresenter;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -27,7 +26,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'pogo:pvp:rank',
-    description: "Classement PvP d'un Pokémon par ligue, et rang de ses IVs au sein de l'espèce",
+    description: 'PvP ranking of a Pokémon per league, and where its IVs place within the species',
 )]
 final class PvpRankCommand extends Command
 {
@@ -36,6 +35,8 @@ final class PvpRankCommand extends Command
         private readonly PvpRankTextPresenter $text,
         private readonly PvpRankJsonPresenter $json,
         private readonly SpeciesNameResolver $names,
+        private readonly InputLocale $inputLocale,
+        private readonly RankPokemonQueryFactory $queries,
     ) {
         parent::__construct();
     }
@@ -44,24 +45,38 @@ final class PvpRankCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('pokemon', InputArgument::REQUIRED, 'Nom français, nom anglais ou numéro de Pokédex')
-            ->addArgument('ivs', InputArgument::OPTIONAL, 'IVs sous la forme attaque/défense/endurance, ex. 1/15/14')
+            ->addArgument('pokemon', InputArgument::REQUIRED, 'French name, English name or Pokédex number')
+            ->addArgument('ivs', InputArgument::OPTIONAL, 'IVs as attack/defense/stamina, e.g. 1/15/14')
             ->addOption(
                 'league',
                 'l',
                 InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-                'Ligue à afficher : great, ultra ou master (toutes par défaut)',
+                'League: great, ultra, master, mega-great, mega-ultra, mega-master'
+                . ' (defaults to the three matching the species)',
             )
-            ->addOption('shadow', null, InputOption::VALUE_NONE, 'Utiliser la forme obscure')
-            ->addOption('best-buddy', 'b', InputOption::VALUE_NONE, 'Autoriser le niveau 51 (Meilleur Copain)')
-            ->addOption('format', 'f', InputOption::VALUE_REQUIRED, 'Format de sortie : text ou json', 'text')
-            ->addOption('locale', null, InputOption::VALUE_REQUIRED, "Langue d'affichage : fr ou en")
+            ->addOption('shadow', null, InputOption::VALUE_NONE, 'Use the shadow form')
+            ->addOption('mega', 'm', InputOption::VALUE_NONE, 'Mega Evolution (level ' . MegaLevel::DEFAULT . ')')
+            ->addOption('mega1', null, InputOption::VALUE_NONE, 'Mega Evolution at level 1')
+            ->addOption('mega2', null, InputOption::VALUE_NONE, 'Mega Evolution at level 2')
+            ->addOption('mega3', null, InputOption::VALUE_NONE, 'Mega Evolution at level 3 (default)')
+            ->addOption('mega4', null, InputOption::VALUE_NONE, 'Mega Evolution at level 4 (Super Mega: +2 levels)')
+            ->addOption('mega-x', null, InputOption::VALUE_NONE, 'Mega X (Charizard, Raichu, Mewtwo)')
+            ->addOption('mega-y', null, InputOption::VALUE_NONE, 'Mega Y (Charizard, Raichu, Mewtwo)')
+            ->addOption('best-buddy', 'b', InputOption::VALUE_NONE, 'Allow level 51 (Best Buddy)')
+            ->addOption('format', 'f', InputOption::VALUE_REQUIRED, 'Output format: text or json', 'text')
+            ->addOption(
+                'locale',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Language of Pokémon and move names: fr or en (defaults to the language you typed)',
+            )
             ->setHelp(<<<'HELP'
-                Exemples :
+                Examples:
 
-                  <info>%command.full_name% ectoplasma</info>            rang de l'espèce dans les trois ligues
-                  <info>%command.full_name% 94 1/15/14</info>            + rang de ces IVs parmi les 4096 possibles
-                  <info>%command.full_name% gengar --league=great</info> une seule ligue
+                  <info>%command.full_name% ectoplasma</info>            species rank across the three leagues
+                  <info>%command.full_name% 94 1/15/14</info>            + where those IVs place among the 4096
+                  <info>%command.full_name% gengar --league=great</info> a single league
+                  <info>%command.full_name% altaria --mega</info>        the Mega Editions
                 HELP);
     }
 
@@ -71,7 +86,8 @@ final class PvpRankCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         try {
-            $result = ($this->handler)($this->buildQuery($input));
+            $query = $this->queries->from($input);
+            $result = ($this->handler)($query);
         } catch (InvalidIv|\InvalidArgumentException $e) {
             $io->error($e->getMessage());
 
@@ -81,7 +97,7 @@ final class PvpRankCommand extends Command
 
             return Command::FAILURE;
         } catch (AmbiguousSpecies $e) {
-            $io->error(\sprintf('"%s" correspond à plusieurs formes.', $e->identifier));
+            $io->error(\sprintf('"%s" matches several forms.', $e->identifier));
             $locale = JsonValue::asString($input->getOption('locale'));
 
             $io->listing(array_map(fn(Species $s): string => \sprintf(
@@ -90,10 +106,19 @@ final class PvpRankCommand extends Command
                 $s->id->value,
             ), $e->candidates));
 
+            if ($this->areMegaVariants($e->candidates)) {
+                $io->text('<comment>Narrow it down with <info>--mega-x</info> or <info>--mega-y</info>.</comment>');
+            }
+
             return Command::FAILURE;
         }
 
-        $locale = JsonValue::asString($input->getOption('locale'));
+        // No explicit choice: let the language of the question decide the language of
+        // the answer.
+        $locale = JsonValue::asString($input->getOption('locale')) ?? $this->inputLocale->detect(
+            $query->identifier,
+            $result->species,
+        );
 
         'json' === $input->getOption('format')
             ? $output->writeln($this->json->present($result, $locale))
@@ -102,51 +127,17 @@ final class PvpRankCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function buildQuery(InputInterface $input): RankPokemonQuery
-    {
-        $pokemon = JsonValue::asString($input->getArgument('pokemon'));
-        $ivs = JsonValue::asString($input->getArgument('ivs'));
-
-        if (null === $pokemon) {
-            throw new \InvalidArgumentException('Il faut un Pokémon à classer.');
-        }
-
-        return new RankPokemonQuery(
-            identifier: $pokemon,
-            iv: null === $ivs ? null : IvSpread::fromString($ivs),
-            leagues: $this->parseLeagues($input->getOption('league')),
-            levelCap: true === $input->getOption('best-buddy')
-                ? PokemonLevel::bestBuddyCap()
-                : PokemonLevel::regularCap(),
-            shadow: true === $input->getOption('shadow'),
-        );
-    }
-
     /**
-     * @return non-empty-list<League>
+     * @param list<Species> $candidates
      */
-    private function parseLeagues(mixed $option): array
+    private function areMegaVariants(array $candidates): bool
     {
-        if (!\is_array($option) || [] === $option) {
-            return League::all();
-        }
-
-        $leagues = [];
-
-        foreach (JsonValue::asStringList($option) as $value) {
-            $league = League::tryFrom(strtolower($value));
-
-            if (null === $league) {
-                throw new \InvalidArgumentException(\sprintf(
-                    'Ligue inconnue "%s" ; attendu : great, ultra ou master.',
-                    $value,
-                ));
+        foreach ($candidates as $candidate) {
+            if (!$candidate->hasMegaVariant('x') && !$candidate->hasMegaVariant('y')) {
+                return false;
             }
-
-            $leagues[] = $league;
         }
 
-        // An option array that held nothing usable means "no filter", not "no league".
-        return [] === $leagues ? League::all() : $leagues;
+        return [] !== $candidates;
     }
 }

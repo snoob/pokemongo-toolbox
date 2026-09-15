@@ -34,7 +34,7 @@ final class IvRankCalculatorTest extends TestCase
 
         $spread = $ranking->for(new IvSpread(1, 15, 14));
 
-        self::assertSame(130, $spread->position);
+        self::assertSame(131, $spread->position);
         self::assertSame(IvSpread::COMBINATIONS, $spread->total);
         self::assertSame(1478, $spread->cp->value);
         self::assertSame('19', (string) $spread->level);
@@ -76,7 +76,6 @@ final class IvRankCalculatorTest extends TestCase
     {
         $ranking = $this->calculator->rank($this->gengar(), League::Master, PokemonLevel::regularCap());
 
-        self::assertFalse(League::Master->ranksIvSpreads());
         self::assertSame(new IvSpread(15, 15, 15)->attack, $ranking->best()->iv->attack);
 
         foreach ($ranking->top(50) as $spread) {
@@ -92,6 +91,24 @@ final class IvRankCalculatorTest extends TestCase
         self::assertSame('50', (string) $regular->level);
         self::assertSame('51', (string) $bestBuddy->level);
         self::assertGreaterThan($regular->cp->value, $bestBuddy->cp->value);
+    }
+
+    /**
+     * At the level cap 15/15/15 and 15/15/14 floor to the same HP, so their stat
+     * products are bit-for-bit equal. Ordering them by stat product alone would show
+     * 15/15/14 as "the best", which no player would recognise.
+     */
+    public function testExactlyTiedSpreadsAreOrderedByTheHigherIvs(): void
+    {
+        $ranking = $this->calculator->rank($this->gengar(), League::Master, PokemonLevel::regularCap());
+
+        $perfect = $ranking->for(new IvSpread(15, 15, 15));
+        $runnerUp = $ranking->for(new IvSpread(15, 15, 14));
+
+        self::assertSame('15/15/15', (string) $ranking->best()->iv);
+        self::assertSame($perfect->statProduct, $runnerUp->statProduct, 'the tie is real, not a rounding artefact');
+        self::assertSame(1, $perfect->position);
+        self::assertSame(2, $runnerUp->position);
     }
 
     public function testASpeciesTooStrongForTheCapIsReportedAsIneligible(): void

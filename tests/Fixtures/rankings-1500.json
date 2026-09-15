@@ -1,6 +1,42 @@
 [
-    {"speciesId": "tinkaton", "speciesName": "Tinkaton", "score": 93},
-    {"speciesId": "ninetales_shadow", "speciesName": "Ninetales (Shadow)", "score": 92.1},
-    {"speciesId": "gengar", "speciesName": "Gengar", "score": 73},
-    {"speciesId": "alakazam", "speciesName": "Alakazam", "score": 62.5}
+    {
+        "speciesId": "tinkaton",
+        "speciesName": "Tinkaton",
+        "score": 93,
+        "moveset": [
+            "FAIRY_WIND",
+            "GIGATON_HAMMER",
+            "BULLDOZE"
+        ]
+    },
+    {
+        "speciesId": "ninetales_shadow",
+        "speciesName": "Ninetales (Shadow)",
+        "score": 92.1,
+        "moveset": [
+            "EMBER",
+            "WEATHER_BALL_FIRE",
+            "ENERGY_BALL"
+        ]
+    },
+    {
+        "speciesId": "gengar",
+        "speciesName": "Gengar",
+        "score": 73,
+        "moveset": [
+            "SHADOW_CLAW",
+            "SHADOW_PUNCH",
+            "DARK_PULSE"
+        ]
+    },
+    {
+        "speciesId": "alakazam",
+        "speciesName": "Alakazam",
+        "score": 62.5,
+        "moveset": [
+            "CONFUSION",
+            "PSYCHIC",
+            "SHADOW_BALL"
+        ]
+    }
 ]

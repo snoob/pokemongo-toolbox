@@ -49,19 +49,40 @@ final class JsonFileSpeciesCatalogTest extends TestCase
         self::assertSame(['gengar'], $this->idsFor('94'));
     }
 
-    #[DataProvider('formIdentifiers')]
-    public function testAFormIsReachedByItsNameInEitherLanguage(string $identifier, string $expected): void
+    /**
+     * Mega and shadow are asked for with their own flags, so naming them resolves to
+     * nothing rather than offering a second, redundant way in.
+     */
+    #[DataProvider('flaggedFormNames')]
+    public function testNamingAFlaggedFormNoLongerResolvesIt(string $identifier): void
     {
-        self::assertSame([$expected], $this->idsFor($identifier));
+        self::assertSame([], $this->idsFor($identifier));
     }
 
-    /** @return iterable<string, array{string, string}> */
-    public static function formIdentifiers(): iterable
+    /** @return iterable<string, array{string}> */
+    public static function flaggedFormNames(): iterable
     {
-        yield 'English form' => ['Gengar (Mega)', 'gengar_mega'];
-        yield 'French form' => ['Ectoplasma (Méga)', 'gengar_mega'];
-        yield 'French shadow' => ['Ectoplasma (Obscur)', 'gengar_shadow'];
-        yield 'English shadow' => ['Gengar (Shadow)', 'gengar_shadow'];
+        yield 'English mega' => ['Gengar (Mega)'];
+        yield 'French mega' => ['Ectoplasma (Méga)'];
+        yield 'English shadow' => ['Gengar (Shadow)'];
+        yield 'French shadow' => ['Ectoplasma (Obscur)'];
+    }
+
+    /**
+     * Regional forms have no flag, so their name stays the only way to reach them.
+     */
+    #[DataProvider('regionalFormNames')]
+    public function testARegionalFormIsStillReachedByItsName(string $identifier): void
+    {
+        self::assertSame(['raichu_alolan'], $this->idsFor($identifier));
+    }
+
+    /** @return iterable<string, array{string}> */
+    public static function regionalFormNames(): iterable
+    {
+        yield 'French' => ["Raichu (d'Alola)"];
+        yield 'English' => ['Raichu (Alolan)'];
+        yield 'accent-free' => ['raichu dalola'];
     }
 
     public function testAnIdentifierCoveringSeveralFormsReturnsThemAll(): void

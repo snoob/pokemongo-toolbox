@@ -6,7 +6,7 @@ namespace App\UI\Cli\Presenter;
 
 use App\Application\Pvp\RankPokemon\LeagueOutcome;
 use App\Application\Pvp\RankPokemon\RankPokemonResult;
-use App\Domain\Pvp\Model\League;
+use App\Domain\Pokemon\Model\Species;
 use App\Infrastructure\Naming\SpeciesNameResolver;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -14,6 +14,10 @@ final readonly class PvpRankTextPresenter
 {
     public function __construct(
         private SpeciesNameResolver $names,
+        private MovesetFormatter $movesets,
+        private IvCellFormatter $ivCells,
+        private BaseFormCellFormatter $baseForms,
+        private RankFooterNotes $notes,
     ) {}
 
     public function present(SymfonyStyle $io, RankPokemonResult $result, ?string $locale = null): void
@@ -22,70 +26,57 @@ final readonly class PvpRankTextPresenter
 
         $io->title(\sprintf('%s — #%d', $this->names->name($species, $locale), $species->dex->value));
 
+        // The base-form column only earns its width when a mega is on screen.
+        $showsBaseForm = $this->baseForms->appliesTo($result);
         $rows = [];
 
         foreach ($result->outcomes as $outcome) {
-            $rows[] = [$outcome->league->label(), $this->speciesRankCell($outcome), $this->spreadCell($outcome)];
-        }
+            $row = [
+                $outcome->league->label(),
+                $this->speciesRankCell($outcome, $species, $locale),
+                $this->ivCells->format($outcome, $result),
+            ];
 
-        $io->table([
-            'Ligue',
-            "Rang de l'espèce",
-            null !== $result->iv ? \sprintf('IVs %s', $result->iv) : 'IVs',
-        ], $rows);
-
-        if (null !== $result->iv) {
-            $io->text(\sprintf('<comment>Niveau maximum considéré : %s.</comment>', $result->levelCap));
-        }
-
-        if ($this->showsMasterCaveat($result)) {
-            $io->text(
-                "<comment>En Master League aucun plafond de CP ne s'applique : classer les IVs revient à trier les IVs bruts, 15/15/15 gagne toujours.</comment>",
-            );
-        }
-    }
-
-    private function showsMasterCaveat(RankPokemonResult $result): bool
-    {
-        foreach ($result->outcomes as $outcome) {
-            if (League::Master === $outcome->league && null !== $outcome->spread) {
-                return true;
+            if ($showsBaseForm) {
+                $row[] = $this->baseForms->format($outcome);
             }
+
+            $rows[] = $row;
         }
 
-        return false;
+        $headers = ['League', 'Species rank', 'IVs'];
+
+        if ($showsBaseForm) {
+            $headers[] = BaseFormCellFormatter::HEADER;
+        }
+
+        $io->table($headers, $rows);
+
+        foreach ($this->notes->of($result, $locale) as $note) {
+            $io->text(\sprintf('<comment>%s</comment>', $note));
+        }
     }
 
-    private function speciesRankCell(LeagueOutcome $outcome): string
+    private function speciesRankCell(LeagueOutcome $outcome, Species $species, ?string $locale): string
     {
         $rank = $outcome->speciesRank;
 
         if (null === $rank) {
-            return '<fg=gray>non classé</>';
+            return '<fg=gray>unranked</>';
         }
 
-        return \sprintf('#%d / %d  (score %.1f)', $rank->position, $rank->total, $rank->score);
+        $lines = [\sprintf('#%d / %d  (score %.1f)', $rank->position, $rank->total, $rank->score)];
+
+        if (null !== $rank->moveset) {
+            $lines[] = $this->movesets->format($rank->moveset, $species, $locale);
+        }
+
+        return implode("\n", $lines);
     }
 
-    private function spreadCell(LeagueOutcome $outcome): string
-    {
-        if ($outcome->ineligible) {
-            return '<fg=gray>inéligible (CP trop élevé)</>';
-        }
-
-        $spread = $outcome->spread;
-
-        if (null === $spread) {
-            return '<fg=gray>—</>';
-        }
-
-        return \sprintf(
-            '#%d / %d — %.2f %% — CP %d au niveau %s',
-            $spread->position,
-            $spread->total,
-            $spread->percentOfBest,
-            $spread->cp->value,
-            $spread->level,
-        );
-    }
+    /**
+     * The requested spread on the first line, the spread worth hunting on the second —
+     * dropped when the two are the same. In Master League the best is always 15/15/15,
+     * which says on its own that an uncapped league rewards nothing but raw IVs.
+     */
 }

@@ -1,0 +1,21 @@
+{
+    "main": "bin/pogo",
+    "output": "build/pogo.phar",
+    "banner": "pokemongo-toolbox — a Pokémon GO PvP toolbox.\nhttps://github.com/snoob/pokemongo-toolbox",
+    "compression": "GZ",
+    "directories": ["src", "config", "translations"],
+    "finder": [
+        { "in": "data", "name": "*.json" },
+        {
+            "in": "vendor",
+            "notName": ["*.md", "*.dist", "Makefile", "composer.json", "composer.lock"],
+            "exclude": ["doc", "docs", "test", "tests", "Test", "Tests", "vendor-bin"]
+        }
+    ],
+    "files": [".env"],
+    "compactors": [
+        "KevinGH\\Box\\Compactor\\Php",
+        "KevinGH\\Box\\Compactor\\Json"
+    ],
+    "check-requirements": false
+}

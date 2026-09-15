@@ -1,0 +1,87 @@
+name: Release
+
+# Tagging is the trigger: `git tag v1.0.0 && git push --tags` publishes the binary.
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  # A release must not ship a binary the checks would have rejected, so the build waits
+  # on this job.
+  quality:
+    name: Format, lint, analyse, tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Format
+        run: vendor/bin/mago format --dry-run
+
+      - name: Lint
+        run: vendor/bin/mago lint --reporting-format=github
+
+      - name: Analyse
+        run: vendor/bin/mago analyze --reporting-format=github
+
+      - name: Tests
+        run: vendor/bin/phpunit
+
+  phar:
+    name: Build and publish the PHAR
+    needs: quality
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          # Creating an archive is refused unless this is off.
+          ini-values: phar.readonly=0
+          coverage: none
+
+      - name: Install production dependencies
+        run: composer install --no-dev --prefer-dist --no-progress --optimize-autoloader
+
+      # The released binary ships the game data as it stands on release day, not as it
+      # stood when the files were last committed.
+      - name: Refresh the game data
+        run: bin/console pogo:data:build
+
+      - name: Download Box
+        run: |
+          curl -fsSL -o box.phar \
+            "https://github.com/box-project/box/releases/download/${BOX_VERSION}/box.phar"
+          chmod +x box.phar
+        env:
+          BOX_VERSION: 4.7.0
+
+      - name: Build the PHAR
+        run: ./box.phar compile --no-interaction
+
+      - name: Check that it runs
+        run: ./build/pogo.phar gengar --league=great --no-ansi
+
+      - name: Checksum
+        run: cd build && sha256sum pogo.phar > pogo.phar.sha256
+
+      - name: Publish the release
+        run: gh release create "$GITHUB_REF_NAME" build/pogo.phar build/pogo.phar.sha256 --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}

@@ -5,10 +5,15 @@ declare(strict_types=1);
 namespace App\UI\Cli\Command;
 
 use App\Infrastructure\Build\CpMultiplierTableBuilder;
+use App\Infrastructure\Build\GameDataPaths;
+use App\Infrastructure\Build\MegaLevelTableBuilder;
+use App\Infrastructure\Build\MoveNameCatalogueBuilder;
 use App\Infrastructure\Build\SpeciesCatalogBuilder;
 use App\Infrastructure\Build\SpeciesNameCatalogueBuilder;
+use App\Infrastructure\Naming\MoveNameResolver;
 use App\Infrastructure\Naming\SpeciesNameResolver;
 use App\Infrastructure\Translation\XliffCatalogueWriter;
+use App\PharEnvironment;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -24,11 +29,11 @@ final class BuildGameDataCommand extends Command
     public function __construct(
         private readonly SpeciesCatalogBuilder $speciesBuilder,
         private readonly CpMultiplierTableBuilder $cpMultiplierBuilder,
+        private readonly MegaLevelTableBuilder $megaLevelBuilder,
         private readonly SpeciesNameCatalogueBuilder $nameBuilder,
+        private readonly MoveNameCatalogueBuilder $moveNameBuilder,
         private readonly XliffCatalogueWriter $xliff,
-        private readonly string $speciesFile,
-        private readonly string $cpMultiplierFile,
-        private readonly string $translationsDir,
+        private readonly GameDataPaths $paths,
     ) {
         parent::__construct();
     }
@@ -38,31 +43,57 @@ final class BuildGameDataCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $io->section('Espèces');
-        $built = $this->speciesBuilder->build();
-        $this->writeJson($this->speciesFile, $built['species']);
-        $io->success(\sprintf('%d formes écrites dans %s', \count($built['species']['species']), $this->speciesFile));
+        // This command writes back into the repository; inside a read-only archive there
+        // is nothing for it to update.
+        if (PharEnvironment::isRunning()) {
+            $io->error('pogo:data:build only runs from a checkout — the PHAR ships the data already built.');
 
-        $io->section('Multiplicateurs de CP');
+            return Command::FAILURE;
+        }
+
+        $io->section('Species');
+        $built = $this->speciesBuilder->build();
+        $this->writeJson($this->paths->species, $built['species']);
+        $io->success(\sprintf('%d forms written to %s', \count($built['species']['species']), $this->paths->species));
+
+        $io->section('CP multipliers');
         $multipliers = $this->cpMultiplierBuilder->build();
-        $this->writeJson($this->cpMultiplierFile, $multipliers);
+        $this->writeJson($this->paths->cpMultipliers, $multipliers);
         $io->success(\sprintf(
-            '%d niveaux écrits dans %s',
+            '%d levels written to %s',
             \count($multipliers['multipliers']),
-            $this->cpMultiplierFile,
+            $this->paths->cpMultipliers,
         ));
 
-        $io->section('Catalogues de traduction');
+        $io->section('Moves');
+        $this->writeJson($this->paths->moves, ['generatedAt' => date(\DATE_ATOM), 'moves' => $built['moves']]);
+        $io->success(\sprintf('%d moves written to %s', \count($built['moves']), $this->paths->moves));
+
+        $io->section('Mega levels');
+        $megaLevels = $this->megaLevelBuilder->build();
+        $this->writeJson($this->paths->megaLevels, $megaLevels);
+        $io->success(\sprintf(
+            '%d species with a mega progression written to %s',
+            \count($megaLevels['maxLevelByDex']),
+            $this->paths->megaLevels,
+        ));
+
+        $io->section('Translation catalogues');
 
         foreach ($this->nameBuilder->build() as $locale => $names) {
-            $this->xliff->write($this->translationsDir, SpeciesNameResolver::SPECIES_DOMAIN, $locale, $names);
-            $io->success(\sprintf('%d noms écrits pour la locale "%s"', \count($names), $locale));
+            $this->xliff->write($this->paths->translations, SpeciesNameResolver::SPECIES_DOMAIN, $locale, $names);
+            $io->success(\sprintf('%d names written for locale "%s"', \count($names), $locale));
         }
 
         // Only the English form labels are generated: the French ones are curated by
         // hand in pokemon_form.fr.xlf, since "Shadow" has no Pokédex translation.
-        $this->xliff->write($this->translationsDir, SpeciesNameResolver::FORM_DOMAIN, 'en', $built['formLabels']);
-        $io->success(\sprintf('%d libellés de forme écrits pour la locale "en"', \count($built['formLabels'])));
+        $this->xliff->write($this->paths->translations, SpeciesNameResolver::FORM_DOMAIN, 'en', $built['formLabels']);
+        $io->success(\sprintf('%d form labels written for locale "en"', \count($built['formLabels'])));
+
+        foreach ($this->moveNameBuilder->build($built['moves']) as $locale => $names) {
+            $this->xliff->write($this->paths->translations, MoveNameResolver::DOMAIN, $locale, $names);
+            $io->success(\sprintf('%d move names written for locale "%s"', \count($names), $locale));
+        }
 
         return Command::SUCCESS;
     }

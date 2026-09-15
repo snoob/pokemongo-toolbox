@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Fake;
 
+use App\Infrastructure\Naming\MoveNameResolver;
 use App\Infrastructure\Naming\SpeciesNameResolver;
 use Symfony\Component\Translation\Loader\XliffFileLoader;
 use Symfony\Component\Translation\Translator;
@@ -24,7 +25,11 @@ final class FixtureTranslator
         $translator->setFallbackLocales(['en']);
 
         foreach ($locales as $locale) {
-            foreach ([SpeciesNameResolver::SPECIES_DOMAIN, SpeciesNameResolver::FORM_DOMAIN] as $domain) {
+            foreach ([
+                SpeciesNameResolver::SPECIES_DOMAIN,
+                SpeciesNameResolver::FORM_DOMAIN,
+                MoveNameResolver::DOMAIN,
+            ] as $domain) {
                 $translator->addResource(
                     'xlf',
                     \sprintf('%s/../Fixtures/translations/%s.%s.xlf', __DIR__, $domain, $locale),

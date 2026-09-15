@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  quality:
+    name: Format, lint, analyse, tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      # --dry-run rather than the plain `format`: CI reports, it does not rewrite.
+      - name: Format
+        run: vendor/bin/mago format --dry-run
+
+      - name: Lint
+        run: vendor/bin/mago lint --reporting-format=github
+
+      - name: Analyse
+        run: vendor/bin/mago analyze --reporting-format=github
+
+      - name: Tests
+        run: vendor/bin/phpunit

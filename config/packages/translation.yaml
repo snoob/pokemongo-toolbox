@@ -1,7 +1,8 @@
 framework:
-    # Toolbox à usage personnel : le français est la langue de travail, l'anglais sert
-    # de repli pour tout ce qui n'est pas traduit (suffixes de forme rares).
-    default_locale: fr
+    # L'anglais est la langue par défaut : c'est celle du méta et des noms d'attaques.
+    # Le français s'active quand le Pokémon est demandé en français (voir InputLocale),
+    # et sert aussi de repli pour ce qui n'est pas traduit.
+    default_locale: en
     translator:
         default_path: '%kernel.project_dir%/translations'
         fallbacks:

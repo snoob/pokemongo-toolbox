@@ -1,0 +1,1394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="n12hEpY" resname="ACID">
+        <source>ACID</source>
+        <target>Acide</target>
+      </trans-unit>
+      <trans-unit id="2e2_8aS" resname="ACID_SPRAY">
+        <source>ACID_SPRAY</source>
+        <target>Bombe Acide</target>
+      </trans-unit>
+      <trans-unit id="svJoB4o" resname="ACID_SPRAY_PLUS">
+        <source>ACID_SPRAY_PLUS</source>
+        <target>Bombe Acide+</target>
+      </trans-unit>
+      <trans-unit id="Zyp6n1u" resname="ACROBATICS">
+        <source>ACROBATICS</source>
+        <target>Acrobatie</target>
+      </trans-unit>
+      <trans-unit id="rn1u5kK" resname="AERIAL_ACE">
+        <source>AERIAL_ACE</source>
+        <target>Aéropique</target>
+      </trans-unit>
+      <trans-unit id="IIhL61z" resname="AEROBLAST">
+        <source>AEROBLAST</source>
+        <target>Aéroblast</target>
+      </trans-unit>
+      <trans-unit id="iz1Zn3k" resname="AIR_CUTTER">
+        <source>AIR_CUTTER</source>
+        <target>Tranch’Air</target>
+      </trans-unit>
+      <trans-unit id="G7KnXdx" resname="AIR_SLASH">
+        <source>AIR_SLASH</source>
+        <target>Lame d’Air</target>
+      </trans-unit>
+      <trans-unit id="eWyuCSF" resname="ANCIENT_POWER">
+        <source>ANCIENT_POWER</source>
+        <target>Pouvoir Antique</target>
+      </trans-unit>
+      <trans-unit id="PEj3Xjq" resname="AQUA_JET">
+        <source>AQUA_JET</source>
+        <target>Aqua-Jet</target>
+      </trans-unit>
+      <trans-unit id="uOSkkYc" resname="AQUA_STEP">
+        <source>AQUA_STEP</source>
+        <target>Danse Aquatique</target>
+      </trans-unit>
+      <trans-unit id="u3.1XLp" resname="AQUA_TAIL">
+        <source>AQUA_TAIL</source>
+        <target>Hydro-Queue</target>
+      </trans-unit>
+      <trans-unit id="jAyTQ1K" resname="ASTONISH">
+        <source>ASTONISH</source>
+        <target>Étonnement</target>
+      </trans-unit>
+      <trans-unit id="0E0hJnI" resname="AURA_SPHERE">
+        <source>AURA_SPHERE</source>
+        <target>Aurasphère</target>
+      </trans-unit>
+      <trans-unit id="46zgtqq" resname="AURA_WHEEL_DARK">
+        <source>AURA_WHEEL_DARK</source>
+        <target>Roue Libre (Dark)</target>
+      </trans-unit>
+      <trans-unit id="uw5Msv2" resname="AURA_WHEEL_ELECTRIC">
+        <source>AURA_WHEEL_ELECTRIC</source>
+        <target>Roue Libre (Electric)</target>
+      </trans-unit>
+      <trans-unit id="H86Ve3_" resname="AURORA_BEAM">
+        <source>AURORA_BEAM</source>
+        <target>Onde Boréale</target>
+      </trans-unit>
+      <trans-unit id="xIZXaNE" resname="AVALANCHE">
+        <source>AVALANCHE</source>
+        <target>Avalanche</target>
+      </trans-unit>
+      <trans-unit id="EkVQwaO" resname="BEAK_BLAST">
+        <source>BEAK_BLAST</source>
+        <target>Bec-Canon</target>
+      </trans-unit>
+      <trans-unit id="VUlpnK2" resname="BEHEMOTH_BASH">
+        <source>BEHEMOTH_BASH</source>
+        <target>Aegis Maxima</target>
+      </trans-unit>
+      <trans-unit id="vu.hYQr" resname="BEHEMOTH_BLADE">
+        <source>BEHEMOTH_BLADE</source>
+        <target>Gladius Maximus</target>
+      </trans-unit>
+      <trans-unit id="u3ig8oq" resname="BITE">
+        <source>BITE</source>
+        <target>Morsure</target>
+      </trans-unit>
+      <trans-unit id="JSkZ7Ao" resname="BLAST_BURN">
+        <source>BLAST_BURN</source>
+        <target>Rafale Feu</target>
+      </trans-unit>
+      <trans-unit id="hJMC1PS" resname="BLAZE_KICK">
+        <source>BLAZE_KICK</source>
+        <target>Pied Brûleur</target>
+      </trans-unit>
+      <trans-unit id="CttOtxS" resname="BLEAKWIND_STORM">
+        <source>BLEAKWIND_STORM</source>
+        <target>Typhon Hivernal</target>
+      </trans-unit>
+      <trans-unit id="rLPA8h8" resname="BLIZZARD">
+        <source>BLIZZARD</source>
+        <target>Blizzard</target>
+      </trans-unit>
+      <trans-unit id="BkM2i6r" resname="BODY_SLAM">
+        <source>BODY_SLAM</source>
+        <target>Plaquage</target>
+      </trans-unit>
+      <trans-unit id="WM00AtW" resname="BONE_CLUB">
+        <source>BONE_CLUB</source>
+        <target>Massd’Os</target>
+      </trans-unit>
+      <trans-unit id="zOv8zP9" resname="BOOMBURST">
+        <source>BOOMBURST</source>
+        <target>Bang Sonique</target>
+      </trans-unit>
+      <trans-unit id="wS6bPVB" resname="BRAVE_BIRD">
+        <source>BRAVE_BIRD</source>
+        <target>Rapace</target>
+      </trans-unit>
+      <trans-unit id="EaIyrzf" resname="BREAKING_SWIPE">
+        <source>BREAKING_SWIPE</source>
+        <target>Abattage</target>
+      </trans-unit>
+      <trans-unit id="yaOUyy." resname="BRICK_BREAK">
+        <source>BRICK_BREAK</source>
+        <target>Casse-Brique</target>
+      </trans-unit>
+      <trans-unit id="XYUT3Me" resname="BRICK_BREAK_PLUS">
+        <source>BRICK_BREAK_PLUS</source>
+        <target>Casse-Brique+</target>
+      </trans-unit>
+      <trans-unit id="0IQYBHO" resname="BRINE">
+        <source>BRINE</source>
+        <target>Saumure</target>
+      </trans-unit>
+      <trans-unit id="Q7mp6.f" resname="BRUTAL_SWING">
+        <source>BRUTAL_SWING</source>
+        <target>Centrifugifle</target>
+      </trans-unit>
+      <trans-unit id="H39VPsp" resname="BUBBLE">
+        <source>BUBBLE</source>
+        <target>Écume</target>
+      </trans-unit>
+      <trans-unit id="ERYWB55" resname="BUBBLE_BEAM">
+        <source>BUBBLE_BEAM</source>
+        <target>Bulles d’O</target>
+      </trans-unit>
+      <trans-unit id="RlpTT_a" resname="BUG_BITE">
+        <source>BUG_BITE</source>
+        <target>Piqûre</target>
+      </trans-unit>
+      <trans-unit id="DUiH_ZC" resname="BUG_BUZZ">
+        <source>BUG_BUZZ</source>
+        <target>Bourdon</target>
+      </trans-unit>
+      <trans-unit id="bxVesaW" resname="BULLDOZE">
+        <source>BULLDOZE</source>
+        <target>Piétisol</target>
+      </trans-unit>
+      <trans-unit id="1akk0gs" resname="BULLET_PUNCH">
+        <source>BULLET_PUNCH</source>
+        <target>Pisto-Poing</target>
+      </trans-unit>
+      <trans-unit id="B3Fbd15" resname="BULLET_SEED">
+        <source>BULLET_SEED</source>
+        <target>Balle Graine</target>
+      </trans-unit>
+      <trans-unit id="SnLqznP" resname="CHARGE_BEAM">
+        <source>CHARGE_BEAM</source>
+        <target>Rayon Chargé</target>
+      </trans-unit>
+      <trans-unit id="mhVNlnu" resname="CHARM">
+        <source>CHARM</source>
+        <target>Charme</target>
+      </trans-unit>
+      <trans-unit id="LYJogUA" resname="CHILLING_WATER">
+        <source>CHILLING_WATER</source>
+        <target>Douche Froide</target>
+      </trans-unit>
+      <trans-unit id="_iYF56U" resname="CLANGING_SCALES">
+        <source>CLANGING_SCALES</source>
+        <target>Vibrécaille</target>
+      </trans-unit>
+      <trans-unit id="Kw3d7vo" resname="CLOSE_COMBAT">
+        <source>CLOSE_COMBAT</source>
+        <target>Close Combat</target>
+      </trans-unit>
+      <trans-unit id="zt2jwCO" resname="CONFUSION">
+        <source>CONFUSION</source>
+        <target>Choc Mental</target>
+      </trans-unit>
+      <trans-unit id="2G1ZO2r" resname="COUNTER">
+        <source>COUNTER</source>
+        <target>Riposte</target>
+      </trans-unit>
+      <trans-unit id="PqUnQN0" resname="CRABHAMMER">
+        <source>CRABHAMMER</source>
+        <target>Pince-Masse</target>
+      </trans-unit>
+      <trans-unit id="sivTKv6" resname="CROSS_CHOP">
+        <source>CROSS_CHOP</source>
+        <target>Coup Croix</target>
+      </trans-unit>
+      <trans-unit id="nzo51iu" resname="CROSS_POISON">
+        <source>CROSS_POISON</source>
+        <target>Poison Croix</target>
+      </trans-unit>
+      <trans-unit id="2D80if8" resname="CRUNCH">
+        <source>CRUNCH</source>
+        <target>Mâchouille</target>
+      </trans-unit>
+      <trans-unit id="8hyNXT8" resname="CRUSH_GRIP">
+        <source>CRUSH_GRIP</source>
+        <target>Presse</target>
+      </trans-unit>
+      <trans-unit id="1KVv9H3" resname="CUT">
+        <source>CUT</source>
+        <target>Coupe</target>
+      </trans-unit>
+      <trans-unit id="C6P65ca" resname="DARKEST_LARIAT">
+        <source>DARKEST_LARIAT</source>
+        <target>Dark Lariat</target>
+      </trans-unit>
+      <trans-unit id="O2w5e2d" resname="DARK_PULSE">
+        <source>DARK_PULSE</source>
+        <target>Vibrobscur</target>
+      </trans-unit>
+      <trans-unit id="OwI4kiZ" resname="DARK_PULSE_PLUS">
+        <source>DARK_PULSE_PLUS</source>
+        <target>Vibrobscur+</target>
+      </trans-unit>
+      <trans-unit id="2TG.wZn" resname="DAZZLING_GLEAM">
+        <source>DAZZLING_GLEAM</source>
+        <target>Éclat Magique</target>
+      </trans-unit>
+      <trans-unit id="EZrPLcx" resname="DIG">
+        <source>DIG</source>
+        <target>Tunnel</target>
+      </trans-unit>
+      <trans-unit id="IlZpZ2T" resname="DISARMING_VOICE">
+        <source>DISARMING_VOICE</source>
+        <target>Voix Enjôleuse</target>
+      </trans-unit>
+      <trans-unit id=".aarz3T" resname="DISCHARGE">
+        <source>DISCHARGE</source>
+        <target>Coup d’Jus</target>
+      </trans-unit>
+      <trans-unit id="qH4JrNi" resname="DIVE">
+        <source>DIVE</source>
+        <target>Plongée</target>
+      </trans-unit>
+      <trans-unit id="rPC.JIz" resname="DOOM_DESIRE">
+        <source>DOOM_DESIRE</source>
+        <target>Vœu Destructeur</target>
+      </trans-unit>
+      <trans-unit id="_6_dE8X" resname="DOUBLE_IRON_BASH">
+        <source>DOUBLE_IRON_BASH</source>
+        <target>Écrous d’Poing</target>
+      </trans-unit>
+      <trans-unit id="BueLYO9" resname="DOUBLE_KICK">
+        <source>DOUBLE_KICK</source>
+        <target>Double Pied</target>
+      </trans-unit>
+      <trans-unit id="PlhcP9m" resname="DRACO_METEOR">
+        <source>DRACO_METEOR</source>
+        <target>Draco-Météore</target>
+      </trans-unit>
+      <trans-unit id="SzECXXq" resname="DRAGON_ASCENT">
+        <source>DRAGON_ASCENT</source>
+        <target>Draco-Ascension</target>
+      </trans-unit>
+      <trans-unit id="TcWLLRZ" resname="DRAGON_BREATH">
+        <source>DRAGON_BREATH</source>
+        <target>Draco-Souffle</target>
+      </trans-unit>
+      <trans-unit id="0sSno4u" resname="DRAGON_CLAW">
+        <source>DRAGON_CLAW</source>
+        <target>Draco-Griffe</target>
+      </trans-unit>
+      <trans-unit id="wDwfpbZ" resname="DRAGON_ENERGY">
+        <source>DRAGON_ENERGY</source>
+        <target>Draco-Énergie</target>
+      </trans-unit>
+      <trans-unit id="nc1OUpF" resname="DRAGON_PULSE">
+        <source>DRAGON_PULSE</source>
+        <target>Draco-Choc</target>
+      </trans-unit>
+      <trans-unit id="5nCP3DR" resname="DRAGON_TAIL">
+        <source>DRAGON_TAIL</source>
+        <target>Draco-Queue</target>
+      </trans-unit>
+      <trans-unit id="BY1XoH1" resname="DRAINING_KISS">
+        <source>DRAINING_KISS</source>
+        <target>Vampibaiser</target>
+      </trans-unit>
+      <trans-unit id="3RGwPGQ" resname="DRAIN_PUNCH">
+        <source>DRAIN_PUNCH</source>
+        <target>Vampi-Poing</target>
+      </trans-unit>
+      <trans-unit id="zVpl3ij" resname="DRILL_PECK">
+        <source>DRILL_PECK</source>
+        <target>Bec Vrille</target>
+      </trans-unit>
+      <trans-unit id="8YBy2N9" resname="DRILL_PECK_PLUS">
+        <source>DRILL_PECK_PLUS</source>
+        <target>Bec Vrille+</target>
+      </trans-unit>
+      <trans-unit id="dE5XPlp" resname="DRILL_RUN">
+        <source>DRILL_RUN</source>
+        <target>Tunnelier</target>
+      </trans-unit>
+      <trans-unit id="Q7Q5H4u" resname="DRUM_BEATING">
+        <source>DRUM_BEATING</source>
+        <target>Tambour Battant</target>
+      </trans-unit>
+      <trans-unit id="7QFrGLR" resname="DYNAMAX_CANNON">
+        <source>DYNAMAX_CANNON</source>
+        <target>Canon Dynamax</target>
+      </trans-unit>
+      <trans-unit id="iwUfZUO" resname="DYNAMIC_PUNCH">
+        <source>DYNAMIC_PUNCH</source>
+        <target>Dynamo-Poing</target>
+      </trans-unit>
+      <trans-unit id="KlofFHb" resname="DYNAMIC_PUNCH_PLUS">
+        <source>DYNAMIC_PUNCH_PLUS</source>
+        <target>Dynamo-Poing+</target>
+      </trans-unit>
+      <trans-unit id="zrXN0WB" resname="EARTHQUAKE">
+        <source>EARTHQUAKE</source>
+        <target>Séisme</target>
+      </trans-unit>
+      <trans-unit id="lQbI30y" resname="EARTH_POWER">
+        <source>EARTH_POWER</source>
+        <target>Telluriforce</target>
+      </trans-unit>
+      <trans-unit id="Rnz6Q1P" resname="EMBER">
+        <source>EMBER</source>
+        <target>Flammèche</target>
+      </trans-unit>
+      <trans-unit id="H4DscEw" resname="ENERGY_BALL">
+        <source>ENERGY_BALL</source>
+        <target>Éco-Sphère</target>
+      </trans-unit>
+      <trans-unit id="_6y5oS7" resname="EXTRASENSORY">
+        <source>EXTRASENSORY</source>
+        <target>Extrasenseur</target>
+      </trans-unit>
+      <trans-unit id="fvGJGY4" resname="FAIRY_WIND">
+        <source>FAIRY_WIND</source>
+        <target>Vent Féérique</target>
+      </trans-unit>
+      <trans-unit id="tzgjS2D" resname="FEATHER_DANCE">
+        <source>FEATHER_DANCE</source>
+        <target>Danse Plumes</target>
+      </trans-unit>
+      <trans-unit id="1Fh2UUN" resname="FEINT_ATTACK">
+        <source>FEINT_ATTACK</source>
+        <target>Feinte</target>
+      </trans-unit>
+      <trans-unit id="Dz5b2OQ" resname="FELL_STINGER">
+        <source>FELL_STINGER</source>
+        <target>Dard Mortel</target>
+      </trans-unit>
+      <trans-unit id="fnDyVsL" resname="FELL_STINGER_PLUS">
+        <source>FELL_STINGER_PLUS</source>
+        <target>Dard Mortel+</target>
+      </trans-unit>
+      <trans-unit id="YvNh.1J" resname="FIRE_BLAST">
+        <source>FIRE_BLAST</source>
+        <target>Déflagration</target>
+      </trans-unit>
+      <trans-unit id="hrmJMmD" resname="FIRE_FANG">
+        <source>FIRE_FANG</source>
+        <target>Crocs Feu</target>
+      </trans-unit>
+      <trans-unit id="0KXr4w7" resname="FIRE_PUNCH">
+        <source>FIRE_PUNCH</source>
+        <target>Poing Feu</target>
+      </trans-unit>
+      <trans-unit id="iczyDjX" resname="FIRE_SPIN">
+        <source>FIRE_SPIN</source>
+        <target>Danse Flammes</target>
+      </trans-unit>
+      <trans-unit id="gpzEf9l" resname="FLAMETHROWER">
+        <source>FLAMETHROWER</source>
+        <target>Lance-Flammes</target>
+      </trans-unit>
+      <trans-unit id="c3VTJ8z" resname="FLAME_BURST">
+        <source>FLAME_BURST</source>
+        <target>Rebondifeu</target>
+      </trans-unit>
+      <trans-unit id="0tYYBgA" resname="FLAME_CHARGE">
+        <source>FLAME_CHARGE</source>
+        <target>Nitrocharge</target>
+      </trans-unit>
+      <trans-unit id="KtMhVBf" resname="FLAME_WHEEL">
+        <source>FLAME_WHEEL</source>
+        <target>Roue de Feu</target>
+      </trans-unit>
+      <trans-unit id="UNuDC0h" resname="FLASH_CANNON">
+        <source>FLASH_CANNON</source>
+        <target>Luminocanon</target>
+      </trans-unit>
+      <trans-unit id="zyvdGbs" resname="FLOWER_TRICK">
+        <source>FLOWER_TRICK</source>
+        <target>Magie Florale</target>
+      </trans-unit>
+      <trans-unit id="raL.t56" resname="FLY">
+        <source>FLY</source>
+        <target>Vol</target>
+      </trans-unit>
+      <trans-unit id="4fsaYkv" resname="FLYING_PRESS">
+        <source>FLYING_PRESS</source>
+        <target>Flying Press</target>
+      </trans-unit>
+      <trans-unit id="mpb__rt" resname="FOCUS_BLAST">
+        <source>FOCUS_BLAST</source>
+        <target>Exploforce</target>
+      </trans-unit>
+      <trans-unit id="cnzUlTV" resname="FORCE_PALM">
+        <source>FORCE_PALM</source>
+        <target>Forte-Paume</target>
+      </trans-unit>
+      <trans-unit id="AsxsBnj" resname="FOUL_PLAY">
+        <source>FOUL_PLAY</source>
+        <target>Tricherie</target>
+      </trans-unit>
+      <trans-unit id="QizB8i0" resname="FREEZE_SHOCK">
+        <source>FREEZE_SHOCK</source>
+        <target>Éclair Gelé</target>
+      </trans-unit>
+      <trans-unit id="XpnE5ct" resname="FRENZY_PLANT">
+        <source>FRENZY_PLANT</source>
+        <target>Végé-Attaque</target>
+      </trans-unit>
+      <trans-unit id="yykEuRL" resname="FROST_BREATH">
+        <source>FROST_BREATH</source>
+        <target>Souffle Glacé</target>
+      </trans-unit>
+      <trans-unit id="FAhXVgF" resname="FRUSTRATION">
+        <source>FRUSTRATION</source>
+        <target>Frustration</target>
+      </trans-unit>
+      <trans-unit id="r643SAN" resname="FURY_CUTTER">
+        <source>FURY_CUTTER</source>
+        <target>Taillade</target>
+      </trans-unit>
+      <trans-unit id="VPT20RH" resname="FUSION_BOLT">
+        <source>FUSION_BOLT</source>
+        <target>Éclair Croix</target>
+      </trans-unit>
+      <trans-unit id="Fmm_.JD" resname="FUSION_FLARE">
+        <source>FUSION_FLARE</source>
+        <target>Flamme Croix</target>
+      </trans-unit>
+      <trans-unit id="Weuzp0o" resname="FUTURE_SIGHT">
+        <source>FUTURE_SIGHT</source>
+        <target>Prescience</target>
+      </trans-unit>
+      <trans-unit id="vjR9pn1" resname="FUTURE_SIGHT_PLUS">
+        <source>FUTURE_SIGHT_PLUS</source>
+        <target>Prescience+</target>
+      </trans-unit>
+      <trans-unit id="60rS47W" resname="GEOMANCY">
+        <source>GEOMANCY</source>
+        <target>Géo-Contrôle</target>
+      </trans-unit>
+      <trans-unit id="afL3k6N" resname="GIGATON_HAMMER">
+        <source>GIGATON_HAMMER</source>
+        <target>Marteau Mastoc</target>
+      </trans-unit>
+      <trans-unit id="nSBqQ.X" resname="GIGA_DRAIN">
+        <source>GIGA_DRAIN</source>
+        <target>Giga-Sangsue</target>
+      </trans-unit>
+      <trans-unit id="G5UwWuX" resname="GIGA_IMPACT">
+        <source>GIGA_IMPACT</source>
+        <target>Giga Impact</target>
+      </trans-unit>
+      <trans-unit id="4Ey4ZC_" resname="GLACIATE">
+        <source>GLACIATE</source>
+        <target>Ère Glaciaire</target>
+      </trans-unit>
+      <trans-unit id="hfhImQc" resname="GLAIVE_RUSH">
+        <source>GLAIVE_RUSH</source>
+        <target>Charge Glaive</target>
+      </trans-unit>
+      <trans-unit id="Pi77Y5l" resname="GRASS_KNOT">
+        <source>GRASS_KNOT</source>
+        <target>Nœud Herbe</target>
+      </trans-unit>
+      <trans-unit id="MU5fqI_" resname="GUNK_SHOT">
+        <source>GUNK_SHOT</source>
+        <target>Détricanon</target>
+      </trans-unit>
+      <trans-unit id="bGm1r8o" resname="GUST">
+        <source>GUST</source>
+        <target>Tornade</target>
+      </trans-unit>
+      <trans-unit id="qK9XsvQ" resname="GYRO_BALL">
+        <source>GYRO_BALL</source>
+        <target>Gyroballe</target>
+      </trans-unit>
+      <trans-unit id="bREsPhK" resname="HEART_STAMP">
+        <source>HEART_STAMP</source>
+        <target>Crève-Cœur</target>
+      </trans-unit>
+      <trans-unit id="Ox2k0T9" resname="HEAT_WAVE">
+        <source>HEAT_WAVE</source>
+        <target>Canicule</target>
+      </trans-unit>
+      <trans-unit id="PAjlnIf" resname="HEAVY_SLAM">
+        <source>HEAVY_SLAM</source>
+        <target>Tacle Lourd</target>
+      </trans-unit>
+      <trans-unit id="i3hbeg5" resname="HEX">
+        <source>HEX</source>
+        <target>Châtiment</target>
+      </trans-unit>
+      <trans-unit id="1XyEqhM" resname="HIDDEN_POWER_BUG">
+        <source>HIDDEN_POWER_BUG</source>
+        <target>Puissance Cachée (Bug)</target>
+      </trans-unit>
+      <trans-unit id="xjBtAQp" resname="HIDDEN_POWER_DARK">
+        <source>HIDDEN_POWER_DARK</source>
+        <target>Puissance Cachée (Dark)</target>
+      </trans-unit>
+      <trans-unit id="cUBMDMJ" resname="HIDDEN_POWER_DRAGON">
+        <source>HIDDEN_POWER_DRAGON</source>
+        <target>Puissance Cachée (Dragon)</target>
+      </trans-unit>
+      <trans-unit id="zeugQ73" resname="HIDDEN_POWER_ELECTRIC">
+        <source>HIDDEN_POWER_ELECTRIC</source>
+        <target>Puissance Cachée (Electric)</target>
+      </trans-unit>
+      <trans-unit id="Sn2x6Jd" resname="HIDDEN_POWER_FIGHTING">
+        <source>HIDDEN_POWER_FIGHTING</source>
+        <target>Puissance Cachée (Fighting)</target>
+      </trans-unit>
+      <trans-unit id="1kOj3VD" resname="HIDDEN_POWER_FIRE">
+        <source>HIDDEN_POWER_FIRE</source>
+        <target>Puissance Cachée (Fire)</target>
+      </trans-unit>
+      <trans-unit id="PO1cNJ0" resname="HIDDEN_POWER_FLYING">
+        <source>HIDDEN_POWER_FLYING</source>
+        <target>Puissance Cachée (Flying)</target>
+      </trans-unit>
+      <trans-unit id="OjCn0wD" resname="HIDDEN_POWER_GHOST">
+        <source>HIDDEN_POWER_GHOST</source>
+        <target>Puissance Cachée (Ghost)</target>
+      </trans-unit>
+      <trans-unit id="aS3_79n" resname="HIDDEN_POWER_GRASS">
+        <source>HIDDEN_POWER_GRASS</source>
+        <target>Puissance Cachée (Grass)</target>
+      </trans-unit>
+      <trans-unit id=".hxDG_9" resname="HIDDEN_POWER_GROUND">
+        <source>HIDDEN_POWER_GROUND</source>
+        <target>Puissance Cachée (Ground)</target>
+      </trans-unit>
+      <trans-unit id="qc8H.F2" resname="HIDDEN_POWER_ICE">
+        <source>HIDDEN_POWER_ICE</source>
+        <target>Puissance Cachée (Ice)</target>
+      </trans-unit>
+      <trans-unit id="6kYmoq3" resname="HIDDEN_POWER_NORMAL">
+        <source>HIDDEN_POWER_NORMAL</source>
+        <target>Puissance Cachée (Normal)</target>
+      </trans-unit>
+      <trans-unit id="ofTdfcU" resname="HIDDEN_POWER_POISON">
+        <source>HIDDEN_POWER_POISON</source>
+        <target>Puissance Cachée (Poison)</target>
+      </trans-unit>
+      <trans-unit id="q2S4Hp8" resname="HIDDEN_POWER_PSYCHIC">
+        <source>HIDDEN_POWER_PSYCHIC</source>
+        <target>Puissance Cachée (Psychic)</target>
+      </trans-unit>
+      <trans-unit id="edjfBh0" resname="HIDDEN_POWER_ROCK">
+        <source>HIDDEN_POWER_ROCK</source>
+        <target>Puissance Cachée (Rock)</target>
+      </trans-unit>
+      <trans-unit id="kscGHbn" resname="HIDDEN_POWER_STEEL">
+        <source>HIDDEN_POWER_STEEL</source>
+        <target>Puissance Cachée (Steel)</target>
+      </trans-unit>
+      <trans-unit id="85uM5oz" resname="HIDDEN_POWER_WATER">
+        <source>HIDDEN_POWER_WATER</source>
+        <target>Puissance Cachée (Water)</target>
+      </trans-unit>
+      <trans-unit id="52SomG." resname="HIGH_HORSEPOWER">
+        <source>HIGH_HORSEPOWER</source>
+        <target>Cavalerie Lourde</target>
+      </trans-unit>
+      <trans-unit id="fYz0_nF" resname="HIGH_JUMP_KICK">
+        <source>HIGH_JUMP_KICK</source>
+        <target>Pied Voltige</target>
+      </trans-unit>
+      <trans-unit id="dq94TCW" resname="HORN_ATTACK">
+        <source>HORN_ATTACK</source>
+        <target>Koud’Korne</target>
+      </trans-unit>
+      <trans-unit id="sChdvUT" resname="HURRICANE">
+        <source>HURRICANE</source>
+        <target>Vent Violent</target>
+      </trans-unit>
+      <trans-unit id="ncjQKbG" resname="HYDRO_CANNON">
+        <source>HYDRO_CANNON</source>
+        <target>Hydroblast</target>
+      </trans-unit>
+      <trans-unit id="AYnvgMV" resname="HYDRO_PUMP">
+        <source>HYDRO_PUMP</source>
+        <target>Hydrocanon</target>
+      </trans-unit>
+      <trans-unit id="1NB_7I1" resname="HYDRO_PUMP_BLASTOISE">
+        <source>HYDRO_PUMP_BLASTOISE</source>
+        <target>Hydrocanon (Blastoise)</target>
+      </trans-unit>
+      <trans-unit id="IxOugbh" resname="HYPER_BEAM">
+        <source>HYPER_BEAM</source>
+        <target>Ultralaser</target>
+      </trans-unit>
+      <trans-unit id="QRRqyQy" resname="HYPER_FANG">
+        <source>HYPER_FANG</source>
+        <target>Croc de Mort</target>
+      </trans-unit>
+      <trans-unit id="vkUlrkx" resname="ICE_BEAM">
+        <source>ICE_BEAM</source>
+        <target>Laser Glace</target>
+      </trans-unit>
+      <trans-unit id="a7EUjy4" resname="ICE_BURN">
+        <source>ICE_BURN</source>
+        <target>Feu Glacé</target>
+      </trans-unit>
+      <trans-unit id="gam_k2K" resname="ICE_FANG">
+        <source>ICE_FANG</source>
+        <target>Crocs Givre</target>
+      </trans-unit>
+      <trans-unit id="67OGXVS" resname="ICE_PUNCH">
+        <source>ICE_PUNCH</source>
+        <target>Poing Glace</target>
+      </trans-unit>
+      <trans-unit id="b3o61X5" resname="ICE_SHARD">
+        <source>ICE_SHARD</source>
+        <target>Éclats Glace</target>
+      </trans-unit>
+      <trans-unit id="uaodjoV" resname="ICICLE_SPEAR">
+        <source>ICICLE_SPEAR</source>
+        <target>Stalactite</target>
+      </trans-unit>
+      <trans-unit id="XZYQEZ7" resname="ICY_WIND">
+        <source>ICY_WIND</source>
+        <target>Vent Glace</target>
+      </trans-unit>
+      <trans-unit id="ir8zrM4" resname="INCINERATE">
+        <source>INCINERATE</source>
+        <target>Calcination</target>
+      </trans-unit>
+      <trans-unit id="HwenAj6" resname="INFESTATION">
+        <source>INFESTATION</source>
+        <target>Harcèlement</target>
+      </trans-unit>
+      <trans-unit id="jkwhn1l" resname="IRON_HEAD">
+        <source>IRON_HEAD</source>
+        <target>Tête de Fer</target>
+      </trans-unit>
+      <trans-unit id="guIcR2N" resname="IRON_TAIL">
+        <source>IRON_TAIL</source>
+        <target>Queue de Fer</target>
+      </trans-unit>
+      <trans-unit id="B382HnR" resname="KARATE_CHOP">
+        <source>KARATE_CHOP</source>
+        <target>Poing Karaté</target>
+      </trans-unit>
+      <trans-unit id="m4UTBuB" resname="LAST_RESORT">
+        <source>LAST_RESORT</source>
+        <target>Dernier Recours</target>
+      </trans-unit>
+      <trans-unit id="VWqutrS" resname="LEAFAGE">
+        <source>LEAFAGE</source>
+        <target>Feuillage</target>
+      </trans-unit>
+      <trans-unit id="06PJ2eH" resname="LEAF_BLADE">
+        <source>LEAF_BLADE</source>
+        <target>Lame Feuille</target>
+      </trans-unit>
+      <trans-unit id="sDlF4eZ" resname="LEAF_STORM">
+        <source>LEAF_STORM</source>
+        <target>Tempête Verte</target>
+      </trans-unit>
+      <trans-unit id="zL3tS9I" resname="LEAF_TORNADO">
+        <source>LEAF_TORNADO</source>
+        <target>Phytomixeur</target>
+      </trans-unit>
+      <trans-unit id="Ugli9t1" resname="LICK">
+        <source>LICK</source>
+        <target>Léchouille</target>
+      </trans-unit>
+      <trans-unit id="_KdubO_" resname="LIQUIDATION">
+        <source>LIQUIDATION</source>
+        <target>Aqua-Brèche</target>
+      </trans-unit>
+      <trans-unit id="CKezLcW" resname="LIQUIDATION_PLUS">
+        <source>LIQUIDATION_PLUS</source>
+        <target>Aqua-Brèche+</target>
+      </trans-unit>
+      <trans-unit id="b9U26wl" resname="LOCK_ON">
+        <source>LOCK_ON</source>
+        <target>Verrouillage</target>
+      </trans-unit>
+      <trans-unit id="fMisOhQ" resname="LOW_KICK">
+        <source>LOW_KICK</source>
+        <target>Balayage</target>
+      </trans-unit>
+      <trans-unit id="5tRmit4" resname="LOW_SWEEP">
+        <source>LOW_SWEEP</source>
+        <target>Balayette</target>
+      </trans-unit>
+      <trans-unit id="x5nD1oQ" resname="LUNGE">
+        <source>LUNGE</source>
+        <target>Furie-Bond</target>
+      </trans-unit>
+      <trans-unit id="sfJGGa8" resname="LUSTER_PURGE">
+        <source>LUSTER_PURGE</source>
+        <target>Lumi-Éclat</target>
+      </trans-unit>
+      <trans-unit id="h5lPeyk" resname="MAGICAL_LEAF">
+        <source>MAGICAL_LEAF</source>
+        <target>Feuille Magik</target>
+      </trans-unit>
+      <trans-unit id="mRo1KyW" resname="MAGMA_STORM">
+        <source>MAGMA_STORM</source>
+        <target>Vortex Magma</target>
+      </trans-unit>
+      <trans-unit id="0Yae4lU" resname="MAGNET_BOMB">
+        <source>MAGNET_BOMB</source>
+        <target>Bombe Aimant</target>
+      </trans-unit>
+      <trans-unit id="XhTVZD9" resname="MEGAHORN">
+        <source>MEGAHORN</source>
+        <target>Mégacorne</target>
+      </trans-unit>
+      <trans-unit id="0ac7Doh" resname="MEGA_DRAIN">
+        <source>MEGA_DRAIN</source>
+        <target>Méga-Sangsue</target>
+      </trans-unit>
+      <trans-unit id="FWHfPID" resname="METAL_CLAW">
+        <source>METAL_CLAW</source>
+        <target>Griffe Acier</target>
+      </trans-unit>
+      <trans-unit id="qYr1jF." resname="METAL_SOUND">
+        <source>METAL_SOUND</source>
+        <target>Strido-Son</target>
+      </trans-unit>
+      <trans-unit id="9m5yidO" resname="METEOR_BEAM">
+        <source>METEOR_BEAM</source>
+        <target>Laser Météore</target>
+      </trans-unit>
+      <trans-unit id="W76UguT" resname="METEOR_MASH">
+        <source>METEOR_MASH</source>
+        <target>Poing Météore</target>
+      </trans-unit>
+      <trans-unit id="YnKvClZ" resname="MIND_BLOWN">
+        <source>MIND_BLOWN</source>
+        <target>Caboche-Kaboum</target>
+      </trans-unit>
+      <trans-unit id="hSPGQAB" resname="MIRROR_COAT">
+        <source>MIRROR_COAT</source>
+        <target>Voile Miroir</target>
+      </trans-unit>
+      <trans-unit id="vocUoVI" resname="MIRROR_SHOT">
+        <source>MIRROR_SHOT</source>
+        <target>Miroi-Tir</target>
+      </trans-unit>
+      <trans-unit id="qgqGt__" resname="MIST_BALL">
+        <source>MIST_BALL</source>
+        <target>Ball’Brume</target>
+      </trans-unit>
+      <trans-unit id="GT1S4I6" resname="MOONBLAST">
+        <source>MOONBLAST</source>
+        <target>Pouvoir Lunaire</target>
+      </trans-unit>
+      <trans-unit id="iO7_lvG" resname="MOONGEIST_BEAM">
+        <source>MOONGEIST_BEAM</source>
+        <target>Rayon Spectral</target>
+      </trans-unit>
+      <trans-unit id="x25oe9B" resname="MUDDY_WATER">
+        <source>MUDDY_WATER</source>
+        <target>Ocroupi</target>
+      </trans-unit>
+      <trans-unit id="KprPYs1" resname="MUD_BOMB">
+        <source>MUD_BOMB</source>
+        <target>Boue-Bombe</target>
+      </trans-unit>
+      <trans-unit id="Qir0y0G" resname="MUD_SHOT">
+        <source>MUD_SHOT</source>
+        <target>Tir de Boue</target>
+      </trans-unit>
+      <trans-unit id="Kf7dAwG" resname="MUD_SLAP">
+        <source>MUD_SLAP</source>
+        <target>Coud’Boue</target>
+      </trans-unit>
+      <trans-unit id="AGy65hM" resname="MYSTICAL_FIRE">
+        <source>MYSTICAL_FIRE</source>
+        <target>Feu Ensorcelé</target>
+      </trans-unit>
+      <trans-unit id="ucRtJVE" resname="MYSTICAL_FIRE_PLUS">
+        <source>MYSTICAL_FIRE_PLUS</source>
+        <target>Feu Ensorcelé+</target>
+      </trans-unit>
+      <trans-unit id="rbUFuvm" resname="NATURES_MADNESS">
+        <source>NATURES_MADNESS</source>
+        <target>Ire de la Nature</target>
+      </trans-unit>
+      <trans-unit id="UAfxT8K" resname="NIGHT_SHADE">
+        <source>NIGHT_SHADE</source>
+        <target>Ombre Nocturne</target>
+      </trans-unit>
+      <trans-unit id="8nkexGU" resname="NIGHT_SLASH">
+        <source>NIGHT_SLASH</source>
+        <target>Tranche-Nuit</target>
+      </trans-unit>
+      <trans-unit id="5c0kpde" resname="OBLIVION_WING">
+        <source>OBLIVION_WING</source>
+        <target>Mort’Ailes</target>
+      </trans-unit>
+      <trans-unit id="7EerVmf" resname="OBSTRUCT">
+        <source>OBSTRUCT</source>
+        <target>Blocage</target>
+      </trans-unit>
+      <trans-unit id="4hW_Han" resname="OCTAZOOKA">
+        <source>OCTAZOOKA</source>
+        <target>Octazooka</target>
+      </trans-unit>
+      <trans-unit id="SrY3V99" resname="OMINOUS_WIND">
+        <source>OMINOUS_WIND</source>
+        <target>Vent Mauvais</target>
+      </trans-unit>
+      <trans-unit id="fo4eECn" resname="ORIGIN_PULSE">
+        <source>ORIGIN_PULSE</source>
+        <target>Onde Originelle</target>
+      </trans-unit>
+      <trans-unit id="TsXxWlQ" resname="OUTRAGE">
+        <source>OUTRAGE</source>
+        <target>Colère</target>
+      </trans-unit>
+      <trans-unit id="WD7Z.BA" resname="OUTRAGE_PLUS">
+        <source>OUTRAGE_PLUS</source>
+        <target>Colère+</target>
+      </trans-unit>
+      <trans-unit id="sJ24LHk" resname="OVERHEAT">
+        <source>OVERHEAT</source>
+        <target>Surchauffe</target>
+      </trans-unit>
+      <trans-unit id="x3P1ykd" resname="PARABOLIC_CHARGE">
+        <source>PARABOLIC_CHARGE</source>
+        <target>Parabocharge</target>
+      </trans-unit>
+      <trans-unit id="Rp74DjC" resname="PAYBACK">
+        <source>PAYBACK</source>
+        <target>Représailles</target>
+      </trans-unit>
+      <trans-unit id="rR0D66P" resname="PECK">
+        <source>PECK</source>
+        <target>Picpic</target>
+      </trans-unit>
+      <trans-unit id="8T98pSU" resname="PETAL_BLIZZARD">
+        <source>PETAL_BLIZZARD</source>
+        <target>Tempête Florale</target>
+      </trans-unit>
+      <trans-unit id="FTwJbmD" resname="PLASMA_FISTS">
+        <source>PLASMA_FISTS</source>
+        <target>Plasma Punch</target>
+      </trans-unit>
+      <trans-unit id="ZaYe5AA" resname="PLAY_ROUGH">
+        <source>PLAY_ROUGH</source>
+        <target>Câlinerie</target>
+      </trans-unit>
+      <trans-unit id="0uqof1x" resname="POISON_FANG">
+        <source>POISON_FANG</source>
+        <target>Crochet Venin</target>
+      </trans-unit>
+      <trans-unit id="3f1UCYI" resname="POISON_JAB">
+        <source>POISON_JAB</source>
+        <target>Direct Toxik</target>
+      </trans-unit>
+      <trans-unit id="fDniJc4" resname="POISON_STING">
+        <source>POISON_STING</source>
+        <target>Dard-Venin</target>
+      </trans-unit>
+      <trans-unit id="qSO5gbX" resname="POLTERGEIST">
+        <source>POLTERGEIST</source>
+        <target>Esprit Frappeur</target>
+      </trans-unit>
+      <trans-unit id="G_QwRAX" resname="POUND">
+        <source>POUND</source>
+        <target>Écras’Face</target>
+      </trans-unit>
+      <trans-unit id="iclNbql" resname="POWDER_SNOW">
+        <source>POWDER_SNOW</source>
+        <target>Poudreuse</target>
+      </trans-unit>
+      <trans-unit id="4XjlIHS" resname="POWER_GEM">
+        <source>POWER_GEM</source>
+        <target>Rayon Gemme</target>
+      </trans-unit>
+      <trans-unit id="wdxojSH" resname="POWER_UP_PUNCH">
+        <source>POWER_UP_PUNCH</source>
+        <target>Poing Boost</target>
+      </trans-unit>
+      <trans-unit id="8r_2Lrn" resname="POWER_WHIP">
+        <source>POWER_WHIP</source>
+        <target>Mégafouet</target>
+      </trans-unit>
+      <trans-unit id="q8nHbNw" resname="PRECIPICE_BLADES">
+        <source>PRECIPICE_BLADES</source>
+        <target>Lame Pangéenne</target>
+      </trans-unit>
+      <trans-unit id="u3GSwP2" resname="PRESENT">
+        <source>PRESENT</source>
+        <target>Cadeau</target>
+      </trans-unit>
+      <trans-unit id="eSAtbC5" resname="PSYBEAM">
+        <source>PSYBEAM</source>
+        <target>Rafale Psy</target>
+      </trans-unit>
+      <trans-unit id="ZnVcgUH" resname="PSYBEAM_PLUS">
+        <source>PSYBEAM_PLUS</source>
+        <target>Rafale Psy+</target>
+      </trans-unit>
+      <trans-unit id="KnoTbzG" resname="PSYCHIC">
+        <source>PSYCHIC</source>
+        <target>Psyko</target>
+      </trans-unit>
+      <trans-unit id="QxEsg.f" resname="PSYCHIC_FANGS">
+        <source>PSYCHIC_FANGS</source>
+        <target>Psycho-Croc</target>
+      </trans-unit>
+      <trans-unit id="X38FlND" resname="PSYCHO_BOOST">
+        <source>PSYCHO_BOOST</source>
+        <target>Psycho-Boost</target>
+      </trans-unit>
+      <trans-unit id="_4ZH4wn" resname="PSYCHO_CUT">
+        <source>PSYCHO_CUT</source>
+        <target>Coupe Psycho</target>
+      </trans-unit>
+      <trans-unit id="uFVhAvz" resname="PSYSHOCK">
+        <source>PSYSHOCK</source>
+        <target>Choc Psy</target>
+      </trans-unit>
+      <trans-unit id="cdmcmC." resname="PSYSTRIKE">
+        <source>PSYSTRIKE</source>
+        <target>Frappe Psy</target>
+      </trans-unit>
+      <trans-unit id="aElymB0" resname="PSYWAVE">
+        <source>PSYWAVE</source>
+        <target>Vague Psy</target>
+      </trans-unit>
+      <trans-unit id="cwrbP35" resname="PYRO_BALL">
+        <source>PYRO_BALL</source>
+        <target>Ballon Brûlant</target>
+      </trans-unit>
+      <trans-unit id="5PtHlbd" resname="QUICK_ATTACK">
+        <source>QUICK_ATTACK</source>
+        <target>Vive-Attaque</target>
+      </trans-unit>
+      <trans-unit id="N_p8KNd" resname="RAGE_FIST">
+        <source>RAGE_FIST</source>
+        <target>Poing de Colère</target>
+      </trans-unit>
+      <trans-unit id="KM_eSzW" resname="RAZOR_LEAF">
+        <source>RAZOR_LEAF</source>
+        <target>Tranch’Herbe</target>
+      </trans-unit>
+      <trans-unit id="KHIr0Wn" resname="RAZOR_SHELL">
+        <source>RAZOR_SHELL</source>
+        <target>Coqui-Lame</target>
+      </trans-unit>
+      <trans-unit id="U5HTGgg" resname="REST">
+        <source>REST</source>
+        <target>Repos</target>
+      </trans-unit>
+      <trans-unit id="hxf2aGH" resname="RETURN">
+        <source>RETURN</source>
+        <target>Retour</target>
+      </trans-unit>
+      <trans-unit id="9Q1pz4q" resname="ROAR_OF_TIME">
+        <source>ROAR_OF_TIME</source>
+        <target>Hurle-Temps</target>
+      </trans-unit>
+      <trans-unit id="T8O_5sM" resname="ROCK_BLAST">
+        <source>ROCK_BLAST</source>
+        <target>Boule Roc</target>
+      </trans-unit>
+      <trans-unit id=".6BKVl7" resname="ROCK_SLIDE">
+        <source>ROCK_SLIDE</source>
+        <target>Éboulement</target>
+      </trans-unit>
+      <trans-unit id="GnzP_Jb" resname="ROCK_SMASH">
+        <source>ROCK_SMASH</source>
+        <target>Éclate-Roc</target>
+      </trans-unit>
+      <trans-unit id="Hmsrc2u" resname="ROCK_THROW">
+        <source>ROCK_THROW</source>
+        <target>Jet-Pierres</target>
+      </trans-unit>
+      <trans-unit id="mMkMlHA" resname="ROCK_TOMB">
+        <source>ROCK_TOMB</source>
+        <target>Tomberoche</target>
+      </trans-unit>
+      <trans-unit id="1ioZXBu" resname="ROCK_WRECKER">
+        <source>ROCK_WRECKER</source>
+        <target>Roc-Boulet</target>
+      </trans-unit>
+      <trans-unit id="yDvlDs5" resname="ROLLOUT">
+        <source>ROLLOUT</source>
+        <target>Roulade</target>
+      </trans-unit>
+      <trans-unit id="oK2vgPC" resname="SACRED_FIRE">
+        <source>SACRED_FIRE</source>
+        <target>Feu Sacré</target>
+      </trans-unit>
+      <trans-unit id="btMj4DC" resname="SACRED_SWORD">
+        <source>SACRED_SWORD</source>
+        <target>Lame Sainte</target>
+      </trans-unit>
+      <trans-unit id="s0QtB7." resname="SANDSEAR_STORM">
+        <source>SANDSEAR_STORM</source>
+        <target>Typhon Pyrosable</target>
+      </trans-unit>
+      <trans-unit id="EL2p3EQ" resname="SAND_ATTACK">
+        <source>SAND_ATTACK</source>
+        <target>Jet de Sable</target>
+      </trans-unit>
+      <trans-unit id="LERhJ0Z" resname="SAND_TOMB">
+        <source>SAND_TOMB</source>
+        <target>Tourbi-Sable</target>
+      </trans-unit>
+      <trans-unit id="u0WDMyu" resname="SCALD">
+        <source>SCALD</source>
+        <target>Ébullition</target>
+      </trans-unit>
+      <trans-unit id="BpWHS0x" resname="SCORCHING_SANDS">
+        <source>SCORCHING_SANDS</source>
+        <target>Sable Ardent</target>
+      </trans-unit>
+      <trans-unit id="xB.5eXT" resname="SCRATCH">
+        <source>SCRATCH</source>
+        <target>Griffe</target>
+      </trans-unit>
+      <trans-unit id=".A4nHnK" resname="SECRET_SWORD">
+        <source>SECRET_SWORD</source>
+        <target>Lame Ointe</target>
+      </trans-unit>
+      <trans-unit id="QOjrxqi" resname="SEED_BOMB">
+        <source>SEED_BOMB</source>
+        <target>Canon Graine</target>
+      </trans-unit>
+      <trans-unit id="Ev7mQbd" resname="SEED_BOMB_PLUS">
+        <source>SEED_BOMB_PLUS</source>
+        <target>Canon Graine+</target>
+      </trans-unit>
+      <trans-unit id="ciWy5LT" resname="SEED_FLARE">
+        <source>SEED_FLARE</source>
+        <target>Fulmigraine</target>
+      </trans-unit>
+      <trans-unit id="aqG9XEO" resname="SHADOW_BALL">
+        <source>SHADOW_BALL</source>
+        <target>Ball’Ombre</target>
+      </trans-unit>
+      <trans-unit id="Qkl90_B" resname="SHADOW_BONE">
+        <source>SHADOW_BONE</source>
+        <target>Os Ombre</target>
+      </trans-unit>
+      <trans-unit id="kf5lnjc" resname="SHADOW_CLAW">
+        <source>SHADOW_CLAW</source>
+        <target>Griffe Ombre</target>
+      </trans-unit>
+      <trans-unit id="qOEE0vm" resname="SHADOW_FORCE">
+        <source>SHADOW_FORCE</source>
+        <target>Revenant</target>
+      </trans-unit>
+      <trans-unit id="OK57isZ" resname="SHADOW_PUNCH">
+        <source>SHADOW_PUNCH</source>
+        <target>Poing Ombre</target>
+      </trans-unit>
+      <trans-unit id="16HElqn" resname="SHADOW_SNEAK">
+        <source>SHADOW_SNEAK</source>
+        <target>Ombre Portée</target>
+      </trans-unit>
+      <trans-unit id="IlqDhfr" resname="SIGNAL_BEAM">
+        <source>SIGNAL_BEAM</source>
+        <target>Rayon Signal</target>
+      </trans-unit>
+      <trans-unit id="60hEWIp" resname="SILVER_WIND">
+        <source>SILVER_WIND</source>
+        <target>Vent Argenté</target>
+      </trans-unit>
+      <trans-unit id="KoU2M_f" resname="SKULL_BASH">
+        <source>SKULL_BASH</source>
+        <target>Coud’Krâne</target>
+      </trans-unit>
+      <trans-unit id="8ZYW_Ti" resname="SKY_ATTACK">
+        <source>SKY_ATTACK</source>
+        <target>Piqué</target>
+      </trans-unit>
+      <trans-unit id="PXglzqr" resname="SLUDGE">
+        <source>SLUDGE</source>
+        <target>Détritus</target>
+      </trans-unit>
+      <trans-unit id="BgOl_I3" resname="SLUDGE_BOMB">
+        <source>SLUDGE_BOMB</source>
+        <target>Bombe Beurk</target>
+      </trans-unit>
+      <trans-unit id="9IH5bd." resname="SLUDGE_WAVE">
+        <source>SLUDGE_WAVE</source>
+        <target>Cradovague</target>
+      </trans-unit>
+      <trans-unit id="zIH6ms2" resname="SMACK_DOWN">
+        <source>SMACK_DOWN</source>
+        <target>Anti-Air</target>
+      </trans-unit>
+      <trans-unit id="7FQGtFM" resname="SNARL">
+        <source>SNARL</source>
+        <target>Aboiement</target>
+      </trans-unit>
+      <trans-unit id="_3pYp9A" resname="SNIPE_SHOT">
+        <source>SNIPE_SHOT</source>
+        <target>Tir de Précision</target>
+      </trans-unit>
+      <trans-unit id="PFHEO5v" resname="SOLAR_BEAM">
+        <source>SOLAR_BEAM</source>
+        <target>Lance-Soleil</target>
+      </trans-unit>
+      <trans-unit id="zOoBOgG" resname="SPACIAL_REND">
+        <source>SPACIAL_REND</source>
+        <target>Spatio-Rift</target>
+      </trans-unit>
+      <trans-unit id="pboQsgY" resname="SPARK">
+        <source>SPARK</source>
+        <target>Étincelle</target>
+      </trans-unit>
+      <trans-unit id="D.FkXg3" resname="SPARKLING_ARIA">
+        <source>SPARKLING_ARIA</source>
+        <target>Aria de l’Écume</target>
+      </trans-unit>
+      <trans-unit id="qtj0Z4t" resname="SPIRIT_SHACKLE">
+        <source>SPIRIT_SHACKLE</source>
+        <target>Tisse Ombre</target>
+      </trans-unit>
+      <trans-unit id="enkS_ZZ" resname="SPLASH">
+        <source>SPLASH</source>
+        <target>Trempette</target>
+      </trans-unit>
+      <trans-unit id="EI4BFiV" resname="SPRINGTIDE_STORM">
+        <source>SPRINGTIDE_STORM</source>
+        <target>Typhon Passionné</target>
+      </trans-unit>
+      <trans-unit id="6tVKX5V" resname="STEEL_WING">
+        <source>STEEL_WING</source>
+        <target>Ailes d’Acier</target>
+      </trans-unit>
+      <trans-unit id="VhlhkfM" resname="STOMP">
+        <source>STOMP</source>
+        <target>Écrasement</target>
+      </trans-unit>
+      <trans-unit id="h9G54gl" resname="STONE_EDGE">
+        <source>STONE_EDGE</source>
+        <target>Lame de Roc</target>
+      </trans-unit>
+      <trans-unit id="oscjZDW" resname="STRUGGLE">
+        <source>STRUGGLE</source>
+        <target>Lutte</target>
+      </trans-unit>
+      <trans-unit id="u.f1.s4" resname="STRUGGLE_BUG">
+        <source>STRUGGLE_BUG</source>
+        <target>Survinsecte</target>
+      </trans-unit>
+      <trans-unit id="G3j4Oq2" resname="SUBMISSION">
+        <source>SUBMISSION</source>
+        <target>Sacrifice</target>
+      </trans-unit>
+      <trans-unit id="9TJznAG" resname="SUCKER_PUNCH">
+        <source>SUCKER_PUNCH</source>
+        <target>Coup Bas</target>
+      </trans-unit>
+      <trans-unit id="Dt3d4kU" resname="SUNSTEEL_STRIKE">
+        <source>SUNSTEEL_STRIKE</source>
+        <target>Choc Météore</target>
+      </trans-unit>
+      <trans-unit id="Ah8_yVn" resname="SURF">
+        <source>SURF</source>
+        <target>Surf</target>
+      </trans-unit>
+      <trans-unit id="yrleOWa" resname="SURF_PLUS">
+        <source>SURF_PLUS</source>
+        <target>Surf+</target>
+      </trans-unit>
+      <trans-unit id="ULmdXz." resname="SWIFT">
+        <source>SWIFT</source>
+        <target>Météores</target>
+      </trans-unit>
+      <trans-unit id="ZSYW4yu" resname="SYNCHRONOISE">
+        <source>SYNCHRONOISE</source>
+        <target>Synchropeine</target>
+      </trans-unit>
+      <trans-unit id="ZEYABy_" resname="TACKLE">
+        <source>TACKLE</source>
+        <target>Charge</target>
+      </trans-unit>
+      <trans-unit id="o2g6YDz" resname="TAKE_DOWN">
+        <source>TAKE_DOWN</source>
+        <target>Bélier</target>
+      </trans-unit>
+      <trans-unit id="pjP1ATD" resname="TECHNO_BLAST_BURN">
+        <source>TECHNO_BLAST_BURN</source>
+        <target>Techno-Buster (Burn)</target>
+      </trans-unit>
+      <trans-unit id="7T0b7PE" resname="TECHNO_BLAST_CHILL">
+        <source>TECHNO_BLAST_CHILL</source>
+        <target>Techno-Buster (Chill)</target>
+      </trans-unit>
+      <trans-unit id="bjtMGal" resname="TECHNO_BLAST_DOUSE">
+        <source>TECHNO_BLAST_DOUSE</source>
+        <target>Techno-Buster (Douse)</target>
+      </trans-unit>
+      <trans-unit id="79gLvQY" resname="TECHNO_BLAST_NORMAL">
+        <source>TECHNO_BLAST_NORMAL</source>
+        <target>Techno-Buster (Normal)</target>
+      </trans-unit>
+      <trans-unit id="qQ3PD2O" resname="TECHNO_BLAST_SHOCK">
+        <source>TECHNO_BLAST_SHOCK</source>
+        <target>Techno-Buster (Shock)</target>
+      </trans-unit>
+      <trans-unit id="lS_le_Q" resname="THUNDER">
+        <source>THUNDER</source>
+        <target>Fatal-Foudre</target>
+      </trans-unit>
+      <trans-unit id="EILs4fv" resname="THUNDERBOLT">
+        <source>THUNDERBOLT</source>
+        <target>Tonnerre</target>
+      </trans-unit>
+      <trans-unit id="pFsgCG3" resname="THUNDER_CAGE">
+        <source>THUNDER_CAGE</source>
+        <target>Voltageôle</target>
+      </trans-unit>
+      <trans-unit id="LiHxRRH" resname="THUNDER_FANG">
+        <source>THUNDER_FANG</source>
+        <target>Crocs Éclair</target>
+      </trans-unit>
+      <trans-unit id="FZ8sgSZ" resname="THUNDER_PUNCH">
+        <source>THUNDER_PUNCH</source>
+        <target>Poing Éclair</target>
+      </trans-unit>
+      <trans-unit id="6kAuxUj" resname="THUNDER_SHOCK">
+        <source>THUNDER_SHOCK</source>
+        <target>Éclair</target>
+      </trans-unit>
+      <trans-unit id="DJope8a" resname="TORCH_SONG">
+        <source>TORCH_SONG</source>
+        <target>Chant Flamboyant</target>
+      </trans-unit>
+      <trans-unit id="b8UfHKQ" resname="TRAILBLAZE">
+        <source>TRAILBLAZE</source>
+        <target>Désherbaffe</target>
+      </trans-unit>
+      <trans-unit id="frExGlj" resname="TRANSFORM">
+        <source>TRANSFORM</source>
+        <target>Morphing</target>
+      </trans-unit>
+      <trans-unit id="AuNy6pR" resname="TRIPLE_AXEL">
+        <source>TRIPLE_AXEL</source>
+        <target>Triple Axel</target>
+      </trans-unit>
+      <trans-unit id="IsHsmaQ" resname="TRI_ATTACK">
+        <source>TRI_ATTACK</source>
+        <target>Triplattaque</target>
+      </trans-unit>
+      <trans-unit id="bIlCzR2" resname="TWISTER">
+        <source>TWISTER</source>
+        <target>Ouragan</target>
+      </trans-unit>
+      <trans-unit id="TYc_2uX" resname="UPPER_HAND">
+        <source>UPPER_HAND</source>
+        <target>Prio-Parade</target>
+      </trans-unit>
+      <trans-unit id="o5UZWuI" resname="VICE_GRIP">
+        <source>VICE_GRIP</source>
+        <target>Force Poigne</target>
+      </trans-unit>
+      <trans-unit id="dKfbpd1" resname="VINE_WHIP">
+        <source>VINE_WHIP</source>
+        <target>Fouet Lianes</target>
+      </trans-unit>
+      <trans-unit id="XtS91RF" resname="VOLT_SWITCH">
+        <source>VOLT_SWITCH</source>
+        <target>Change Éclair</target>
+      </trans-unit>
+      <trans-unit id="npSLlhx" resname="VOLT_TACKLE">
+        <source>VOLT_TACKLE</source>
+        <target>Électacle</target>
+      </trans-unit>
+      <trans-unit id="taY0BfZ" resname="VOLT_TACKLE_PLUS">
+        <source>VOLT_TACKLE_PLUS</source>
+        <target>Électacle+</target>
+      </trans-unit>
+      <trans-unit id="bX1k.oX" resname="V_CREATE">
+        <source>V_CREATE</source>
+        <target>Coup Victoire</target>
+      </trans-unit>
+      <trans-unit id="Ss2gF1z" resname="WATERFALL">
+        <source>WATERFALL</source>
+        <target>Cascade</target>
+      </trans-unit>
+      <trans-unit id="rHT6n3k" resname="WATER_GUN">
+        <source>WATER_GUN</source>
+        <target>Pistolet à O</target>
+      </trans-unit>
+      <trans-unit id="v.e_Wp7" resname="WATER_GUN_FAST_BLASTOISE">
+        <source>WATER_GUN_FAST_BLASTOISE</source>
+        <target>Pistolet à O (Fast blastoise)</target>
+      </trans-unit>
+      <trans-unit id="M1YYn3Q" resname="WATER_PULSE">
+        <source>WATER_PULSE</source>
+        <target>Vibraqua</target>
+      </trans-unit>
+      <trans-unit id="1zN1bgo" resname="WATER_SHURIKEN">
+        <source>WATER_SHURIKEN</source>
+        <target>Sheauriken</target>
+      </trans-unit>
+      <trans-unit id="63aZ7aC" resname="WEATHER_BALL_FIRE">
+        <source>WEATHER_BALL_FIRE</source>
+        <target>Ball’Météo (Fire)</target>
+      </trans-unit>
+      <trans-unit id="1mmv9cr" resname="WEATHER_BALL_ICE">
+        <source>WEATHER_BALL_ICE</source>
+        <target>Ball’Météo (Ice)</target>
+      </trans-unit>
+      <trans-unit id="PBU.U0K" resname="WEATHER_BALL_NORMAL">
+        <source>WEATHER_BALL_NORMAL</source>
+        <target>Ball’Météo (Normal)</target>
+      </trans-unit>
+      <trans-unit id="vRr.L3q" resname="WEATHER_BALL_ROCK">
+        <source>WEATHER_BALL_ROCK</source>
+        <target>Ball’Météo (Rock)</target>
+      </trans-unit>
+      <trans-unit id="SX9NA8f" resname="WEATHER_BALL_WATER">
+        <source>WEATHER_BALL_WATER</source>
+        <target>Ball’Météo (Water)</target>
+      </trans-unit>
+      <trans-unit id="nhZXL8l" resname="WILDBOLT_STORM">
+        <source>WILDBOLT_STORM</source>
+        <target>Typhon Fulgurant</target>
+      </trans-unit>
+      <trans-unit id="Fa5NAtH" resname="WILD_CHARGE">
+        <source>WILD_CHARGE</source>
+        <target>Éclair Fou</target>
+      </trans-unit>
+      <trans-unit id="tTOngBq" resname="WING_ATTACK">
+        <source>WING_ATTACK</source>
+        <target>Cru-Ailes</target>
+      </trans-unit>
+      <trans-unit id="YOhL7HS" resname="WRAP">
+        <source>WRAP</source>
+        <target>Ligotage</target>
+      </trans-unit>
+      <trans-unit id="iochvmH" resname="X_SCISSOR">
+        <source>X_SCISSOR</source>
+        <target>Plaie Croix</target>
+      </trans-unit>
+      <trans-unit id="q2hNwjm" resname="YAWN">
+        <source>YAWN</source>
+        <target>Bâillement</target>
+      </trans-unit>
+      <trans-unit id="1n98PJy" resname="ZAP_CANNON">
+        <source>ZAP_CANNON</source>
+        <target>Élecanon</target>
+      </trans-unit>
+      <trans-unit id="Vd1An8b" resname="ZAP_CANNON_PLUS">
+        <source>ZAP_CANNON_PLUS</source>
+        <target>Élecanon+</target>
+      </trans-unit>
+      <trans-unit id="qCG9LhK" resname="ZEN_HEADBUTT">
+        <source>ZEN_HEADBUTT</source>
+        <target>Psykoud’Boul</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

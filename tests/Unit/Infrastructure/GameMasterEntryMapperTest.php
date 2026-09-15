@@ -18,6 +18,7 @@ final class GameMasterEntryMapperTest extends TestCase
         'dex' => 94,
         'baseStats' => ['atk' => 261, 'def' => 149, 'hp' => 155],
         'tags' => ['shadoweligible'],
+        'eliteMoves' => ['SHADOW_PUNCH'],
     ];
 
     public function testItFlattensAUsableEntry(): void
@@ -33,6 +34,8 @@ final class GameMasterEntryMapperTest extends TestCase
                 'def' => 149,
                 'sta' => 155,
                 'shadow' => true,
+                'super' => false,
+                'elite' => ['SHADOW_PUNCH'],
                 'base' => true,
             ],
             $mapped,

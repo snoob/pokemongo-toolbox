@@ -1,0 +1,23 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use App\Kernel;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+
+// Entry point for the PHAR build. Unlike bin/console it makes no assumption about a
+// vendor/ directory on disk: everything it needs is inside the archive.
+require_once __DIR__ . '/../vendor/autoload_runtime.php';
+
+return static function (array $context): Application {
+    // Always prod: the dev container writes a config reference back into config/, which
+    // a read-only archive cannot accept.
+    $application = new Application(new Kernel('prod', false));
+    $application->setName('pogo');
+    // Single-command mode: the binary is the ranking tool, so `pogo gengar 1/15/14`
+    // works without naming the command. pogo:data:build is a checkout-only chore.
+    $application->setDefaultCommand('pogo:pvp:rank', true);
+
+    return $application;
+};

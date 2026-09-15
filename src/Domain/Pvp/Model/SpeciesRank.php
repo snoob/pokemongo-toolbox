@@ -14,6 +14,7 @@ final readonly class SpeciesRank
         public int $position,
         public int $total,
         public float $score,
+        public ?Moveset $moveset = null,
     ) {
         if ($position < 1) {
             throw new \InvalidArgumentException(\sprintf('A rank position starts at 1, got %d.', $position));
