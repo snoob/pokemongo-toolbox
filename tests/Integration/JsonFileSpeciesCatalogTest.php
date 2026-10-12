@@ -119,7 +119,7 @@ final class JsonFileSpeciesCatalogTest extends TestCase
             $catalog->search('gengar');
             self::fail('A missing species file must not pass silently.');
         } catch (\RuntimeException $e) {
-            self::assertStringContainsString('pogo:data:build', $e->getMessage());
+            self::assertStringContainsString('app:data:build', $e->getMessage());
         }
     }
 

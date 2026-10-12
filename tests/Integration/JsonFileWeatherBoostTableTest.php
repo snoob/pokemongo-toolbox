@@ -34,7 +34,7 @@ final class JsonFileWeatherBoostTableTest extends TestCase
             new JsonFileWeatherBoostTable(__DIR__ . '/../Fixtures/absent.json')->boostedTypes(GameWeather::Fog);
             self::fail('a missing file cannot yield affinities');
         } catch (\RuntimeException $e) {
-            self::assertStringContainsString('pogo:data:build', $e->getMessage());
+            self::assertStringContainsString('app:data:build', $e->getMessage());
         }
     }
 }

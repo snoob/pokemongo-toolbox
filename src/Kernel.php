@@ -25,13 +25,14 @@ final class Kernel extends BaseKernel
 
     /**
      * A PHAR is read-only, so the compiled container and the logs move to the user's
-     * cache directory.
+     * cache directory — one container per build of the archive, so an upgrade never runs
+     * on the container of the release it replaced.
      */
     #[\Override]
     public function getCacheDir(): string
     {
         return PharEnvironment::isRunning()
-            ? PharEnvironment::writableDir() . '/cache/' . $this->environment
+            ? \sprintf('%s/cache/%s-%s', PharEnvironment::writableDir(), $this->environment, PharEnvironment::buildId())
             : parent::getCacheDir();
     }
 

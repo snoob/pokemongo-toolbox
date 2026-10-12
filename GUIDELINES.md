@@ -22,10 +22,10 @@ source dédiée.
 
 ## 2. Invocation
 
-Le cœur métier vit dans des **commandes Symfony**, préfixées `pogo:` :
+Le cœur métier vit dans des **commandes Symfony**, préfixées `app:` :
 
 ```bash
-php bin/console pogo:pvp:rank <pokemon> [ivs]   # alias : pvp
+php bin/console app:pvp:rank <pokemon> [ivs]   # alias : pvp
 pogo pvp <pokemon> [ivs]                        # même chose depuis le PHAR
 ```
 
@@ -75,7 +75,7 @@ Scraper du HTML est un dernier recours, à justifier au §9.
 
 Le projet a **deux étages de données**, et un seul se rafraîchit tout seul.
 
-**Étage build — manuel.** `pogo:data:build` va chercher les trois sources amont et écrit
+**Étage build — manuel.** `app:data:build` va chercher les trois sources amont et écrit
 les fichiers commités listés plus bas. Il n'est **jamais** déclenché automatiquement et
 il n'existe **aucune détection de péremption** : on le relance après une mise à jour du
 jeu. Au runtime ces fichiers sont lus sur disque, sans réseau — c'est ce qui rend la
@@ -91,9 +91,9 @@ dont l'implémentation décide de servir le cache ou de rafraîchir. Si la sourc
 injoignable, la copie périmée est servie plutôt que d'échouer.
 
 Pour forcer une mise à jour : supprimer le répertoire de cache (classements) ou relancer
-`pogo:data:build` (données de jeu).
+`app:data:build` (données de jeu).
 
-Deux fichiers sont **générés puis commités** par `pogo:data:build`, et lus sans réseau :
+Deux fichiers sont **générés puis commités** par `app:data:build`, et lus sans réseau :
 
 - `data/species.json` — 1751 formes : identifiant, n° de dex, stats de base, types, slugs
   de forme. **Aucun nom** : ils vivent dans les catalogues de traduction ;
@@ -106,7 +106,7 @@ Deux fichiers sont **générés puis commités** par `pogo:data:build`, et lus s
 - `translations/pokemon_move.{fr,en}.xlf` — 351 attaques en anglais, 346 en français.
 
 Une exception : **`translations/pokemon_form.fr.xlf` est tenu à la main** et n'est jamais
-réécrit par `pogo:data:build`. « Shadow », « Mega » ou « Alolan » n'existent pas dans le
+réécrit par `app:data:build`. « Shadow », « Mega » ou « Alolan » n'existent pas dans le
 Pokédex, donc aucune source ne les traduit. Ce qui n'y figure pas retombe sur l'anglais
 via `framework.translator.fallbacks`.
 
@@ -115,15 +115,15 @@ Seuls les **classements** sont téléchargés à l'exécution, derrière le cach
 
 ---
 
-## 4. Feature 1 — `pogo:pvp:rank`
+## 4. Feature 1 — `app:pvp:rank`
 
 ### 4.1 Interface
 
 ```bash
-pogo:pvp:rank ectoplasma          # nom FR
-pogo:pvp:rank gengar              # nom EN
-pogo:pvp:rank 94                  # n° de dex
-pogo:pvp:rank ectoplasma 1/15/14  # avec IVs atk/def/sta
+app:pvp:rank ectoplasma          # nom FR
+app:pvp:rank gengar              # nom EN
+app:pvp:rank 94                  # n° de dex
+app:pvp:rank ectoplasma 1/15/14  # avec IVs atk/def/sta
 ```
 
 Options : `--league` (répétable : `great`, `ultra`, `master`, `mega-great`,
@@ -273,7 +273,7 @@ Les demi-niveaux ne sont pas dans la table PokeMiners : ils s'interpolent par
 
 ---
 
-## 4 bis. Feature 2 — `pogo:weather:forecast`
+## 4 bis. Feature 2 — `app:weather:forecast`
 
 ### Question
 
@@ -293,7 +293,7 @@ dire « boost ».
 
 Mesuré en octobre 2026, le meilleur spread encore accessible en boosté atteint 98,6 à
 99,9 % du rang 1 selon l'oiseau et la ligue : le boost est une préférence, pas un
-interdit. La commande ne l'affiche plus (décision 69), mais `pogo:pvp:rank` donne les
+interdit. La commande ne l'affiche plus (décision 69), mais `app:pvp:rank` donne les
 spreads de chaque oiseau.
 
 Artikodin (Psy/Vol) est boosté par Venteux ; Électhor (Combat/Vol) par Venteux et
@@ -654,5 +654,9 @@ Règles d'usage :
 | 66 | Open-Meteo remplace AccuWeather | AccuWeather n'a plus d'offre gratuite. Annule les décisions 56 et 63 (plus de clé ni de masquage). Le domaine n'a pas bougé : seuls les adapters ont changé, ce que les ports devaient permettre |
 | 67 | Traduction WMO → météo du jeu écrite par nous, non validée | Aucune table n'existe pour cette source ; tracée par analogie avec celle d'AccuWeather (décision 57) et isolée dans `WmoConditions`, à recaler sur des relevés en jeu |
 | 68 | PHAR multi-commande, alias `pvp` et `weather` | Annule le mode mono-commande de la décision 52 (le `prod` forcé reste) et clôt la 64 : le PHAR expose les commandes de `bin/console`, et les alias gardent la saisie courte — `pogo pvp gengar` |
-| 69 | Coût du boost, notes et colonne « Unboosted » retirés de `pogo:weather:forecast` | La commande répond à « quelle heure ? » : le tableau horaire et le surlignage suffisent. Annule la décision 61 ; `bestWithFloor` et la lecture du plancher d'IVs partent avec, puisque plus rien ne les lit |
+| 69 | Coût du boost, notes et colonne « Unboosted » retirés de `app:weather:forecast` | La commande répond à « quelle heure ? » : le tableau horaire et le surlignage suffisent. Annule la décision 61 ; `bestWithFloor` et la lecture du plancher d'IVs partent avec, puisque plus rien ne les lit |
 | 70 | Surlignage des heures qui boostent au moins un oiseau, plus du « meilleur créneau » | Préférence de l'utilisateur : l'heure se repère par le boost, le PvP se lit dans les coches. `bestHours` et le compte de non-boostés disparaissent, comme le champ `best` du JSON |
+| 71 | Conteneur du PHAR mis en cache par build de l'archive (`prod-<id>`) | En `prod`, Symfony ne revalide jamais son conteneur compilé : après une mise à jour, le PHAR servait les commandes de la version précédente (constaté avec les alias de la décision 68). Le cache des classements et de la météo (`cache/pogo`) reste partagé entre versions |
+| 72 | Commandes préfixées `app:` au lieu de `pogo:` | Préfixe par défaut d'une application Symfony ; le binaire reste `pogo` et les alias `pvp` / `weather` ne changent pas |
+| 73 | `release.yml` appelle `ci.yml` (`workflow_call`) au lieu d'en recopier les checks | Annule la décision 54 : le tag rejoue toujours les checks, mais depuis une seule définition, qui ne peut plus diverger de celle du CI |
+| 74 | Note de release = message du tag annoté (`--notes-from-tag`) | Les notes générées listent des PR, et le projet n'en ouvre pas : la note s'écrit avec le tag (`git tag -a`) et part avec le binaire, sans `gh` en local |

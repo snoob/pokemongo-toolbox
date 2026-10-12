@@ -20,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'pogo:weather:forecast',
+    name: 'app:weather:forecast',
     aliases: ['weather'],
     description: 'In-game weather for the coming hours, and when to light the Daily Adventure Incense',
 )]

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Build;
 
 /**
- * Where `pogo:data:build` writes what it generates.
+ * Where `app:data:build` writes what it generates.
  */
 final readonly class GameDataPaths
 {

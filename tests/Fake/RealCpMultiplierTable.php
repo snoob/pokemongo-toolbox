@@ -10,7 +10,7 @@ use App\Infrastructure\Json\JsonValue;
 
 /**
  * The real CP multipliers, inlined so unit tests stay free of disk and network.
- * Regenerate with "bin/console pogo:data:build" if the game ever changes them.
+ * Regenerate with "bin/console app:data:build" if the game ever changes them.
  */
 final class RealCpMultiplierTable implements CpMultiplierTable
 {

@@ -60,7 +60,7 @@ pogo pvp <pokemon> [ivs]       # PvP ranking
 pogo weather [--at=place]      # in-game weather, for the Daily Adventure Incense
 ```
 
-`pvp` and `weather` are short aliases of `pogo:pvp:rank` and `pogo:weather:forecast`;
+`pvp` and `weather` are short aliases of `app:pvp:rank` and `app:weather:forecast`;
 `pogo list` shows every command.
 
 A Pokémon is named by its **English name**, its **French name**, or its **Pokédex
@@ -234,7 +234,7 @@ The project separates what it reads from the data from what it **infers**:
 ### Generate or update cache data (should be done after game update)
 
 ```bash 
-bin/console pogo:data:build
+bin/console app:data:build
 ```
 
 ### Running quality scripts

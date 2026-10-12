@@ -22,7 +22,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'pogo:data:build',
+    name: 'app:data:build',
     description: 'Regenerate the committed game data and translation catalogues from upstream sources',
 )]
 final class BuildGameDataCommand extends Command
@@ -48,7 +48,7 @@ final class BuildGameDataCommand extends Command
         // This command writes back into the repository; inside a read-only archive there
         // is nothing for it to update.
         if (PharEnvironment::isRunning()) {
-            $io->error('pogo:data:build only runs from a checkout — the PHAR ships the data already built.');
+            $io->error('app:data:build only runs from a checkout — the PHAR ships the data already built.');
 
             return Command::FAILURE;
         }

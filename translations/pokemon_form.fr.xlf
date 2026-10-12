@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   Catalogue tenu à la main : "Shadow", "Mega" ou "Alolan" n'ont pas d'équivalent dans
-  le Pokédex, donc aucune source ne les traduit. `pogo:data:build` ne réécrit PAS ce
+  le Pokédex, donc aucune source ne les traduit. `app:data:build` ne réécrit PAS ce
   fichier. Ce qui n'y figure pas retombe sur l'anglais via framework.translator.fallbacks.
 -->
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">

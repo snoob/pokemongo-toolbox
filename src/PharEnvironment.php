@@ -28,6 +28,19 @@ final readonly class PharEnvironment
     }
 
     /**
+     * Tells one build of the archive from the next. In prod Symfony never checks whether
+     * its compiled container is stale, so a container cached by the previous release
+     * would keep serving the previous release's commands after an upgrade.
+     */
+    public static function buildId(): string
+    {
+        $archive = \Phar::running(false);
+        $stat = '' === $archive ? false : stat($archive);
+
+        return false === $stat ? 'unknown' : hash('xxh32', $stat['mtime'] . '-' . $stat['size']);
+    }
+
+    /**
      * Follows the XDG base directory spec, so files land where the system expects them
      * rather than beside the binary.
      */

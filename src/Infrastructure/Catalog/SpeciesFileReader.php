@@ -29,7 +29,7 @@ final readonly class SpeciesFileReader
     {
         if (!is_file($this->file)) {
             throw new \RuntimeException(\sprintf(
-                'Species file "%s" is missing; run "bin/console pogo:data:build".',
+                'Species file "%s" is missing; run "bin/console app:data:build".',
                 $this->file,
             ));
         }
@@ -41,7 +41,7 @@ final readonly class SpeciesFileReader
 
         if ([] === $entries) {
             throw new \RuntimeException(\sprintf(
-                'Species file "%s" is malformed or empty; rebuild it with "bin/console pogo:data:build".',
+                'Species file "%s" is malformed or empty; rebuild it with "bin/console app:data:build".',
                 $this->file,
             ));
         }

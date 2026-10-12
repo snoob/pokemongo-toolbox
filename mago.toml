@@ -20,7 +20,7 @@ excessive-parameter-list = { threshold = 8 }
 # production, pas la couverture.
 too-many-methods = { exclude = ["tests"] }
 
-# Fichier généré par `pogo:data:build` : 101 constantes issues du jeu, pas du code écrit.
+# Fichier généré par `app:data:build` : 101 constantes issues du jeu, pas du code écrit.
 readable-literal = { exclude = ["tests/Fake/RealCpMultiplierTable.php"] }
 
 # Désactivée en amont dans le mago.toml de Mago lui-même : exiger un argument nommé
