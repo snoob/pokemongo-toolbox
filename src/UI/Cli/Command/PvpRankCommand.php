@@ -26,6 +26,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'pogo:pvp:rank',
+    aliases: ['pvp'],
     description: 'PvP ranking of a Pokémon per league, and where its IVs place within the species',
 )]
 final class PvpRankCommand extends Command

@@ -15,7 +15,8 @@ final readonly class Species
 {
     /**
      * @param list<string> $forms      form slugs, e.g. ["alolan", "shadow"]; empty for the default form
-     * @param list<MoveId> $eliteMoves moves this form only learns from an Elite TM
+     * @param list<MoveId>      $eliteMoves moves this form only learns from an Elite TM
+     * @param list<PokemonType> $types      one or two; a regional form may differ from its base form
      */
     public function __construct(
         public SpeciesId $id,
@@ -25,7 +26,13 @@ final readonly class Species
         public bool $superMega = false,
         public array $forms = [],
         public array $eliteMoves = [],
+        public array $types = [],
     ) {}
+
+    public function hasType(PokemonType $type): bool
+    {
+        return \in_array($type, $this->types, true);
+    }
 
     public function isBaseForm(): bool
     {

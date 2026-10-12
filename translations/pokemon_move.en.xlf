@@ -125,6 +125,10 @@
         <source>BRAVE_BIRD</source>
         <target>Brave Bird</target>
       </trans-unit>
+      <trans-unit id="VHtW7mD" resname="BRAVE_BIRD_PLUS">
+        <source>BRAVE_BIRD_PLUS</source>
+        <target>Brave Bird+</target>
+      </trans-unit>
       <trans-unit id="EaIyrzf" resname="BREAKING_SWIPE">
         <source>BREAKING_SWIPE</source>
         <target>Breaking Swipe</target>

@@ -10,6 +10,7 @@ use App\Infrastructure\Build\MegaLevelTableBuilder;
 use App\Infrastructure\Build\MoveNameCatalogueBuilder;
 use App\Infrastructure\Build\SpeciesCatalogBuilder;
 use App\Infrastructure\Build\SpeciesNameCatalogueBuilder;
+use App\Infrastructure\Build\WeatherTableBuilder;
 use App\Infrastructure\Naming\MoveNameResolver;
 use App\Infrastructure\Naming\SpeciesNameResolver;
 use App\Infrastructure\Translation\XliffCatalogueWriter;
@@ -30,6 +31,7 @@ final class BuildGameDataCommand extends Command
         private readonly SpeciesCatalogBuilder $speciesBuilder,
         private readonly CpMultiplierTableBuilder $cpMultiplierBuilder,
         private readonly MegaLevelTableBuilder $megaLevelBuilder,
+        private readonly WeatherTableBuilder $weatherBuilder,
         private readonly SpeciesNameCatalogueBuilder $nameBuilder,
         private readonly MoveNameCatalogueBuilder $moveNameBuilder,
         private readonly XliffCatalogueWriter $xliff,
@@ -76,6 +78,15 @@ final class BuildGameDataCommand extends Command
             '%d species with a mega progression written to %s',
             \count($megaLevels['maxLevelByDex']),
             $this->paths->megaLevels,
+        ));
+
+        $io->section('Weather');
+        $weather = $this->weatherBuilder->build();
+        $this->writeJson($this->paths->weather, $weather);
+        $io->success(\sprintf(
+            '%d weather conditions written to %s',
+            \count($weather['boostedTypes']),
+            $this->paths->weather,
         ));
 
         $io->section('Translation catalogues');

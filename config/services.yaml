@@ -7,6 +7,12 @@ parameters:
     pogo.cache_dir: '%kernel.cache_dir%/../pogo'
     # Les classements bougent à chaque mise à jour du méta, pas à chaque heure.
     pogo.rankings_ttl: 86400
+    # La météo du jeu suit la prévision horaire : au-delà d'une demi-heure elle a pu bouger.
+    pogo.forecast_ttl: 1800
+    # Une ville ne déménage pas.
+    pogo.places_ttl: 2592000
+    # L'IP change quand l'ordinateur change de réseau.
+    pogo.ip_location_ttl: 3600
     # Langues embarquées : un nom tapé dans l'une ou l'autre doit résoudre (§6).
     pogo.locales: ['fr', 'en']
 
@@ -40,6 +46,10 @@ services:
     App\Domain\Pvp\Port\MegaLevelTable: '@App\Infrastructure\Cpm\JsonFileMegaLevelTable'
     App\Domain\Pokemon\Port\MoveCatalog: '@App\Infrastructure\Catalog\JsonFileMoveCatalog'
     App\Domain\Pvp\Port\PvpRankingCatalog: '@App\Infrastructure\Pvpoke\PvpokeRankingCatalog'
+    App\Domain\Encounter\Port\WeatherBoostTable: '@App\Infrastructure\Encounter\JsonFileWeatherBoostTable'
+    App\Domain\Weather\Port\WeatherForecast: '@App\Infrastructure\OpenMeteo\OpenMeteoForecast'
+    App\Domain\Weather\Port\PlaceSearch: '@App\Infrastructure\OpenMeteo\OpenMeteoPlaceSearch'
+    App\Domain\Weather\Port\PlaceLocator: '@App\Infrastructure\Ipinfo\IpinfoPlaceLocator'
     # Le dumper XLIFF est fourni par FrameworkBundle : on l'alias plutôt que d'écrire
     # un générateur XML maison (§8).
     Symfony\Component\Translation\Dumper\XliffFileDumper: '@translation.dumper.xliff'
@@ -52,6 +62,44 @@ services:
             $inner: '@App\Infrastructure\Json\HttpJsonFetcher'
             $cacheDirectory: '%pogo.cache_dir%'
             $ttlSeconds: '%pogo.rankings_ttl%'
+
+    # Même décorateur, autres durées de vie : chaque source a son rythme.
+    pogo.json.forecasts:
+        class: App\Infrastructure\Json\CachedJsonFetcher
+        arguments:
+            $inner: '@App\Infrastructure\Json\HttpJsonFetcher'
+            $cacheDirectory: '%pogo.cache_dir%'
+            $ttlSeconds: '%pogo.forecast_ttl%'
+
+    pogo.json.places:
+        class: App\Infrastructure\Json\CachedJsonFetcher
+        arguments:
+            $inner: '@App\Infrastructure\Json\HttpJsonFetcher'
+            $cacheDirectory: '%pogo.cache_dir%'
+            $ttlSeconds: '%pogo.places_ttl%'
+
+    pogo.json.ip_location:
+        class: App\Infrastructure\Json\CachedJsonFetcher
+        arguments:
+            $inner: '@App\Infrastructure\Json\HttpJsonFetcher'
+            $cacheDirectory: '%pogo.cache_dir%'
+            $ttlSeconds: '%pogo.ip_location_ttl%'
+
+    App\Infrastructure\OpenMeteo\OpenMeteoForecast:
+        arguments:
+            $fetcher: '@pogo.json.forecasts'
+
+    App\Infrastructure\OpenMeteo\OpenMeteoPlaceSearch:
+        arguments:
+            $fetcher: '@pogo.json.places'
+
+    App\Infrastructure\Ipinfo\IpinfoPlaceLocator:
+        arguments:
+            $fetcher: '@pogo.json.ip_location'
+
+    App\Infrastructure\Encounter\JsonFileWeatherBoostTable:
+        arguments:
+            $file: '%pogo.data_dir%/weather.json'
 
     App\Infrastructure\Catalog\SpeciesFileReader:
         arguments:
@@ -84,4 +132,5 @@ services:
             $cpMultipliers: '%pogo.data_dir%/cpm.json'
             $megaLevels: '%pogo.data_dir%/mega-levels.json'
             $moves: '%pogo.data_dir%/moves.json'
+            $weather: '%pogo.data_dir%/weather.json'
             $translations: '%kernel.project_dir%/translations'

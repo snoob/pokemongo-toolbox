@@ -19,6 +19,7 @@ final class GameMasterEntryMapperTest extends TestCase
         'baseStats' => ['atk' => 261, 'def' => 149, 'hp' => 155],
         'tags' => ['shadoweligible'],
         'eliteMoves' => ['SHADOW_PUNCH'],
+        'types' => ['ghost', 'poison'],
     ];
 
     public function testItFlattensAUsableEntry(): void
@@ -37,9 +38,20 @@ final class GameMasterEntryMapperTest extends TestCase
                 'super' => false,
                 'elite' => ['SHADOW_PUNCH'],
                 'base' => true,
+                'types' => ['ghost', 'poison'],
             ],
             $mapped,
         );
+    }
+
+    public function testASingleTypeIsNotPaddedWithTheSourcesPlaceholder(): void
+    {
+        $mapped = new GameMasterEntryMapper(new BaseStatsReader(), new FormLabels())->map([
+            ...self::GENGAR,
+            'types' => ['electric', 'none'],
+        ]);
+
+        self::assertSame(['electric'], $mapped['types'] ?? null);
     }
 
     public function testAFormIsStoredAsSlugsRatherThanAName(): void

@@ -1,0 +1,37 @@
+{
+    "generatedAt": "2026-10-10T00:21:50+00:00",
+    "boostedTypes": {
+        "clear": [
+            "fire",
+            "grass",
+            "ground"
+        ],
+        "fog": [
+            "dark",
+            "ghost"
+        ],
+        "overcast": [
+            "fairy",
+            "fighting",
+            "poison"
+        ],
+        "partly_cloudy": [
+            "normal",
+            "rock"
+        ],
+        "rainy": [
+            "bug",
+            "electric",
+            "water"
+        ],
+        "snow": [
+            "ice",
+            "steel"
+        ],
+        "windy": [
+            "dragon",
+            "flying",
+            "psychic"
+        ]
+    }
+}

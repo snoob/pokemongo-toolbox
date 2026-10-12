@@ -23,7 +23,7 @@ final readonly class SpeciesCatalogBuilder
     ) {}
 
     /**
-     * @return array{species: array{generatedAt: string, species: list<array{id: string, dex: int, atk: int, def: int, sta: int, shadow: bool, super: bool, base: bool, forms: list<string>, elite: list<string>}>}, formLabels: array<string, string>, moves: list<array{id: string, name: string, power: int, energy: int, mega: bool}>}
+     * @return array{species: array{generatedAt: string, species: list<array{id: string, dex: int, atk: int, def: int, sta: int, shadow: bool, super: bool, base: bool, forms: list<string>, elite: list<string>, types: list<string>}>}, formLabels: array<string, string>, moves: list<array{id: string, name: string, power: int, energy: int, mega: bool}>}
      */
     public function build(): array
     {

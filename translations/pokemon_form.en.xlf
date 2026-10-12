@@ -413,13 +413,13 @@
         <source>ultra</source>
         <target>Ultra</target>
       </trans-unit>
-      <trans-unit id="LfTVlDT" resname="gulping">
-        <source>gulping</source>
-        <target>Gulping</target>
-      </trans-unit>
       <trans-unit id="3QY43TW" resname="gorging">
         <source>gorging</source>
         <target>Gorging</target>
+      </trans-unit>
+      <trans-unit id="LfTVlDT" resname="gulping">
+        <source>gulping</source>
+        <target>Gulping</target>
       </trans-unit>
       <trans-unit id="NjRfAaZ" resname="amped">
         <source>amped</source>

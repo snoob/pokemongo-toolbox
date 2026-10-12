@@ -7,6 +7,7 @@ namespace App\Infrastructure\Catalog;
 use App\Domain\Pokemon\Model\BaseStats;
 use App\Domain\Pokemon\Model\DexNumber;
 use App\Domain\Pokemon\Model\MoveId;
+use App\Domain\Pokemon\Model\PokemonType;
 use App\Domain\Pokemon\Model\Species;
 use App\Domain\Pokemon\Model\SpeciesId;
 use App\Infrastructure\Json\JsonPath;
@@ -45,12 +46,12 @@ final readonly class SpeciesFileReader
             ));
         }
 
-        /** @var list<array{id: string, dex: int, atk: int, def: int, sta: int, shadow: bool, super: bool, base: bool, forms: list<string>, elite: list<string>}> $entries */
+        /** @var list<array{id: string, dex: int, atk: int, def: int, sta: int, shadow: bool, super: bool, base: bool, forms: list<string>, elite: list<string>, types?: list<string>}> $entries */
         return array_map($this->toSpecies(...), $entries);
     }
 
     /**
-     * @param array{id: string, dex: int, atk: int, def: int, sta: int, shadow: bool, super: bool, base: bool, forms: list<string>, elite: list<string>} $entry
+     * @param array{id: string, dex: int, atk: int, def: int, sta: int, shadow: bool, super: bool, base: bool, forms: list<string>, elite: list<string>, types?: list<string>} $entry
      */
     private function toSpecies(array $entry): Species
     {
@@ -62,6 +63,19 @@ final readonly class SpeciesFileReader
             superMega: $entry['super'],
             forms: $entry['forms'],
             eliteMoves: array_map(static fn(string $move): MoveId => new MoveId($move), $entry['elite']),
+            types: $this->types($entry['types'] ?? []),
         );
+    }
+
+    /**
+     * A file built before types were recorded simply yields none.
+     *
+     * @param list<string> $types
+     *
+     * @return list<PokemonType>
+     */
+    private function types(array $types): array
+    {
+        return array_values(array_filter(array_map(PokemonType::tryFrom(...), $types)));
     }
 }

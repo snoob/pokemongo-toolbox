@@ -14,8 +14,9 @@ ne s'appliquent **pas** à Pokémon GO, qui a ses propres stats de base, ses pro
 attaques et ses propres formules. Seule exception tolérée : PokéAPI comme source de
 **traduction des noms** (voir §3).
 
-Périmètre à date : classements PvP. Les raids, events et dex perso viendront après,
-chacun avec sa propre source dédiée.
+Périmètre à date : classements PvP, et météo du jeu pour choisir l'heure de l'Encens
+d'aventure du jour. Les raids, events et dex perso viendront après, chacun avec sa propre
+source dédiée.
 
 ---
 
@@ -24,7 +25,8 @@ chacun avec sa propre source dédiée.
 Le cœur métier vit dans des **commandes Symfony**, préfixées `pogo:` :
 
 ```bash
-php bin/console pogo:pvp:rank <pokemon> [ivs]
+php bin/console pogo:pvp:rank <pokemon> [ivs]   # alias : pvp
+pogo pvp <pokemon> [ivs]                        # même chose depuis le PHAR
 ```
 
 Règle : **la logique n'est jamais dans un agent**. Les commandes doivent tourner seules,
@@ -52,6 +54,12 @@ Scraper du HTML est un dernier recours, à justifier au §9.
 | Noms d'attaques (fr) | PokéAPI, **au build** | `.../data/v2/csv/moves.csv` + `move_names.csv` |
 | Table des CP Multipliers | PokeMiners game_master | `raw.githubusercontent.com/PokeMiners/game_masters/master/latest/latest.json` → `PLAYER_LEVEL_SETTINGS` |
 | Noms d'espèces (fr, en) | PokéAPI, **au build** | `raw.githubusercontent.com/PokeAPI/pokeapi/master/data/v2/csv/pokemon_species_names.csv` (un seul fichier, 12 langues) |
+| Types des espèces | pvpoke gamemaster, **au build** | `.../src/data/gamemaster.json` → `types` (`"none"` en second pour un mono-type) |
+| Types boostés par météo | PokeMiners game_master, **au build** | `WEATHER_AFFINITY_*` |
+| Prévision météo horaire | Open-Meteo, **au runtime**, sans clé | `api.open-meteo.com/v1/forecast` → `weather_code`, `wind_speed_10m`, `wind_gusts_10m` |
+| Lieu nommé → coordonnées | Open-Meteo geocoding, **au runtime** | `geocoding-api.open-meteo.com/v1/search` |
+| Position devinée | ipinfo.io, **au runtime**, sans clé | `ipinfo.io/json` → `loc` |
+| Code WMO → météo du jeu | **à nous**, par analogie avec la table AccuWeather de thornleaf/pgo-weatherbot | `WmoConditions` — voir §4 bis |
 
 ### Pourquoi pas pokemongohub / stadiumgaming
 
@@ -73,9 +81,11 @@ il n'existe **aucune détection de péremption** : on le relance après une mise
 jeu. Au runtime ces fichiers sont lus sur disque, sans réseau — c'est ce qui rend la
 toolbox utilisable hors-ligne et reproductible d'une machine à l'autre.
 
-**Étage runtime — automatique.** Seuls les **classements** sortent sur le réseau à
-l'exécution, derrière un cache disque (`var/cache/pogo/` depuis un checkout,
-`~/.cache/pokemongo-toolbox/` depuis le PHAR) avec un TTL de 24 h. Aucune
+**Étage runtime — automatique.** Les **classements** et, pour la commande météo, la
+**prévision** sortent sur le réseau à l'exécution, derrière un cache disque
+(`var/cache/pogo/` depuis un checkout, `~/.cache/pokemongo-toolbox/` depuis le PHAR). Un TTL par
+rythme de la source : 24 h pour les classements, 30 min pour la prévision, 1 h pour la
+position devinée par IP, 30 jours pour les lieux nommés. Aucune
 commande métier ne fait d'appel HTTP direct : elle demande la donnée à un *port* (§6),
 dont l'implémentation décide de servir le cache ou de rafraîchir. Si la source est
 injoignable, la copie périmée est servie plutôt que d'échouer.
@@ -85,13 +95,14 @@ Pour forcer une mise à jour : supprimer le répertoire de cache (classements) o
 
 Deux fichiers sont **générés puis commités** par `pogo:data:build`, et lus sans réseau :
 
-- `data/species.json` — 1742 formes : identifiant, n° de dex, stats de base, slugs de
-  forme. **Aucun nom** : ils vivent dans les catalogues de traduction ;
+- `data/species.json` — 1751 formes : identifiant, n° de dex, stats de base, types, slugs
+  de forme. **Aucun nom** : ils vivent dans les catalogues de traduction ;
 - `data/cpm.json` — 101 niveaux (1 → 51 par pas de 0,5), demi-niveaux déjà interpolés ;
 - `translations/pokemon.{fr,en}.xlf` — 1025 noms par langue, clé = n° de dex ;
 - `translations/pokemon_form.en.xlf` — 119 libellés de forme, clé = slug (`shadow`, `mega_x`) ;
 - `data/moves.json` — 351 attaques : puissance, énergie, drapeau `mega` (15 exclusives) ;
 - `data/mega-levels.json` — progression des niveaux de méga ;
+- `data/weather.json` — types boostés par chaque météo du jeu ;
 - `translations/pokemon_move.{fr,en}.xlf` — 351 attaques en anglais, 346 en français.
 
 Une exception : **`translations/pokemon_form.fr.xlf` est tenu à la main** et n'est jamais
@@ -262,6 +273,60 @@ Les demi-niveaux ne sont pas dans la table PokeMiners : ils s'interpolent par
 
 ---
 
+## 4 bis. Feature 2 — `pogo:weather:forecast`
+
+### Question
+
+« Quand allumer l'Encens d'aventure du jour ? » Sa prise rare, ce sont les trois oiseaux
+de Galar (annonce de Niantic : le game master décrit l'objet, 15 min, livré à minuit, mais
+ne porte aucune table d'apparition). La météo ne change pas — à notre connaissance — la
+probabilité de les voir ; elle change **ce qu'on peut capturer**.
+
+### Le boost joue dans les deux sens
+
+Une rencontre sauvage boostée a chaque IV ≥ 4 (`guaranteedIndividualValues` du game
+master). Or les meilleurs spreads de ligues plafonnées des trois oiseaux ont tous une
+attaque de 0 à 3 : impossibles en boosté. Le bon créneau est donc celui qui laisse le plus
+d'oiseaux **non** boostés. La commande coche (✔, en vert) chaque oiseau boosté, met un tiret aux autres, et
+surligne en vert l'heure qui en booste au moins un (décision 70) : le vert veut toujours
+dire « boost ».
+
+Mesuré en octobre 2026, le meilleur spread encore accessible en boosté atteint 98,6 à
+99,9 % du rang 1 selon l'oiseau et la ligue : le boost est une préférence, pas un
+interdit. La commande ne l'affiche plus (décision 69), mais `pogo:pvp:rank` donne les
+spreads de chaque oiseau.
+
+Artikodin (Psy/Vol) est boosté par Venteux ; Électhor (Combat/Vol) par Venteux et
+Nuageux ; Sulfura (Ténèbres/Vol) par Venteux et Brouillard. Ces associations ne sont pas
+écrites dans le code : elles découlent des types (`species.json`) et des affinités
+(`weather.json`).
+
+### Prévoir la météo du jeu
+
+Le jeu lit les prévisions horaires d'**AccuWeather**, qui n'a plus d'offre gratuite. La
+source retenue est donc **Open-Meteo** (gratuit, sans clé, rafales incluses) : un autre
+modèle, donc une heure peut différer de la météo du jeu — la commande le dit.
+
+Niantic ne publie aucune traduction prévision → météo du jeu. La communauté en a établi
+une pour AccuWeather (thornleaf/pgo-weatherbot, un an de relevés à Lindsay, Ontario) ;
+celle de `WmoConditions` est la **nôtre**, tracée par analogie : chaque ciel sec garde
+son nom, la précipitation l'emporte sur le nuage, et seul un ciel sec devient Venteux,
+au-delà de 24 km/h de vent **ou** 35 km/h de rafales (seuils du README de
+pgo-weatherbot). Elle n'a été comparée au jeu par personne : comme le multiplicateur
+d'attaque méga (§4.1 bis), c'est une valeur qu'aucun fichier du jeu ne confirme, isolée
+dans une classe avec sa provenance — à recaler sur des relevés en jeu dès qu'on en a. Un
+code hors table WMO reste `null`, et une heure inconnue n'a pas de verdict.
+
+### Où
+
+`--at="Ville, Pays"` passe le nom au géocodeur d'Open-Meteo (qui ne cherche que par nom)
+et la partie après la virgule départage les homonymes, par nom de pays ou code ISO. Sans
+`--at`, la position est devinée par IP (ipinfo) : précise à la ville au mieux, fausse
+derrière un VPN ou en 4G — le lieu trouvé est affiché en tête. Les coordonnées sont
+arrondies à ~100 m pour que le cache serve.
+
+---
+
 ## 5. Architecture — DDD
 
 Découpage DDD en quatre couches. Le modèle métier est le centre ; tout le reste gravite
@@ -274,14 +339,25 @@ src/
       Model/              # Species, PokemonName, DexNumber, IvSpread
       Port/               # SpeciesCatalog (interface)
       Exception/          # SpeciesNotFound, AmbiguousSpecies, InvalidIv
+    Weather/
+      Model/              # GameWeather, Place, HourlyWeather
+      Port/               # WeatherForecast, PlaceSearch, PlaceLocator (interfaces)
+    Encounter/
+      Model/              # DailyAdventureIncense
+      Port/               # WeatherBoostTable (interface)
+      Service/            # WeatherBoost
     Pvp/
       Model/              # League, Cp, StatProduct, SpeciesRank, RankedSpread
       Service/            # CpCalculator, IvRankCalculator — calcul pur, sans état
       Port/               # PvpRankingCatalog, CpMultiplierTable (interfaces)
   Application/            # cas d'usage, un par intention
     Pvp/RankPokemon/      # RankPokemonQuery, RankPokemonHandler, RankPokemonResult
+    Weather/ForecastIncense/  # ForecastIncenseQuery, ForecastIncenseHandler, ForecastIncenseResult
   Infrastructure/         # adapters — seule couche qui connaît le réseau et le disque
     Pvpoke/               # PvpokeRankingCatalog
+    OpenMeteo/            # OpenMeteoForecast, OpenMeteoPlaceSearch, WmoConditions
+    Ipinfo/               # IpinfoPlaceLocator
+    Encounter/            # JsonFileWeatherBoostTable (data/weather.json)
     PokeMiners/           # PokeMinersCpMultiplierTable
     Catalog/              # JsonFileSpeciesCatalog (data/names.json)
     Cache/                # décorateurs de cache disque
@@ -322,6 +398,10 @@ il ignore comment on l'obtient.
 | `Pvp\Port\CpMultiplierTable` | `JsonFileCpMultiplierTable` | `RealCpMultiplierTable` (valeurs réelles, en dur) |
 | `Json\JsonFetcher` (port d'infra) | `HttpJsonFetcher`, décoré par `CachedJsonFetcher` | `RecordingJsonFetcher` |
 | `Psr\Clock\ClockInterface` | `symfony/clock` (service `clock`) | `MockClock` |
+| `Weather\Port\WeatherForecast` | `OpenMeteoForecast` (HTTP + cache 30 min) | `InMemoryWeatherForecast` |
+| `Weather\Port\PlaceSearch` | `OpenMeteoPlaceSearch` (HTTP + cache 30 j) | `InMemoryPlaces` |
+| `Weather\Port\PlaceLocator` | `IpinfoPlaceLocator` (HTTP + cache 1 h) | `InMemoryPlaces` |
+| `Encounter\Port\WeatherBoostTable` | `JsonFileWeatherBoostTable` | `RealWeatherBoostTable` (valeurs réelles, en dur) |
 
 Le nommage n'est pas un port mais un service de présentation : `SpeciesNameResolver`
 compose un nom depuis les catalogues (`pokemon` pour l'espèce, `pokemon_form` pour les
@@ -561,3 +641,18 @@ Règles d'usage :
 | 53 | Gain de CP de la méga affiché **par ligne**, pas par espèce | Il est stable selon le niveau (±0,2 %) mais **varie avec les IVs** : Altaria gagne +64 % en 0/8/15 et +58 % en 15/15/15, parce que les mêmes IVs ne pèsent pas pareil sur deux jeux de stats de base. Un chiffre unique par espèce serait faux de six points |
 | 54 | Checks qualité dupliqués entre `ci.yml` et `release.yml` | Un tag ne rejoue pas le CI de la branche : sans cette duplication, on pourrait publier un binaire issu d'un commit jamais vérifié |
 | 55 | `mago format --dry-run` en CI, pas `format` | Un job qui réécrit des fichiers ne rapporte rien : soit il les modifie sans committer, soit il passe toujours |
+| 56 | AccuWeather comme source météo, malgré la clé API | C'est la source que lit le jeu ; toute autre prédirait une météo voisine, pas celle du jeu |
+| 57 | Traduction AccuWeather → météo du jeu en constante, sourcée communauté | Niantic ne la publie pas ; isolée dans `AccuWeatherConditions` avec sa provenance, comme la décision 44 |
+| 58 | *Hot* / *Cold* laissés non traduits | Jamais observés en jeu par la source ; une heure inconnue sans verdict vaut mieux qu'une supposition |
+| 59 | Position devinée par IP (ipinfo), `--at` prioritaire | Zéro saisie dans le cas courant ; le lieu deviné est affiché parce qu'il peut tomber une ville à côté. ipinfo plutôt que la recherche IP d'AccuWeather : pas de clé, et un appel de moins sur le quota |
+| 60 | Types dans `species.json`, affinités dans `data/weather.json`, générés au build | Données de jeu stables (§3) : le runtime reste hors-ligne pour tout sauf la prévision |
+| 61 | Coût du boost calculé (`bestWithFloor`) plutôt qu'un conseil figé | « Éviter le boost » est vrai mais coûte 0,1 à 1,4 % de stat product selon l'oiseau : un chiffre laisse le joueur trancher |
+| 62 | Un `CachedJsonFetcher` par rythme de source | Le décorateur existe déjà ; trois TTL valent mieux qu'un compromis qui serait trop long pour la météo ou trop court pour le quota |
+| 63 | Clé AccuWeather masquée dans les erreurs, exception d'origine non chaînée | La clé voyage dans l'URL, que l'erreur HTTP recopie |
+| 64 | `pogo:weather:forecast` hors du PHAR pour l'instant | Le PHAR est mono-commande (décision 52) ; y ajouter une commande impose de revoir `pogo gengar` — décision laissée ouverte |
+| 65 | Pas d'option `--goal` (PvP / 100 %) | Retirée avant la première version : le besoin est le PvP ; l'inverse se lit dans la note sur le 15/15/15, et `HourOutcome::$boosted` suffira à le réintroduire |
+| 66 | Open-Meteo remplace AccuWeather | AccuWeather n'a plus d'offre gratuite. Annule les décisions 56 et 63 (plus de clé ni de masquage). Le domaine n'a pas bougé : seuls les adapters ont changé, ce que les ports devaient permettre |
+| 67 | Traduction WMO → météo du jeu écrite par nous, non validée | Aucune table n'existe pour cette source ; tracée par analogie avec celle d'AccuWeather (décision 57) et isolée dans `WmoConditions`, à recaler sur des relevés en jeu |
+| 68 | PHAR multi-commande, alias `pvp` et `weather` | Annule le mode mono-commande de la décision 52 (le `prod` forcé reste) et clôt la 64 : le PHAR expose les commandes de `bin/console`, et les alias gardent la saisie courte — `pogo pvp gengar` |
+| 69 | Coût du boost, notes et colonne « Unboosted » retirés de `pogo:weather:forecast` | La commande répond à « quelle heure ? » : le tableau horaire et le surlignage suffisent. Annule la décision 61 ; `bestWithFloor` et la lecture du plancher d'IVs partent avec, puisque plus rien ne les lit |
+| 70 | Surlignage des heures qui boostent au moins un oiseau, plus du « meilleur créneau » | Préférence de l'utilisateur : l'heure se repère par le boost, le PvP se lit dans les coches. `bestHours` et le compte de non-boostés disparaissent, comme le champ `best` du JSON |

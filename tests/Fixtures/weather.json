@@ -1,0 +1,8 @@
+{
+    "generatedAt": "2026-10-10T00:21:50+00:00",
+    "boostedTypes": {
+        "fog": ["dark", "ghost"],
+        "overcast": ["fairy", "fighting", "poison"],
+        "windy": ["dragon", "flying", "psychic"]
+    }
+}

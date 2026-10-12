@@ -14,6 +14,7 @@ final readonly class GameDataPaths
         public string $cpMultipliers,
         public string $megaLevels,
         public string $moves,
+        public string $weather,
         public string $translations,
     ) {}
 }

@@ -21,7 +21,7 @@ final readonly class GameMasterEntryMapper
     /**
      * @param array<array-key, mixed> $entry
      *
-     * @return array{id: string, dex: int, atk: int, def: int, sta: int, shadow: bool, super: bool, base: bool, forms: list<string>, elite: list<string>}|null null when the entry is unusable
+     * @return array{id: string, dex: int, atk: int, def: int, sta: int, shadow: bool, super: bool, base: bool, forms: list<string>, elite: list<string>, types: list<string>}|null null when the entry is unusable
      */
     public function map(array $entry): ?array
     {
@@ -58,6 +58,11 @@ final readonly class GameMasterEntryMapper
             // spending one on a recommended moveset.
             'elite' => JsonValue::asStringList($entry['eliteMoves'] ?? null),
             'base' => [] === $forms,
+            // A single-typed species is listed with "none" as its second type.
+            'types' => array_values(array_filter(
+                JsonValue::asStringList($entry['types'] ?? null),
+                static fn(string $type): bool => 'none' !== $type,
+            )),
         ];
     }
 }

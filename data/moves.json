@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-09-15T12:09:11+00:00",
+    "generatedAt": "2026-10-10T00:21:50+00:00",
     "moves": [
         {
             "id": "ACID",
@@ -210,6 +210,13 @@
             "power": 130,
             "energy": 55,
             "mega": false
+        },
+        {
+            "id": "BRAVE_BIRD_PLUS",
+            "name": "Brave Bird+",
+            "power": 70,
+            "energy": 40,
+            "mega": true
         },
         {
             "id": "BREAKING_SWIPE",
