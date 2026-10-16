@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace App\UI\Cli\Presenter;
 
+use App\Application\Pvp\RankPokemon\EvolutionRanking;
 use App\Application\Pvp\RankPokemon\RankPokemonResult;
-use App\Domain\Pokemon\Model\Move;
-use App\Domain\Pvp\Model\MegaLevel;
-use App\Domain\Pvp\Model\MegaLevelEffects;
-use App\Infrastructure\Naming\MoveNameResolver;
+use App\Infrastructure\Naming\SpeciesNameResolver;
 
 /**
- * The lines under the table: what the numbers assume, and what the chosen Mega Level
- * actually grants. Kept out of the presenter, which already assembles three columns.
+ * The lines under the tables: what the numbers assume and what the marks mean, said once
+ * for the whole family rather than under every table. The mega ones come from
+ * `MegaFooterNotes`.
  */
 final readonly class RankFooterNotes
 {
     public function __construct(
         private BaseFormCellFormatter $baseForms,
         private MovesetFormatter $movesets,
-        private MoveNameResolver $moveNames,
+        private MegaFooterNotes $megaNotes,
+        private SpeciesNameResolver $names,
     ) {}
 
     /**
@@ -29,31 +29,26 @@ final readonly class RankFooterNotes
     {
         $notes = [\sprintf('Level cap considered: %s.', $result->levelCap)];
 
-        if ($this->baseForms->appliesTo($result)) {
-            $notes[] = 'Pre-Mega CP = what to power the base form up to, and what Mega Evolving adds at that level.';
+        if ($this->any($result, $this->baseForms->appliesTo(...))) {
+            $notes[] = $this->powerUp($result, $locale);
         }
 
-        if (null !== $result->megaLevel && null !== $result->megaLevelEffects) {
-            $notes[] = $this->megaLevel($result->megaLevel, $result->megaLevelEffects);
-        }
+        $notes = [...$notes, ...$this->megaNotes->of($result, $locale)];
 
-        if ($result->species->superMega) {
-            $notes[] = $this->superMega($result->megaLevelEffects, $result->exclusiveMove, $locale);
-        }
-
-        if ($this->showsAnEliteMove($result)) {
+        if ($this->any($result, $this->showsAnEliteMove(...))) {
             $notes[] = \sprintf('%s = exclusive move, unlocked with an Elite TM.', MovesetFormatter::ELITE_MARK);
         }
 
         return $notes;
     }
 
-    private function showsAnEliteMove(RankPokemonResult $result): bool
+    /**
+     * @param \Closure(EvolutionRanking): bool $test
+     */
+    private function any(RankPokemonResult $result, \Closure $test): bool
     {
-        foreach ($result->outcomes as $outcome) {
-            $moveset = $outcome->speciesRank?->moveset;
-
-            if (null !== $moveset && $this->movesets->holdsAnEliteMove($moveset, $result->species)) {
+        foreach ($result->evolutions as $ranking) {
+            if ($test($ranking)) {
                 return true;
             }
         }
@@ -62,54 +57,29 @@ final readonly class RankFooterNotes
     }
 
     /**
-     * The progression only touches the CP at its last step; the rest is about how often
-     * the mega can be used, which is worth stating rather than implying.
+     * The column is named after the form in hand, so the note can say it plainly; the
+     * percentage only shows one step from a mega, and is only explained then.
      */
-    private function megaLevel(MegaLevel $level, MegaLevelEffects $effects): string
+    private function powerUp(RankPokemonResult $result, ?string $locale): string
     {
-        return \sprintf(
-            'Mega level %d: %d-day cooldown%s.',
-            $level->value,
-            $effects->cooldownDays,
-            $this->combatPower($level, $effects),
-        );
+        $name = $this->names->name($result->asked, $locale);
+        $note = \sprintf('%s CP = what to power %s up to before evolving', $name, $name);
+
+        return $this->any($result, $this->baseForms->showsAMegaGain(...))
+            ? $note . ', and what Mega Evolving adds at that level.'
+            : $note . '.';
     }
 
-    /**
-     * Mega Evolving already lifts the CP a long way — that is what the "Pre-Mega CP"
-     * column shows. What the *level* adds on top is a separate thing, and only the last
-     * one adds any, so the wording must not let the two be read as one.
-     */
-    private function combatPower(MegaLevel $level, MegaLevelEffects $effects): string
+    private function showsAnEliteMove(EvolutionRanking $ranking): bool
     {
-        if ($effects->additionalLevels > 0) {
-            return \sprintf(', additional CP boost corresponding to +%d levels', $effects->additionalLevels);
+        foreach ($ranking->outcomes as $outcome) {
+            $moveset = $outcome->speciesRank?->moveset;
+
+            if (null !== $moveset && $this->movesets->holdsAnEliteMove($moveset, $ranking->species())) {
+                return true;
+            }
         }
 
-        // Nothing precedes the first level, so there is nothing to say it matches.
-        return MegaLevel::MIN === $level->value
-            ? ', CP boost'
-            : \sprintf(', same CP boost as mega level %d', $level->value - 1);
-    }
-
-    /**
-     * The exclusive move's base power is lifted by the Mega Level — the only per-level
-     * effect that shows up in a battle.
-     */
-    private function superMega(?MegaLevelEffects $effects, ?Move $move, ?string $locale): string
-    {
-        $note = 'Super Mega Pokémon has an extra Charged Attack available when mega evolved';
-
-        if (null === $move) {
-            return $note . '.';
-        }
-
-        // The Mega Level lifts the move's base power; showing the bonus separately makes
-        // the level's worth readable without doing the multiplication in your head.
-        $power = null !== $effects && $effects->boostsTheExclusiveMove()
-            ? \sprintf('%d + %d', $move->power, (int) round($move->power * ($effects->movePowerMultiplier - 1.0)))
-            : (string) $move->power;
-
-        return \sprintf('%s: %s (power: %s)', $note, $this->moveNames->name($move->id, $locale), $power);
+        return false;
     }
 }

@@ -1,9 +1,10 @@
 # Pokemon go toolbox
 
 A **Pokémon GO** command-line toolbox. It answers the questions you ask yourself before
-spending resources on a Pokémon: where it ranks in PvP, what its IVs are worth, which
-spread to hunt for, and which moveset to aim at — and when the weather is right to light
-the Daily Adventure Incense.
+spending resources on a Pokémon: where it — and everything it evolves into — ranks in
+PvP, what its IVs are worth, which spread to hunt for, which moveset to aim at, and how
+far to power it up before evolving — and when the weather is right to light the Daily
+Adventure Incense.
 
 Everything is computed **locally** — no scraping. The only things fetched at runtime are
 the league rankings and, for the weather command, the forecast.
@@ -34,7 +35,9 @@ Gengar — #94
 - **The spread to hunt for**, shown even without IVs: that is the question you ask
   yourself in front of a wild Pokémon.
 - **Recommended moveset**, with moves that cost an **Elite TM** marked `*`.
-- **Mega Evolutions**: the CP to stop at before evolving and the exclusive Charged Attack Super Megas has.
+- **Evolutions and Mega Evolutions**: give the form you hold and every form it can become
+  is ranked too, megas included, with the CP to stop at before evolving and the exclusive
+  Charged Attack a Super Mega has.
 - **Shadow, regional, Origin/Altered forms**…
 - **Bilingual data**: type the name in French or English, and species and move names
   come back in the language you asked in. The interface itself is always English.
@@ -78,35 +81,72 @@ pogo pvp "Raichu (Alolan)"   # regional form
 
 | Option | Effect |
 |---|---|
-| `-l, --league` | `great`, `ultra`, `master`, `mega-great`, `mega-ultra`, `mega-master`. Repeatable. Defaults to the three matching the species. |
-| `--shadow` | Shadow form |
-| `-m, --mega` | Mega Evolution (level 3) |
-| `--mega1` … `--mega4` | A specific Mega Level. Only level 4 changes the CP. |
-| `--mega-x`, `--mega-y` | Tells Charizard, Raichu and Mewtwo apart — they have two megas each |
+| `-l, --league` | `great`, `ultra`, `master`, `mega-great`, `mega-ultra`, `mega-master`. Repeatable. Defaults to the standard leagues, and the Mega Editions for a mega. A mega is never ranked in a standard league. |
+| `--shadow` | Shadow form — its evolutions are shadows too, and it has no mega |
+| `--mega1` … `--mega4` | The Mega Level megas are ranked at (default 3). Only level 4 changes the CP. |
 | `-b, --best-buddy` | Allow level 51 |
 | `--locale` | `fr` or `en` for species and move names. Defaults to the language you typed. |
 | `-f, --format` | `text` (default) or `json` |
 
-### Mega Evolutions
+### Evolutions and Mega Evolutions
+
+Name the form you hold: every form it can become is ranked as well, each followed by its
+mega. A form that still evolves and that no league ranks is left out to save room —
+the one you typed included — so Ralts gives Gallade, Mega Gallade, Gardevoir and Mega
+Gardevoir, with Ralts's own CP in the power-up column. Final forms always show. A mega's title gives
+the Mega Level it is ranked at — 3 unless `--mega1` … `--mega4` says otherwise.
 
 ```
-$ pogo pvp altaria --mega 0/8/15
+$ pogo pvp ralts 1/15/14 --league=great --league=mega-great
+…
+Gallade — #475
+==============
 
-  League               Species rank                IVs                                       Pre-Mega CP
- -------------------- --------------------------- ----------------------------------------- --------------------
-  Mega Great League    #262 / 1200  (score 81.3)   0/8/15  #1 / 4096 — 100.00 % — CP 1500     916 CP (lvl 18)
-  Mega Ultra League    #99 / 904  (score 85.9)     0/8/15  #733 / 4096 — 97.00 % — CP 2459    1502 CP (lvl 29.5)
-  Mega Master League   #126 / 466  (score 63.4)    0/8/15  #1745 / 4096 — 90.86 % — CP 3299   —
+  League              Species rank                             IVs                                                  Ralts CP
+ ------------------- ---------------------------------------- ---------------------------------------------------- -----------------
+  Great League        #377 / 1153  (score 79.0)                1/15/14  #6 / 4096 — 99.46 % — CP 1498 at level 18   234 CP (lvl 18)
+                      Psycho Cut → Leaf Blade / Sacred Sword   0/15/15  best — CP 1496 at level 18                  233 CP (lvl 18)
+  Mega Great League   #439 / 1210  (score 77.4)                1/15/14  #6 / 4096 — 99.46 % — CP 1498 at level 18   234 CP (lvl 18)
+                      Psycho Cut → Leaf Blade / Sacred Sword   0/15/15  best — CP 1496 at level 18                  233 CP (lvl 18)
 
- Pre-Mega CP = what to power the base form up to; Mega Evolving lifts it to the cap.
+Gallade (Mega, level 3) — #475
+==============================
+
+  League              Species rank                           IVs                                                    Ralts CP
+ ------------------- -------------------------------------- ------------------------------------------------------ -----------------
+  Mega Great League   #636 / 1210  (score 72.7)              1/15/14  #145 / 4096 — 97.93 % — CP 1482 at level 12   156 CP (lvl 12)
+                      Low Kick → Sacred Sword / Leaf Blade   4/15/15  best — CP 1500 at level 12                    163 CP (lvl 12)
+…
+ Ralts CP = what to power Ralts up to before evolving.
 ```
 
-A mega automatically switches to the **Mega Editions**: it is barred from the standard
-leagues, so ranking it there would only ever answer "unranked".
+The **Ralts CP** column — named after the form you typed — answers "how far do I power
+this up?". Evolving and Mega Evolving keep the IVs and the level, so the number the game
+shows while powering up is the CP of the form in hand at the level the evolved one is
+ranked at.
 
-The **Pre-Mega CP** column answers "how far do I power this up?". A Mega Edition caps the
-CP of the **mega** form, not the base form, so the number the game shows while powering
-up sits below the league cap. The percentage beside it is what Mega Evolving adds at that
+A mega is barred from the standard leagues, so it is ranked in the **Mega Editions**,
+which the rest of the family may enter too. A shadow evolves into shadows and has no mega:
+it would have to be purified first, which rerolls its IVs.
+
+Typing a final form still brings its mega:
+
+```
+$ pogo pvp altaria 0/8/15
+…
+  League               Species rank                                IVs                                                     Altaria CP
+ -------------------- ------------------------------------------- ------------------------------------------------------- --------------------------
+  Mega Great League    #261 / 1210  (score 81.2)                   0/8/15  #1 / 4096 — 100.00 % — CP 1500 at level 18      916 CP (lvl 18) +64 %
+                       Dragon Breath → Moonblast* / Flamethrower
+  Mega Ultra League    #101 / 912  (score 85.9)                    0/8/15  #733 / 4096 — 97.00 % — CP 2459 at level 29.5   1502 CP (lvl 29.5) +64 %
+                       Dragon Breath → Moonblast* / Flamethrower   0/15/15  best — CP 2497 at level 29.5                   1527 CP (lvl 29.5) +64 %
+  Mega Master League   #128 / 470  (score 63.4)                    0/8/15  #1745 / 4096 — 90.86 % — CP 3299                —
+                       Dragon Breath → Moonblast* / Sky Attack     15/15/15  best — CP 3576
+
+ Altaria CP = what to power Altaria up to before evolving, and what Mega Evolving adds at that level.
+```
+
+One step from its mega, the percentage beside the CP is what Mega Evolving adds at that
 level — it is given per row because it shifts with the IVs, from +58 % on a 15/15/15
 Altaria to +64 % on a 0/8/15 one.
 
@@ -141,6 +181,8 @@ pogo pvp gengar 1/15/14 --format=json
 
 Everything the text output shows, plus what it leaves out for brevity: the best spread is
 always present, every move carries its `elite` flag, and CP targets carry their level.
+Each form of the family is an entry of `evolutions`, with the `path` of species ids that
+leads to it from the one you typed.
 
 ### Cached downloads
 
@@ -161,7 +203,7 @@ The PvP reference. Provides both the league rankings and the game data they are 
 | File | Used for |
 |---|---|
 | `src/data/rankings/{all,mega}/overall/rankings-{1500,2500,10000}.json` | Species rank, score and recommended moveset per league |
-| `src/data/gamemaster.json` | Base stats, types, forms, Elite TM moves, move power and energy, `supermega` tag |
+| `src/data/gamemaster.json` | Base stats, types, forms, evolutions, Elite TM moves, move power and energy, `supermega` tag |
 
 The rankings are the only thing fetched at runtime, behind a 24-hour disk cache.
 

@@ -16,84 +16,44 @@ use PHPUnit\Framework\TestCase;
 
 final class SpeciesResolverTest extends TestCase
 {
-    public function testTheMegaFlagSwitchesToTheMegaForm(): void
-    {
-        $species = $this->resolver()->resolve('gengar', mega: true);
-
-        self::assertSame('gengar_mega', $species->id->value);
-    }
-
     public function testWithoutTheFlagThePlainFormStands(): void
     {
         self::assertSame('gengar', $this->resolver()->resolve('gengar')->id->value);
     }
 
-    /**
-     * Charizard, Raichu and Mewtwo have two megas each; the flag must not pick one.
-     */
-    public function testASpeciesWithTwoMegasIsReportedAsAmbiguous(): void
-    {
-        $catalog = $this->charizardCatalog();
-
-        try {
-            new SpeciesResolver($catalog)->resolve('charizard', mega: true);
-            self::fail('Two megas cannot be narrowed to one.');
-        } catch (AmbiguousSpecies $e) {
-            self::assertCount(2, $e->candidates);
-        }
-    }
-
-    /**
-     * The X/Y pair is the only case a flag cannot resolve on its own, and the species id
-     * is an internal detail the user should not have to know.
-     */
-    public function testAVariantPicksBetweenTheTwoMegas(): void
-    {
-        $resolver = new SpeciesResolver($this->charizardCatalog());
-
-        self::assertSame('charizard_mega_x', $resolver->resolve('charizard', mega: true, megaVariant: 'x')->id->value);
-        self::assertSame('charizard_mega_y', $resolver->resolve('charizard', mega: true, megaVariant: 'y')->id->value);
-    }
-
-    public function testAVariantThatTheSpeciesDoesNotHaveIsRejected(): void
-    {
-        $this->expectException(SpeciesNotFound::class);
-
-        $this->resolver()->resolve('gengar', mega: true, megaVariant: 'x');
-    }
-
-    private function charizardCatalog(): InMemorySpeciesCatalog
-    {
-        return new InMemorySpeciesCatalog([
-            $this->species('charizard', 6),
-            $this->species('charizard_mega_x', 6, ['mega_x']),
-            $this->species('charizard_mega_y', 6, ['mega_y']),
-        ]);
-    }
-
-    public function testASpeciesWithoutAMegaSaysSo(): void
-    {
-        $catalog = new InMemorySpeciesCatalog([$this->species('tinkaton', 959)]);
-
-        $this->expectException(SpeciesNotFound::class);
-
-        new SpeciesResolver($catalog)->resolve('tinkaton', mega: true);
-    }
-
     public function testTheShadowFlagSwitchesToTheShadowForm(): void
     {
-        self::assertSame('gengar_shadow', $this->resolver()->resolve('gengar', shadow: true)->id->value);
+        self::assertSame('gengar_shadow', $this->resolver()->resolveShadow('gengar')->id->value);
     }
 
-    /**
-     * No form is both mega and shadow in the game, so the two flags cannot combine;
-     * asking for both resolves to the mega rather than failing.
-     */
-    public function testAskingForBothFormsSettlesOnTheMega(): void
+    public function testTheShadowFlagFallsBackWhenNoShadowFormExists(): void
     {
-        $species = $this->resolver()->resolve('gengar', shadow: true, mega: true);
+        $resolver = new SpeciesResolver(new InMemorySpeciesCatalog([$this->species('tinkaton', 959)]));
 
-        self::assertSame('gengar_mega', $species->id->value);
+        self::assertSame('tinkaton', $resolver->resolveShadow('tinkaton')->id->value);
+    }
+
+    public function testAnUnknownNameIsRejected(): void
+    {
+        $this->expectException(SpeciesNotFound::class);
+
+        $this->resolver()->resolve('Pikachouette');
+    }
+
+    public function testAnAmbiguousIdentifierListsTheCandidatesInsteadOfGuessing(): void
+    {
+        $resolver = new SpeciesResolver(new InMemorySpeciesCatalog([
+            $this->species('giratina_altered', 487, ['altered']),
+            $this->species('giratina_origin', 487, ['origin']),
+        ]));
+
+        try {
+            $resolver->resolve('487');
+            self::fail('An ambiguous identifier must not resolve silently.');
+        } catch (AmbiguousSpecies $e) {
+            self::assertCount(2, $e->candidates);
+            self::assertSame('487', $e->identifier);
+        }
     }
 
     private function resolver(): SpeciesResolver

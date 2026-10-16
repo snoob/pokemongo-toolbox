@@ -23,6 +23,11 @@ final readonly class SpeciesId implements \Stringable
         return str_ends_with($this->value, '_shadow') ? $this : new self($this->value . '_shadow');
     }
 
+    public function regular(): self
+    {
+        return str_ends_with($this->value, '_shadow') ? new self(substr($this->value, 0, -7)) : $this;
+    }
+
     public function equals(self $other): bool
     {
         return $this->value === $other->value;

@@ -28,8 +28,8 @@ final readonly class SpeciesNameResolver
     }
 
     /**
-     * The name the search index holds: mega and shadow are reached through flags, so
-     * their segments are left out rather than offering a second way in.
+     * The name the search index holds: a mega is reached as an evolution and a shadow
+     * through its flag, so their segments are left out rather than offering a second way in.
      */
     public function searchName(Species $species, ?string $locale = null): string
     {

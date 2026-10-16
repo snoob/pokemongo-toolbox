@@ -8,8 +8,9 @@ Guidance for Claude Code when working in this repository.
 distributed as a PHAR. PHP >= 8.5.
 
 It answers what a player asks before spending resources on a Pokémon: league rank, IV
-rank within the species, the spread worth hunting, the recommended moveset, and — for
-megas — the CP to stop at before evolving. A second command forecasts the in-game weather
+rank within the species, the spread worth hunting, the recommended moveset — for the form
+in hand and everything it evolves into, megas included — and the CP to stop at before
+evolving. A second command forecasts the in-game weather
 to time the Daily Adventure Incense.
 
 **`GUIDELINES.md` is the reference**: conventions, architecture, and a numbered decision

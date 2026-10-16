@@ -14,7 +14,7 @@ final readonly class MegaLevel
     public const int MIN = 1;
     public const int MAX = 4;
 
-    /** The level a PvP player realistically targets, and what a bare "--mega" means. */
+    /** The level a PvP player realistically targets, and the one megas are ranked at by default. */
     public const int DEFAULT = 3;
 
     public function __construct(

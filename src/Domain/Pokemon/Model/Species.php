@@ -17,6 +17,7 @@ final readonly class Species
      * @param list<string> $forms      form slugs, e.g. ["alolan", "shadow"]; empty for the default form
      * @param list<MoveId>      $eliteMoves moves this form only learns from an Elite TM
      * @param list<PokemonType> $types      one or two; a regional form may differ from its base form
+     * @param list<SpeciesId>   $evolutions the forms this one evolves into, one step ahead; megas excluded
      */
     public function __construct(
         public SpeciesId $id,
@@ -27,6 +28,7 @@ final readonly class Species
         public array $forms = [],
         public array $eliteMoves = [],
         public array $types = [],
+        public array $evolutions = [],
     ) {}
 
     public function hasType(PokemonType $type): bool
@@ -53,22 +55,14 @@ final readonly class Species
         return false;
     }
 
-    /**
-     * Charizard, Raichu and Mewtwo each carry two megas, told apart by an X or Y suffix.
-     */
-    public function hasMegaVariant(string $variant): bool
-    {
-        return \in_array('mega_' . strtolower($variant), $this->forms, true);
-    }
-
     public function isShadow(): bool
     {
         return \in_array('shadow', $this->forms, true);
     }
 
     /**
-     * The form segments a user can type. Mega and shadow are reached through their own
-     * flags, so naming them would be a second, redundant way in.
+     * The form segments a user can type. A mega is reached as an evolution of the form
+     * in hand, a shadow through its flag, so naming them would be a second way in.
      *
      * @return list<string>
      */

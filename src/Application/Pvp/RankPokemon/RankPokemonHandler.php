@@ -4,158 +4,111 @@ declare(strict_types=1);
 
 namespace App\Application\Pvp\RankPokemon;
 
-use App\Domain\Pokemon\Model\Species;
-use App\Domain\Pokemon\Port\SpeciesCatalog;
+use App\Domain\Pokemon\Model\EvolutionPath;
+use App\Domain\Pokemon\Service\EvolutionTree;
 use App\Domain\Pokemon\Service\SpeciesResolver;
-use App\Domain\Pvp\Exception\SpeciesIneligibleForLeague;
 use App\Domain\Pvp\Model\League;
-use App\Domain\Pvp\Model\MegaLevel;
-use App\Domain\Pvp\Model\Moveset;
-use App\Domain\Pvp\Model\PokemonLevel;
-use App\Domain\Pvp\Model\PowerUpTarget;
-use App\Domain\Pvp\Model\RankedSpread;
 use App\Domain\Pvp\Port\MegaLevelTable;
-use App\Domain\Pvp\Port\PvpRankingCatalog;
-use App\Domain\Pvp\Service\CpCalculator;
-use App\Domain\Pvp\Service\ExclusiveMoveFinder;
-use App\Domain\Pvp\Service\IvRankCalculator;
 
 final readonly class RankPokemonHandler
 {
     public function __construct(
         private SpeciesResolver $resolver,
-        private SpeciesCatalog $species,
-        private PvpRankingCatalog $rankings,
-        private IvRankCalculator $ivRanker,
-        private CpCalculator $cp,
+        private EvolutionTree $evolutions,
+        private EvolutionRanker $ranker,
         private MegaLevelTable $megaLevels,
-        private ExclusiveMoveFinder $exclusiveMoves,
     ) {}
 
     public function __invoke(RankPokemonQuery $query): RankPokemonResult
     {
-        $species = $this->resolver->resolve(
-            $query->identifier,
-            $query->shadow,
-            null !== $query->megaLevel,
-            $query->megaVariant,
-        );
-        $levelCap = $query->effectiveLevelCap();
-        $outcomes = [];
+        $asked = $query->shadow
+            ? $this->resolver->resolveShadow($query->identifier)
+            : $this->resolver->resolve($query->identifier);
+        $rankings = [];
 
-        foreach ($this->leaguesFor($query, $species) as $league) {
-            $spread = null;
-            $best = null;
-            $ineligible = false;
+        // Evolving keeps the IVs and the level, so the form in hand is worth ranking as
+        // everything it can become — megas included.
+        $paths = $this->evolutions->from($asked);
 
-            try {
-                // Ranking every spread is what makes both answers available: where the
-                // given IVs land, and which spread to hunt for in that league.
-                $ranking = $this->ivRanker->rank($species->baseStats, $league, $levelCap);
-                $best = $ranking->best();
-                $spread = null === $query->iv ? null : $ranking->for($query->iv);
-            } catch (SpeciesIneligibleForLeague) {
-                $ineligible = true;
+        foreach ($paths as $path) {
+            $leagues = $query->leaguesFor($path->last());
+
+            if ([] === $leagues || $this->isUnrankedOnTheWay($path, $paths, $leagues)) {
+                continue;
             }
 
-            $outcomes[] = new LeagueOutcome(
-                league: $league,
-                speciesRank: $this->rankings->rankOf($species->id, $league),
-                spread: $spread,
-                best: $best,
-                powerUpTo: $this->powerUpTo($species, $league, $spread, $query->megaLevel),
-                bestPowerUpTo: $this->powerUpTo($species, $league, $best, $query->megaLevel),
-                ineligible: $ineligible,
-            );
+            $rankings[] = $this->rank($path, $leagues, $query);
         }
+
+        // A mega asked by its id and sent to a standard league still deserves an answer,
+        // even if it is "unranked".
+        if ([] === $rankings) {
+            $leagues = [] === $query->leagues ? League::standard() : $query->leagues;
+            $rankings[] = $this->rank(new EvolutionPath([$asked]), $leagues, $query);
+        }
+
+        $megaLevel = $this->ranksAMega($rankings) ? $query->effectiveMegaLevel() : null;
 
         return new RankPokemonResult(
-            $species,
+            $asked,
             $query->iv,
-            $levelCap,
-            $outcomes,
-            $query->megaLevel,
-            null === $query->megaLevel ? null : $this->megaLevels->effectsAt($query->megaLevel),
-            $this->exclusiveMoves->in($this->movesetsIn($outcomes)),
+            $query->effectiveLevelCap(),
+            $rankings,
+            $megaLevel,
+            null === $megaLevel ? null : $this->megaLevels->effectsAt($megaLevel),
         );
     }
 
     /**
-     * @param list<LeagueOutcome> $outcomes
-     *
-     * @return list<Moveset>
+     * @param non-empty-list<League> $leagues
      */
-    private function movesetsIn(array $outcomes): array
+    private function rank(EvolutionPath $path, array $leagues, RankPokemonQuery $query): EvolutionRanking
     {
-        $movesets = [];
+        return $this->ranker->rank(
+            $path,
+            $leagues,
+            $query->iv,
+            $query->effectiveLevelCap(),
+            $query->effectiveMegaLevel(),
+        );
+    }
 
-        foreach ($outcomes as $outcome) {
-            $moveset = $outcome->speciesRank?->moveset;
+    /**
+     * A form that still evolves (Ralts, Kirlia) and that no league ranks would only fill
+     * a table with "unranked" — the form in hand included, since the power-up column of
+     * the next tables already answers for it. Final forms stay whatever their rank: they
+     * are the answer, and a final form in hand would leave nothing to show. A mega does
+     * not count as a further evolution — Gardevoir is final even though it Mega Evolves.
+     *
+     * @param list<EvolutionPath>    $paths
+     * @param non-empty-list<League> $leagues
+     */
+    private function isUnrankedOnTheWay(EvolutionPath $path, array $paths, array $leagues): bool
+    {
+        if ($this->ranker->isRanked($path->last(), $leagues)) {
+            return false;
+        }
 
-            if (null !== $moveset) {
-                $movesets[] = $moveset;
+        foreach ($paths as $other) {
+            if ($path->leadsTo($other) && !$other->last()->isMega()) {
+                return true;
             }
         }
 
-        return $movesets;
+        return false;
     }
 
     /**
-     * What the base form must read on screen before Mega Evolving.
-     *
-     * A Mega Edition caps the CP of the *mega* form, so the number the game shows while
-     * powering up — the base form's CP — is lower and is the one to aim for.
+     * @param list<EvolutionRanking> $rankings
      */
-    private function powerUpTo(
-        Species $species,
-        League $league,
-        ?RankedSpread $spread,
-        ?MegaLevel $megaLevel,
-    ): ?PowerUpTarget {
-        // An uncapped league asks nothing of the CP, so there is no figure to aim for.
-        if (null === $league->cpCap() || !$species->isMega() || null === $spread) {
-            return null;
-        }
-
-        $base = $this->species->baseFormOf($species->dex);
-
-        if (null === $base) {
-            return null;
-        }
-
-        // At its last Mega Level the mega fights a couple of Pokémon levels above where
-        // it actually sits, so the form to power up stops that much lower.
-        $level = $this->beforeEvolving($spread->level, $megaLevel);
-        $beforeEvolving = $this->cp->cpAt($base->baseStats, $spread->iv, $level);
-
-        return new PowerUpTarget(
-            $beforeEvolving,
-            $level,
-            // The gain is the step between the two figures on screen: what the game shows
-            // while powering up, and what it shows once evolved. At the last Mega Level
-            // that step also carries the two free levels, which is exactly what happens.
-            (int) round((($spread->cp->value / $beforeEvolving->value) - 1) * 100),
-        );
-    }
-
-    private function beforeEvolving(PokemonLevel $level, ?MegaLevel $megaLevel): PokemonLevel
+    private function ranksAMega(array $rankings): bool
     {
-        $gained = null === $megaLevel ? 0 : $this->megaLevels->effectsAt($megaLevel)->additionalLevels;
-
-        return new PokemonLevel(max(PokemonLevel::MIN, $level->value - $gained));
-    }
-
-    /**
-     * @return non-empty-list<League>
-     */
-    private function leaguesFor(RankPokemonQuery $query, Species $species): array
-    {
-        if ([] !== $query->leagues) {
-            return $query->leagues;
+        foreach ($rankings as $ranking) {
+            if ($ranking->species()->isMega()) {
+                return true;
+            }
         }
 
-        // A mega is barred from the standard leagues, so ranking it there would only
-        // ever answer "unranked"; the Mega Editions are where it competes.
-        return $species->isMega() ? League::megaEditions() : League::standard();
+        return false;
     }
 }

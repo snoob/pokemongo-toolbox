@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace App\UI\Cli\Presenter;
 
 use App\Application\Pvp\RankPokemon\LeagueOutcome;
-use App\Application\Pvp\RankPokemon\RankPokemonResult;
+use App\Domain\Pokemon\Model\IvSpread;
 use App\Domain\Pvp\Model\RankedSpread;
 
 /**
- * Everything the IV column says for one league: where the given spread lands, which
- * spread to hunt for, and — for a mega — what the base form must read before evolving.
+ * Everything the IV column says for one league: where the given spread lands, and which
+ * spread to hunt for.
  */
 final readonly class IvCellFormatter
 {
-    public function format(LeagueOutcome $outcome, RankPokemonResult $result): string
+    public function format(LeagueOutcome $outcome, ?IvSpread $iv): string
     {
         if ($outcome->ineligible) {
             return '<fg=gray>ineligible (CP too high)</>';
@@ -22,12 +22,12 @@ final readonly class IvCellFormatter
 
         $lines = [];
 
-        if (null !== $result->iv && null !== $outcome->spread) {
-            $iv = (string) $result->iv;
+        if (null !== $iv && null !== $outcome->spread) {
+            $given = (string) $iv;
 
             $lines[] = \sprintf(
                 '%s  <options=bold>#%d / %d</> — %.2f %% — %s',
-                $outcome->spread->isPerfect() ? $this->asUnbeatable($iv) : $iv,
+                $outcome->spread->isPerfect() ? $this->asUnbeatable($given) : $given,
                 $outcome->spread->position,
                 $outcome->spread->total,
                 $outcome->spread->percentOfBest,

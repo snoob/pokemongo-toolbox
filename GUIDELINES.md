@@ -49,7 +49,7 @@ Scraper du HTML est un dernier recours, à justifier au §9.
 | Donnée | Source retenue | URL |
 |---|---|---|
 | Classements PvP par ligue | pvpoke (JSON, GitHub) | `.../src/data/rankings/{all,mega}/overall/rankings-{1500,2500,10000}.json` |
-| Stats de base, attaques, tags, `eliteMoves` | pvpoke gamemaster | `.../src/data/gamemaster.json` |
+| Stats de base, attaques, tags, `eliteMoves`, évolutions | pvpoke gamemaster | `.../src/data/gamemaster.json` (`family.evolutions` pour l'arbre) |
 | Moveset recommandé par ligue | déjà dans les fichiers de classement (clé `moveset`) | — |
 | Noms d'attaques (fr) | PokéAPI, **au build** | `.../data/v2/csv/moves.csv` + `move_names.csv` |
 | Table des CP Multipliers | PokeMiners game_master | `raw.githubusercontent.com/PokeMiners/game_masters/master/latest/latest.json` → `PLAYER_LEVEL_SETTINGS` |
@@ -96,7 +96,8 @@ Pour forcer une mise à jour : supprimer le répertoire de cache (classements) o
 Deux fichiers sont **générés puis commités** par `app:data:build`, et lus sans réseau :
 
 - `data/species.json` — 1751 formes : identifiant, n° de dex, stats de base, types, slugs
-  de forme. **Aucun nom** : ils vivent dans les catalogues de traduction ;
+  de forme, formes vers lesquelles elle évolue. **Aucun nom** : ils vivent dans les
+  catalogues de traduction ;
 - `data/cpm.json` — 101 niveaux (1 → 51 par pas de 0,5), demi-niveaux déjà interpolés ;
 - `translations/pokemon.{fr,en}.xlf` — 1025 noms par langue, clé = n° de dex ;
 - `translations/pokemon_form.en.xlf` — 119 libellés de forme, clé = slug (`shadow`, `mega_x`) ;
@@ -127,7 +128,7 @@ app:pvp:rank ectoplasma 1/15/14  # avec IVs atk/def/sta
 ```
 
 Options : `--league` (répétable : `great`, `ultra`, `master`, `mega-great`,
-`mega-ultra`, `mega-master`), `--shadow`, `--mega`,
+`mega-ultra`, `mega-master`), `--shadow`, `--mega1` à `--mega4`,
 `--best-buddy` (niveau 51), `--format=text|json`, `--locale=fr|en`.
 
 Un nom saisi dans **l'une ou l'autre langue** résout : l'index de recherche contient les
@@ -150,10 +151,10 @@ candidates et code 1 ; IVs invalides → code 2 (`Command::INVALID`).
 La résolution de l'identifiant est **insensible à la casse et aux accents**
 (`ectoplasma` = `Ectoplasma`). Un nom ambigu liste les candidats au lieu de deviner.
 
-**Une forme couverte par un drapeau ne se demande pas par son nom.** « Ectoplasma (Méga) »
-et « Gengar (Shadow) » ne résolvent rien : on écrit `ectoplasma --mega` ou
-`ectoplasma --shadow`. Offrir les deux voies ferait deux orthographes à connaître par
-langue pour le même résultat.
+**Méga et obscur ne se demandent pas par leur nom.** « Ectoplasma (Méga) » et « Gengar
+(Shadow) » ne résolvent rien. La méga s'affiche d'elle-même, comme évolution de la forme
+tapée (§4.1 ter) ; l'obscur se demande avec `--shadow`. Offrir les deux voies ferait deux
+orthographes à connaître par langue pour le même résultat.
 
 Les formes **sans drapeau** gardent leur nom comme seule voie d'accès : régionales
 (`Raichu (d'Alola)`), Origine/Alternative, Totémique… Elles se combinent aux drapeaux :
@@ -163,16 +164,20 @@ Les formes **sans drapeau** gardent leur nom comme seule voie d'accès : région
 
 Depuis la saison *Twilight Trails* (8 septembre 2026), les méga-évolutions sont admises
 en combat de ligue, mais **uniquement dans les Mega Editions** — elles restent interdites
-dans les ligues standard. Par défaut la commande choisit donc les trois ligues qui
-correspondent à l'espèce : Mega Editions pour une méga, ligues standard sinon. Classer
-une méga en Great League ne répondrait jamais que « non classé ».
+dans les ligues standard. Une Mega Edition admet une méga par équipe, le reste de
+l'équipe étant des Pokémon ordinaires, classés eux aussi. Par défaut chaque forme reçoit
+donc ses trois ligues : Mega Editions pour une méga, ligues standard sinon. Avec
+`--league`, une méga n'est classée que dans les Mega Editions demandées — la classer en
+Great League ne répondrait jamais que « non classé » — et les autres formes dans toutes
+les ligues demandées.
 
 **Seize mégas portent le tag `supermega`** : une attaque chargée supplémentaire,
 exclusive, suffixée `_PLUS` dans les données et marquée `isMegaMove`. Le moveset les
 affiche naturellement à trois attaques chargées, et une note le signale.
 
-**Les niveaux de méga sont binaires, pas progressifs.** `--mega1` à `--mega4` existent,
-`--mega` valant `--mega3` (le niveau qu'on vise en PvP). Mais d'après le game master,
+**Les niveaux de méga sont binaires, pas progressifs.** `--mega1` à `--mega4` choisissent
+le niveau auquel les mégas de la famille sont classées, 3 par défaut (le niveau qu'on vise
+en PvP). Mais d'après le game master,
 relevé sur les 139 templates `MEGA_EVOLUTION_LEVEL_*` :
 
 | | niv. 1 | niv. 2 | niv. 3 | niv. 4 |
@@ -202,29 +207,68 @@ de [pokemongo.fandom.com](https://pokemongo.fandom.com/wiki/Mega_Evolution#Addit
 qui cite une analyse Silph Road. Elle est donc écrite en constante documentée dans
 `MegaLevelTableBuilder`, pas déduite des données — à revérifier si le méta bouge.
 
-**On demande une méga avec `--mega`**, pas en tapant son nom de forme : `altaria --mega`
-plutôt que `"Altaria (Mega)"`. Trois espèces ont deux mégas (Dracaufeu, Raichu, Mewtwo
-X/Y). `--mega-x` et `--mega-y` départagent ces trois-là, et le message d'ambiguïté les
-suggère : sans eux, le seul recours serait de taper l'identifiant interne
-(`charizard_mega_x`), que l'utilisateur n'a pas à connaître. Demander une variante
-implique la méga, donc `--mega-x` seul suffit. Aucune forme n'étant à la fois méga et
-obscure, `--mega` l'emporte sur `--shadow`.
+**Une méga n'a pas d'option : elle suit la forme tapée.** `altaria` affiche Altaria puis
+Méga-Altaria ; `dracaufeu` affiche ses deux mégas X et Y, sans rien à départager. Seule la
+forme de base méga-évolue : une forme régionale qui partage le n° de dex d'une méga
+(Flagadoss de Galar) ne l'atteint pas, et un obscur doit d'abord être purifié — ce qui
+retire les IVs classés.
 
 **CP de montée.** Une Mega Edition plafonne le CP de la **forme méga**, pas de la forme
 de base. Le nombre affiché en jeu pendant la montée est donc celui de la forme de base,
-plus bas — il a sa propre colonne « Pre-Mega CP », qui n'apparaît que lorsqu'une méga est
-à l'écran : 916 CP pour Méga Altaria en Mega Great. Elle suit la colonne des IVs ligne
-par ligne — tes IVs d'abord, le spread imbattable en dessous **en vert**.
+plus bas : c'est la colonne de montée du §4.1 ter, qui donne 916 CP pour Méga Altaria en
+Mega Great. Un pas avant la méga seulement, elle ajoute ce que méga-évoluer rapporte à ce
+niveau (+64 %).
 
-**Une ligue sans plafond n'affiche ni « Pre-Mega CP » ni niveau.** Sans cap, il n'y a aucun
+**Une ligue sans plafond n'affiche ni CP de montée ni niveau.** Sans cap, il n'y a aucun
 CP à viser, et tous les spreads atteignent le niveau plafond : le répéter à chaque ligne
-ne dirait rien. En Master on lit donc « CP 3576 » et un tiret dans la colonne hors méga.
+ne dirait rien. En Master on lit donc « CP 3576 » et un tiret dans la colonne de montée.
 
 Cette mécanique est **déduite des données de pvpoke**, pas lue dans une documentation :
 en recalculant leurs mégas sous plafond, notre résultat tombe à 1,5 % du leur, l'écart
 résiduel venant de ce que leur `stats` décrit leur build recommandé et non le stat
 product maximal. Plafonner la forme de base à la place donnait 70 % d'écart — hypothèse
 écartée.
+
+### 4.1 ter — Évolutions
+
+On connaît souvent la forme qu'on a en main, pas celle qui combattra. **La commande classe
+donc la forme tapée et tout ce qu'elle peut devenir**, en profondeur d'abord, chaque forme
+suivie de sa méga : `ralts` donne Gallame, Méga-Gallame, Gardevoir, Méga-Gardevoir —
+un tableau par forme, titré de son seul nom et de son n° de dex (« Gallame — #475 ») :
+la forme en main est déjà nommée par la colonne de montée. Le titre d'une méga précise le
+niveau de méga auquel elle est classée (« Malamar (Méga, level 3) — #687 »), puisque ce
+niveau déplace le CP où s'arrêter. Une forme finale n'affiche que sa méga, s'il y en a
+une.
+
+**Une forme qui évolue encore et qu'aucune ligue ne classe est masquée**, la forme tapée
+comprise : Tarsal et Kirlia ne rempliraient qu'un tableau de « unranked », et la colonne
+de montée des tableaux suivants répond déjà pour la forme en main. Celles qu'une ligue
+classe restent (Bulbizarre, Herbizarre, Galifeu en Great). Les formes finales restent
+toujours, y compris « non classé » : elles sont la réponse, et une forme finale tapée ne
+laisserait rien à afficher. Une méga ne compte pas comme évolution suivante : Gardevoir
+est finale. Le test ne lit que le
+classement (une recherche en mémoire), donc une forme masquée ne coûte pas ses 4096
+spreads.
+
+**Évoluer garde les IVs et le niveau.** Le CP à atteindre avant d'évoluer est donc celui
+de la forme en main, au niveau où l'évolution est classée. Il occupe la colonne de
+montée, **nommée d'après la forme tapée** (« Ralts CP », en anglais comme le reste de
+l'interface, le nom suivant `--locale`) : c'est le nombre qu'on lit à l'écran pendant
+la montée. Une seule colonne pour les évolutions et les mégas, puisque c'est la même
+question. La note de pied le rappelle une fois pour toute la famille.
+
+**L'arbre vient des liens « vers l'avant » de pvpoke** (`family.evolutions`), seuls
+conservés au build : les liens arrière (`parent`) les contredisent à une douzaine
+d'endroits (Rattatac a pour parent le Rattata d'Alola alors que le Rattata ordinaire le
+liste). Un lien vers une forme absente du catalogue est ignoré.
+
+**Un obscur évolue en obscur, et n'a pas de méga.** pvpoke omet les liens de certains
+obscurs (Évoli) : un obscur suit ceux de sa forme ordinaire. Une évolution sans entrée
+obscure est écartée plutôt que remplacée par la forme ordinaire, qui répondrait pour un
+Pokémon que l'obscur ne peut pas devenir.
+
+Coût : chaque forme affichée classe les 4096 spreads dans chaque ligue. Mesuré à 1,7 s
+pour la famille de Tarsal (4 formes affichées) et 2,5 s pour Évoli (9 formes).
 
 ---
 
@@ -336,8 +380,9 @@ autour et lui est remplaçable.
 src/
   Domain/                 # modèle métier pur — zéro dépendance externe
     Pokemon/
-      Model/              # Species, PokemonName, DexNumber, IvSpread
+      Model/              # Species, PokemonName, DexNumber, IvSpread, EvolutionPath
       Port/               # SpeciesCatalog (interface)
+      Service/            # SpeciesResolver, EvolutionTree
       Exception/          # SpeciesNotFound, AmbiguousSpecies, InvalidIv
     Weather/
       Model/              # GameWeather, Place, HourlyWeather
@@ -351,7 +396,7 @@ src/
       Service/            # CpCalculator, IvRankCalculator — calcul pur, sans état
       Port/               # PvpRankingCatalog, CpMultiplierTable (interfaces)
   Application/            # cas d'usage, un par intention
-    Pvp/RankPokemon/      # RankPokemonQuery, RankPokemonHandler, RankPokemonResult
+    Pvp/RankPokemon/      # RankPokemonQuery, RankPokemonHandler, EvolutionRanker, RankPokemonResult
     Weather/ForecastIncense/  # ForecastIncenseQuery, ForecastIncenseHandler, ForecastIncenseResult
   Infrastructure/         # adapters — seule couche qui connaît le réseau et le disque
     Pvpoke/               # PvpokeRankingCatalog
@@ -660,3 +705,11 @@ Règles d'usage :
 | 72 | Commandes préfixées `app:` au lieu de `pogo:` | Préfixe par défaut d'une application Symfony ; le binaire reste `pogo` et les alias `pvp` / `weather` ne changent pas |
 | 73 | `release.yml` appelle `ci.yml` (`workflow_call`) au lieu d'en recopier les checks | Annule la décision 54 : le tag rejoue toujours les checks, mais depuis une seule définition, qui ne peut plus diverger de celle du CI |
 | 74 | Note de release = message du tag annoté (`--notes-from-tag`) | Les notes générées listent des PR, et le projet n'en ouvre pas : la note s'écrit avec le tag (`git tag -a`) et part avec le binaire, sans `gh` en local |
+| 75 | La famille entière classée d'office : évolutions, puis la méga de chacune | On connaît la forme en main, pas celle qui combattra. Annule les décisions 31 et 42 : `--mega`, `--mega-x` et `--mega-y` disparaissent, la méga — X et Y comprises — s'affichant comme évolution de la forme tapée ; `--mega1` à `--mega4` ne choisissent plus que le niveau |
+| 76 | Colonne de montée nommée d'après la forme tapée, pour les évolutions comme pour les mégas | Remplace « Pre-Mega CP » (décision 32) : évoluer et méga-évoluer gardent tous deux le niveau, donc c'est la même question — « jusqu'à combien je monte ce que j'ai en main ? » |
+| 77 | Gain de CP de la méga (décision 53) affiché seulement à un pas de la méga | Depuis Tarsal, « +260 % » mesurerait surtout les évolutions ordinaires et n'apprendrait rien |
+| 78 | Liens d'évolution « vers l'avant » seuls, un obscur suivant ceux de sa forme ordinaire | Les liens `parent` de pvpoke contredisent les `evolutions` à douze endroits, et certains obscurs n'ont aucun lien ; une évolution sans entrée obscure est écartée plutôt que remplacée par la forme ordinaire |
+| 79 | Sous `--league`, une méga n'entre que dans les Mega Editions, les autres formes partout | Une Mega Edition admet une méga par équipe et classe aussi les Pokémon ordinaires (Noctali #29 en Mega Great) ; seule la méga est interdite en ligue standard |
+| 80 | `excessive-parameter-list` relevé de 8 à 9 | `Species` gagne ses évolutions ; les sortir dans un port à part dédoublerait la lecture de `species.json` pour une relation qui appartient à l'espèce. Même raison que la décision 10 |
+| 81 | Forme qui évolue encore masquée quand aucune ligue affichée ne la classe, forme tapée comprise | Demande de l'utilisateur, pour la place : Tarsal, Kirlia ou Chrysacier n'apportaient qu'un tableau de « unranked », et la colonne de montée nomme déjà la forme tapée. Les finales restent, et le test passe avant le calcul des spreads |
+| 82 | Titre réduit au nom et au n° de dex, niveau de méga entre parenthèses | Demande de l'utilisateur : le chemin « Inkay → Malamar → Malamar (Mega) » se lisait mal, et la colonne de montée nomme déjà la forme en main. Le niveau de méga, lui, change le calcul : il se lit dans le titre (« Malamar (Mega, level 3) ») |

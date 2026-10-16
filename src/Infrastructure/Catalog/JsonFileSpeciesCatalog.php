@@ -51,18 +51,6 @@ final class JsonFileSpeciesCatalog implements SpeciesCatalog
         ));
     }
 
-    #[\Override]
-    public function baseFormOf(DexNumber $dex): ?Species
-    {
-        foreach ($this->index()->byDex($dex->value) as $species) {
-            if ($species->isBaseForm()) {
-                return $species;
-            }
-        }
-
-        return null;
-    }
-
     /**
      * @return list<Species>
      */

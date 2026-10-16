@@ -46,12 +46,12 @@ final readonly class SpeciesFileReader
             ));
         }
 
-        /** @var list<array{id: string, dex: int, atk: int, def: int, sta: int, shadow: bool, super: bool, base: bool, forms: list<string>, elite: list<string>, types?: list<string>}> $entries */
+        /** @var list<array{id: string, dex: int, atk: int, def: int, sta: int, shadow: bool, super: bool, base: bool, forms: list<string>, elite: list<string>, types?: list<string>, evolutions?: list<string>}> $entries */
         return array_map($this->toSpecies(...), $entries);
     }
 
     /**
-     * @param array{id: string, dex: int, atk: int, def: int, sta: int, shadow: bool, super: bool, base: bool, forms: list<string>, elite: list<string>, types?: list<string>} $entry
+     * @param array{id: string, dex: int, atk: int, def: int, sta: int, shadow: bool, super: bool, base: bool, forms: list<string>, elite: list<string>, types?: list<string>, evolutions?: list<string>} $entry
      */
     private function toSpecies(array $entry): Species
     {
@@ -64,6 +64,7 @@ final readonly class SpeciesFileReader
             forms: $entry['forms'],
             eliteMoves: array_map(static fn(string $move): MoveId => new MoveId($move), $entry['elite']),
             types: $this->types($entry['types'] ?? []),
+            evolutions: array_map(static fn(string $id): SpeciesId => new SpeciesId($id), $entry['evolutions'] ?? []),
         );
     }
 

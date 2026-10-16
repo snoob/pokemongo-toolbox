@@ -77,21 +77,21 @@ final class InputLocaleTest extends TestCase
     }
 
     /**
-     * A flagged form is asked for as "ectoplasma --mega", so the language must still be
+     * A flagged form is asked for as "ectoplasma --shadow", so the language must still be
      * read from the bare name rather than from a form suffix that is never typed.
      */
     public function testAFlaggedFormIsDetectedFromTheBareName(): void
     {
-        $mega = new Species(
-            new SpeciesId('gengar_mega'),
+        $shadow = new Species(
+            new SpeciesId('gengar_shadow'),
             new DexNumber(94),
-            new BaseStats(349, 199, 155),
+            new BaseStats(261, 149, 155),
             shadowEligible: false,
-            forms: ['mega'],
+            forms: ['shadow'],
         );
 
-        self::assertSame('fr', $this->locale->detect('Ectoplasma', $mega));
-        self::assertSame('en', $this->locale->detect('Gengar', $mega));
+        self::assertSame('fr', $this->locale->detect('Ectoplasma', $shadow));
+        self::assertSame('en', $this->locale->detect('Gengar', $shadow));
     }
 
     private function gengar(): Species

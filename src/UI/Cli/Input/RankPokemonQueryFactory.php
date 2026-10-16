@@ -36,33 +36,18 @@ final readonly class RankPokemonQueryFactory
                 : PokemonLevel::regularCap(),
             shadow: true === $input->getOption('shadow'),
             megaLevel: $this->parseMegaLevel($input),
-            megaVariant: $this->parseMegaVariant($input),
         );
     }
 
     /**
-     * A bare "--mega" means the level a PvP player targets; "--mega4" is the Super Mega
-     * tier, the only one that shifts the CP to stop at. Asking for a variant implies a
-     * mega too, since only megas have one.
+     * Megas are always ranked; these flags only pick the Mega Level they are ranked at.
+     * "--mega4" is the Super Mega tier, the only one that shifts the CP to stop at.
      */
     private function parseMegaLevel(InputInterface $input): ?MegaLevel
     {
         for ($level = MegaLevel::MIN; $level <= MegaLevel::MAX; ++$level) {
             if (true === $input->getOption('mega' . $level)) {
                 return new MegaLevel($level);
-            }
-        }
-
-        return true === $input->getOption('mega') || null !== $this->parseMegaVariant($input)
-            ? MegaLevel::default()
-            : null;
-    }
-
-    private function parseMegaVariant(InputInterface $input): ?string
-    {
-        foreach (['x', 'y'] as $variant) {
-            if (true === $input->getOption('mega-' . $variant)) {
-                return $variant;
             }
         }
 

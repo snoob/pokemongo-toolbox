@@ -54,18 +54,6 @@ final readonly class InMemorySpeciesCatalog implements SpeciesCatalog
     }
 
     #[\Override]
-    public function baseFormOf(DexNumber $dex): ?Species
-    {
-        foreach ($this->species as $species) {
-            if ($species->dex->value === $dex->value && $species->isBaseForm()) {
-                return $species;
-            }
-        }
-
-        return null;
-    }
-
-    #[\Override]
     public function find(SpeciesId $id): ?Species
     {
         foreach ($this->species as $species) {

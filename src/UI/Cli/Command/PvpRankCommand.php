@@ -9,7 +9,6 @@ use App\Domain\Pokemon\Exception\AmbiguousSpecies;
 use App\Domain\Pokemon\Exception\InvalidIv;
 use App\Domain\Pokemon\Exception\SpeciesNotFound;
 use App\Domain\Pokemon\Model\Species;
-use App\Domain\Pvp\Model\MegaLevel;
 use App\Infrastructure\Json\JsonValue;
 use App\Infrastructure\Naming\InputLocale;
 use App\Infrastructure\Naming\SpeciesNameResolver;
@@ -27,7 +26,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(
     name: 'app:pvp:rank',
     aliases: ['pvp'],
-    description: 'PvP ranking of a Pokémon per league, and where its IVs place within the species',
+    description: 'PvP ranking of a Pokémon and everything it evolves into, and where its IVs place',
 )]
 final class PvpRankCommand extends Command
 {
@@ -56,13 +55,15 @@ final class PvpRankCommand extends Command
                 . ' (defaults to the three matching the species)',
             )
             ->addOption('shadow', null, InputOption::VALUE_NONE, 'Use the shadow form')
-            ->addOption('mega', 'm', InputOption::VALUE_NONE, 'Mega Evolution (level ' . MegaLevel::DEFAULT . ')')
-            ->addOption('mega1', null, InputOption::VALUE_NONE, 'Mega Evolution at level 1')
-            ->addOption('mega2', null, InputOption::VALUE_NONE, 'Mega Evolution at level 2')
-            ->addOption('mega3', null, InputOption::VALUE_NONE, 'Mega Evolution at level 3 (default)')
-            ->addOption('mega4', null, InputOption::VALUE_NONE, 'Mega Evolution at level 4 (Super Mega: +2 levels)')
-            ->addOption('mega-x', null, InputOption::VALUE_NONE, 'Mega X (Charizard, Raichu, Mewtwo)')
-            ->addOption('mega-y', null, InputOption::VALUE_NONE, 'Mega Y (Charizard, Raichu, Mewtwo)')
+            ->addOption('mega1', null, InputOption::VALUE_NONE, 'Rank the megas at Mega Level 1')
+            ->addOption('mega2', null, InputOption::VALUE_NONE, 'Rank the megas at Mega Level 2')
+            ->addOption('mega3', null, InputOption::VALUE_NONE, 'Rank the megas at Mega Level 3 (default)')
+            ->addOption(
+                'mega4',
+                null,
+                InputOption::VALUE_NONE,
+                'Rank the megas at Mega Level 4 (Super Mega: +2 levels)',
+            )
             ->addOption('best-buddy', 'b', InputOption::VALUE_NONE, 'Allow level 51 (Best Buddy)')
             ->addOption('format', 'f', InputOption::VALUE_REQUIRED, 'Output format: text or json', 'text')
             ->addOption(
@@ -74,10 +75,10 @@ final class PvpRankCommand extends Command
             ->setHelp(<<<'HELP'
                 Examples:
 
-                  <info>%command.full_name% ectoplasma</info>            species rank across the three leagues
+                  <info>%command.full_name% ectoplasma</info>            Gengar, then Mega Gengar in the Mega Editions
                   <info>%command.full_name% 94 1/15/14</info>            + where those IVs place among the 4096
-                  <info>%command.full_name% gengar --league=great</info> a single league
-                  <info>%command.full_name% altaria --mega</info>        the Mega Editions
+                  <info>%command.full_name% ralts 1/15/14</info>         Ralts and all it becomes, with the CP to stop at
+                  <info>%command.full_name% gengar --league=great</info> a single league, megas left out
                 HELP);
     }
 
@@ -107,10 +108,6 @@ final class PvpRankCommand extends Command
                 $s->id->value,
             ), $e->candidates));
 
-            if ($this->areMegaVariants($e->candidates)) {
-                $io->text('<comment>Narrow it down with <info>--mega-x</info> or <info>--mega-y</info>.</comment>');
-            }
-
             return Command::FAILURE;
         }
 
@@ -118,7 +115,7 @@ final class PvpRankCommand extends Command
         // the answer.
         $locale = JsonValue::asString($input->getOption('locale')) ?? $this->inputLocale->detect(
             $query->identifier,
-            $result->species,
+            $result->asked,
         );
 
         'json' === $input->getOption('format')
@@ -126,19 +123,5 @@ final class PvpRankCommand extends Command
             : $this->text->present($io, $result, $locale);
 
         return Command::SUCCESS;
-    }
-
-    /**
-     * @param list<Species> $candidates
-     */
-    private function areMegaVariants(array $candidates): bool
-    {
-        foreach ($candidates as $candidate) {
-            if (!$candidate->hasMegaVariant('x') && !$candidate->hasMegaVariant('y')) {
-                return false;
-            }
-        }
-
-        return [] !== $candidates;
     }
 }

@@ -4,24 +4,48 @@ declare(strict_types=1);
 
 namespace App\UI\Cli\Presenter;
 
+use App\Application\Pvp\RankPokemon\EvolutionRanking;
 use App\Application\Pvp\RankPokemon\LeagueOutcome;
-use App\Application\Pvp\RankPokemon\RankPokemonResult;
+use App\Domain\Pokemon\Model\Species;
 use App\Domain\Pvp\Model\PowerUpTarget;
+use App\Infrastructure\Naming\SpeciesNameResolver;
 
 /**
- * The "Hors méga" column: what the base form must read on screen before Mega Evolving.
+ * The "<form in hand> CP" column: what the asked form must read on screen before
+ * evolving — into another form or into its mega, the same question either way.
  *
- * It only exists for a mega in a capped league — an uncapped one asks nothing of the CP,
- * and a plain species never leaves its own form.
+ * It only exists for an evolution in a capped league — an uncapped one asks nothing of
+ * the CP, and the form in hand ranked as itself never leaves its own form.
  */
 final readonly class BaseFormCellFormatter
 {
-    public const string HEADER = 'Pre-Mega CP';
+    public function __construct(
+        private SpeciesNameResolver $names,
+    ) {}
 
-    public function appliesTo(RankPokemonResult $result): bool
+    public function header(Species $asked, ?string $locale): string
     {
-        foreach ($result->outcomes as $outcome) {
+        return \sprintf('%s CP', $this->names->name($asked, $locale));
+    }
+
+    public function appliesTo(EvolutionRanking $ranking): bool
+    {
+        foreach ($ranking->outcomes as $outcome) {
             if (null !== $outcome->powerUpTo || null !== $outcome->bestPowerUpTo) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Whether a cell tells what Mega Evolving adds — only one step away from the mega.
+     */
+    public function showsAMegaGain(EvolutionRanking $ranking): bool
+    {
+        foreach ($ranking->outcomes as $outcome) {
+            if (null !== $outcome->powerUpTo?->megaGainPercent || null !== $outcome->bestPowerUpTo?->megaGainPercent) {
                 return true;
             }
         }
@@ -33,16 +57,6 @@ final readonly class BaseFormCellFormatter
      * Mirrors the IV column line for line: the given spread first, the unbeatable one
      * below it in green.
      */
-    /**
-     * The Pokémon level to stop at — the figure that makes the CP target checkable while
-     * powering up. Not to be confused with the Mega Level, which is a separate
-     * progression and only affects the CP from level 4 onwards.
-     */
-    private function target(PowerUpTarget $target): string
-    {
-        return \sprintf('%d CP (lvl %s) +%d %%', $target->cp->value, $target->level, $target->megaGainPercent);
-    }
-
     public function format(LeagueOutcome $outcome): string
     {
         $lines = [];
@@ -56,5 +70,17 @@ final readonly class BaseFormCellFormatter
         }
 
         return [] === $lines ? '<fg=gray>—</>' : implode("\n", $lines);
+    }
+
+    /**
+     * The Pokémon level to stop at — the figure that makes the CP target checkable while
+     * powering up. Not to be confused with the Mega Level, which is a separate
+     * progression and only affects the CP from level 4 onwards.
+     */
+    private function target(PowerUpTarget $target): string
+    {
+        $cell = \sprintf('%d CP (lvl %s)', $target->cp->value, $target->level);
+
+        return null === $target->megaGainPercent ? $cell : \sprintf('%s +%d %%', $cell, $target->megaGainPercent);
     }
 }

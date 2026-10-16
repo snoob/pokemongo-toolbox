@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Build;
 
+use App\Infrastructure\Json\JsonPath;
 use App\Infrastructure\Json\JsonValue;
 
 /**
@@ -21,7 +22,7 @@ final readonly class GameMasterEntryMapper
     /**
      * @param array<array-key, mixed> $entry
      *
-     * @return array{id: string, dex: int, atk: int, def: int, sta: int, shadow: bool, super: bool, base: bool, forms: list<string>, elite: list<string>, types: list<string>}|null null when the entry is unusable
+     * @return array{id: string, dex: int, atk: int, def: int, sta: int, shadow: bool, super: bool, base: bool, forms: list<string>, elite: list<string>, types: list<string>, evolutions: list<string>}|null null when the entry is unusable
      */
     public function map(array $entry): ?array
     {
@@ -63,6 +64,8 @@ final readonly class GameMasterEntryMapper
                 JsonValue::asStringList($entry['types'] ?? null),
                 static fn(string $type): bool => 'none' !== $type,
             )),
+            // Only the forward links: the backward "parent" contradicts them in places.
+            'evolutions' => JsonValue::asStringList(JsonPath::arrayAt($entry, 'family')['evolutions'] ?? null),
         ];
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\UI\Cli\Presenter;
 
+use App\Application\Pvp\RankPokemon\EvolutionRanking;
 use App\Application\Pvp\RankPokemon\LeagueOutcome;
 use App\Application\Pvp\RankPokemon\RankPokemonResult;
 use App\Domain\Pokemon\Model\Species;
@@ -20,28 +21,53 @@ final readonly class PvpRankJsonPresenter
 
     public function present(RankPokemonResult $result, ?string $locale = null): string
     {
-        $leagues = [];
-
-        foreach ($result->outcomes as $outcome) {
-            $leagues[$outcome->league->value] = $this->league($outcome, $result->species);
-        }
-
         return json_encode(
             [
-                'species' => [
-                    'id' => $result->species->id->value,
-                    'dex' => $result->species->dex->value,
-                    'name' => $this->names->name($result->species, $locale),
-                    'forms' => $result->species->forms,
-                    'mega' => $result->species->isMega(),
-                    'superMega' => $result->species->superMega,
-                ],
+                'species' => $this->species($result->asked, $locale),
                 'iv' => null === $result->iv ? null : (string) $result->iv,
                 'levelCap' => $result->levelCap->value,
-                'leagues' => $leagues,
+                'megaLevel' => $result->megaLevel?->value,
+                'evolutions' => array_map(
+                    /** @return array<string, mixed> */
+                    fn(EvolutionRanking $ranking): array => $this->evolution($ranking, $locale),
+                    $result->evolutions,
+                ),
             ],
             \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE | \JSON_UNESCAPED_SLASHES | \JSON_THROW_ON_ERROR,
         );
+    }
+
+    /**
+     * @return array{species: array<string, mixed>, path: list<string>, leagues: array<string, array<string, mixed>>}
+     */
+    private function evolution(EvolutionRanking $ranking, ?string $locale): array
+    {
+        $leagues = [];
+
+        foreach ($ranking->outcomes as $outcome) {
+            $leagues[$outcome->league->value] = $this->league($outcome, $ranking->species());
+        }
+
+        return [
+            'species' => $this->species($ranking->species(), $locale),
+            'path' => array_map(static fn(Species $stage): string => $stage->id->value, $ranking->path->stages),
+            'leagues' => $leagues,
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function species(Species $species, ?string $locale): array
+    {
+        return [
+            'id' => $species->id->value,
+            'dex' => $species->dex->value,
+            'name' => $this->names->name($species, $locale),
+            'forms' => $species->forms,
+            'mega' => $species->isMega(),
+            'superMega' => $species->superMega,
+        ];
     }
 
     /**
@@ -111,10 +137,18 @@ final readonly class PvpRankJsonPresenter
     }
 
     /**
-     * @return array{cp: int, level: float}|null
+     * @return array{cp: int, level: float, megaGainPercent: int|null}|null
      */
     private function target(?PowerUpTarget $target): ?array
     {
-        return null === $target ? null : ['cp' => $target->cp->value, 'level' => $target->level->value];
+        return (
+            null === $target
+                ? null
+                : [
+                    'cp' => $target->cp->value,
+                    'level' => $target->level->value,
+                    'megaGainPercent' => $target->megaGainPercent,
+                ]
+        );
     }
 }

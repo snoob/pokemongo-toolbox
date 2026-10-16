@@ -39,9 +39,27 @@ final class GameMasterEntryMapperTest extends TestCase
                 'elite' => ['SHADOW_PUNCH'],
                 'base' => true,
                 'types' => ['ghost', 'poison'],
+                'evolutions' => [],
             ],
             $mapped,
         );
+    }
+
+    /**
+     * Only the forward links are kept: they are what the ranking walks, and the
+     * source's backward ones disagree with them in a dozen places (Raticate's parent is
+     * the Alolan Rattata, although plain Rattata lists it).
+     */
+    public function testTheFormsItEvolvesIntoAreKept(): void
+    {
+        $mapped = new GameMasterEntryMapper(new BaseStatsReader(), new FormLabels())->map([
+            ...self::GENGAR,
+            'speciesId' => 'kirlia',
+            'speciesName' => 'Kirlia',
+            'family' => ['id' => 'FAMILY_RALTS', 'parent' => 'ralts', 'evolutions' => ['gallade', 'gardevoir']],
+        ]);
+
+        self::assertSame(['gallade', 'gardevoir'], $mapped['evolutions'] ?? null);
     }
 
     public function testASingleTypeIsNotPaddedWithTheSourcesPlaceholder(): void

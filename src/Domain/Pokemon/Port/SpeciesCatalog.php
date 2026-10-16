@@ -22,14 +22,8 @@ interface SpeciesCatalog
     public function find(SpeciesId $id): ?Species;
 
     /**
-     * The default form sharing this Pokédex number — the one you actually power up
-     * before Mega Evolving. Null when the species has no plain form (Giratina).
-     */
-    public function baseFormOf(DexNumber $dex): ?Species;
-
-    /**
      * The mega forms sharing this Pokédex number. Usually none or one; Charizard,
-     * Raichu and Mewtwo have two (X and Y), which makes "--mega" ambiguous for them.
+     * Raichu and Mewtwo have two (X and Y).
      *
      * @return list<Species>
      */
