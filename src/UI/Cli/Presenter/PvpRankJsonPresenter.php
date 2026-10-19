@@ -24,6 +24,7 @@ final readonly class PvpRankJsonPresenter
         return json_encode(
             [
                 'species' => $this->species($result->asked, $locale),
+                'guessedFrom' => $result->guessedFrom,
                 'iv' => null === $result->iv ? null : (string) $result->iv,
                 'levelCap' => $result->levelCap->value,
                 'megaLevel' => $result->megaLevel?->value,

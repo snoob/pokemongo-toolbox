@@ -67,7 +67,8 @@ pogo weather [--at=place]      # in-game weather, for the Daily Adventure Incens
 `pogo list` shows every command.
 
 A Pokémon is named by its **English name**, its **French name**, or its **Pokédex
-number**. Case and accents are ignored.
+number**. Case and accents are ignored, and a typo is forgiven: `flozizarre` is read
+as Florizarre, and the answer says so before the tables.
 
 ```bash
 pogo pvp gengar              # English name

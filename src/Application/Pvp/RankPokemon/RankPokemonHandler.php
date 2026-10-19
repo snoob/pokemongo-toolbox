@@ -21,9 +21,10 @@ final readonly class RankPokemonHandler
 
     public function __invoke(RankPokemonQuery $query): RankPokemonResult
     {
-        $asked = $query->shadow
+        $match = $query->shadow
             ? $this->resolver->resolveShadow($query->identifier)
             : $this->resolver->resolve($query->identifier);
+        $asked = $match->species;
         $rankings = [];
 
         // Evolving keeps the IVs and the level, so the form in hand is worth ranking as
@@ -56,6 +57,7 @@ final readonly class RankPokemonHandler
             $rankings,
             $megaLevel,
             null === $megaLevel ? null : $this->megaLevels->effectsAt($megaLevel),
+            $match->guessed ? $query->identifier : null,
         );
     }
 

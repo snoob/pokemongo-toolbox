@@ -89,6 +89,26 @@ final readonly class SpeciesIndex
     }
 
     /**
+     * The forms whose name lies closest by the given measure — null meaning too far to
+     * count; several when names tie at the same distance, none when nothing is close.
+     *
+     * @param \Closure(string): ?int $distanceTo
+     *
+     * @return list<Species>
+     */
+    public function byNearestName(\Closure $distanceTo): array
+    {
+        /** @var NearestCandidates<string> $nearest */
+        $nearest = new NearestCandidates();
+
+        foreach ($this->byName as $name => $candidates) {
+            $nearest->offer($distanceTo($name), $candidates);
+        }
+
+        return $this->hydrate(array_values(array_unique($nearest->items())));
+    }
+
+    /**
      * @param list<string> $ids
      *
      * @return list<Species>

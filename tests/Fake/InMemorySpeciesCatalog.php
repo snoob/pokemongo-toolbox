@@ -39,9 +39,25 @@ final readonly class InMemorySpeciesCatalog implements SpeciesCatalog
             $matches[] = $species;
         }
 
-        $base = array_values(array_filter($matches, static fn(Species $s): bool => $s->isBaseForm()));
+        return $this->preferBaseForm($matches);
+    }
 
-        return [] !== $base ? $base : $matches;
+    /**
+     * Within two edits of a declared name, nearest only: enough to exercise the callers,
+     * the length-based allowance being the real adapter's business.
+     */
+    #[\Override]
+    public function nearest(string $identifier): array
+    {
+        $needle = mb_strtolower(trim($identifier));
+        $distances = array_map(fn(Species $s): int => $this->distance($s, $needle), $this->species);
+        $nearest = min([3, ...$distances]);
+
+        return $this->preferBaseForm(array_values(array_filter(
+            $this->species,
+            static fn(int $i): bool => ($distances[$i] ?? 3) === $nearest && $nearest < 3,
+            \ARRAY_FILTER_USE_KEY,
+        )));
     }
 
     #[\Override]
@@ -63,6 +79,34 @@ final readonly class InMemorySpeciesCatalog implements SpeciesCatalog
         }
 
         return null;
+    }
+
+    /**
+     * Edits from the needle to the nearest declared name, capped at three: within two is
+     * a typo, enough to exercise the callers — the length-based allowance being the real
+     * adapter's business.
+     */
+    private function distance(Species $species, string $needle): int
+    {
+        return min([
+            3,
+            ...array_map(static fn(string $name): int => levenshtein(
+                $needle,
+                mb_strtolower($name),
+            ), $this->names[$species->id->value] ?? []),
+        ]);
+    }
+
+    /**
+     * @param list<Species> $matches
+     *
+     * @return list<Species>
+     */
+    private function preferBaseForm(array $matches): array
+    {
+        $base = array_values(array_filter($matches, static fn(Species $s): bool => $s->isBaseForm()));
+
+        return [] !== $base ? $base : $matches;
     }
 
     private function matches(Species $species, string $needle): bool

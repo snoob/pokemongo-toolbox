@@ -9,6 +9,7 @@ use App\Domain\Pokemon\Model\SpeciesId;
 use App\Infrastructure\Catalog\JsonFileSpeciesCatalog;
 use App\Infrastructure\Catalog\NameNormalizer;
 use App\Infrastructure\Catalog\SpeciesFileReader;
+use App\Infrastructure\Catalog\TypoTolerance;
 use App\Infrastructure\Naming\LocalisedSpeciesNames;
 use App\Infrastructure\Naming\SpeciesNameResolver;
 use App\Tests\Fake\FixtureTranslator;
@@ -105,6 +106,48 @@ final class JsonFileSpeciesCatalogTest extends TestCase
         self::assertSame([], $this->idsFor(''));
     }
 
+    #[DataProvider('typos')]
+    public function testATypoIsTakenForTheNearestName(string $identifier, string $expected): void
+    {
+        self::assertSame([], $this->idsFor($identifier), 'a typo must not pass for an exact match');
+        self::assertSame([$expected], $this->nearestIdsFor($identifier));
+    }
+
+    /** @return iterable<string, array{string, string}> */
+    public static function typos(): iterable
+    {
+        yield 'French, one letter swapped for another' => ['Ectoplasmo', 'gengar'];
+        yield 'French, two letters transposed' => ['Ectoplsama', 'gengar'];
+        yield 'English, one letter missing' => ['Gengr', 'gengar'];
+        yield 'English, one letter too many' => ['Gengarr', 'gengar'];
+        yield 'regional form' => ['Raichu dAlolla', 'raichu_alolan'];
+    }
+
+    public function testNothingIsGuessedWhenNoNameIsCloseEnough(): void
+    {
+        self::assertSame([], $this->nearestIdsFor('Pikachouette'));
+        self::assertSame([], $this->nearestIdsFor('Gegnr'), 'three edits in five letters is another word');
+        self::assertSame([], $this->nearestIdsFor('95'), 'a dex number one digit off is another Pokémon');
+        self::assertSame([], $this->nearestIdsFor(''));
+    }
+
+    public function testATypoInTheStartOfANameStillFindsIt(): void
+    {
+        self::assertSame(['gengar'], $this->nearestIdsFor('Ectoplsa'));
+    }
+
+    public function testAWholeNameBeatsTheStartOfALongerOne(): void
+    {
+        // "Raichu" is a whole name one edit away, and also the start of "Raichu (Alolan)".
+        self::assertSame(['raichu'], $this->nearestIdsFor('Raichi'));
+    }
+
+    public function testNamesTiedAtTheSameDistanceAreAllOffered(): void
+    {
+        // Giratina has no default form: a typo in the bare name reaches both.
+        self::assertCount(2, $this->nearestIdsFor('Giratima'));
+    }
+
     public function testItLooksUpAFormById(): void
     {
         self::assertNotNull($this->catalog->find(new SpeciesId('gengar_shadow')));
@@ -129,7 +172,16 @@ final class JsonFileSpeciesCatalogTest extends TestCase
             new SpeciesFileReader($file),
             new NameNormalizer(),
             new LocalisedSpeciesNames(new SpeciesNameResolver(FixtureTranslator::create()), ['fr', 'en']),
+            new TypoTolerance(),
         );
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function nearestIdsFor(string $identifier): array
+    {
+        return array_map(static fn(Species $s): string => $s->id->value, $this->catalog->nearest($identifier));
     }
 
     /**

@@ -151,6 +151,16 @@ candidates et code 1 ; IVs invalides → code 2 (`Command::INVALID`).
 La résolution de l'identifiant est **insensible à la casse et aux accents**
 (`ectoplasma` = `Ectoplasma`). Un nom ambigu liste les candidats au lieu de deviner.
 
+**Une faute de frappe est corrigée, et la réponse le dit.** Quand ni le nom exact ni un
+début de nom ne trouvent rien, on prend le nom le plus proche par distance de Levenshtein
+(`levenshtein()` natif, `TypoTolerance`) : « flozizarre » donne Florizarre, avec
+`Interpreted "flozizarre" as Florizarre.` avant les tableaux et `guessedFrom` en JSON.
+La tolérance croît avec la longueur — 0 faute jusqu'à 3 lettres, 1 jusqu'à 5, 2 jusqu'à
+9, 3 au-delà — et un numéro de Pokédex n'est jamais corrigé. Les noms entiers passent
+avant les débuts de nom (« Giratima » atteint les deux Giratina par leur début) ; deux
+noms à égalité sont listés comme un nom ambigu. La langue de la réponse suit le nom le
+plus proche : « flozizarre » répond en français.
+
 **Méga et obscur ne se demandent pas par leur nom.** « Ectoplasma (Méga) » et « Gengar
 (Shadow) » ne résolvent rien. La méga s'affiche d'elle-même, comme évolution de la forme
 tapée (§4.1 ter) ; l'obscur se demande avec `--shadow`. Offrir les deux voies ferait deux
@@ -713,3 +723,4 @@ Règles d'usage :
 | 80 | `excessive-parameter-list` relevé de 8 à 9 | `Species` gagne ses évolutions ; les sortir dans un port à part dédoublerait la lecture de `species.json` pour une relation qui appartient à l'espèce. Même raison que la décision 10 |
 | 81 | Forme qui évolue encore masquée quand aucune ligue affichée ne la classe, forme tapée comprise | Demande de l'utilisateur, pour la place : Tarsal, Kirlia ou Chrysacier n'apportaient qu'un tableau de « unranked », et la colonne de montée nomme déjà la forme tapée. Les finales restent, et le test passe avant le calcul des spreads |
 | 82 | Titre réduit au nom et au n° de dex, niveau de méga entre parenthèses | Demande de l'utilisateur : le chemin « Inkay → Malamar → Malamar (Mega) » se lisait mal, et la colonne de montée nomme déjà la forme en main. Le niveau de méga, lui, change le calcul : il se lit dans le titre (« Malamar (Mega, level 3) ») |
+| 83 | Faute de frappe corrigée d'office vers le nom le plus proche, avec mention | Choix de l'utilisateur, entre corriger et seulement suggérer : à une ou deux lettres près le risque de viser le mauvais Pokémon est faible, et la ligne `Interpreted …` le rend visible avant toute lecture. `nearest()` est une méthode du port distincte de `search()` pour que le domaine sache qu'il a deviné ; la tolérance, elle, reste une politique de l'adapter, comme la normalisation (décision 20) |

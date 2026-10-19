@@ -6,7 +6,7 @@ namespace App\Domain\Pokemon\Service;
 
 use App\Domain\Pokemon\Exception\AmbiguousSpecies;
 use App\Domain\Pokemon\Exception\SpeciesNotFound;
-use App\Domain\Pokemon\Model\Species;
+use App\Domain\Pokemon\Model\SpeciesMatch;
 use App\Domain\Pokemon\Port\SpeciesCatalog;
 
 /**
@@ -21,9 +21,19 @@ final readonly class SpeciesResolver
         private SpeciesCatalog $catalog,
     ) {}
 
-    public function resolve(string $identifier): Species
+    /**
+     * A name that matches nothing is taken for the one it most likely misspells, provided
+     * a single species is that close; the match says so, for the answer to tell.
+     */
+    public function resolve(string $identifier): SpeciesMatch
     {
         $candidates = $this->catalog->search($identifier);
+        $guessed = false;
+
+        if ([] === $candidates) {
+            $candidates = $this->catalog->nearest($identifier);
+            $guessed = true;
+        }
 
         if ([] === $candidates) {
             throw SpeciesNotFound::forIdentifier($identifier);
@@ -33,17 +43,18 @@ final readonly class SpeciesResolver
             throw new AmbiguousSpecies($identifier, $candidates);
         }
 
-        return $candidates[0];
+        return new SpeciesMatch($candidates[0], $guessed);
     }
 
     /**
      * A shadow form is a distinct entry in the catalogue; fall back to the regular form
      * rather than inventing stats the ranking source does not have.
      */
-    public function resolveShadow(string $identifier): Species
+    public function resolveShadow(string $identifier): SpeciesMatch
     {
-        $species = $this->resolve($identifier);
+        $match = $this->resolve($identifier);
+        $shadow = $this->catalog->find($match->species->id->shadow());
 
-        return $this->catalog->find($species->id->shadow()) ?? $species;
+        return null === $shadow ? $match : new SpeciesMatch($shadow, $match->guessed);
     }
 }

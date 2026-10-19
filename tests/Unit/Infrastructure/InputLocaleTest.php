@@ -9,6 +9,7 @@ use App\Domain\Pokemon\Model\DexNumber;
 use App\Domain\Pokemon\Model\Species;
 use App\Domain\Pokemon\Model\SpeciesId;
 use App\Infrastructure\Catalog\NameNormalizer;
+use App\Infrastructure\Catalog\TypoTolerance;
 use App\Infrastructure\Naming\InputLocale;
 use App\Infrastructure\Naming\SpeciesNameResolver;
 use App\Tests\Fake\FixtureTranslator;
@@ -25,6 +26,7 @@ final class InputLocaleTest extends TestCase
         $this->locale = new InputLocale(
             new SpeciesNameResolver(FixtureTranslator::create('en')),
             new NameNormalizer(),
+            new TypoTolerance(),
             ['fr', 'en'],
             'en',
         );
@@ -42,6 +44,7 @@ final class InputLocaleTest extends TestCase
         yield 'plain' => ['Ectoplasma'];
         yield 'lowercase' => ['ectoplasma'];
         yield 'padded' => ['  Ectoplasma '];
+        yield 'misspelt' => ['Ectoplsama'];
     }
 
     #[DataProvider('englishInputs')]

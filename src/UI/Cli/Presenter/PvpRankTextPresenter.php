@@ -27,6 +27,15 @@ final readonly class PvpRankTextPresenter
 
     public function present(SymfonyStyle $io, RankPokemonResult $result, ?string $locale = null): void
     {
+        // Said before the tables: a wrong guess must show before it is read as an answer.
+        if (null !== $result->guessedFrom) {
+            $io->text(\sprintf(
+                '<comment>Interpreted "%s" as %s.</comment>',
+                $result->guessedFrom,
+                $this->names->name($result->asked, $locale),
+            ));
+        }
+
         foreach ($result->evolutions as $ranking) {
             $this->table($io, $ranking, $result, $locale);
         }

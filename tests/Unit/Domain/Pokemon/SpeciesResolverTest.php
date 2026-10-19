@@ -18,19 +18,57 @@ final class SpeciesResolverTest extends TestCase
 {
     public function testWithoutTheFlagThePlainFormStands(): void
     {
-        self::assertSame('gengar', $this->resolver()->resolve('gengar')->id->value);
+        self::assertSame('gengar', $this->resolver()->resolve('gengar')->species->id->value);
     }
 
     public function testTheShadowFlagSwitchesToTheShadowForm(): void
     {
-        self::assertSame('gengar_shadow', $this->resolver()->resolveShadow('gengar')->id->value);
+        self::assertSame('gengar_shadow', $this->resolver()->resolveShadow('gengar')->species->id->value);
     }
 
     public function testTheShadowFlagFallsBackWhenNoShadowFormExists(): void
     {
         $resolver = new SpeciesResolver(new InMemorySpeciesCatalog([$this->species('tinkaton', 959)]));
 
-        self::assertSame('tinkaton', $resolver->resolveShadow('tinkaton')->id->value);
+        self::assertSame('tinkaton', $resolver->resolveShadow('tinkaton')->species->id->value);
+    }
+
+    public function testAnExactNameIsNotAGuess(): void
+    {
+        self::assertFalse($this->resolver()->resolve('Ectoplasma')->guessed);
+    }
+
+    public function testATypoIsTakenForTheNearestNameAndSaysSo(): void
+    {
+        $match = $this->resolver()->resolve('Ectoplsama');
+
+        self::assertSame('gengar', $match->species->id->value);
+        self::assertTrue($match->guessed);
+    }
+
+    public function testTheShadowFlagKeepsTheGuess(): void
+    {
+        $match = $this->resolver()->resolveShadow('Ectoplsama');
+
+        self::assertSame('gengar_shadow', $match->species->id->value);
+        self::assertTrue($match->guessed);
+    }
+
+    public function testTwoNamesEquallyCloseAreOfferedRatherThanPicked(): void
+    {
+        $resolver = new SpeciesResolver(
+            new InMemorySpeciesCatalog([
+                $this->species('nidoran_female', 29),
+                $this->species('nidoran_male', 32),
+            ], [
+                'nidoran_female' => ['Nidoran F'],
+                'nidoran_male' => ['Nidoran M'],
+            ]),
+        );
+
+        $this->expectException(AmbiguousSpecies::class);
+
+        $resolver->resolve('Nidoran X');
     }
 
     public function testAnUnknownNameIsRejected(): void
@@ -58,11 +96,15 @@ final class SpeciesResolverTest extends TestCase
 
     private function resolver(): SpeciesResolver
     {
-        return new SpeciesResolver(new InMemorySpeciesCatalog([
-            $this->species('gengar', 94),
-            $this->species('gengar_mega', 94, ['mega']),
-            $this->species('gengar_shadow', 94, ['shadow']),
-        ]));
+        return new SpeciesResolver(
+            new InMemorySpeciesCatalog([
+                $this->species('gengar', 94),
+                $this->species('gengar_mega', 94, ['mega']),
+                $this->species('gengar_shadow', 94, ['shadow']),
+            ], [
+                'gengar' => ['Gengar', 'Ectoplasma'],
+            ]),
+        );
     }
 
     /**

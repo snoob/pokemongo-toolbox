@@ -50,6 +50,19 @@ final class RankPokemonHandlerTest extends TestCase
         );
     }
 
+    public function testATypoIsRankedAsTheNearestNameAndRemembered(): void
+    {
+        $result = $this->handler()(new RankPokemonQuery('Ectoplsama'));
+
+        self::assertSame('gengar', $result->asked->id->value);
+        self::assertSame('Ectoplsama', $result->guessedFrom);
+    }
+
+    public function testAnExactNameLeavesNothingToOwnUpTo(): void
+    {
+        self::assertNull($this->handler()(new RankPokemonQuery('Ectoplasma'))->guessedFrom);
+    }
+
     public function testItResolvesADexNumberToTheDefaultForm(): void
     {
         self::assertSame('gengar', $this->handler()(new RankPokemonQuery('94'))->asked->id->value);

@@ -19,6 +19,15 @@ interface SpeciesCatalog
      */
     public function search(string $identifier): array;
 
+    /**
+     * The species whose name the identifier most likely misspells — "flozizarre" for
+     * Florizarre — when search() found none. Several entries mean names tie at the same
+     * distance; an empty list means nothing is close enough to be a typo.
+     *
+     * @return list<Species>
+     */
+    public function nearest(string $identifier): array;
+
     public function find(SpeciesId $id): ?Species;
 
     /**

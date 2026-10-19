@@ -181,6 +181,27 @@ final class PvpRankTextPresenterTest extends TestCase
         self::assertStringContainsString('Ectoplasma (Méga, level 2) — #94', $output);
     }
 
+    public function testAGuessedNameIsOwnedUpToBeforeTheTables(): void
+    {
+        $path = new EvolutionPath([$this->gengar()]);
+        $output = $this->present(
+            new RankPokemonResult(
+                $this->gengar(),
+                null,
+                PokemonLevel::regularCap(),
+                [new EvolutionRanking($path, [$this->greatOutcome(null)])],
+                guessedFrom: 'Ectoplsama',
+            ),
+        );
+
+        self::assertStringStartsWith('Interpreted "Ectoplsama" as Ectoplasma.', trim($output));
+    }
+
+    public function testAnExactNameIsNotCommentedOn(): void
+    {
+        self::assertStringNotContainsString('Interpreted', $this->render(null, null));
+    }
+
     public function testAMegaOneStepAwayAlsoTellsWhatMegaEvolvingAdds(): void
     {
         $outcome = new LeagueOutcome(

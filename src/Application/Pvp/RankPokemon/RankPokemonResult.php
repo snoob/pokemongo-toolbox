@@ -13,6 +13,9 @@ use App\Domain\Pvp\Model\PokemonLevel;
 /**
  * The asked form and everything it can become, each ranked on its own. The Mega Level
  * is only set when a mega is among them.
+ *
+ * `guessedFrom` holds the identifier as typed when it named no species and the nearest
+ * name was taken instead: "flozizarre" for Florizarre.
  */
 final readonly class RankPokemonResult
 {
@@ -27,6 +30,7 @@ final readonly class RankPokemonResult
         public array $evolutions,
         public ?MegaLevel $megaLevel = null,
         public ?MegaLevelEffects $megaLevelEffects = null,
+        public ?string $guessedFrom = null,
     ) {}
 
     public function rankingOf(string $speciesId): ?EvolutionRanking

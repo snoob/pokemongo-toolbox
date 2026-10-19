@@ -22,6 +22,7 @@ final class JsonFileSpeciesCatalog implements SpeciesCatalog
         private readonly SpeciesFileReader $reader,
         private readonly NameNormalizer $normalizer,
         private readonly LocalisedSpeciesNames $names,
+        private readonly TypoTolerance $tolerance,
     ) {}
 
     #[\Override]
@@ -34,6 +35,28 @@ final class JsonFileSpeciesCatalog implements SpeciesCatalog
         }
 
         return $this->preferBaseForm($this->candidatesFor($identifier, $needle));
+    }
+
+    #[\Override]
+    public function nearest(string $identifier): array
+    {
+        $needle = $this->normalizer->normalize($identifier);
+
+        // A Pokédex number one digit off is another Pokémon, not a typo.
+        if ('' === $needle || 1 === preg_match('#^\d+$#', $needle)) {
+            return [];
+        }
+
+        $index = $this->index();
+        $nearest = $index->byNearestName(fn(string $name): ?int => $this->tolerance->distance($needle, $name));
+
+        // Same order as search(): whole names first, then the start of one — "Giratima"
+        // only reaches Giratina through "Giratina (Altered)" and "Giratina (Origin)".
+        return $this->preferBaseForm(
+            [] !== $nearest
+                ? $nearest
+                : $index->byNearestName(fn(string $name): ?int => $this->tolerance->distanceToPrefix($needle, $name)),
+        );
     }
 
     #[\Override]
