@@ -64,6 +64,14 @@ final class PvpRankCommand extends Command
                 InputOption::VALUE_NONE,
                 'Rank the megas at Mega Level 4 (Super Mega: +2 levels)',
             )
+            ->addOption(
+                'floor',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Lowest IV the Pokémon can have, as a number or a source: wild, weather, good, great,'
+                . ' ultra, best (friend trades), shadow, giovanni, raid, egg, research, lucky',
+                'wild',
+            )
             ->addOption('best-buddy', 'b', InputOption::VALUE_NONE, 'Allow level 51 (Best Buddy)')
             ->addOption('format', 'f', InputOption::VALUE_REQUIRED, 'Output format: text or json', 'text')
             ->addOption(
@@ -79,6 +87,7 @@ final class PvpRankCommand extends Command
                   <info>%command.full_name% 94 1/15/14</info>            + where those IVs place among the 4096
                   <info>%command.full_name% ralts 1/15/14</info>         Ralts and all it becomes, with the CP to stop at
                   <info>%command.full_name% gengar --league=great</info> a single league, megas left out
+                  <info>%command.full_name% azurill --floor=best</info>  the best a Best Friend trade can give
                 HELP);
     }
 

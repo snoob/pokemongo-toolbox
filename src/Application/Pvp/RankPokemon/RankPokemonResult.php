@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Pvp\RankPokemon;
 
+use App\Domain\Pokemon\Model\IvFloor;
 use App\Domain\Pokemon\Model\IvSpread;
 use App\Domain\Pokemon\Model\Species;
 use App\Domain\Pvp\Model\MegaLevel;
@@ -25,6 +26,7 @@ final readonly class RankPokemonResult
     public function __construct(
         public Species $asked,
         public ?IvSpread $iv,
+        public IvFloor $floor,
         public PokemonLevel $levelCap,
         /** @var non-empty-list<EvolutionRanking> */
         public array $evolutions,

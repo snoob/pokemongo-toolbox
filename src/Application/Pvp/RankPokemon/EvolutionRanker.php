@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Pvp\RankPokemon;
 
 use App\Domain\Pokemon\Model\EvolutionPath;
+use App\Domain\Pokemon\Model\IvFloor;
 use App\Domain\Pokemon\Model\IvSpread;
 use App\Domain\Pokemon\Model\Species;
 use App\Domain\Pvp\Exception\SpeciesIneligibleForLeague;
@@ -41,6 +42,7 @@ final readonly class EvolutionRanker
         EvolutionPath $path,
         array $leagues,
         ?IvSpread $iv,
+        IvFloor $floor,
         PokemonLevel $levelCap,
         MegaLevel $megaLevel,
     ): EvolutionRanking {
@@ -49,15 +51,18 @@ final readonly class EvolutionRanker
 
         foreach ($leagues as $league) {
             $spread = null;
+            $withinFloor = null;
             $best = null;
             $ineligible = false;
 
             try {
                 // Ranking every spread is what makes both answers available: where the
-                // given IVs land, and which spread to hunt for in that league.
+                // given IVs land, and which spread to hunt for in that league. Both keep
+                // their place among all 4096; the floor only narrows what can be hunted.
                 $ranking = $this->ivRanker->rank($species->baseStats, $league, $levelCap);
-                $best = $ranking->best();
+                $best = $ranking->bestFrom($floor);
                 $spread = null === $iv ? null : $ranking->for($iv);
+                $withinFloor = null === $iv ? null : $ranking->withinFloor($iv, $floor);
             } catch (SpeciesIneligibleForLeague) {
                 $ineligible = true;
             }
@@ -69,7 +74,9 @@ final readonly class EvolutionRanker
                 best: $best,
                 powerUpTo: $this->powerUpTo($path, $league, $spread, $megaLevel),
                 bestPowerUpTo: $this->powerUpTo($path, $league, $best, $megaLevel),
-                ineligible: $ineligible,
+                // A floor can also leave out every spread that fits under the cap.
+                ineligible: $ineligible || null === $best,
+                withinFloor: $withinFloor,
             );
         }
 

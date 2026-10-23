@@ -53,6 +53,7 @@ final readonly class RankPokemonHandler
         return new RankPokemonResult(
             $asked,
             $query->iv,
+            $query->effectiveFloor(),
             $query->effectiveLevelCap(),
             $rankings,
             $megaLevel,
@@ -70,6 +71,7 @@ final readonly class RankPokemonHandler
             $path,
             $leagues,
             $query->iv,
+            $query->effectiveFloor(),
             $query->effectiveLevelCap(),
             $query->effectiveMegaLevel(),
         );

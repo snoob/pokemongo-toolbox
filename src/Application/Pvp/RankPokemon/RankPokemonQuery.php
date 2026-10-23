@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\Pvp\RankPokemon;
 
+use App\Domain\Pokemon\Exception\InvalidIv;
+use App\Domain\Pokemon\Model\IvFloor;
 use App\Domain\Pokemon\Model\IvSpread;
 use App\Domain\Pokemon\Model\Species;
 use App\Domain\Pvp\Model\League;
@@ -18,6 +20,8 @@ final readonly class RankPokemonQuery
      *                                standard leagues
      * @param ?MegaLevel   $megaLevel the level every mega of the family is ranked at;
      *                                null means the one a PvP player targets
+     * @param ?IvFloor     $floor     the lowest IVs the Pokémon can come with; null means
+     *                                a wild catch, which can roll anything
      */
     public function __construct(
         public string $identifier,
@@ -26,11 +30,22 @@ final readonly class RankPokemonQuery
         public ?PokemonLevel $levelCap = null,
         public bool $shadow = false,
         public ?MegaLevel $megaLevel = null,
-    ) {}
+        public ?IvFloor $floor = null,
+    ) {
+        // IVs under the floor cannot be the Pokémon in hand: the source was misnamed.
+        if (null !== $iv && !$this->effectiveFloor()->allows($iv)) {
+            throw InvalidIv::belowFloor($iv, $this->effectiveFloor());
+        }
+    }
 
     public function effectiveLevelCap(): PokemonLevel
     {
         return $this->levelCap ?? PokemonLevel::regularCap();
+    }
+
+    public function effectiveFloor(): IvFloor
+    {
+        return $this->floor ?? IvFloor::wild();
     }
 
     public function effectiveMegaLevel(): MegaLevel

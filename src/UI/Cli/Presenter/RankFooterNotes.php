@@ -29,6 +29,10 @@ final readonly class RankFooterNotes
     {
         $notes = [\sprintf('Level cap considered: %s.', $result->levelCap)];
 
+        if ($result->floor->restricts()) {
+            $notes[] = \sprintf('IV floor considered: %s.', $result->floor);
+        }
+
         if ($this->any($result, $this->baseForms->appliesTo(...))) {
             $notes[] = $this->powerUp($result, $locale);
         }

@@ -63,7 +63,7 @@ final readonly class PvpRankTextPresenter
             $row = [
                 $outcome->league->label(),
                 $this->speciesRankCell($outcome, $species, $locale),
-                $this->ivCells->format($outcome, $result->iv),
+                $this->ivCells->format($outcome, $result->iv, $result->floor),
             ];
 
             if ($showsBaseForm) {

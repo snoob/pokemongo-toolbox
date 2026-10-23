@@ -85,6 +85,7 @@ pogo pvp "Raichu (Alolan)"   # regional form
 | `-l, --league` | `great`, `ultra`, `master`, `mega-great`, `mega-ultra`, `mega-master`. Repeatable. Defaults to the standard leagues, and the Mega Editions for a mega. A mega is never ranked in a standard league. |
 | `--shadow` | Shadow form — its evolutions are shadows too, and it has no mega |
 | `--mega1` … `--mega4` | The Mega Level megas are ranked at (default 3). Only level 4 changes the CP. |
+| `--floor` | Lowest IV the Pokémon can have: a number, or where it comes from — `wild` (default), `weather`, `good`, `great`, `ultra`, `best` (friend trades), `shadow`, `giovanni`, `raid`, `egg`, `research`, `lucky` |
 | `-b, --best-buddy` | Allow level 51 |
 | `--locale` | `fr` or `en` for species and move names. Defaults to the language you typed. |
 | `-f, --format` | `text` (default) or `json` |
@@ -150,6 +151,39 @@ $ pogo pvp altaria 0/8/15
 One step from its mega, the percentage beside the CP is what Mega Evolving adds at that
 level — it is given per row because it shifts with the IVs, from +58 % on a 15/15/15
 Altaria to +64 % on a 0/8/15 one.
+
+### IV floor: the best you can actually get
+
+Where a Pokémon comes from sets the lowest IV it can roll: a trade rolls from 1 to 5
+depending on friendship, a raid, egg or research reward never goes under 10, a lucky
+trade under 12. `--floor` points the spread to hunt at the best one that source can
+give, and still says where it stands among all 4096 — that is what the floor costs.
+
+| Source | Floor |
+|---|---|
+| `wild` | 0 |
+| `good` friend trade | 1 |
+| `great` friend trade | 2 |
+| `ultra` friend trade | 3 |
+| `weather`-boosted catch | 4 |
+| `best` friend trade | 5 |
+| `shadow` (shadow raid), `giovanni` | 6 |
+| `raid`, `egg`, `research` | 10 |
+| `lucky` trade | 12 |
+
+Any other floor is a number: `--floor=3`.
+
+```
+$ pogo pvp azurill 5/15/14 --floor=best --league=great
+…
+  League         Species rank                     IVs                                                                              Azurill CP
+  Great League   #29 / 1154  (score 90.0)         5/15/14  #341 / 4096 · #4 / 1331 above floor 5 — 97.49 % — CP 1497 at level 42   299 CP (lvl 42)
+                 Bubble → Ice Beam / Play Rough   5/15/15  best above floor 5, #180 — 98.00 % — CP 1500 at level 42                300 CP (lvl 42)
+…
+ IV floor considered: best (5).
+```
+
+IVs under the floor are refused: they cannot come from that source.
 
 ### Weather and the Daily Adventure Incense
 

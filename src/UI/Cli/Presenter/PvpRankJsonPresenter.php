@@ -26,6 +26,7 @@ final readonly class PvpRankJsonPresenter
                 'species' => $this->species($result->asked, $locale),
                 'guessedFrom' => $result->guessedFrom,
                 'iv' => null === $result->iv ? null : (string) $result->iv,
+                'ivFloor' => ['name' => $result->floor->name, 'minimum' => $result->floor->minimum],
                 'levelCap' => $result->levelCap->value,
                 'megaLevel' => $result->megaLevel?->value,
                 'evolutions' => array_map(
@@ -90,6 +91,9 @@ final readonly class PvpRankJsonPresenter
                 ],
             'ineligible' => $outcome->ineligible,
             'ivRank' => $this->spread($spread),
+            'ivRankWithinFloor' => null === $outcome->withinFloor
+                ? null
+                : ['position' => $outcome->withinFloor->position, 'total' => $outcome->withinFloor->total],
             'bestIv' => $this->spread($outcome->best),
             'powerUpTo' => $this->target($outcome->powerUpTo),
             'bestPowerUpTo' => $this->target($outcome->bestPowerUpTo),

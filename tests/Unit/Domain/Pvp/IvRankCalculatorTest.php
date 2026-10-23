@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Domain\Pvp;
 
 use App\Domain\Pokemon\Model\BaseStats;
+use App\Domain\Pokemon\Model\IvFloor;
 use App\Domain\Pokemon\Model\IvSpread;
 use App\Domain\Pvp\Exception\SpeciesIneligibleForLeague;
 use App\Domain\Pvp\Model\League;
@@ -109,6 +110,49 @@ final class IvRankCalculatorTest extends TestCase
         self::assertSame($perfect->statProduct, $runnerUp->statProduct, 'the tie is real, not a rounding artefact');
         self::assertSame(1, $perfect->position);
         self::assertSame(2, $runnerUp->position);
+    }
+
+    /**
+     * The floor narrows what can be hunted but does not re-rank it: the best spread a
+     * Best Friend trade can give keeps its place among all 4096.
+     */
+    public function testTheBestSpreadAboveAFloorKeepsItsOverallPosition(): void
+    {
+        $ranking = $this->calculator->rank($this->gengar(), League::Great, PokemonLevel::regularCap());
+        $floor = IvFloor::fromString('best');
+
+        $best = $ranking->bestFrom($floor);
+
+        self::assertNotNull($best);
+        self::assertTrue($floor->allows($best->iv));
+        self::assertGreaterThan(1, $best->position, 'the overall best, 0/13/13, is out of reach');
+
+        foreach ($ranking->top($best->position - 1) as $better) {
+            self::assertFalse($floor->allows($better->iv), \sprintf('%s beats it and is possible', $better->iv));
+        }
+    }
+
+    public function testWithoutAFloorTheBestPossibleIsTheBest(): void
+    {
+        $ranking = $this->calculator->rank($this->gengar(), League::Great, PokemonLevel::regularCap());
+
+        self::assertSame($ranking->best(), $ranking->bestFrom(IvFloor::wild()));
+    }
+
+    public function testASpreadIsAlsoPlacedAmongTheOnesTheFloorLeavesPossible(): void
+    {
+        $ranking = $this->calculator->rank($this->gengar(), League::Great, PokemonLevel::regularCap());
+        $floor = IvFloor::fromString('best');
+        $best = $ranking->bestFrom($floor);
+
+        self::assertNotNull($best);
+
+        $first = $ranking->withinFloor($best->iv, $floor);
+        $given = $ranking->withinFloor(new IvSpread(5, 15, 14), $floor);
+
+        self::assertSame(1, $first->position);
+        self::assertSame(11 ** 3, $first->total, 'eleven values from 5 to 15, for each IV');
+        self::assertLessThan($ranking->for(new IvSpread(5, 15, 14))->position, $given->position);
     }
 
     public function testASpeciesTooStrongForTheCapIsReportedAsIneligible(): void

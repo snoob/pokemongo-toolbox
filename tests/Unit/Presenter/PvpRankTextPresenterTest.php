@@ -10,6 +10,7 @@ use App\Application\Pvp\RankPokemon\RankPokemonResult;
 use App\Domain\Pokemon\Model\BaseStats;
 use App\Domain\Pokemon\Model\DexNumber;
 use App\Domain\Pokemon\Model\EvolutionPath;
+use App\Domain\Pokemon\Model\IvFloor;
 use App\Domain\Pokemon\Model\IvSpread;
 use App\Domain\Pokemon\Model\MoveId;
 use App\Domain\Pokemon\Model\Species;
@@ -21,6 +22,7 @@ use App\Domain\Pvp\Model\Moveset;
 use App\Domain\Pvp\Model\PokemonLevel;
 use App\Domain\Pvp\Model\PowerUpTarget;
 use App\Domain\Pvp\Model\RankedSpread;
+use App\Domain\Pvp\Model\RankWithinFloor;
 use App\Domain\Pvp\Model\SpeciesRank;
 use App\Infrastructure\Naming\MoveNameResolver;
 use App\Infrastructure\Naming\SpeciesNameResolver;
@@ -87,6 +89,45 @@ final class PvpRankTextPresenterTest extends TestCase
 
         self::assertStringNotContainsString("\033[32m1/15/14", $output, 'rank 131 is nothing to celebrate');
         self::assertStringContainsString("\033[32m0/13/13\033[39m", $output);
+    }
+
+    public function testUnderAFloorTheGivenSpreadAlsoSaysWhereItStandsAmongThePossibleOnes(): void
+    {
+        $outcome = new LeagueOutcome(
+            League::Great,
+            null,
+            $this->spread(new IvSpread(5, 15, 14), 131),
+            $this->spread(new IvSpread(5, 13, 13), 37),
+            withinFloor: new RankWithinFloor(3, 1331),
+        );
+        $output = $this->renderOutcome(new IvSpread(5, 15, 14), $outcome, floor: IvFloor::fromString('best'));
+
+        self::assertStringContainsString('#131 / 4096 · #3 / 1331 above floor 5', $output);
+        self::assertStringContainsString('5/13/13  best above floor 5, #37 — 98.02 %', $output);
+        self::assertStringContainsString('IV floor considered: best (5).', $output);
+    }
+
+    public function testWithoutAFloorNothingIsSaidAboutOne(): void
+    {
+        $output = $this->render(new IvSpread(1, 15, 14), $this->spread(new IvSpread(1, 15, 14), 131));
+
+        self::assertStringNotContainsString('floor', $output);
+    }
+
+    public function testTheBestSpreadAboveTheFloorIsGreenEvenIfAnotherBeatsItOverall(): void
+    {
+        $best = new IvSpread(5, 13, 13);
+        $outcome = new LeagueOutcome(
+            League::Great,
+            null,
+            $this->spread($best, 37),
+            $this->spread($best, 37),
+            withinFloor: new RankWithinFloor(1, 1331),
+        );
+        $output = $this->renderOutcome($best, $outcome, decorated: true, floor: IvFloor::fromString('5'));
+
+        self::assertStringContainsString("\033[32m5/13/13\033[39m", $output);
+        self::assertStringNotContainsString('best above', $output, 'the given spread already is the best possible');
     }
 
     public function testTheRecommendedMovesetIsShownBesideTheRank(): void
@@ -172,6 +213,7 @@ final class PvpRankTextPresenterTest extends TestCase
             new RankPokemonResult(
                 $this->gengar(),
                 null,
+                IvFloor::wild(),
                 PokemonLevel::regularCap(),
                 [new EvolutionRanking($path, [$this->greatOutcome(null)])],
                 new MegaLevel(2),
@@ -188,6 +230,7 @@ final class PvpRankTextPresenterTest extends TestCase
             new RankPokemonResult(
                 $this->gengar(),
                 null,
+                IvFloor::wild(),
                 PokemonLevel::regularCap(),
                 [new EvolutionRanking($path, [$this->greatOutcome(null)])],
                 guessedFrom: 'Ectoplsama',
@@ -267,7 +310,7 @@ final class PvpRankTextPresenterTest extends TestCase
 
     public function testEachFormOfTheFamilyGetsItsOwnTableAndTheNotesComeOnce(): void
     {
-        $result = new RankPokemonResult($this->haunter(), null, PokemonLevel::regularCap(), [
+        $result = new RankPokemonResult($this->haunter(), null, IvFloor::wild(), PokemonLevel::regularCap(), [
             new EvolutionRanking(new EvolutionPath([$this->haunter()]), [$this->greatOutcome(null)]),
             new EvolutionRanking(new EvolutionPath([$this->haunter(), $this->gengar()]), [$this->greatOutcome(null)]),
         ]);
@@ -305,12 +348,19 @@ final class PvpRankTextPresenterTest extends TestCase
         LeagueOutcome $outcome,
         bool $decorated = false,
         ?array $path = null,
+        ?IvFloor $floor = null,
     ): string {
         $path = new EvolutionPath($path ?? [$this->gengar()]);
 
-        return $this->present(new RankPokemonResult($path->first(), $iv, PokemonLevel::regularCap(), [
-            new EvolutionRanking($path, [$outcome]),
-        ]), $decorated);
+        return $this->present(new RankPokemonResult(
+            $path->first(),
+            $iv,
+            $floor ?? IvFloor::wild(),
+            PokemonLevel::regularCap(),
+            [
+                new EvolutionRanking($path, [$outcome]),
+            ],
+        ), $decorated);
     }
 
     private function present(RankPokemonResult $result, bool $decorated = false): string

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Pvp\Model;
 
+use App\Domain\Pokemon\Model\IvFloor;
 use App\Domain\Pokemon\Model\IvSpread;
 
 /**
@@ -34,6 +35,46 @@ final readonly class IvRanking
         }
 
         throw new \LogicException(\sprintf('Spread %s is missing from the ranking; the ranking is incomplete.', $iv));
+    }
+
+    /**
+     * The best spread the floor leaves possible, still placed among all 4096: that
+     * position is what the floor costs. Null when every spread above the floor busts the
+     * CP cap even at level 1.
+     */
+    public function bestFrom(IvFloor $floor): ?RankedSpread
+    {
+        foreach ($this->spreads as $spread) {
+            if ($floor->allows($spread->iv)) {
+                return $spread;
+            }
+        }
+
+        return null;
+    }
+
+    public function withinFloor(IvSpread $iv, IvFloor $floor): RankWithinFloor
+    {
+        $position = null;
+        $total = 0;
+
+        foreach ($this->spreads as $spread) {
+            if (!$floor->allows($spread->iv)) {
+                continue;
+            }
+
+            ++$total;
+
+            if ($spread->iv->equals($iv)) {
+                $position = $total;
+            }
+        }
+
+        if (null === $position) {
+            throw new \LogicException(\sprintf('Spread %s is not ranked above the floor of %s.', $iv, $floor));
+        }
+
+        return new RankWithinFloor($position, $total);
     }
 
     /** @return list<RankedSpread> */

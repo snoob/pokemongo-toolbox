@@ -9,8 +9,10 @@ use App\Application\Pvp\RankPokemon\EvolutionRanking;
 use App\Application\Pvp\RankPokemon\LeagueOutcome;
 use App\Application\Pvp\RankPokemon\RankPokemonHandler;
 use App\Application\Pvp\RankPokemon\RankPokemonQuery;
+use App\Domain\Pokemon\Exception\InvalidIv;
 use App\Domain\Pokemon\Model\BaseStats;
 use App\Domain\Pokemon\Model\DexNumber;
+use App\Domain\Pokemon\Model\IvFloor;
 use App\Domain\Pokemon\Model\IvSpread;
 use App\Domain\Pokemon\Model\Move;
 use App\Domain\Pokemon\Model\MoveId;
@@ -88,6 +90,44 @@ final class RankPokemonHandlerTest extends TestCase
         self::assertNull($outcome?->spread, 'no IVs given, so nothing to place');
         self::assertSame('0/13/13', (string) $outcome?->best?->iv, 'the spread worth hunting is still answered');
         self::assertSame(1, $outcome?->best?->position);
+    }
+
+    public function testAFloorPointsAtTheBestSpreadItLeavesPossible(): void
+    {
+        $outcome = $this->outcome(
+            new RankPokemonQuery(
+                'gengar',
+                new IvSpread(5, 15, 14),
+                [League::Great],
+                floor: IvFloor::fromString('best'),
+            ),
+            'gengar',
+            League::Great,
+        );
+
+        self::assertNotNull($outcome?->best);
+        self::assertGreaterThan(1, $outcome->best->position, 'the overall best, 0/13/13, cannot come from a trade');
+        self::assertSame(11 ** 3, $outcome->withinFloor?->total);
+        self::assertLessThan($outcome->spread?->position, $outcome->withinFloor->position);
+    }
+
+    public function testTheResultRemembersTheFloorAndDefaultsToAWildCatch(): void
+    {
+        self::assertSame(0, $this->handler()(new RankPokemonQuery('gengar'))->floor->minimum);
+        self::assertSame(
+            12,
+            $this->handler()(new RankPokemonQuery('gengar', floor: IvFloor::fromString('lucky')))->floor->minimum,
+        );
+    }
+
+    public function testIvsUnderTheFloorAreRefused(): void
+    {
+        try {
+            new RankPokemonQuery('gengar', new IvSpread(0, 15, 15), floor: IvFloor::fromString('best'));
+            self::fail('IVs a Best Friend trade cannot roll must not make a query.');
+        } catch (InvalidIv $e) {
+            self::assertSame('IVs 0/15/15 cannot come with a floor of best (5).', $e->getMessage());
+        }
     }
 
     /**

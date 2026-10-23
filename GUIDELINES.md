@@ -129,7 +129,8 @@ app:pvp:rank ectoplasma 1/15/14  # avec IVs atk/def/sta
 
 Options : `--league` (répétable : `great`, `ultra`, `master`, `mega-great`,
 `mega-ultra`, `mega-master`), `--shadow`, `--mega1` à `--mega4`,
-`--best-buddy` (niveau 51), `--format=text|json`, `--locale=fr|en`.
+`--floor` (plancher d'IV, §4.3 bis), `--best-buddy` (niveau 51), `--format=text|json`,
+`--locale=fr|en`.
 
 Un nom saisi dans **l'une ou l'autre langue** résout : l'index de recherche contient les
 noms de toutes les locales embarquées, indépendamment de la langue d'affichage. Les
@@ -317,6 +318,28 @@ plafond ne récompense pas la recherche de spreads, sans avoir à l'expliquer en
 
 Les demi-niveaux ne sont pas dans la table PokeMiners : ils s'interpolent par
 `CPM(L+0.5) = sqrt( (CPM(L)² + CPM(L+1)²) / 2 )`.
+
+### 4.3 bis — Plancher d'IV
+
+L'origine du Pokémon fixe l'IV minimum de chacune des trois stats. `--floor` le prend
+comme un entier, ou par un alias de source : `wild` 0, `good` 1, `great` 2, `ultra` 3,
+`weather` 4, `best` 5, `shadow` et `giovanni` 6, `raid`, `egg` et
+`research` 10, `lucky` 12. Défaut : `wild`, qui ne change rien au classement.
+
+- Le classement des 4096 n'est **pas** refait : le meilleur spread possible
+  (`IvRanking::bestFrom`) garde son rang absolu, puisque c'est ce que le plancher coûte
+  (« le mieux qu'un échange Best Friend puisse donner est #180 / 4096 »).
+- Les IVs donnés gardent aussi leur rang absolu, et gagnent leur rang parmi les spreads
+  que le plancher laisse possibles (`withinFloor`, « #4 / 1331 »). Le texte ne l'affiche
+  que sous un plancher non nul ; le JSON l'a toujours (`ivRankWithinFloor`, `ivFloor`).
+- Des IVs sous le plancher sont refusés (code 2) : ils ne peuvent pas venir de là.
+- Si aucun spread au-dessus du plancher ne tient sous le cap de CP, la ligue est
+  `ineligible`, comme pour une espèce trop forte.
+
+Sources des valeurs : Bulbapedia et GamePress pour les échanges (Good 1, Great 2, Ultra 3,
+Best 5, chanceux 12). `shadow` vise le raid obscur et Giovanni (6, dittobase et Pokémon
+GO Hub), pas les sbires dont le plancher est incertain : ceux-là passent par un nombre.
+Pas d'alias `purified`, à la demande de l'utilisateur.
 
 ### 4.4 Tests attendus
 
@@ -724,3 +747,6 @@ Règles d'usage :
 | 81 | Forme qui évolue encore masquée quand aucune ligue affichée ne la classe, forme tapée comprise | Demande de l'utilisateur, pour la place : Tarsal, Kirlia ou Chrysacier n'apportaient qu'un tableau de « unranked », et la colonne de montée nomme déjà la forme tapée. Les finales restent, et le test passe avant le calcul des spreads |
 | 82 | Titre réduit au nom et au n° de dex, niveau de méga entre parenthèses | Demande de l'utilisateur : le chemin « Inkay → Malamar → Malamar (Mega) » se lisait mal, et la colonne de montée nomme déjà la forme en main. Le niveau de méga, lui, change le calcul : il se lit dans le titre (« Malamar (Mega, level 3) ») |
 | 83 | Faute de frappe corrigée d'office vers le nom le plus proche, avec mention | Choix de l'utilisateur, entre corriger et seulement suggérer : à une ou deux lettres près le risque de viser le mauvais Pokémon est faible, et la ligne `Interpreted …` le rend visible avant toute lecture. `nearest()` est une méthode du port distincte de `search()` pour que le domaine sache qu'il a deviné ; la tolérance, elle, reste une politique de l'adapter, comme la normalisation (décision 20) |
+| 84 | Plancher d'IV en entier unique (`--floor`), les sources n'étant que des alias | Demande de l'utilisateur : un nombre couvre ce qu'aucun alias ne nomme (`--floor=4`, capture boostée par la météo), et `egg` / `research` ne sont que d'autres noms de `raid`. Les trois IVs partagent le même plancher dans tous les cas du jeu, d'où un seul entier |
+| 85 | Sous un plancher, rangs absolus conservés et rang dans le plancher ajouté à côté | Le rang absolu du meilleur spread possible est la réponse utile : il dit ce que la source coûte. Renuméroter ferait passer un #180 pour un #1 |
+| 86 | `shadow` à 6 (raid obscur, alias `giovanni`), pas de `purified` | Choix de l'utilisateur : ce sont les obscurs qu'on vise en PvP. Le plancher des sbires Rocket diverge selon les sources (dittobase 1, Pokémon GO Hub aucun) et reste accessible par un nombre |
