@@ -27,7 +27,13 @@ Le cœur métier vit dans des **commandes Symfony**, préfixées `app:` :
 ```bash
 php bin/console app:pvp:rank <pokemon> [ivs]   # alias : pvp
 pogo pvp <pokemon> [ivs]                        # même chose depuis le PHAR
+php bin/console app:inventory:add <pokemon> <ivs> -l <ligue>   # alias : inventory:add
 ```
+
+Une commande à plusieurs actions s'écrit en commandes séparées sous un même namespace
+(`app:inventory:add`, `:list`, `:remove`) plutôt qu'en `inventory add` : le shell coupe
+sur l'espace et Symfony ne prend que le premier mot pour nom. Les abréviations de Symfony
+font le reste (`inv:add`).
 
 Règle : **la logique n'est jamais dans un agent**. Les commandes doivent tourner seules,
 dans un terminal, sans Claude ni réseau (hors rafraîchissement du cache). Si on veut un
@@ -89,6 +95,11 @@ position devinée par IP, 30 jours pour les lieux nommés. Aucune
 commande métier ne fait d'appel HTTP direct : elle demande la donnée à un *port* (§6),
 dont l'implémentation décide de servir le cache ou de rafraîchir. Si la source est
 injoignable, la copie périmée est servie plutôt que d'échouer.
+
+**Données du joueur — à part.** L'inventaire (§4 ter) n'est ni généré ni un cache : c'est
+ce que le joueur a saisi, sans autre copie. Il vit dans `$XDG_DATA_HOME/pokemongo-toolbox/`
+(défaut `~/.local/share/…`), le même fichier depuis le PHAR et depuis un checkout, sans
+TTL ; `POGO_INVENTORY` le déplace.
 
 Pour forcer une mise à jour : supprimer le répertoire de cache (classements) ou relancer
 `app:data:build` (données de jeu).
@@ -416,6 +427,52 @@ arrondies à ~100 m pour que le cache serve.
 
 ---
 
+## 4 ter. Feature 3 — inventaire (`app:inventory:*`)
+
+### Question
+
+« Quels Pokémon je garde pour chaque ligue, et ce que je tiens là vaut-il mieux ? »
+Première itération : l'inventaire seul. `app:pvp:rank` ne le consulte pas encore.
+
+```bash
+app:inventory:add minidraco 0/15/15 -l great -l ultra   # une entrée par ligue
+app:inventory:add 94 1/x/14 --cp=1478 -l mega-great      # IVs déduits comme pour pvp
+app:inventory:list [-l great] [--format=json]
+app:inventory:remove 3                                   # numéro affiché par list
+```
+
+### Modèle
+
+Une **entrée** = une forme (l'id porte l'obscur), des IVs complets, **une ligue**, une
+date. Le même Pokémon gardé pour deux ligues fait deux entrées : chaque ligue est une
+équipe, et chaque Mega Edition est une ligue à part entière. Les numéros ne sont jamais
+réutilisés après une suppression. Même forme, mêmes IVs, même ligue → refusé (doublon),
+tout ou rien quand plusieurs ligues sont données.
+
+### Classer une entrée
+
+Une entrée est classée comme **la forme de sa famille que sa ligue classe le mieux**
+(rang d'espèce de pvpoke), pas comme sa dernière évolution : un Minidraco gardé en Super
+compte comme Draco, en Hyper comme Dracolosse. Une méga n'est candidate qu'en Mega
+Edition. Puis ses IVs sont classés comme cette forme, au plafond 50. `InventoryRanker`
+garde chaque classement de 4096 spreads en mémoire le temps d'une commande : une famille
+ne se calcule qu'une fois par ligue.
+
+### Comparer
+
+À l'ajout, l'entrée est comparée aux autres de **sa ligue** qui peuvent devenir la même
+forme (ou le sont déjà) : la meilleure n'est nommée que si elle la bat. Un Dracolosse
+gardé ne bat pas un Minidraco en Super, puisqu'il ne peut plus être Draco.
+
+### Stockage
+
+Un fichier JSON versionné (`InventoryDocument`), écrit par fichier temporaire puis
+`rename()`. Un fichier illisible est une **erreur**, jamais un inventaire vide : la
+sauvegarde suivante effacerait ce que le joueur a gardé. Une forme que les données du
+jeu ne connaissent plus reste listée, signalée, plutôt que de faire échouer la commande.
+
+---
+
 ## 5. Architecture — DDD
 
 Découpage DDD en quatre couches. Le modèle métier est le centre ; tout le reste gravite
@@ -436,6 +493,10 @@ src/
       Model/              # DailyAdventureIncense
       Port/               # WeatherBoostTable (interface)
       Service/            # WeatherBoost
+    Inventory/
+      Model/              # Inventory, InventoryEntry
+      Port/               # InventoryRepository (interface)
+      Exception/          # DuplicateEntry, EntryNotFound
     Pvp/
       Model/              # League, Cp, StatProduct, SpeciesRank, RankedSpread
       Service/            # CpCalculator, IvRankCalculator — calcul pur, sans état
@@ -443,10 +504,12 @@ src/
   Application/            # cas d'usage, un par intention
     Pvp/RankPokemon/      # RankPokemonQuery, RankPokemonHandler, EvolutionRanker, RankPokemonResult
     Weather/ForecastIncense/  # ForecastIncenseQuery, ForecastIncenseHandler, ForecastIncenseResult
+    Inventory/            # InventoryRanker, Standing ; AddToInventory/, ListInventory/, RemoveFromInventory/
   Infrastructure/         # adapters — seule couche qui connaît le réseau et le disque
     Pvpoke/               # PvpokeRankingCatalog
     OpenMeteo/            # OpenMeteoForecast, OpenMeteoPlaceSearch, WmoConditions
     Ipinfo/               # IpinfoPlaceLocator
+    Inventory/            # JsonFileInventoryRepository, InventoryDocument, InventoryFile
     Encounter/            # JsonFileWeatherBoostTable (data/weather.json)
     PokeMiners/           # PokeMinersCpMultiplierTable
     Catalog/              # JsonFileSpeciesCatalog (data/names.json)
@@ -492,6 +555,7 @@ il ignore comment on l'obtient.
 | `Weather\Port\PlaceSearch` | `OpenMeteoPlaceSearch` (HTTP + cache 30 j) | `InMemoryPlaces` |
 | `Weather\Port\PlaceLocator` | `IpinfoPlaceLocator` (HTTP + cache 1 h) | `InMemoryPlaces` |
 | `Encounter\Port\WeatherBoostTable` | `JsonFileWeatherBoostTable` | `RealWeatherBoostTable` (valeurs réelles, en dur) |
+| `Inventory\Port\InventoryRepository` | `JsonFileInventoryRepository` (+ `InventoryFile`, `InventoryDocument`) | `InMemoryInventoryRepository` |
 
 Le nommage n'est pas un port mais un service de présentation : `SpeciesNameResolver`
 compose un nom depuis les catalogues (`pokemon` pour l'espèce, `pokemon_form` pour les
@@ -765,3 +829,10 @@ Règles d'usage :
 | 87 | PC (`--cp`) contre IVs : rejet si aucun spread ne le donne, rejet aussi s'il en reste plusieurs | Choix de l'utilisateur, qui recoupait ses IVs par le PC sur un autre outil. Classer chaque candidat noierait la réponse ; la liste des spreads possibles dit quel IV ajouter. Une seule inconnue suffit souvent, pas toujours : pour Ectoplasma 1/15/14 au PC 1478, `x/15/14` laisse deux spreads, `1/x/14` un seul |
 | 88 | Le PC se compare à la forme en main, sur tous les niveaux jusqu'au plafond ; le niveau trouvé ne sert qu'à l'affichage | C'est la forme tapée que le joueur regarde. Le niveau n'entre pas dans le classement : celui-ci cherche déjà le meilleur niveau sous le plafond de la ligue. Le nombre de jokers n'est pas limité, la règle d'ambiguïté tranche |
 | 89 | Joker `x` seul, ni `?` ni `*` ni `_` | `?` et `*` sont des globs : zsh refuse `1/?/14` (« no matches found ») sans guillemets |
+| 90 | Inventaire en fichier JSON, pas en SQLite | Un PHAR n'embarque pas d'extension : `pdo_sqlite` manquait sur la machine de l'utilisateur. Quelques dizaines d'entrées se lisent et se réécrivent entières, et le joueur peut lire, sauvegarder ou corriger le fichier. Le port laisse changer d'adapter si le volume l'exige un jour |
+| 91 | Inventaire sous `$XDG_DATA_HOME`, pas sous le cache ; même fichier PHAR et checkout | Ce sont les seules données saisies par le joueur : un cache se jette, elles non. Le chemin est lu à l'exécution et non au build du conteneur, qui figerait le `HOME` de la machine qui l'a compilé ; `POGO_INVENTORY` le remplace |
+| 92 | `app:inventory:add` / `:list` / `:remove` avec alias, pas `inventory add` | `inventory add` serait une commande `inventory` à argument `add` : options et aide différentes par action dans une seule classe. Le `:` coûte un caractère, et `inv:add` marche par abréviation |
+| 93 | Une entrée par ligue, chaque Mega Edition à part | Choix de l'utilisateur : l'inventaire reflète l'équipe de chaque ligue. Une entrée n'est comparée que dans sa ligue |
+| 94 | Entrée classée comme la forme de sa famille la mieux classée dans sa ligue ; comparaison sur toute la famille | Choix de l'utilisateur : Draco vaut mieux que Dracolosse en Super, donc la dernière évolution n'est pas la bonne cible ; un Minidraco gardé pour devenir Draco doit compter face à un Draco. Le rang d'espèce tranche, sans option `--as` |
+| 95 | Fichier d'inventaire illisible : erreur sans écriture ; forme inconnue : listée, signalée | À l'inverse du cache (copie périmée servie, fichier corrompu ignoré), rien d'autre ne détient ces données : les lire comme vides puis sauvegarder les effacerait |
+| 96 | Commandes d'écriture `*Command` dans `Application/`, exclues du conteneur comme `*Query` | Ajouter ou retirer n'est pas une requête ; le suffixe dit qu'elles changent l'état. Elles restent des messages, pas des services |

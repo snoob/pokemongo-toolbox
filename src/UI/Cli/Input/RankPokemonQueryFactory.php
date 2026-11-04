@@ -8,7 +8,6 @@ use App\Application\Pvp\RankPokemon\RankPokemonQuery;
 use App\Domain\Pokemon\Model\IvFloor;
 use App\Domain\Pokemon\Model\IvPattern;
 use App\Domain\Pvp\Model\Cp;
-use App\Domain\Pvp\Model\League;
 use App\Domain\Pvp\Model\MegaLevel;
 use App\Domain\Pvp\Model\PokemonLevel;
 use App\Infrastructure\Json\JsonValue;
@@ -32,7 +31,7 @@ final readonly class RankPokemonQueryFactory
         return new RankPokemonQuery(
             identifier: $pokemon,
             iv: null === $ivs ? null : IvPattern::fromString($ivs),
-            leagues: $this->parseLeagues($input->getOption('league')),
+            leagues: LeagueOption::parse($input->getOption('league')),
             levelCap: true === $input->getOption('best-buddy')
                 ? PokemonLevel::bestBuddyCap()
                 : PokemonLevel::regularCap(),
@@ -52,19 +51,11 @@ final readonly class RankPokemonQueryFactory
             return null;
         }
 
-        if (1 !== preg_match('/^\d{1,5}$/', trim($value)) || (int) $value < Cp::FLOOR) {
-            throw new \InvalidArgumentException(\sprintf(
-                'Cannot read a CP from "%s"; expected a number of at least %d.',
-                $value,
-                Cp::FLOOR,
-            ));
-        }
-
         if (null === $ivs) {
             throw new \InvalidArgumentException('--cp checks IVs: give them too, with "x" for those to deduce.');
         }
 
-        return new Cp((int) $value);
+        return CpOption::parse($value);
     }
 
     /**
@@ -80,32 +71,5 @@ final readonly class RankPokemonQueryFactory
         }
 
         return null;
-    }
-
-    /**
-     * @return list<League> empty when the caller did not choose, letting the species decide
-     */
-    private function parseLeagues(mixed $option): array
-    {
-        if (!\is_array($option) || [] === $option) {
-            return [];
-        }
-
-        $leagues = [];
-
-        foreach (JsonValue::asStringList($option) as $value) {
-            $league = League::tryFrom(strtolower($value));
-
-            if (null === $league) {
-                throw new \InvalidArgumentException(\sprintf(
-                    'Unknown league "%s"; expected great, ultra, master, mega-great, mega-ultra or mega-master.',
-                    $value,
-                ));
-            }
-
-            $leagues[] = $league;
-        }
-
-        return $leagues;
     }
 }

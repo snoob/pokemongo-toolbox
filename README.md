@@ -61,6 +61,8 @@ archive, so it works offline apart from refreshing the league rankings.
 ```bash
 pogo pvp <pokemon> [ivs]       # PvP ranking
 pogo weather [--at=place]      # in-game weather, for the Daily Adventure Incense
+pogo inv:add <pokemon> <ivs> -l <league>   # keep a Pokémon for a league
+pogo inv:list                  # what you keep, league by league
 ```
 
 `pvp` and `weather` are short aliases of `app:pvp:rank` and `app:weather:forecast`;
@@ -209,6 +211,32 @@ Without `--at`, the place is guessed from your public IP address. That is good t
 at best, and far off behind a VPN or a mobile connection — the place found is printed
 first, so check it. Name the place where you will actually play, since the weather is
 computed per area some 10 to 20 kilometres across.
+
+### Inventory: what you keep, league by league
+
+```bash
+pogo inventory:add minidraco 0/15/15 -l great -l ultra   # one entry per league
+pogo inventory:add gengar 1/x/14 --cp=1478 -l mega-great # IVs deduced from the CP
+pogo inventory:add gengar 2/14/15 --shadow -l great
+pogo inventory:list                     # every league, best first
+pogo inventory:list -l great --format=json
+pogo inventory:remove 3                 # by the number the list shows
+```
+
+`inv:add`, `inv:list` and `inv:remove` work too: Symfony accepts any unambiguous
+abbreviation.
+
+Each Pokémon is kept for **one league**; give `-l` several times to keep it for several.
+The Mega Editions are leagues of their own. A kept Pokémon is ranked as **the form of its
+family its league ranks best**, not as its last evolution: a Dratini kept for the Great
+League counts as a Dragonair, the same Dratini kept for the Ultra League as a Dragonite.
+When you add one, it is compared with what you already keep in that league that can
+become the same form, and the best of those is named if it beats the newcomer.
+
+The inventory is a JSON file under `~/.local/share/pokemongo-toolbox/inventory.json` (or
+`$XDG_DATA_HOME`), the same whether you run the PHAR or a checkout. Set `POGO_INVENTORY`
+to keep it elsewhere. It is yours to back up or edit; a file that cannot be read is
+reported and left untouched, never overwritten.
 
 ### JSON output
 

@@ -37,6 +37,7 @@ services:
             - '%kernel.project_dir%/src/Application/*/*/*Query.php'
             - '%kernel.project_dir%/src/Application/*/*/*Result.php'
             - '%kernel.project_dir%/src/Application/*/*/*Outcome.php'
+            - '%kernel.project_dir%/src/Application/*/*/*Command.php'
             - '%kernel.project_dir%/src/Infrastructure/Json/JsonFetchFailed.php'
 
     # --- Ports → adapters -------------------------------------------------------
@@ -50,6 +51,7 @@ services:
     App\Domain\Weather\Port\WeatherForecast: '@App\Infrastructure\OpenMeteo\OpenMeteoForecast'
     App\Domain\Weather\Port\PlaceSearch: '@App\Infrastructure\OpenMeteo\OpenMeteoPlaceSearch'
     App\Domain\Weather\Port\PlaceLocator: '@App\Infrastructure\Ipinfo\IpinfoPlaceLocator'
+    App\Domain\Inventory\Port\InventoryRepository: '@App\Infrastructure\Inventory\JsonFileInventoryRepository'
     # Le dumper XLIFF est fourni par FrameworkBundle : on l'alias plutôt que d'écrire
     # un générateur XML maison (§8).
     Symfony\Component\Translation\Dumper\XliffFileDumper: '@translation.dumper.xliff'

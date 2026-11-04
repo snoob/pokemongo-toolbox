@@ -11,7 +11,8 @@ It answers what a player asks before spending resources on a Pokémon: league ra
 rank within the species, the spread worth hunting, the recommended moveset — for the form
 in hand and everything it evolves into, megas included — and the CP to stop at before
 evolving. A second command forecasts the in-game weather
-to time the Daily Adventure Incense.
+to time the Daily Adventure Incense. A third family (`app:inventory:*`) keeps the
+player's Pokémon league by league, in a JSON file under `$XDG_DATA_HOME`.
 
 **`GUIDELINES.md` is the reference**: conventions, architecture, and a numbered decision
 log explaining *why* each choice was made. Read it before writing code; add a row to the
@@ -22,6 +23,7 @@ log when you decide something structural, including when you reverse an earlier 
 ```bash
 bin/console app:pvp:rank <pokemon> [ivs]   # PvP ranking (alias: pvp)
 bin/console app:weather:forecast [--at=…]  # in-game weather (alias: weather)
+bin/console app:inventory:add|list|remove  # per-league inventory (alias: inventory:*)
 bin/console app:data:build                 # refresh game data from upstream (~3 s)
 
 vendor/bin/mago format && vendor/bin/mago lint && vendor/bin/mago analyze && vendor/bin/phpunit
