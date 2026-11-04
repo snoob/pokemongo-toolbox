@@ -6,7 +6,8 @@ namespace App\UI\Cli\Input;
 
 use App\Application\Pvp\RankPokemon\RankPokemonQuery;
 use App\Domain\Pokemon\Model\IvFloor;
-use App\Domain\Pokemon\Model\IvSpread;
+use App\Domain\Pokemon\Model\IvPattern;
+use App\Domain\Pvp\Model\Cp;
 use App\Domain\Pvp\Model\League;
 use App\Domain\Pvp\Model\MegaLevel;
 use App\Domain\Pvp\Model\PokemonLevel;
@@ -30,7 +31,7 @@ final readonly class RankPokemonQueryFactory
 
         return new RankPokemonQuery(
             identifier: $pokemon,
-            iv: null === $ivs ? null : IvSpread::fromString($ivs),
+            iv: null === $ivs ? null : IvPattern::fromString($ivs),
             leagues: $this->parseLeagues($input->getOption('league')),
             levelCap: true === $input->getOption('best-buddy')
                 ? PokemonLevel::bestBuddyCap()
@@ -38,7 +39,32 @@ final readonly class RankPokemonQueryFactory
             shadow: true === $input->getOption('shadow'),
             megaLevel: $this->parseMegaLevel($input),
             floor: IvFloor::fromString(JsonValue::asString($input->getOption('floor')) ?? 'wild'),
+            cp: $this->parseCp(JsonValue::asString($input->getOption('cp')), $ivs),
         );
+    }
+
+    /**
+     * The CP is checked against IVs: on its own it would say nothing about the Pokémon.
+     */
+    private function parseCp(?string $value, ?string $ivs): ?Cp
+    {
+        if (null === $value) {
+            return null;
+        }
+
+        if (1 !== preg_match('/^\d{1,5}$/', trim($value)) || (int) $value < Cp::FLOOR) {
+            throw new \InvalidArgumentException(\sprintf(
+                'Cannot read a CP from "%s"; expected a number of at least %d.',
+                $value,
+                Cp::FLOOR,
+            ));
+        }
+
+        if (null === $ivs) {
+            throw new \InvalidArgumentException('--cp checks IVs: give them too, with "x" for those to deduce.');
+        }
+
+        return new Cp((int) $value);
     }
 
     /**

@@ -6,8 +6,9 @@ namespace App\Application\Pvp\RankPokemon;
 
 use App\Domain\Pokemon\Exception\InvalidIv;
 use App\Domain\Pokemon\Model\IvFloor;
-use App\Domain\Pokemon\Model\IvSpread;
+use App\Domain\Pokemon\Model\IvPattern;
 use App\Domain\Pokemon\Model\Species;
+use App\Domain\Pvp\Model\Cp;
 use App\Domain\Pvp\Model\League;
 use App\Domain\Pvp\Model\MegaLevel;
 use App\Domain\Pvp\Model\PokemonLevel;
@@ -22,19 +23,32 @@ final readonly class RankPokemonQuery
      *                                null means the one a PvP player targets
      * @param ?IvFloor     $floor     the lowest IVs the Pokémon can come with; null means
      *                                a wild catch, which can roll anything
+     * @param ?Cp          $cp        the CP the game shows: it checks the IVs, and settles
+     *                                those left unknown
      */
     public function __construct(
         public string $identifier,
-        public ?IvSpread $iv = null,
+        public ?IvPattern $iv = null,
         public array $leagues = [],
         public ?PokemonLevel $levelCap = null,
         public bool $shadow = false,
         public ?MegaLevel $megaLevel = null,
         public ?IvFloor $floor = null,
+        public ?Cp $cp = null,
     ) {
+        if (null === $iv) {
+            return;
+        }
+
         // IVs under the floor cannot be the Pokémon in hand: the source was misnamed.
-        if (null !== $iv && !$this->effectiveFloor()->allows($iv)) {
+        $lowest = $iv->lowestKnown();
+
+        if (null !== $lowest && $lowest < $this->effectiveFloor()->minimum) {
             throw InvalidIv::belowFloor($iv, $this->effectiveFloor());
+        }
+
+        if (null === $cp && !$iv->isComplete()) {
+            throw InvalidIv::unknownWithoutCp($iv);
         }
     }
 

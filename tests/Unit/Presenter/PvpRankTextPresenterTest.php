@@ -16,6 +16,7 @@ use App\Domain\Pokemon\Model\MoveId;
 use App\Domain\Pokemon\Model\Species;
 use App\Domain\Pokemon\Model\SpeciesId;
 use App\Domain\Pvp\Model\Cp;
+use App\Domain\Pvp\Model\IvDeduction;
 use App\Domain\Pvp\Model\League;
 use App\Domain\Pvp\Model\MegaLevel;
 use App\Domain\Pvp\Model\Moveset;
@@ -29,6 +30,7 @@ use App\Infrastructure\Naming\SpeciesNameResolver;
 use App\Tests\Fake\FixtureTranslator;
 use App\UI\Cli\Presenter\BaseFormCellFormatter;
 use App\UI\Cli\Presenter\IvCellFormatter;
+use App\UI\Cli\Presenter\IvDeductionFormatter;
 use App\UI\Cli\Presenter\MegaFooterNotes;
 use App\UI\Cli\Presenter\MovesetFormatter;
 use App\UI\Cli\Presenter\PvpRankTextPresenter;
@@ -240,6 +242,38 @@ final class PvpRankTextPresenterTest extends TestCase
         self::assertStringStartsWith('Interpreted "Ectoplsama" as Ectoplasma.', trim($output));
     }
 
+    public function testADeducedSpreadIsOwnedUpToBeforeTheTables(): void
+    {
+        self::assertStringStartsWith(
+            'Deduced 1/15/14 from CP 1478 (level 19).',
+            trim($this->presentDeduction(guessed: true)),
+        );
+    }
+
+    public function testACheckedSpreadSaysTheCpAgrees(): void
+    {
+        self::assertStringStartsWith(
+            'CP 1478 checks out for 1/15/14 (level 19).',
+            trim($this->presentDeduction(guessed: false)),
+        );
+    }
+
+    private function presentDeduction(bool $guessed): string
+    {
+        $iv = new IvSpread(1, 15, 14);
+
+        return $this->present(
+            new RankPokemonResult(
+                $this->gengar(),
+                $iv,
+                IvFloor::wild(),
+                PokemonLevel::regularCap(),
+                [new EvolutionRanking(new EvolutionPath([$this->gengar()]), [$this->greatOutcome(null)])],
+                deduction: new IvDeduction($iv, new Cp(1478), [new PokemonLevel(19.0)], $guessed),
+            ),
+        );
+    }
+
     public function testAnExactNameIsNotCommentedOn(): void
     {
         self::assertStringNotContainsString('Interpreted', $this->render(null, null));
@@ -382,6 +416,7 @@ final class PvpRankTextPresenterTest extends TestCase
                 new MegaFooterNotes(new MoveNameResolver($translator), $names),
                 $names,
             ),
+            new IvDeductionFormatter(),
         );
 
         $presenter->present(new SymfonyStyle(new ArrayInput([]), $output), $result);

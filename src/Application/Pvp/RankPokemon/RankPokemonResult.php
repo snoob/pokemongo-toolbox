@@ -7,6 +7,7 @@ namespace App\Application\Pvp\RankPokemon;
 use App\Domain\Pokemon\Model\IvFloor;
 use App\Domain\Pokemon\Model\IvSpread;
 use App\Domain\Pokemon\Model\Species;
+use App\Domain\Pvp\Model\IvDeduction;
 use App\Domain\Pvp\Model\MegaLevel;
 use App\Domain\Pvp\Model\MegaLevelEffects;
 use App\Domain\Pvp\Model\PokemonLevel;
@@ -17,6 +18,8 @@ use App\Domain\Pvp\Model\PokemonLevel;
  *
  * `guessedFrom` holds the identifier as typed when it named no species and the nearest
  * name was taken instead: "flozizarre" for Florizarre.
+ *
+ * `deduction` is set when a CP was given: it tells how the IVs were checked or settled.
  */
 final readonly class RankPokemonResult
 {
@@ -33,6 +36,7 @@ final readonly class RankPokemonResult
         public ?MegaLevel $megaLevel = null,
         public ?MegaLevelEffects $megaLevelEffects = null,
         public ?string $guessedFrom = null,
+        public ?IvDeduction $deduction = null,
     ) {}
 
     public function rankingOf(string $speciesId): ?EvolutionRanking

@@ -9,6 +9,7 @@ use App\Application\Pvp\RankPokemon\LeagueOutcome;
 use App\Application\Pvp\RankPokemon\RankPokemonResult;
 use App\Domain\Pokemon\Model\Species;
 use App\Domain\Pvp\Model\Moveset;
+use App\Domain\Pvp\Model\PokemonLevel;
 use App\Domain\Pvp\Model\PowerUpTarget;
 use App\Domain\Pvp\Model\RankedSpread;
 use App\Infrastructure\Naming\SpeciesNameResolver;
@@ -26,6 +27,16 @@ final readonly class PvpRankJsonPresenter
                 'species' => $this->species($result->asked, $locale),
                 'guessedFrom' => $result->guessedFrom,
                 'iv' => null === $result->iv ? null : (string) $result->iv,
+                'deduction' => null === $result->deduction
+                    ? null
+                    : [
+                        'cp' => $result->deduction->cp->value,
+                        'levels' => array_map(
+                            static fn(PokemonLevel $level): float => $level->value,
+                            $result->deduction->levels,
+                        ),
+                        'guessed' => $result->deduction->guessed,
+                    ],
                 'ivFloor' => ['name' => $result->floor->name, 'minimum' => $result->floor->minimum],
                 'levelCap' => $result->levelCap->value,
                 'megaLevel' => $result->megaLevel?->value,

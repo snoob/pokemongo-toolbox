@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Pokemon\Exception;
 
 use App\Domain\Pokemon\Model\IvFloor;
+use App\Domain\Pokemon\Model\IvPattern;
 use App\Domain\Pokemon\Model\IvSpread;
 
 final class InvalidIv extends \InvalidArgumentException
@@ -26,7 +27,7 @@ final class InvalidIv extends \InvalidArgumentException
         ));
     }
 
-    public static function belowFloor(IvSpread $iv, IvFloor $floor): self
+    public static function belowFloor(IvSpread|IvPattern $iv, IvFloor $floor): self
     {
         return new self(\sprintf('IVs %s cannot come with a floor of %s.', $iv, $floor));
     }
@@ -34,8 +35,14 @@ final class InvalidIv extends \InvalidArgumentException
     public static function unparsable(string $input): self
     {
         return new self(\sprintf(
-            'Cannot read IVs from "%s"; expected the form "attack/defense/stamina", e.g. "1/15/14".',
+            'Cannot read IVs from "%s"; expected the form "attack/defense/stamina", e.g. "1/15/14",'
+            . ' with "x" for an IV to deduce from the CP.',
             $input,
         ));
+    }
+
+    public static function unknownWithoutCp(IvPattern $pattern): self
+    {
+        return new self(\sprintf('IVs %s leave some unknown; give the CP (--cp) to deduce them.', $pattern));
     }
 }

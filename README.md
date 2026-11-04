@@ -75,6 +75,7 @@ pogo pvp gengar              # English name
 pogo pvp ectoplasma          # French name
 pogo pvp 94                  # Pokédex number
 pogo pvp gengar 1/15/14      # with your IVs (atk/def/sta)
+pogo pvp gengar 1/x/14 --cp=1478   # an IV you don't know, deduced from the CP
 pogo pvp "Raichu (Alolan)"   # regional form
 ```
 
@@ -86,6 +87,7 @@ pogo pvp "Raichu (Alolan)"   # regional form
 | `--shadow` | Shadow form — its evolutions are shadows too, and it has no mega |
 | `--mega1` … `--mega4` | The Mega Level megas are ranked at (default 3). Only level 4 changes the CP. |
 | `--floor` | Lowest IV the Pokémon can have: a number, or where it comes from — `wild` (default), `weather`, `good`, `great`, `ultra`, `best` (friend trades), `shadow`, `giovanni`, `raid`, `egg`, `research`, `lucky` |
+| `--cp` | CP shown in the game. Refuses IVs that cannot give it, and deduces those typed `x`; lists the candidates when several spreads fit. |
 | `-b, --best-buddy` | Allow level 51 |
 | `--locale` | `fr` or `en` for species and move names. Defaults to the language you typed. |
 | `-f, --format` | `text` (default) or `json` |

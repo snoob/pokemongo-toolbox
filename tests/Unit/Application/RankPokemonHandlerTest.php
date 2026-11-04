@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Application;
 
 use App\Application\Pvp\RankPokemon\EvolutionRanker;
 use App\Application\Pvp\RankPokemon\EvolutionRanking;
+use App\Application\Pvp\RankPokemon\IvReader;
 use App\Application\Pvp\RankPokemon\LeagueOutcome;
 use App\Application\Pvp\RankPokemon\RankPokemonHandler;
 use App\Application\Pvp\RankPokemon\RankPokemonQuery;
@@ -13,6 +14,7 @@ use App\Domain\Pokemon\Exception\InvalidIv;
 use App\Domain\Pokemon\Model\BaseStats;
 use App\Domain\Pokemon\Model\DexNumber;
 use App\Domain\Pokemon\Model\IvFloor;
+use App\Domain\Pokemon\Model\IvPattern;
 use App\Domain\Pokemon\Model\IvSpread;
 use App\Domain\Pokemon\Model\Move;
 use App\Domain\Pokemon\Model\MoveId;
@@ -20,6 +22,8 @@ use App\Domain\Pokemon\Model\Species;
 use App\Domain\Pokemon\Model\SpeciesId;
 use App\Domain\Pokemon\Service\EvolutionTree;
 use App\Domain\Pokemon\Service\SpeciesResolver;
+use App\Domain\Pvp\Exception\IvMismatch;
+use App\Domain\Pvp\Model\Cp;
 use App\Domain\Pvp\Model\League;
 use App\Domain\Pvp\Model\MegaLevel;
 use App\Domain\Pvp\Model\Moveset;
@@ -27,6 +31,7 @@ use App\Domain\Pvp\Model\PowerUpTarget;
 use App\Domain\Pvp\Model\SpeciesRank;
 use App\Domain\Pvp\Service\CpCalculator;
 use App\Domain\Pvp\Service\ExclusiveMoveFinder;
+use App\Domain\Pvp\Service\IvDeducer;
 use App\Domain\Pvp\Service\IvRankCalculator;
 use App\Tests\Fake\FixedMegaLevelTable;
 use App\Tests\Fake\InMemoryMoveCatalog;
@@ -73,7 +78,7 @@ final class RankPokemonHandlerTest extends TestCase
     public function testItRanksTheGivenIvsWithinTheSpecies(): void
     {
         $outcome = $this->outcome(
-            new RankPokemonQuery('gengar', new IvSpread(1, 15, 14), [League::Great]),
+            new RankPokemonQuery('gengar', new IvPattern(1, 15, 14), [League::Great]),
             'gengar',
             League::Great,
         );
@@ -97,7 +102,7 @@ final class RankPokemonHandlerTest extends TestCase
         $outcome = $this->outcome(
             new RankPokemonQuery(
                 'gengar',
-                new IvSpread(5, 15, 14),
+                new IvPattern(5, 15, 14),
                 [League::Great],
                 floor: IvFloor::fromString('best'),
             ),
@@ -123,11 +128,56 @@ final class RankPokemonHandlerTest extends TestCase
     public function testIvsUnderTheFloorAreRefused(): void
     {
         try {
-            new RankPokemonQuery('gengar', new IvSpread(0, 15, 15), floor: IvFloor::fromString('best'));
+            new RankPokemonQuery('gengar', new IvPattern(0, 15, 15), floor: IvFloor::fromString('best'));
             self::fail('IVs a Best Friend trade cannot roll must not make a query.');
         } catch (InvalidIv $e) {
             self::assertSame('IVs 0/15/15 cannot come with a floor of best (5).', $e->getMessage());
         }
+    }
+
+    public function testAnUnknownIvIsDeducedFromTheCpAndRankedAsIfTyped(): void
+    {
+        // 1/15/14 Gengar at level 19 shows CP 1478.
+        $result = $this->handler()(
+            new RankPokemonQuery('gengar', new IvPattern(1, null, 14), [League::Great], cp: new Cp(1478)),
+        );
+
+        self::assertSame('1/15/14', (string) $result->iv);
+        self::assertTrue($result->deduction?->guessed);
+        self::assertSame(131, $result->rankingOf('gengar')?->outcomeFor(League::Great)?->spread?->position);
+    }
+
+    public function testTypedIvsTheCpContradictsAreRefused(): void
+    {
+        $this->expectException(IvMismatch::class);
+
+        $this->handler()(new RankPokemonQuery('gengar', new IvPattern(1, 14, 14), cp: new Cp(1478)));
+    }
+
+    public function testTypedIvsTheCpConfirmsAreNotCalledAGuess(): void
+    {
+        $result = $this->handler()(new RankPokemonQuery('gengar', new IvPattern(1, 15, 14), cp: new Cp(1478)));
+
+        self::assertFalse($result->deduction?->guessed);
+    }
+
+    public function testAnUnknownIvWithoutACpIsRefused(): void
+    {
+        $this->expectException(InvalidIv::class);
+
+        new RankPokemonQuery('gengar', new IvPattern(1, null, 14));
+    }
+
+    public function testAKnownIvUnderTheFloorIsRefusedBeforeAnyDeduction(): void
+    {
+        $this->expectException(InvalidIv::class);
+
+        new RankPokemonQuery(
+            'gengar',
+            new IvPattern(0, null, 14),
+            floor: IvFloor::fromString('best'),
+            cp: new Cp(1478),
+        );
     }
 
     /**
@@ -243,7 +293,7 @@ final class RankPokemonHandlerTest extends TestCase
     public function testAnEvolutionReportsTheCpOfTheFormInHandToPowerUpTo(): void
     {
         $outcome = $this->outcome(
-            new RankPokemonQuery('gastly', new IvSpread(0, 15, 15), [League::Great]),
+            new RankPokemonQuery('gastly', new IvPattern(0, 15, 15), [League::Great]),
             'gengar',
             League::Great,
         );
@@ -258,7 +308,7 @@ final class RankPokemonHandlerTest extends TestCase
     public function testTheFormInHandHasNothingToPowerUpTowards(): void
     {
         $outcome = $this->outcome(
-            new RankPokemonQuery('gengar', new IvSpread(0, 15, 15), [League::Great]),
+            new RankPokemonQuery('gengar', new IvPattern(0, 15, 15), [League::Great]),
             'gengar',
             League::Great,
         );
@@ -270,7 +320,7 @@ final class RankPokemonHandlerTest extends TestCase
     public function testAMegaReportsTheCpBeforeMegaEvolvingAndWhatItAdds(): void
     {
         $outcome = $this->outcome(
-            new RankPokemonQuery('gengar', new IvSpread(0, 15, 15), [League::MegaGreat]),
+            new RankPokemonQuery('gengar', new IvPattern(0, 15, 15), [League::MegaGreat]),
             'gengar_mega',
             League::MegaGreat,
         );
@@ -287,7 +337,7 @@ final class RankPokemonHandlerTest extends TestCase
     public function testAMegaReachedFromFurtherBackHasATargetButNoGain(): void
     {
         $outcome = $this->outcome(
-            new RankPokemonQuery('gastly', new IvSpread(0, 15, 15), [League::MegaGreat]),
+            new RankPokemonQuery('gastly', new IvPattern(0, 15, 15), [League::MegaGreat]),
             'gengar_mega',
             League::MegaGreat,
         );
@@ -416,7 +466,12 @@ final class RankPokemonHandlerTest extends TestCase
     private function megaTarget(MegaLevel $level, ?IvSpread $iv = null): ?PowerUpTarget
     {
         return $this->outcome(
-            new RankPokemonQuery('gengar', $iv ?? new IvSpread(0, 15, 15), [League::MegaGreat], megaLevel: $level),
+            new RankPokemonQuery(
+                'gengar',
+                IvPattern::fromString((string) ($iv ?? new IvSpread(0, 15, 15))),
+                [League::MegaGreat],
+                megaLevel: $level,
+            ),
             'gengar_mega',
             League::MegaGreat,
         )?->powerUpTo;
@@ -478,6 +533,7 @@ final class RankPokemonHandlerTest extends TestCase
                 new ExclusiveMoveFinder($moves ?? new InMemoryMoveCatalog()),
             ),
             new FixedMegaLevelTable(),
+            new IvReader(new IvDeducer(new CpCalculator($multipliers), $multipliers)),
         );
     }
 

@@ -9,10 +9,13 @@ use App\Domain\Pokemon\Exception\AmbiguousSpecies;
 use App\Domain\Pokemon\Exception\InvalidIv;
 use App\Domain\Pokemon\Exception\SpeciesNotFound;
 use App\Domain\Pokemon\Model\Species;
+use App\Domain\Pvp\Exception\IvMismatch;
+use App\Domain\Pvp\Model\IvDeduction;
 use App\Infrastructure\Json\JsonValue;
 use App\Infrastructure\Naming\InputLocale;
 use App\Infrastructure\Naming\SpeciesNameResolver;
 use App\UI\Cli\Input\RankPokemonQueryFactory;
+use App\UI\Cli\Presenter\IvDeductionFormatter;
 use App\UI\Cli\Presenter\PvpRankJsonPresenter;
 use App\UI\Cli\Presenter\PvpRankTextPresenter;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -30,6 +33,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 final class PvpRankCommand extends Command
 {
+    private const int LISTED_CANDIDATES = 10;
+
     public function __construct(
         private readonly RankPokemonHandler $handler,
         private readonly PvpRankTextPresenter $text,
@@ -37,6 +42,7 @@ final class PvpRankCommand extends Command
         private readonly SpeciesNameResolver $names,
         private readonly InputLocale $inputLocale,
         private readonly RankPokemonQueryFactory $queries,
+        private readonly IvDeductionFormatter $deductions,
     ) {
         parent::__construct();
     }
@@ -46,7 +52,11 @@ final class PvpRankCommand extends Command
     {
         $this
             ->addArgument('pokemon', InputArgument::REQUIRED, 'French name, English name or Pokédex number')
-            ->addArgument('ivs', InputArgument::OPTIONAL, 'IVs as attack/defense/stamina, e.g. 1/15/14')
+            ->addArgument(
+                'ivs',
+                InputArgument::OPTIONAL,
+                'IVs as attack/defense/stamina, e.g. 1/15/14; "x" for one to deduce from --cp',
+            )
             ->addOption(
                 'league',
                 'l',
@@ -72,6 +82,12 @@ final class PvpRankCommand extends Command
                 . ' ultra, best (friend trades), shadow, giovanni, raid, egg, research, lucky',
                 'wild',
             )
+            ->addOption(
+                'cp',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'CP shown in the game: refuses IVs that cannot give it, settles those typed "x"',
+            )
             ->addOption('best-buddy', 'b', InputOption::VALUE_NONE, 'Allow level 51 (Best Buddy)')
             ->addOption('format', 'f', InputOption::VALUE_REQUIRED, 'Output format: text or json', 'text')
             ->addOption(
@@ -88,6 +104,7 @@ final class PvpRankCommand extends Command
                   <info>%command.full_name% ralts 1/15/14</info>         Ralts and all it becomes, with the CP to stop at
                   <info>%command.full_name% gengar --league=great</info> a single league, megas left out
                   <info>%command.full_name% azurill --floor=best</info>  the best a Best Friend trade can give
+                  <info>%command.full_name% 94 1/x/14 --cp=1432</info>   the defense deduced from the CP
                 HELP);
     }
 
@@ -99,6 +116,14 @@ final class PvpRankCommand extends Command
         try {
             $query = $this->queries->from($input);
             $result = ($this->handler)($query);
+        } catch (IvMismatch $e) {
+            $io->error($e->getMessage());
+
+            if ([] !== $e->candidates) {
+                $io->listing($this->candidates($e->candidates));
+            }
+
+            return Command::INVALID;
         } catch (InvalidIv|\InvalidArgumentException $e) {
             $io->error($e->getMessage());
 
@@ -132,5 +157,23 @@ final class PvpRankCommand extends Command
             : $this->text->present($io, $result, $locale);
 
         return Command::SUCCESS;
+    }
+
+    /**
+     * Two unknown IVs can leave dozens of spreads: the first few say enough.
+     *
+     * @param list<IvDeduction> $candidates
+     *
+     * @return list<string>
+     */
+    private function candidates(array $candidates): array
+    {
+        $lines = array_map($this->deductions->candidate(...), \array_slice($candidates, 0, self::LISTED_CANDIDATES));
+
+        if (\count($candidates) > self::LISTED_CANDIDATES) {
+            $lines[] = \sprintf('… and %d more', \count($candidates) - self::LISTED_CANDIDATES);
+        }
+
+        return $lines;
     }
 }

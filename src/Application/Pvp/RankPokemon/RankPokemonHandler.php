@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Pvp\RankPokemon;
 
 use App\Domain\Pokemon\Model\EvolutionPath;
+use App\Domain\Pokemon\Model\IvSpread;
 use App\Domain\Pokemon\Service\EvolutionTree;
 use App\Domain\Pokemon\Service\SpeciesResolver;
 use App\Domain\Pvp\Model\League;
@@ -17,6 +18,7 @@ final readonly class RankPokemonHandler
         private EvolutionTree $evolutions,
         private EvolutionRanker $ranker,
         private MegaLevelTable $megaLevels,
+        private IvReader $ivs,
     ) {}
 
     public function __invoke(RankPokemonQuery $query): RankPokemonResult
@@ -26,6 +28,9 @@ final readonly class RankPokemonHandler
             : $this->resolver->resolve($query->identifier);
         $asked = $match->species;
         $rankings = [];
+
+        $reading = $this->ivs->read($asked, $query);
+        $iv = $reading->iv;
 
         // Evolving keeps the IVs and the level, so the form in hand is worth ranking as
         // everything it can become — megas included.
@@ -38,39 +43,40 @@ final readonly class RankPokemonHandler
                 continue;
             }
 
-            $rankings[] = $this->rank($path, $leagues, $query);
+            $rankings[] = $this->rank($path, $leagues, $iv, $query);
         }
 
         // A mega asked by its id and sent to a standard league still deserves an answer,
         // even if it is "unranked".
         if ([] === $rankings) {
             $leagues = [] === $query->leagues ? League::standard() : $query->leagues;
-            $rankings[] = $this->rank(new EvolutionPath([$asked]), $leagues, $query);
+            $rankings[] = $this->rank(new EvolutionPath([$asked]), $leagues, $iv, $query);
         }
 
         $megaLevel = $this->ranksAMega($rankings) ? $query->effectiveMegaLevel() : null;
 
         return new RankPokemonResult(
             $asked,
-            $query->iv,
+            $iv,
             $query->effectiveFloor(),
             $query->effectiveLevelCap(),
             $rankings,
             $megaLevel,
             null === $megaLevel ? null : $this->megaLevels->effectsAt($megaLevel),
             $match->guessed ? $query->identifier : null,
+            $reading->deduction,
         );
     }
 
     /**
      * @param non-empty-list<League> $leagues
      */
-    private function rank(EvolutionPath $path, array $leagues, RankPokemonQuery $query): EvolutionRanking
+    private function rank(EvolutionPath $path, array $leagues, ?IvSpread $iv, RankPokemonQuery $query): EvolutionRanking
     {
         return $this->ranker->rank(
             $path,
             $leagues,
-            $query->iv,
+            $iv,
             $query->effectiveFloor(),
             $query->effectiveLevelCap(),
             $query->effectiveMegaLevel(),

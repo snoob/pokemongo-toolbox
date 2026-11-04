@@ -23,6 +23,7 @@ final readonly class PvpRankTextPresenter
         private IvCellFormatter $ivCells,
         private BaseFormCellFormatter $baseForms,
         private RankFooterNotes $notes,
+        private IvDeductionFormatter $deductions,
     ) {}
 
     public function present(SymfonyStyle $io, RankPokemonResult $result, ?string $locale = null): void
@@ -34,6 +35,10 @@ final readonly class PvpRankTextPresenter
                 $result->guessedFrom,
                 $this->names->name($result->asked, $locale),
             ));
+        }
+
+        if (null !== $result->deduction) {
+            $io->text(\sprintf('<comment>%s</comment>', $this->deductions->summary($result->deduction)));
         }
 
         foreach ($result->evolutions as $ranking) {

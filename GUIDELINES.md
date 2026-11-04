@@ -125,12 +125,24 @@ app:pvp:rank ectoplasma          # nom FR
 app:pvp:rank gengar              # nom EN
 app:pvp:rank 94                  # n° de dex
 app:pvp:rank ectoplasma 1/15/14  # avec IVs atk/def/sta
+app:pvp:rank ectoplasma 1/x/14 --cp=1478  # IV inconnu déduit du PC
 ```
 
 Options : `--league` (répétable : `great`, `ultra`, `master`, `mega-great`,
 `mega-ultra`, `mega-master`), `--shadow`, `--mega1` à `--mega4`,
-`--floor` (plancher d'IV, §4.3 bis), `--best-buddy` (niveau 51), `--format=text|json`,
-`--locale=fr|en`.
+`--floor` (plancher d'IV, §4.3 bis), `--cp` (PC affiché en jeu), `--best-buddy`
+(niveau 51), `--format=text|json`, `--locale=fr|en`.
+
+**Le PC contrôle les IVs, et complète ceux qu'on ignore.** `--cp` donne le PC lu dans le
+jeu ; un `x` à la place d'un IV le laisse déduire (seul `x` est accepté : `?` et `*` sont des
+jokers du shell et devraient être entre guillemets). Le niveau est
+inconnu : `IvDeducer` essaie chaque niveau jusqu'au plafond pour chaque spread qui suit le
+motif et respecte le plancher, soit au plus 4096 × 101 calculs (0,13 s). Trois issues :
+aucun spread ne donne ce PC → erreur, code 2 ; plusieurs le donnent → erreur, code 2, et
+liste des candidats avec leur niveau (dix au plus) ; un seul → classement normal, précédé
+de `Deduced 1/15/14 from CP 1478 (level 19).` (ou `CP 1478 checks out for …` quand les
+trois IVs étaient tapés) et de la clé `deduction` en JSON. Un joker sans `--cp`, ou
+`--cp` sans IVs, est refusé.
 
 Un nom saisi dans **l'une ou l'autre langue** résout : l'index de recherche contient les
 noms de toutes les locales embarquées, indépendamment de la langue d'affichage. Les
@@ -750,3 +762,6 @@ Règles d'usage :
 | 84 | Plancher d'IV en entier unique (`--floor`), les sources n'étant que des alias | Demande de l'utilisateur : un nombre couvre ce qu'aucun alias ne nomme (`--floor=4`, capture boostée par la météo), et `egg` / `research` ne sont que d'autres noms de `raid`. Les trois IVs partagent le même plancher dans tous les cas du jeu, d'où un seul entier |
 | 85 | Sous un plancher, rangs absolus conservés et rang dans le plancher ajouté à côté | Le rang absolu du meilleur spread possible est la réponse utile : il dit ce que la source coûte. Renuméroter ferait passer un #180 pour un #1 |
 | 86 | `shadow` à 6 (raid obscur, alias `giovanni`), pas de `purified` | Choix de l'utilisateur : ce sont les obscurs qu'on vise en PvP. Le plancher des sbires Rocket diverge selon les sources (dittobase 1, Pokémon GO Hub aucun) et reste accessible par un nombre |
+| 87 | PC (`--cp`) contre IVs : rejet si aucun spread ne le donne, rejet aussi s'il en reste plusieurs | Choix de l'utilisateur, qui recoupait ses IVs par le PC sur un autre outil. Classer chaque candidat noierait la réponse ; la liste des spreads possibles dit quel IV ajouter. Une seule inconnue suffit souvent, pas toujours : pour Ectoplasma 1/15/14 au PC 1478, `x/15/14` laisse deux spreads, `1/x/14` un seul |
+| 88 | Le PC se compare à la forme en main, sur tous les niveaux jusqu'au plafond ; le niveau trouvé ne sert qu'à l'affichage | C'est la forme tapée que le joueur regarde. Le niveau n'entre pas dans le classement : celui-ci cherche déjà le meilleur niveau sous le plafond de la ligue. Le nombre de jokers n'est pas limité, la règle d'ambiguïté tranche |
+| 89 | Joker `x` seul, ni `?` ni `*` ni `_` | `?` et `*` sont des globs : zsh refuse `1/?/14` (« no matches found ») sans guillemets |
