@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Pvp\Service;
 
 use App\Domain\Pokemon\Model\BaseStats;
-use App\Domain\Pokemon\Model\IvFloor;
 use App\Domain\Pokemon\Model\IvPattern;
 use App\Domain\Pokemon\Model\IvSpread;
 use App\Domain\Pvp\Exception\IvMismatch;
@@ -29,13 +28,8 @@ final readonly class IvDeducer
     /**
      * @throws IvMismatch when no spread or several give that CP
      */
-    public function deduce(
-        BaseStats $stats,
-        IvPattern $pattern,
-        Cp $cp,
-        IvFloor $floor,
-        PokemonLevel $levelCap,
-    ): IvDeduction {
+    public function deduce(BaseStats $stats, IvPattern $pattern, Cp $cp, PokemonLevel $levelCap): IvDeduction
+    {
         $multipliers = [];
 
         foreach (array_reverse(PokemonLevel::descendingTo($levelCap)) as $level) {
@@ -45,7 +39,7 @@ final readonly class IvDeducer
         $candidates = [];
 
         foreach (IvSpread::all() as $iv) {
-            if (!$pattern->matches($iv) || !$floor->allows($iv)) {
+            if (!$pattern->matches($iv)) {
                 continue;
             }
 

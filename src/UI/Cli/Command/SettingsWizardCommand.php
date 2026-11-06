@@ -11,6 +11,7 @@ use App\Infrastructure\Settings\SettingsFile;
 use App\UI\Cli\Input\PlaceOption;
 use App\UI\Cli\Settings\ConfigurableOptions;
 use App\UI\Cli\Settings\LeaguePicker;
+use App\UI\Cli\Settings\RerollFriendshipPicker;
 use App\UI\Cli\Settings\SettingKey;
 use App\UI\Cli\Settings\SettingQuestion;
 use App\UI\Cli\Settings\SettingsTable;
@@ -22,13 +23,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
- * The three settings most players want, asked one after the other. It only writes what
+ * The settings most players want, asked one after the other. It only writes what
  * `settings:set` would: nothing here is a setting of its own.
  */
 #[AsCommand(
     name: 'app:settings:wizard',
     aliases: ['wizard', 'settings:wizard'],
-    description: 'Set your account, leagues and place, question by question',
+    description: 'Set your account, leagues, IV floor and place, question by question',
 )]
 final class SettingsWizardCommand extends Command
 {
@@ -45,13 +46,14 @@ final class SettingsWizardCommand extends Command
     protected function configure(): void
     {
         $this->setHelp(<<<'HELP'
-            The way in: four questions that set the defaults most players want, each
+            The way in: five questions that set the defaults most players want, each
             explaining what it is for, which commands use it and how to override it.
 
               1. the language Pokémon and moves are shown in      (global.locale)
               2. the game account the inventory commands use      (inventory.account)
               3. the leagues "pvp" ranks in, megas or not          (pvp.league)
-              4. where you play, for the weather forecast          (weather.at)
+              4. the friendship you reroll IVs at, for the floor  (pvp.floor)
+              5. where you play, for the weather forecast          (weather.at)
 
             Enter keeps the value shown, "-" removes it. Nothing is saved before the last
             answer. Run it again any time: it starts from what is set.
@@ -82,7 +84,7 @@ final class SettingsWizardCommand extends Command
 
         $io->title('pogo — your defaults');
         $io->text([
-            'Four questions to set what most players want. Each answer is only a default: it',
+            'Five questions to set what most players want. Each answer is only a default: it',
             'fills an option you leave out, and whatever you type on a command still wins.',
             'Enter keeps the value shown, "-" removes it. Nothing is saved before the end.',
         ]);
@@ -91,7 +93,7 @@ final class SettingsWizardCommand extends Command
 
         $answers = [
             'global.locale' => SettingQuestion::ask(
-                $this->explain($io, '1/4 · Language', [
+                $this->explain($io, '1/5 · Language', [
                     'Pokémon and move names are shown in this language, whichever one you type them',
                     'in: "gengar" and "ectoplasma" find the same Pokémon. The rest of the interface',
                     'stays in English. Left unset, names follow the language you type. For another',
@@ -104,7 +106,7 @@ final class SettingsWizardCommand extends Command
                 static fn(string $answer): string => SettingValues::fromAnswer('locale', strtolower($answer)),
             ),
             'inventory.account' => SettingQuestion::ask(
-                $this->explain($io, '2/4 · Account', [
+                $this->explain($io, '2/5 · Account', [
                     'Your inventory is kept per game account. This one is used by every inventory',
                     'command — inventory:add, inventory:list, inventory:remove — whenever you leave',
                     'out --account. For another account, pass it as an option:',
@@ -115,15 +117,22 @@ final class SettingsWizardCommand extends Command
                 'default',
                 static fn(string $answer): string => SettingValues::fromAnswer('account', $answer),
             ),
-            'pvp.league' => LeaguePicker::pick($input, $this->explain($io, '3/4 · Leagues', [
+            'pvp.league' => LeaguePicker::pick($input, $this->explain($io, '3/5 · Leagues', [
                 'The "pvp" command ranks a Pokémon and its evolutions in these leagues whenever',
                 'you leave out --league. Leave the Mega Editions unticked to keep megas',
                 'out of sight; tick nothing to rank each species in its own leagues. For other',
                 'leagues, pass them as an option:',
                 '  <info>pogo pvp gengar -l mega-great</info>',
             ]), 'Which leagues should "pvp" rank in by default?', $sections['pvp']['league'] ?? null, self::STANDARD_LEAGUES),
+            'pvp.floor' => RerollFriendshipPicker::pick($input, $this->explain($io, '4/5 · IV floor', [
+                'Trading a Pokémon to a second account of yours rolls its IVs again, never under a',
+                'floor set by your friendship. "pvp" then points at the best spread that floor',
+                'allows, beside the best overall. IVs under it are ranked all the same, so a wild',
+                'catch needs no option. For another floor, pass it as an option:',
+                '  <info>pogo pvp gengar --floor=raid</info>',
+            ]), 'Do you use a second account to reroll IVs for PvP? At which friendship level?', $sections['pvp']['floor'] ?? null),
             'weather.at' => SettingQuestion::ask(
-                $this->explain($io, '4/4 · Where you play', [
+                $this->explain($io, '5/5 · Where you play', [
                     'The "weather" command forecasts the in-game weather, to time the Daily Adventure',
                     'Incense. "auto" guesses where you are from your IP address — to the town at',
                     'best, and off behind a VPN or a mobile connection. For another place, or for',

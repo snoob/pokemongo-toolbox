@@ -19,7 +19,7 @@ Options : `--league` (répétable : `great`, `ultra`, `master`, `mega-great`,
 jeu ; un `x` à la place d'un IV le laisse déduire (seul `x` est accepté : `?` et `*` sont des
 jokers du shell et devraient être entre guillemets). Le niveau est
 inconnu : `IvDeducer` essaie chaque niveau jusqu'au plafond pour chaque spread qui suit le
-motif et respecte le plancher, soit au plus 4096 × 101 calculs (0,13 s). Trois issues :
+motif, soit au plus 4096 × 101 calculs (0,13 s). Trois issues :
 aucun spread ne donne ce PC → erreur, code 2 ; plusieurs le donnent → erreur, code 2, et
 liste des candidats avec leur niveau (dix au plus) ; un seul → classement normal, précédé
 de `Deduced 1/15/14 from CP 1478 (level 19).` (ou `CP 1478 checks out for …` quand les
@@ -235,10 +235,20 @@ comme un entier, ou par un alias de source : `wild` 0, `good` 1, `great` 2, `ult
   (« le mieux qu'un échange Best Friend puisse donner est #180 / 4096 »).
 - Les IVs donnés gardent aussi leur rang absolu, et gagnent leur rang parmi les spreads
   que le plancher laisse possibles (`withinFloor`, « #4 / 1331 »). Le texte ne l'affiche
-  que sous un plancher non nul ; le JSON l'a toujours (`ivRankWithinFloor`, `ivFloor`).
-- Des IVs sous le plancher sont refusés (code 2) : ils ne peuvent pas venir de là.
+  que sous un plancher non nul ; le JSON l'a toujours (`ivRankWithinFloor`, `ivFloor`),
+  à `null` pour des IVs sous le plancher.
+- **Le plancher 0 reste en vue.** Sous un plancher non nul, une ligne
+  `0/15/15  best overall — CP …` suit celle du meilleur spread au-dessus du plancher :
+  ce qu'une capture sauvage pourrait donner, pour juger si l'échange vaut la peine. Elle
+  disparaît quand le plancher garde ce spread (15/15/15 en Master League). Le JSON l'a
+  toujours (`bestIvWithoutFloor`, égal à `bestIv` sans plancher).
+- **Des IVs sous le plancher sont classés quand même**, sans rang dans le plancher. Le
+  plancher dit ce qu'on peut chasser, pas d'où vient le Pokémon en main : réglé une fois
+  pour les échanges (`pvp.floor`), il ne doit pas obliger à taper `--floor=wild` pour une
+  capture sauvage. Pour la même raison, la déduction par le PC ne filtre pas par plancher.
 - Si aucun spread au-dessus du plancher ne tient sous le cap de CP, la ligue est
-  `ineligible`, comme pour une espèce trop forte.
+  `ineligible`, comme pour une espèce trop forte ; le texte dit alors « nothing above
+  floor N fits under the cap » et garde le meilleur spread sans plancher.
 
 Sources des valeurs : Bulbapedia et GamePress pour les échanges (Good 1, Great 2, Ultra 3,
 Best 5, chanceux 12). `shadow` vise le raid obscur et Giovanni (6, dittobase et Pokémon

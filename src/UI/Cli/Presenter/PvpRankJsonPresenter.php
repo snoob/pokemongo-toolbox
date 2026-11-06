@@ -106,6 +106,7 @@ final readonly class PvpRankJsonPresenter
                 ? null
                 : ['position' => $outcome->withinFloor->position, 'total' => $outcome->withinFloor->total],
             'bestIv' => $this->spread($outcome->best),
+            'bestIvWithoutFloor' => $this->spread($outcome->wildBest ?? $outcome->best),
             'powerUpTo' => $this->target($outcome->powerUpTo),
             'bestPowerUpTo' => $this->target($outcome->bestPowerUpTo),
         ];

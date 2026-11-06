@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Domain\Pvp;
 
 use App\Domain\Pokemon\Model\BaseStats;
-use App\Domain\Pokemon\Model\IvFloor;
 use App\Domain\Pokemon\Model\IvPattern;
 use App\Domain\Pokemon\Model\IvSpread;
 use App\Domain\Pvp\Exception\IvMismatch;
@@ -71,35 +70,25 @@ final class IvDeducerTest extends TestCase
         }
     }
 
-    public function testTheFloorRulesOutSpreadsItCannotGive(): void
-    {
-        self::assertSame('1/15/14', (string) $this->deduce('1/15/x', self::GENGAR_1_15_14_AT_19)->iv);
-
-        // The deducer is not told the attack is a 1 here; the floor alone rules it out.
-        $this->expectException(IvMismatch::class);
-        $this->deduce('x/15/x', self::GENGAR_1_15_14_AT_19, IvFloor::fromString('lucky'));
-    }
-
     public function testLevel51IsOnlyTriedForABestBuddy(): void
     {
         $stats = new BaseStats(261, 149, 155);
         $cp = $this->calculator->cpAt($stats, new IvSpread(15, 15, 15), PokemonLevel::bestBuddyCap());
         $pattern = IvPattern::fromString('15/15/15');
 
-        $deduction = $this->deducer->deduce($stats, $pattern, $cp, IvFloor::wild(), PokemonLevel::bestBuddyCap());
+        $deduction = $this->deducer->deduce($stats, $pattern, $cp, PokemonLevel::bestBuddyCap());
         self::assertSame(['51'], array_map(strval(...), $deduction->levels));
 
         $this->expectException(IvMismatch::class);
-        $this->deducer->deduce($stats, $pattern, $cp, IvFloor::wild(), PokemonLevel::regularCap());
+        $this->deducer->deduce($stats, $pattern, $cp, PokemonLevel::regularCap());
     }
 
-    private function deduce(string $pattern, int $cp, ?IvFloor $floor = null): IvDeduction
+    private function deduce(string $pattern, int $cp): IvDeduction
     {
         return $this->deducer->deduce(
             new BaseStats(261, 149, 155),
             IvPattern::fromString($pattern),
             new Cp($cp),
-            $floor ?? IvFloor::wild(),
             PokemonLevel::regularCap(),
         );
     }

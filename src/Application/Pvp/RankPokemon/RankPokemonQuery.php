@@ -21,8 +21,8 @@ final readonly class RankPokemonQuery
      *                                standard leagues
      * @param ?MegaLevel   $megaLevel the level every mega of the family is ranked at;
      *                                null means the one a PvP player targets
-     * @param ?IvFloor     $floor     the lowest IVs the Pokémon can come with; null means
-     *                                a wild catch, which can roll anything
+     * @param ?IvFloor     $floor     the lowest IVs the spreads worth hunting can come
+     *                                with; null means a wild catch, which can roll anything
      * @param ?Cp          $cp        the CP the game shows: it checks the IVs, and settles
      *                                those left unknown
      */
@@ -36,18 +36,10 @@ final readonly class RankPokemonQuery
         public ?IvFloor $floor = null,
         public ?Cp $cp = null,
     ) {
-        if (null === $iv) {
-            return;
-        }
-
-        // IVs under the floor cannot be the Pokémon in hand: the source was misnamed.
-        $lowest = $iv->lowestKnown();
-
-        if (null !== $lowest && $lowest < $this->effectiveFloor()->minimum) {
-            throw InvalidIv::belowFloor($iv, $this->effectiveFloor());
-        }
-
-        if (null === $cp && !$iv->isComplete()) {
+        // IVs under the floor are ranked all the same: the floor says what can be hunted,
+        // not where the Pokémon in hand comes from — a wild catch is often weighed against
+        // a floor set once for trades.
+        if (null !== $iv && null === $cp && !$iv->isComplete()) {
             throw InvalidIv::unknownWithoutCp($iv);
         }
     }

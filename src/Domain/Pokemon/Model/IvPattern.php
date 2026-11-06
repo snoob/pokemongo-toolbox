@@ -58,16 +58,6 @@ final readonly class IvPattern implements \Stringable
         return $this->isComplete() ? IvSpread::fromString((string) $this) : null;
     }
 
-    /**
-     * The lowest IV known, so that a floor can refuse "0/x/x" before any deduction.
-     */
-    public function lowestKnown(): ?int
-    {
-        $known = array_filter($this->values(), static fn(?int $iv): bool => null !== $iv);
-
-        return [] === $known ? null : min($known);
-    }
-
     public function matches(IvSpread $iv): bool
     {
         return (

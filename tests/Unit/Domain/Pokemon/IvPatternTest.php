@@ -54,12 +54,6 @@ final class IvPatternTest extends TestCase
         self::assertFalse($pattern->matches(new IvSpread(2, 15, 14)));
     }
 
-    public function testTheLowestKnownIvIgnoresTheUnknowns(): void
-    {
-        self::assertSame(1, IvPattern::fromString('1/x/14')->lowestKnown());
-        self::assertNull(IvPattern::fromString('x/x/x')->lowestKnown());
-    }
-
     #[DataProvider('rejectedNotations')]
     public function testItRefusesWhatItCannotRead(string $input): void
     {

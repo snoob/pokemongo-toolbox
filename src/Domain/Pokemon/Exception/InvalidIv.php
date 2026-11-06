@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Pokemon\Exception;
 
-use App\Domain\Pokemon\Model\IvFloor;
 use App\Domain\Pokemon\Model\IvPattern;
-use App\Domain\Pokemon\Model\IvSpread;
 
 final class InvalidIv extends \InvalidArgumentException
 {
@@ -25,11 +23,6 @@ final class InvalidIv extends \InvalidArgumentException
             $input,
             implode(', ', $names),
         ));
-    }
-
-    public static function belowFloor(IvSpread|IvPattern $iv, IvFloor $floor): self
-    {
-        return new self(\sprintf('IVs %s cannot come with a floor of %s.', $iv, $floor));
     }
 
     public static function unparsable(string $input): self

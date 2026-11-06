@@ -13,14 +13,21 @@ use App\Domain\Pvp\Model\RankedSpread;
  * Everything the IV column says for one league: where the given spread lands, and which
  * spread to hunt for. Under an IV floor both keep their place among all 4096 — that is
  * what the floor costs — and the given spread also says where it stands among the
- * spreads the floor leaves possible.
+ * spreads the floor leaves possible, while the best of all stays in sight.
  */
 final readonly class IvCellFormatter
 {
     public function format(LeagueOutcome $outcome, ?IvSpread $iv, IvFloor $floor): string
     {
+        // A floor can leave out every spread under the cap while a wild catch still fits.
         if ($outcome->ineligible) {
-            return '<fg=gray>ineligible (CP too high)</>';
+            return null === $outcome->wildBest
+                ? '<fg=gray>ineligible (CP too high)</>'
+                : \sprintf(
+                    "<fg=gray>nothing above floor %d fits under the cap</>\n%s",
+                    $floor->minimum,
+                    $this->wildBestLine($outcome->wildBest, $outcome),
+                );
         }
 
         $lines = [];
@@ -58,7 +65,21 @@ final readonly class IvCellFormatter
             );
         }
 
+        // Under a floor, what a wild catch could give stays in sight — unless the floor
+        // leaves it in, as 15/15/15 in Master League.
+        if (null !== $outcome->wildBest && true !== $outcome->best?->iv->equals($outcome->wildBest->iv)) {
+            $lines[] = $this->wildBestLine($outcome->wildBest, $outcome);
+        }
+
         return [] === $lines ? '<fg=gray>—</>' : implode("\n", $lines);
+    }
+
+    /**
+     * Not green: the Pokémon in hand cannot have come with it.
+     */
+    private function wildBestLine(RankedSpread $wildBest, LeagueOutcome $outcome): string
+    {
+        return \sprintf('%s  best overall — %s', $wildBest->iv, $this->cpAndLevel($wildBest, $outcome));
     }
 
     private function withinFloor(LeagueOutcome $outcome, IvFloor $floor): string

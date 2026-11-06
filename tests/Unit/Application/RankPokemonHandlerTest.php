@@ -114,6 +114,16 @@ final class RankPokemonHandlerTest extends TestCase
         self::assertGreaterThan(1, $outcome->best->position, 'the overall best, 0/13/13, cannot come from a trade');
         self::assertSame(11 ** 3, $outcome->withinFloor?->total);
         self::assertLessThan($outcome->spread?->position, $outcome->withinFloor->position);
+        self::assertSame('0/13/13', (string) $outcome->wildBest?->iv, 'the best of a wild catch stays in sight');
+    }
+
+    public function testWithoutAFloorTheBestIsAlreadyTheWildOne(): void
+    {
+        self::assertNull($this->outcome(
+            new RankPokemonQuery('gengar', leagues: [League::Great]),
+            'gengar',
+            League::Great,
+        )?->wildBest);
     }
 
     public function testTheResultRemembersTheFloorAndDefaultsToAWildCatch(): void
@@ -125,14 +135,22 @@ final class RankPokemonHandlerTest extends TestCase
         );
     }
 
-    public function testIvsUnderTheFloorAreRefused(): void
+    public function testIvsUnderTheFloorAreRankedAllTheSame(): void
     {
-        try {
-            new RankPokemonQuery('gengar', new IvPattern(0, 15, 15), floor: IvFloor::fromString('best'));
-            self::fail('IVs a Best Friend trade cannot roll must not make a query.');
-        } catch (InvalidIv $e) {
-            self::assertSame('IVs 0/15/15 cannot come with a floor of best (5).', $e->getMessage());
-        }
+        $outcome = $this->outcome(
+            new RankPokemonQuery(
+                'gengar',
+                new IvPattern(0, 15, 15),
+                [League::Great],
+                floor: IvFloor::fromString('best'),
+            ),
+            'gengar',
+            League::Great,
+        );
+
+        self::assertNotNull($outcome?->spread, 'a wild catch weighed against a floor set for trades');
+        self::assertNull($outcome->withinFloor, 'no place among the spreads the floor allows');
+        self::assertSame(5, $outcome->best?->iv->attack);
     }
 
     public function testAnUnknownIvIsDeducedFromTheCpAndRankedAsIfTyped(): void
@@ -168,16 +186,19 @@ final class RankPokemonHandlerTest extends TestCase
         new RankPokemonQuery('gengar', new IvPattern(1, null, 14));
     }
 
-    public function testAKnownIvUnderTheFloorIsRefusedBeforeAnyDeduction(): void
+    public function testTheFloorDoesNotNarrowTheDeduction(): void
     {
-        $this->expectException(InvalidIv::class);
-
-        new RankPokemonQuery(
-            'gengar',
-            new IvPattern(0, null, 14),
-            floor: IvFloor::fromString('best'),
-            cp: new Cp(1478),
+        $result = $this->handler()(
+            new RankPokemonQuery(
+                'gengar',
+                new IvPattern(1, null, 14),
+                [League::Great],
+                floor: IvFloor::fromString('best'),
+                cp: new Cp(1478),
+            ),
         );
+
+        self::assertSame('1/15/14', (string) $result->iv, 'a wild catch, deduced under a floor set for trades');
     }
 
     /**

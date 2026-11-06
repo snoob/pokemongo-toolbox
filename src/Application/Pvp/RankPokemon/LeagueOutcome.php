@@ -14,6 +14,9 @@ use App\Domain\Pvp\Model\SpeciesRank;
  * `best` is the best spread the IV floor leaves possible, and `withinFloor` where the
  * given spread stands among those; both rankings agree when there is no floor. A league
  * is `ineligible` when no spread above the floor fits under its CP cap.
+ *
+ * `wildBest` is the best of all 4096, kept beside `best` when the floor leaves it out:
+ * what a wild catch could have given. Null without a floor, where it is `best` itself.
  */
 final readonly class LeagueOutcome
 {
@@ -26,5 +29,6 @@ final readonly class LeagueOutcome
         public ?PowerUpTarget $bestPowerUpTo = null,
         public bool $ineligible = false,
         public ?RankWithinFloor $withinFloor = null,
+        public ?RankedSpread $wildBest = null,
     ) {}
 }

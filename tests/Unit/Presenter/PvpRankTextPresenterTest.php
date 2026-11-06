@@ -109,6 +109,46 @@ final class PvpRankTextPresenterTest extends TestCase
         self::assertStringContainsString('IV floor considered: best (5).', $output);
     }
 
+    public function testUnderAFloorTheBestOfAWildCatchStaysInSight(): void
+    {
+        $outcome = new LeagueOutcome(
+            League::Great,
+            null,
+            $this->spread(new IvSpread(5, 15, 14), 131),
+            $this->spread(new IvSpread(5, 13, 13), 37),
+            withinFloor: new RankWithinFloor(3, 1331),
+            wildBest: $this->spread(new IvSpread(0, 13, 13), 1),
+        );
+        $output = $this->renderOutcome(new IvSpread(5, 15, 14), $outcome, floor: IvFloor::fromString('best'));
+
+        self::assertStringContainsString('0/13/13  best overall — CP 1498 at level 19.5', $output);
+    }
+
+    public function testTheBestOverallIsNotRepeatedWhenTheFloorLeavesItIn(): void
+    {
+        $best = $this->spread(new IvSpread(15, 15, 15), 1);
+        $outcome = new LeagueOutcome(League::Great, null, null, $best, wildBest: $best);
+        $output = $this->renderOutcome(null, $outcome, floor: IvFloor::fromString('best'));
+
+        self::assertStringNotContainsString('best overall', $output);
+    }
+
+    public function testAFloorThatLeavesNothingUnderTheCapStillShowsTheBestOverall(): void
+    {
+        $outcome = new LeagueOutcome(
+            League::Great,
+            null,
+            null,
+            ineligible: true,
+            wildBest: $this->spread(new IvSpread(0, 13, 13), 1),
+        );
+        $output = $this->renderOutcome(null, $outcome, floor: IvFloor::fromString('lucky'));
+
+        self::assertStringContainsString('nothing above floor 12 fits under the cap', $output);
+        self::assertStringContainsString('0/13/13  best overall', $output);
+        self::assertStringNotContainsString('ineligible', $output);
+    }
+
     public function testWithoutAFloorNothingIsSaidAboutOne(): void
     {
         $output = $this->render(new IvSpread(1, 15, 14), $this->spread(new IvSpread(1, 15, 14), 131));

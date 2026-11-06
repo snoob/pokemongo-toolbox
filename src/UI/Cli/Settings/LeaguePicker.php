@@ -7,7 +7,6 @@ namespace App\UI\Cli\Settings;
 use App\Domain\Pvp\Model\League;
 use App\Infrastructure\Json\JsonValue;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\StreamableInputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -40,14 +39,9 @@ final readonly class LeaguePicker
     ): ?array {
         $ticked = (array) ($current ?? $proposed);
 
-        return self::inTerminal($input) ? self::checkboxes($question, $ticked) : self::typed($io, $question, $ticked);
-    }
-
-    private static function inTerminal(InputInterface $input): bool
-    {
-        $given = $input instanceof StreamableInputInterface && null !== $input->getStream();
-
-        return !$given && $input->isInteractive() && '\\' !== \DIRECTORY_SEPARATOR && stream_isatty(\STDIN);
+        return ArrowPrompts::available($input)
+            ? self::checkboxes($question, $ticked)
+            : self::typed($io, $question, $ticked);
     }
 
     /**

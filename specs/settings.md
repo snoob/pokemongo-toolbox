@@ -42,12 +42,19 @@ lisant les définitions des commandes.
   qu'elle règle, des commandes qui s'en servent et de la façon de passer outre (un
   exemple en ligne de commande), et la fin propose les premières commandes à essayer —
   pour ne pas avoir à lire la doc avant de commencer. Il liste d'abord tous les réglages
-  en place, puis pose quatre questions — `global.locale`,
-  `inventory.account`, `pvp.league`, `weather.at` — avec la valeur actuelle (ou une
-  proposition : `default`, `great ultra master`) ; Entrée la garde, `-` la retire. Les
+  en place, puis pose cinq questions — `global.locale`,
+  `inventory.account`, `pvp.league`, `pvp.floor`, `weather.at` — avec la valeur actuelle
+  (ou une proposition : `default`, `great ultra master`, `no`) ; Entrée la garde, `-` la retire. Les
   ligues sont des cases à cocher (`LeaguePicker`, `laravel/prompts`) dans un terminal ;
   ailleurs (entrée fournie par un test ou un pipe, Windows), la même liste se tape, noms
-  séparés par des virgules. Rien de coché = réglage retiré. Chaque réponse passe par `SettingValues`, le lieu par le port
+  séparés par des virgules. Rien de coché = réglage retiré. Le plancher se demande par
+  l'usage : « Do you use a second account to reroll IVs for PvP? At which friendship
+  level? », un seul choix dans une liste (`RerollFriendshipPicker`, `select()` de
+  `laravel/prompts`, même repli que les ligues). `good`, `great`, `ultra` ou `best` est
+  enregistré tel quel (l'alias de `--floor`, plus lisible que le nombre), `no` retire le
+  réglage. Un plancher écrit à la main que nulle amitié ne donne (`raid`) est proposé
+  tel quel, pour qu'Entrée le garde. Pas de `lucky` : un échange chanceux ne se prévoit
+  pas. Chaque réponse passe par `SettingValues`, le lieu par le port
   `PlaceSearch` (hors ligne, gardé tel quel). Rien n'est écrit avant la fin ; refusé hors
   terminal. Sans compte réglé, `inventory:add` et `:list` le rappellent (`AccountHint`).
 - Fichier illisible : erreur, comme l'inventaire — retomber sur les défauts de l'outil

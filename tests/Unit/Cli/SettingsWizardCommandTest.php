@@ -32,14 +32,14 @@ final class SettingsWizardCommandTest extends TestCase
 
     public function testTheAnswersAreSaved(): void
     {
-        $tester = $this->wizard(['FR', 'Snoob2555', 'great, ultra', 'Villemomble, France']);
+        $tester = $this->wizard(['FR', 'Snoob2555', 'great, ultra', 'Best', 'Villemomble, France']);
 
         self::assertSame(Command::SUCCESS, $tester->getStatusCode());
         self::assertSame(
             [
                 'global' => ['locale' => 'fr'],
                 'inventory' => ['account' => 'Snoob2555'],
-                'pvp' => ['league' => ['great', 'ultra']],
+                'pvp' => ['league' => ['great', 'ultra'], 'floor' => 'best'],
                 'weather' => ['at' => 'Villemomble, France'],
             ],
             new SettingsFile($this->file)->load(),
@@ -54,7 +54,7 @@ final class SettingsWizardCommandTest extends TestCase
             'weather' => ['at' => 'Villemomble, France'],
         ]);
 
-        $tester = $this->wizard(['', '', '-', '-']);
+        $tester = $this->wizard(['', '', '-', '', '-']);
 
         self::assertMatchesRegularExpression(
             '/Set now:.*inventory\.floor\s+best/s',
@@ -71,7 +71,7 @@ final class SettingsWizardCommandTest extends TestCase
 
     public function testWithNothingSetEnterTakesTheProposedAnswers(): void
     {
-        $this->wizard(['', '', '', '']);
+        $this->wizard(['', '', '', '', '']);
 
         self::assertSame(
             [
@@ -93,6 +93,8 @@ final class SettingsWizardCommandTest extends TestCase
             'snoob2555',
             'great,hyper',
             'great',
+            'lucky',
+            'ultra',
             'Atlantis',
             'Villemomble, France',
         ]);
@@ -101,6 +103,27 @@ final class SettingsWizardCommandTest extends TestCase
         self::assertSame('snoob2555', new SettingsFile($this->file)->load()['inventory']['account'] ?? null);
         self::assertStringContainsString('"hyper" is invalid', $tester->getDisplay());
         self::assertStringContainsString('Unknown locale "de"', $tester->getDisplay());
+        self::assertStringContainsString('"lucky" is invalid', $tester->getDisplay());
+        self::assertSame('ultra', new SettingsFile($this->file)->load()['pvp']['floor'] ?? null);
+    }
+
+    public function testNoRerollRemovesTheFloor(): void
+    {
+        new SettingsFile($this->file)->save(['pvp' => ['floor' => 'best']]);
+
+        $this->wizard(['-', '-', '-', 'no', '-']);
+
+        self::assertSame([], new SettingsFile($this->file)->load());
+    }
+
+    public function testAFloorSetByHandIsKeptByEnter(): void
+    {
+        new SettingsFile($this->file)->save(['pvp' => ['floor' => 'raid']]);
+
+        $tester = $this->wizard(['-', '-', '-', '', '-']);
+
+        self::assertSame(['pvp' => ['floor' => 'raid']], new SettingsFile($this->file)->load());
+        self::assertStringContainsString('Keep raid', $tester->getDisplay());
     }
 
     public function testItNeedsATerminal(): void

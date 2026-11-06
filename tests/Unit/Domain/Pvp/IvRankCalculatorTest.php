@@ -150,9 +150,13 @@ final class IvRankCalculatorTest extends TestCase
         $first = $ranking->withinFloor($best->iv, $floor);
         $given = $ranking->withinFloor(new IvSpread(5, 15, 14), $floor);
 
-        self::assertSame(1, $first->position);
+        self::assertSame(1, $first?->position);
         self::assertSame(11 ** 3, $first->total, 'eleven values from 5 to 15, for each IV');
-        self::assertLessThan($ranking->for(new IvSpread(5, 15, 14))->position, $given->position);
+        self::assertLessThan($ranking->for(new IvSpread(5, 15, 14))->position, $given?->position);
+        self::assertNull(
+            $ranking->withinFloor(new IvSpread(0, 15, 15), $floor),
+            'a spread under the floor has no place',
+        );
     }
 
     public function testASpeciesTooStrongForTheCapIsReportedAsIneligible(): void

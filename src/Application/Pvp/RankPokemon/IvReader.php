@@ -29,13 +29,7 @@ final readonly class IvReader
             return new IvReading($query->iv?->toSpread());
         }
 
-        $deduction = $this->deducer->deduce(
-            $inHand->baseStats,
-            $query->iv,
-            $query->cp,
-            $query->effectiveFloor(),
-            $query->effectiveLevelCap(),
-        );
+        $deduction = $this->deducer->deduce($inHand->baseStats, $query->iv, $query->cp, $query->effectiveLevelCap());
 
         return new IvReading($deduction->iv, $deduction);
     }

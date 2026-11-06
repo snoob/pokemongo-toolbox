@@ -53,7 +53,10 @@ final readonly class IvRanking
         return null;
     }
 
-    public function withinFloor(IvSpread $iv, IvFloor $floor): RankWithinFloor
+    /**
+     * Null for a spread under the floor: it has no place among those the floor allows.
+     */
+    public function withinFloor(IvSpread $iv, IvFloor $floor): ?RankWithinFloor
     {
         $position = null;
         $total = 0;
@@ -70,11 +73,7 @@ final readonly class IvRanking
             }
         }
 
-        if (null === $position) {
-            throw new \LogicException(\sprintf('Spread %s is not ranked above the floor of %s.', $iv, $floor));
-        }
-
-        return new RankWithinFloor($position, $total);
+        return null === $position ? null : new RankWithinFloor($position, $total);
     }
 
     /** @return list<RankedSpread> */

@@ -53,6 +53,7 @@ final readonly class EvolutionRanker
             $spread = null;
             $withinFloor = null;
             $best = null;
+            $wildBest = null;
             $ineligible = false;
 
             try {
@@ -61,6 +62,7 @@ final readonly class EvolutionRanker
                 // their place among all 4096; the floor only narrows what can be hunted.
                 $ranking = $this->ivRanker->rank($species->baseStats, $league, $levelCap);
                 $best = $ranking->bestFrom($floor);
+                $wildBest = $floor->restricts() ? $ranking->best() : null;
                 $spread = null === $iv ? null : $ranking->for($iv);
                 $withinFloor = null === $iv ? null : $ranking->withinFloor($iv, $floor);
             } catch (SpeciesIneligibleForLeague) {
@@ -77,6 +79,7 @@ final readonly class EvolutionRanker
                 // A floor can also leave out every spread that fits under the cap.
                 ineligible: $ineligible || null === $best,
                 withinFloor: $withinFloor,
+                wildBest: $wildBest,
             );
         }
 
