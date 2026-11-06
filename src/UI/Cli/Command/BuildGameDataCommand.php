@@ -14,7 +14,6 @@ use App\Infrastructure\Build\WeatherTableBuilder;
 use App\Infrastructure\Naming\MoveNameResolver;
 use App\Infrastructure\Naming\SpeciesNameResolver;
 use App\Infrastructure\Translation\XliffCatalogueWriter;
-use App\PharEnvironment;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -24,6 +23,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(
     name: 'app:data:build',
     description: 'Regenerate the committed game data and translation catalogues from upstream sources',
+    // A maintainer's tool, run from a checkout before a release: box.json leaves it and
+    // its builders out of the PHAR, and the player never needs to see it listed.
+    hidden: true,
 )]
 final class BuildGameDataCommand extends Command
 {
@@ -44,14 +46,6 @@ final class BuildGameDataCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-
-        // This command writes back into the repository; inside a read-only archive there
-        // is nothing for it to update.
-        if (PharEnvironment::isRunning()) {
-            $io->error('app:data:build only runs from a checkout — the PHAR ships the data already built.');
-
-            return Command::FAILURE;
-        }
 
         $io->section('Species');
         $built = $this->speciesBuilder->build();

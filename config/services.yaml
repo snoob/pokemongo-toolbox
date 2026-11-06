@@ -127,12 +127,3 @@ services:
     App\Infrastructure\Catalog\JsonFileMoveCatalog:
         arguments:
             $file: '%pogo.data_dir%/moves.json'
-
-    App\Infrastructure\Build\GameDataPaths:
-        arguments:
-            $species: '%pogo.data_dir%/species.json'
-            $cpMultipliers: '%pogo.data_dir%/cpm.json'
-            $megaLevels: '%pogo.data_dir%/mega-levels.json'
-            $moves: '%pogo.data_dir%/moves.json'
-            $weather: '%pogo.data_dir%/weather.json'
-            $translations: '%kernel.project_dir%/translations'

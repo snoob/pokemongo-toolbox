@@ -84,7 +84,8 @@ Le projet a **deux étages de données**, et un seul se rafraîchit tout seul.
 **Étage build — manuel.** `app:data:build` va chercher les trois sources amont et écrit
 les fichiers commités listés plus bas. Il n'est **jamais** déclenché automatiquement et
 il n'existe **aucune détection de péremption** : on le relance après une mise à jour du
-jeu. Au runtime ces fichiers sont lus sur disque, sans réseau — c'est ce qui rend la
+jeu. C'est un outil de mainteneur : masqué de `list` et absent du PHAR, avec ses
+builders (décision 100). Au runtime ces fichiers sont lus sur disque, sans réseau — c'est ce qui rend la
 toolbox utilisable hors-ligne et reproductible d'une machine à l'autre.
 
 **Étage runtime — automatique.** Les **classements** et, pour la commande météo, la
@@ -473,6 +474,43 @@ jeu ne connaissent plus reste listée, signalée, plutôt que de faire échouer 
 
 ---
 
+## 4 quater. Feature 4 — poussière par source (`app:stardust:info`)
+
+### Question
+
+« Combien de poussière me rapporte chaque source, avec et sans Pièce étoile ? »
+
+```bash
+app:stardust:info                # alias : stardust
+app:stardust:info --format=json
+```
+
+Aucun argument : la réponse est la même pour tout le monde, un tableau par source.
+
+### Règles
+
+- **Captures** : 100 par capture, 125 sous boost météo ; affichées pour 1, 10, 50 et 100.
+  Les formes évoluées capturées dans la nature rapportent plus et sont laissées de côté.
+- **Combat GO** : une série paie 3 600 à sa première victoire, 7 200 à sa cinquième et
+  3 600 à sa fin ; les victoires intermédiaires ne donnent pas de poussière. Série à une
+  victoire : 7 200 ; à cinq : 14 400. Fin de saison par rang : 20 → 90 000, As → 110 000,
+  Vétéran → 134 000, Expert → 164 000, Légende → 200 000.
+- **Baies en arène** : une baie rapporte 30 poussières fois son rang dans la série, sans
+  plafond : 30, 60, … 300 pour le premier défenseur. Un défenseur prend 10 baies ; passer
+  vite au suivant garde la série (330 … 600 pour le deuxième), donc chaque défenseur paie
+  plus que le précédent : 1 650, 4 650, 7 650… Arène pleine (6) : 54 900. L'arène est
+  toujours montrée pleine, avec le cumul défenseur par défenseur.
+- **Pièce étoile** : ajoute la moitié à chaque récompense, partout, fin de saison
+  comprise. L'arrondi se fait par récompense, vers le bas : une capture boostée paie 187,
+  pas 187,5.
+
+**Provenance : relevés de l'utilisateur en jeu**, aucun fichier du jeu ne les donne. Ils
+vivent dans `CatchStardust`, `BattleLeagueStardust` et `BerryStardust` (constantes
+commentées) ; à recaler si les montants observés divergent. L'arrondi de la Pièce étoile
+sur 125 n'a pas encore été vérifié en jeu.
+
+---
+
 ## 5. Architecture — DDD
 
 Découpage DDD en quatre couches. Le modèle métier est le centre ; tout le reste gravite
@@ -497,6 +535,9 @@ src/
       Model/              # Inventory, InventoryEntry
       Port/               # InventoryRepository (interface)
       Exception/          # DuplicateEntry, EntryNotFound
+    Stardust/
+      Model/              # Stardust, CatchReward, BattleSetReward, SeasonReward, GymFeeding, FedDefender
+      Service/            # CatchStardust, BattleLeagueStardust, BerryStardust
     Pvp/
       Model/              # League, Cp, StatProduct, SpeciesRank, RankedSpread
       Service/            # CpCalculator, IvRankCalculator — calcul pur, sans état
@@ -505,6 +546,7 @@ src/
     Pvp/RankPokemon/      # RankPokemonQuery, RankPokemonHandler, EvolutionRanker, RankPokemonResult
     Weather/ForecastIncense/  # ForecastIncenseQuery, ForecastIncenseHandler, ForecastIncenseResult
     Inventory/            # InventoryRanker, Standing ; AddToInventory/, ListInventory/, RemoveFromInventory/
+    Stardust/StardustInfo/ # StardustInfoHandler, StardustInfoResult
   Infrastructure/         # adapters — seule couche qui connaît le réseau et le disque
     Pvpoke/               # PvpokeRankingCatalog
     OpenMeteo/            # OpenMeteoForecast, OpenMeteoPlaceSearch, WmoConditions
@@ -836,3 +878,7 @@ Règles d'usage :
 | 94 | Entrée classée comme la forme de sa famille la mieux classée dans sa ligue ; comparaison sur toute la famille | Choix de l'utilisateur : Draco vaut mieux que Dracolosse en Super, donc la dernière évolution n'est pas la bonne cible ; un Minidraco gardé pour devenir Draco doit compter face à un Draco. Le rang d'espèce tranche, sans option `--as` |
 | 95 | Fichier d'inventaire illisible : erreur sans écriture ; forme inconnue : listée, signalée | À l'inverse du cache (copie périmée servie, fichier corrompu ignoré), rien d'autre ne détient ces données : les lire comme vides puis sauvegarder les effacerait |
 | 96 | Commandes d'écriture `*Command` dans `Application/`, exclues du conteneur comme `*Query` | Ajouter ou retirer n'est pas une requête ; le suffixe dit qu'elles changent l'état. Elles restent des messages, pas des services |
+| 97 | `app:stardust:info` (alias `stardust`), sans argument, sans port ni données | La vraie question est « où gagner ma poussière » : captures, Combat GO et baies côte à côte. Règles du jeu en quelques constantes, un service de domaine par source. Un nombre de défenseurs en argument ne servait à rien : l'arène pleine avec son cumul donne chaque taille d'arène sur ses premières lignes. Le handler ne prend pas de query, la réponse ne dépend de rien |
+| 98 | Barèmes (capture 100 / 125 boostée ; série 3 600 + 7 200 + 3 600 ; fin de saison par rang ; baies 30 × rang de série sans plafond, 10 par défenseur) pris des relevés de l'utilisateur | Aucun fichier du jeu ne les expose ; isolés dans `CatchStardust`, `BattleLeagueStardust` et `BerryStardust` comme `MegaLevelTableBuilder` et `WmoConditions` le sont pour leurs tables |
+| 99 | Pièce étoile × 1,5 sur chaque récompense, arrondi vers le bas par récompense, affichée partout en `total (+ gain)` | Choix de l'utilisateur : le gain se lit sans soustraire. La Pièce s'applique récompense par récompense, d'où l'arrondi sur chacune et non sur le total (100 captures boostées : 18 700, pas 18 750) |
+| 100 | `app:data:build` masquée (`hidden`) et exclue du PHAR par `box.json` | Elle ne tourne que depuis un checkout (dev, puis la CI juste avant `box compile`) : dans l'archive en lecture seule elle ne pouvait qu'échouer. L'exclure retire aussi `Infrastructure/Build`, et la garde `PharEnvironment` de la commande disparaît. Préféré à `when@dev`, qui l'aurait liée à l'environnement plutôt qu'au checkout. `GameDataPaths` passe en `#[Autowire]` : une définition YAML nommerait une classe absente de l'archive et ferait échouer le conteneur |

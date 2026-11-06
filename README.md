@@ -63,6 +63,7 @@ pogo pvp <pokemon> [ivs]       # PvP ranking
 pogo weather [--at=place]      # in-game weather, for the Daily Adventure Incense
 pogo inv:add <pokemon> <ivs> -l <league>   # keep a Pokémon for a league
 pogo inv:list                  # what you keep, league by league
+pogo stardust                  # Stardust from catches, battles and gym berries
 ```
 
 `pvp` and `weather` are short aliases of `app:pvp:rank` and `app:weather:forecast`;
@@ -238,6 +239,25 @@ The inventory is a JSON file under `~/.local/share/pokemongo-toolbox/inventory.j
 to keep it elsewhere. It is yours to back up or edit; a file that cannot be read is
 reported and left untouched, never overwritten.
 
+### Stardust: what each source pays
+
+```bash
+pogo stardust
+pogo stardust --format=json
+```
+
+Every amount comes with what a Star Piece (+50%) adds, shown as `(+ …)`:
+
+- **Catches**: 1, 10, 50 and 100, at 100 a catch or 125 under a weather boost. Evolved
+  forms caught in the wild pay more and are left out.
+- **GO Battle League**: a set with one win (3,600 + 3,600 at the end of the set), a set
+  with five (3,600 + 7,200 + 3,600), and the end of the season from rank 20 to Legend.
+- **Gym berries**: a full gym, defender by defender. A berry pays 30 Stardust, then 60,
+  90… with no cap; a defender takes 10 berries, and switching quickly to the next one
+  keeps the streak. The *Gym of this size* column reads a smaller gym off its first rows.
+
+These amounts come from observations in the game, not from a game file.
+
 ### JSON output
 
 ```bash
@@ -343,6 +363,9 @@ The project separates what it reads from the data from what it **infers**:
 ```bash 
 bin/console app:data:build
 ```
+
+The command is hidden from `list` and left out of the PHAR: it rewrites the committed
+files, so it only runs from a checkout.
 
 ### Running quality scripts
 

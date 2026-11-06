@@ -3,8 +3,12 @@
     "output": "build/pogo.phar",
     "banner": "pokemongo-toolbox — a Pokémon GO PvP toolbox.\nhttps://github.com/snoob/pokemongo-toolbox",
     "compression": "GZ",
-    "directories": ["src", "config", "translations"],
+    "directories": ["config", "translations"],
     "finder": [
+        {
+            "in": "src",
+            "notPath": ["Infrastructure/Build", "UI/Cli/Command/BuildGameDataCommand.php"]
+        },
         { "in": "data", "name": "*.json" },
         {
             "in": "vendor",

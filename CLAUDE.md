@@ -12,7 +12,8 @@ rank within the species, the spread worth hunting, the recommended moveset — f
 in hand and everything it evolves into, megas included — and the CP to stop at before
 evolving. A second command forecasts the in-game weather
 to time the Daily Adventure Incense. A third family (`app:inventory:*`) keeps the
-player's Pokémon league by league, in a JSON file under `$XDG_DATA_HOME`.
+player's Pokémon league by league, in a JSON file under `$XDG_DATA_HOME`. A fourth
+(`app:stardust:info`) tells what catches, GO Battle League and gym berries pay in Stardust.
 
 **`GUIDELINES.md` is the reference**: conventions, architecture, and a numbered decision
 log explaining *why* each choice was made. Read it before writing code; add a row to the
@@ -24,6 +25,7 @@ log when you decide something structural, including when you reverse an earlier 
 bin/console app:pvp:rank <pokemon> [ivs]   # PvP ranking (alias: pvp)
 bin/console app:weather:forecast [--at=…]  # in-game weather (alias: weather)
 bin/console app:inventory:add|list|remove  # per-league inventory (alias: inventory:*)
+bin/console app:stardust:info              # Stardust by source (alias: stardust)
 bin/console app:data:build                 # refresh game data from upstream (~3 s)
 
 vendor/bin/mago format && vendor/bin/mago lint && vendor/bin/mago analyze && vendor/bin/phpunit
@@ -51,9 +53,10 @@ forecast are fetched at run time, each behind a disk cache with its own TTL.
   services there, silently.
 - **The interface is English, the game data follows `--locale`.** Species and move names
   are translated; headers, labels and errors are not.
-- **Two tables come from no upstream game file**, each isolated with its provenance: the
-  mega-exclusive move's power multiplier (`MegaLevelTableBuilder`, community wiki) and the
+- **Three tables come from no upstream game file**, each isolated with its provenance: the
+  mega-exclusive move's power multiplier (`MegaLevelTableBuilder`, community wiki), the
   forecast → in-game weather translation (`WmoConditions`, our own and not yet checked
-  against the game).
+  against the game), and the Stardust scales (`CatchStardust`, `BattleLeagueStardust`,
+  `BerryStardust`, the user's own observations in the game).
 - **The PHAR runs `bin/pogo`, not `bin/console`.** Same commands, but forced to `prod`:
   the `dev` container writes into `config/`, which a read-only archive refuses.
