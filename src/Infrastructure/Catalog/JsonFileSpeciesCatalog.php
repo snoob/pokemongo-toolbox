@@ -66,6 +66,14 @@ final class JsonFileSpeciesCatalog implements SpeciesCatalog
     }
 
     #[\Override]
+    public function namesStartingWith(string $typed): array
+    {
+        $needle = $this->normalizer->normalize($typed);
+
+        return '' === $needle ? [] : $this->index()->namesStartingWith($needle);
+    }
+
+    #[\Override]
     public function megaFormsOf(DexNumber $dex): array
     {
         return array_values(array_filter(

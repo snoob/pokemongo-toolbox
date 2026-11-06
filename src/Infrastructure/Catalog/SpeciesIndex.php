@@ -23,6 +23,9 @@ final readonly class SpeciesIndex
     /** @var array<int, list<string>> */
     private array $byDex;
 
+    /** @var array<string, string> normalised name => the name it was folded from */
+    private array $labels;
+
     /**
      * @param list<Species> $species
      */
@@ -31,6 +34,7 @@ final readonly class SpeciesIndex
         $byId = [];
         $byName = [];
         $byDex = [];
+        $labels = [];
 
         foreach ($species as $entry) {
             $byId[$entry->id->value] = $entry;
@@ -41,6 +45,7 @@ final readonly class SpeciesIndex
 
                 if ('' !== $key && !\in_array($entry->id->value, $byName[$key] ?? [], true)) {
                     $byName[$key][] = $entry->id->value;
+                    $labels[$key] ??= $name;
                 }
             }
         }
@@ -48,6 +53,7 @@ final readonly class SpeciesIndex
         $this->byId = $byId;
         $this->byName = $byName;
         $this->byDex = $byDex;
+        $this->labels = $labels;
     }
 
     public function byId(string $id): ?Species
@@ -86,6 +92,21 @@ final readonly class SpeciesIndex
         }
 
         return $this->hydrate(array_values(array_unique($ids)));
+    }
+
+    /**
+     * @return array<string, string> normalised name => name, in alphabetical order
+     */
+    public function namesStartingWith(string $normalized): array
+    {
+        $names = array_filter(
+            $this->labels,
+            static fn(string $key): bool => str_starts_with($key, $normalized),
+            \ARRAY_FILTER_USE_KEY,
+        );
+        ksort($names);
+
+        return $names;
     }
 
     /**

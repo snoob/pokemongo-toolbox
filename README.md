@@ -56,6 +56,14 @@ sudo mv pogo.phar /usr/local/bin/pogo
 PHP 8.5 with the `zlib` extension is the only requirement. Game data ships inside the
 archive, so it works offline apart from refreshing the league rankings.
 
+For Tab completion of commands, options and Pokémon names (`pogo pvp melo<Tab>` offers
+`melodelfe`, Mélodelfe), add this line to your `~/.zshrc` (`bash` and `fish` work the
+same way):
+
+```bash
+eval "$(pogo completion zsh)"
+```
+
 Then let the wizard walk you through the rest — the language names are shown in, your game
 account, the leagues you play, where you play — explaining what each one does and how to
 override it on a command:

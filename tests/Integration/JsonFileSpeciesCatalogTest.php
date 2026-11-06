@@ -166,6 +166,33 @@ final class JsonFileSpeciesCatalogTest extends TestCase
         }
     }
 
+    /**
+     * @param array<string, string> $expected
+     */
+    #[DataProvider('namesForCompletion')]
+    public function testListsTheNamesBeginningWithWhatIsTyped(string $typed, array $expected): void
+    {
+        self::assertSame($expected, $this->catalog->namesStartingWith($typed));
+    }
+
+    /** @return iterable<string, array{string, array<string, string>}> */
+    public static function namesForCompletion(): iterable
+    {
+        yield 'French' => ['ecto', ['ectoplasma' => 'Ectoplasma']];
+        yield 'English, any case' => ['GEN', ['gengar' => 'Gengar']];
+        yield 'every form' => [
+            'gira',
+            [
+                'giratinaaltered' => 'Giratina (Altered)',
+                'giratinaalternative' => 'Giratina (Alternative)',
+                'giratinaorigin' => 'Giratina (Origin)',
+                'giratinaorigine' => 'Giratina (Origine)',
+            ],
+        ];
+        yield 'nothing typed' => ['', []];
+        yield 'nothing begins so' => ['zz', []];
+    }
+
     private function catalogFor(string $file): JsonFileSpeciesCatalog
     {
         return new JsonFileSpeciesCatalog(

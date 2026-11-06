@@ -31,6 +31,15 @@ interface SpeciesCatalog
     public function find(SpeciesId $id): ?Species;
 
     /**
+     * Every name beginning with the text typed so far, for the shell to complete: the
+     * key is what to type — a form search() resolves, free of spaces, case and accents —
+     * the value the name as the game writes it. Nothing for an empty text.
+     *
+     * @return array<string, string>
+     */
+    public function namesStartingWith(string $typed): array;
+
+    /**
      * The mega forms sharing this Pokédex number. Usually none or one; Charizard,
      * Raichu and Mewtwo have two (X and Y).
      *

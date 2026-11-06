@@ -70,6 +70,21 @@ final readonly class InMemorySpeciesCatalog implements SpeciesCatalog
     }
 
     #[\Override]
+    public function namesStartingWith(string $typed): array
+    {
+        $needle = mb_strtolower(trim($typed));
+        $names = array_merge(...array_values($this->names));
+        $found = array_filter(
+            array_combine(array_map(mb_strtolower(...), $names), $names),
+            static fn(string $key): bool => '' !== $needle && str_starts_with($key, $needle),
+            \ARRAY_FILTER_USE_KEY,
+        );
+        ksort($found);
+
+        return $found;
+    }
+
+    #[\Override]
     public function find(SpeciesId $id): ?Species
     {
         foreach ($this->species as $species) {

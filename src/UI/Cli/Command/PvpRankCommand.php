@@ -15,6 +15,7 @@ use App\Infrastructure\Json\JsonValue;
 use App\Infrastructure\Naming\InputLocale;
 use App\Infrastructure\Naming\SpeciesNameResolver;
 use App\UI\Cli\Input\FloorOption;
+use App\UI\Cli\Input\PokemonCompletion;
 use App\UI\Cli\Input\RankPokemonQueryFactory;
 use App\UI\Cli\Presenter\IvDeductionFormatter;
 use App\UI\Cli\Presenter\PvpRankJsonPresenter;
@@ -44,6 +45,7 @@ final class PvpRankCommand extends Command
         private readonly InputLocale $inputLocale,
         private readonly RankPokemonQueryFactory $queries,
         private readonly IvDeductionFormatter $deductions,
+        private readonly PokemonCompletion $completion,
     ) {
         parent::__construct();
     }
@@ -52,7 +54,12 @@ final class PvpRankCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('pokemon', InputArgument::REQUIRED, 'French name, English name or Pokédex number')
+            ->addArgument(
+                'pokemon',
+                InputArgument::REQUIRED,
+                'French name, English name or Pokédex number',
+                suggestedValues: $this->completion->suggest(...),
+            )
             ->addArgument(
                 'ivs',
                 InputArgument::OPTIONAL,
