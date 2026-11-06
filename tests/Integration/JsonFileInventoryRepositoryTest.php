@@ -11,6 +11,7 @@ use App\Domain\Pokemon\Model\SpeciesId;
 use App\Domain\Pvp\Model\League;
 use App\Infrastructure\Inventory\JsonFileInventoryRepository;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Filesystem\Filesystem;
 
 final class JsonFileInventoryRepositoryTest extends TestCase
 {
@@ -27,8 +28,7 @@ final class JsonFileInventoryRepositoryTest extends TestCase
     #[\Override]
     protected function tearDown(): void
     {
-        array_map(unlink(...), array_filter([$this->file, $this->file . '.tmp'], is_file(...)));
-        array_map(rmdir(...), array_filter([\dirname($this->file), $this->directory], is_dir(...)));
+        new Filesystem()->remove($this->directory);
     }
 
     public function testNoFileYetIsAnEmptyInventory(): void
@@ -65,8 +65,27 @@ final class JsonFileInventoryRepositoryTest extends TestCase
         self::assertSame(League::Great, $entry->league);
         self::assertEquals($at, $entry->addedAt);
         self::assertSame(3, $loaded->nextId(), 'the removed number stays used');
-        self::assertFileDoesNotExist($this->file . '.tmp');
+        $files = scandir(\dirname($this->file));
+        self::assertIsArray($files);
+        self::assertSame(
+            ['snoob2555.json'],
+            array_values(array_diff($files, ['.', '..'])),
+            'no temporary file left behind',
+        );
         self::assertSame([], $repository->load(Account::default())->entries(), 'each account has its own');
+    }
+
+    public function testAMissingDirectoryIsCreatedForTheOwnerAndTheGroupOnly(): void
+    {
+        $umask = umask(0);
+
+        try {
+            new JsonFileInventoryRepository(\dirname($this->file))->save(Account::default(), new Inventory());
+        } finally {
+            umask($umask);
+        }
+
+        self::assertSame(0o775, fileperms(\dirname($this->file)) & 0o777, 'never writable by others');
     }
 
     public function testAnUnreadableFileIsAnErrorAndIsLeftAsItIs(): void

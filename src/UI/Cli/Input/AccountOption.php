@@ -17,16 +17,25 @@ use Symfony\Component\Console\Input\InputOption;
 final readonly class AccountOption
 {
     private const string NAME = 'account';
+    private const string SHORTCUT = 'a';
 
     public static function addTo(Command $command): void
     {
         $command->addOption(
             self::NAME,
-            'a',
+            self::SHORTCUT,
             InputOption::VALUE_REQUIRED,
             'Game account whose inventory to use',
             Account::DEFAULT,
         );
+    }
+
+    /**
+     * Whether the account was typed on the command line, rather than left to a default.
+     */
+    public static function typed(InputInterface $input): bool
+    {
+        return $input->hasParameterOption(['--' . self::NAME, '-' . self::SHORTCUT], true);
     }
 
     /**

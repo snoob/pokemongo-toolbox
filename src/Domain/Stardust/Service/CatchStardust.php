@@ -11,7 +11,7 @@ use App\Domain\Stardust\Model\Stardust;
  * Stardust earned by catching Pokémon: 100 a catch, a quarter more when the weather boosts
  * the species. Evolved forms caught in the wild pay more and are left out.
  *
- * Provenance: the game's long-standing rule, no upstream file — see GUIDELINES §4 quater.
+ * Provenance: the game's long-standing rule, no upstream file — see specs/stardust.md.
  * The Star Piece applies to each catch on its own, so a boosted one pays 187, not 187.5.
  */
 final readonly class CatchStardust

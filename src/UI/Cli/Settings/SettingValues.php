@@ -6,7 +6,6 @@ namespace App\UI\Cli\Settings;
 
 use App\Domain\Inventory\Model\Account;
 use App\Domain\Pokemon\Model\IvFloor;
-use App\Infrastructure\Json\JsonValue;
 use App\UI\Cli\Input\CpOption;
 use App\UI\Cli\Input\LeagueOption;
 
@@ -43,28 +42,16 @@ final readonly class SettingValues
     }
 
     /**
-     * A typed answer as the setting is saved: leagues split on spaces or commas
-     * ("great ultra", "great, ultra"), anything else as one value. Checked as above.
+     * A typed answer, checked as above, to save as it is. For an option taking one value
+     * only: a repeatable one (`--league`) is a list, which `LeaguePicker` asks for.
      *
      * @throws \InvalidArgumentException naming what is wrong
-     *
-     * @return string|list<string>
      */
-    public static function fromAnswer(string $option, string $answer): string|array
+    public static function fromAnswer(string $option, string $answer): string
     {
-        if ('league' !== $option) {
-            self::check($option, [$answer]);
+        self::check($option, [$answer]);
 
-            return $answer;
-        }
-
-        $leagues = array_values(array_filter(
-            JsonValue::asStringList(preg_split('/[\s,]+/', strtolower($answer))),
-            static fn(string $league): bool => '' !== $league,
-        ));
-        self::check($option, $leagues);
-
-        return $leagues;
+        return $answer;
     }
 
     /**

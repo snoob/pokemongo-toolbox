@@ -6,6 +6,7 @@ namespace App\Tests\Integration;
 
 use App\Infrastructure\Settings\SettingsFile;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Filesystem\Filesystem;
 
 final class SettingsFileTest extends TestCase
 {
@@ -22,11 +23,7 @@ final class SettingsFileTest extends TestCase
     #[\Override]
     protected function tearDown(): void
     {
-        array_map(unlink(...), array_filter([$this->file, $this->file . '.tmp'], is_file(...)));
-
-        if (is_dir($this->directory)) {
-            rmdir($this->directory);
-        }
+        new Filesystem()->remove($this->directory);
     }
 
     public function testNoFileYetIsNoSettings(): void

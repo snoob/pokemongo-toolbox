@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Settings;
 
 use App\Infrastructure\Environment\UserDirectory;
+use App\Infrastructure\Json\JsonDocumentFile;
 
 /**
  * The player's defaults for command options, one object per command family:
@@ -53,22 +54,7 @@ final class SettingsFile
             /** @param array<string, string|list<string>> $options */
             static fn(array $options): bool => [] !== $options,
         );
-        $file = $this->path();
-        $directory = \dirname($file);
-
-        if (!is_dir($directory) && !mkdir($directory, 0o775, true) && !is_dir($directory)) {
-            throw new \RuntimeException(\sprintf('Cannot create "%s" to keep the settings.', $directory));
-        }
-
-        $temporary = $file . '.tmp';
-
-        if (
-            false === file_put_contents($temporary, SettingsDocument::encode($sections))
-            || !rename($temporary, $file)
-        ) {
-            throw new \RuntimeException(\sprintf('Cannot write the settings to "%s".', $file));
-        }
-
+        JsonDocumentFile::write($this->path(), 'settings file', SettingsDocument::encode($sections));
         $this->loaded = $sections;
     }
 
@@ -77,21 +63,6 @@ final class SettingsFile
      */
     private function read(): array
     {
-        $file = $this->path();
-
-        if (!is_file($file)) {
-            return [];
-        }
-
-        $json = file_get_contents($file);
-
-        try {
-            return SettingsDocument::decode(false === $json ? '' : $json);
-        } catch (\UnexpectedValueException $e) {
-            throw new \RuntimeException(
-                \sprintf('The settings "%s" are unreadable (%s); fix or move the file.', $file, $e->getMessage()),
-                previous: $e,
-            );
-        }
+        return JsonDocumentFile::read($this->path(), 'settings file', SettingsDocument::decode(...)) ?? [];
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\UI\Cli\Settings;
 
 use App\Infrastructure\Settings\SettingsFile;
+use App\UI\Cli\Input\AccountOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -18,23 +19,13 @@ final readonly class AccountHint
         private SettingsFile $settings,
     ) {}
 
-    public function for(InputInterface $input): ?string
-    {
-        $typed = $input->hasParameterOption(['--account', '-a'], true);
-        $set = null !== ($this->settings->load()['inventory']['account'] ?? null);
-
-        return $typed || $set ? null : '<fg=gray>No account set, so "default" is used; "wizard" sets yours.</>';
-    }
-
     public function show(InputInterface $input, SymfonyStyle $io): void
     {
-        $hint = $this->for($input);
-
-        if (null === $hint) {
+        if (AccountOption::typed($input) || null !== ($this->settings->load()['inventory']['account'] ?? null)) {
             return;
         }
 
-        $io->text($hint);
+        $io->text('<fg=gray>No account set, so "default" is used; "wizard" sets yours.</>');
         $io->newLine();
     }
 }

@@ -21,6 +21,11 @@ Stardust. `app:settings:*` gives any command option the player's own default (`p
 log explaining *why* each choice was made. Read it before writing code; add a row to the
 log when you decide something structural, including when you reverse an earlier decision.
 
+**`specs/` holds one spec per feature** (`specs/<feature>.md`, index in `specs/README.md`):
+the player's question, the interface, the rules and their provenance. Read the feature's
+spec before touching it; a new feature starts with its spec, and a behaviour change
+updates the spec in the same commit.
+
 ## Commands
 
 ```bash

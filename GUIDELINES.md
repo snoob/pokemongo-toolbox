@@ -1,7 +1,8 @@
 # GUIDELINES — pokemongo-toolbox
 
 Référentiel des décisions et conventions du projet. À lire avant d'écrire du code ;
-toute décision structurante nouvelle s'ajoute au §9.
+toute décision structurante nouvelle s'ajoute au §12. Les features sont décrites
+chacune dans sa spec, sous `specs/` (§4).
 
 ---
 
@@ -65,7 +66,7 @@ Scraper du HTML est un dernier recours, à justifier au §9.
 | Prévision météo horaire | Open-Meteo, **au runtime**, sans clé | `api.open-meteo.com/v1/forecast` → `weather_code`, `wind_speed_10m`, `wind_gusts_10m` |
 | Lieu nommé → coordonnées | Open-Meteo geocoding, **au runtime** | `geocoding-api.open-meteo.com/v1/search` |
 | Position devinée | ipinfo.io, **au runtime**, sans clé | `ipinfo.io/json` → `loc` |
-| Code WMO → météo du jeu | **à nous**, par analogie avec la table AccuWeather de thornleaf/pgo-weatherbot | `WmoConditions` — voir §4 bis |
+| Code WMO → météo du jeu | **à nous**, par analogie avec la table AccuWeather de thornleaf/pgo-weatherbot | `WmoConditions` — voir [specs/weather-forecast.md](specs/weather-forecast.md) |
 
 ### Pourquoi pas pokemongohub / stadiumgaming
 
@@ -74,7 +75,7 @@ Scraper du HTML est un dernier recours, à justifier au §9.
   *affichage* des données pvpoke : scraper le HTML apporterait zéro information
   supplémentaire, pour une fragilité maximale.
 - **stadiumgaming rank-checker** ne détient aucune donnée propriétaire : le rang IV
-  interne à l'espèce est un calcul déterministe (§4.3) qu'on fait nous-mêmes, plus vite,
+  interne à l'espèce est un calcul déterministe ([specs/pvp-rank.md](specs/pvp-rank.md)) qu'on fait nous-mêmes, plus vite,
   hors-ligne, et avec les cas que le site ne couvre pas (ombres, best buddy, niveau 51).
 
 ### Cache
@@ -97,11 +98,11 @@ commande métier ne fait d'appel HTTP direct : elle demande la donnée à un *po
 dont l'implémentation décide de servir le cache ou de rafraîchir. Si la source est
 injoignable, la copie périmée est servie plutôt que d'échouer.
 
-**Données du joueur — à part.** L'inventaire (§4 ter) n'est ni généré ni un cache : c'est
+**Données du joueur — à part.** L'inventaire ([specs/inventory.md](specs/inventory.md)) n'est ni généré ni un cache : c'est
 ce que le joueur a saisi, sans autre copie. Il vit dans
 `$XDG_DATA_HOME/pokemongo-toolbox/inventory/`, un fichier par compte (défaut
 `~/.local/share/…`), le même depuis le PHAR et depuis un checkout, sans TTL ;
-`POGO_INVENTORY` nomme un autre répertoire. Les réglages (§4 ter bis) suivent la même
+`POGO_INVENTORY` nomme un autre répertoire. Les réglages ([specs/settings.md](specs/settings.md)) suivent la même
 règle sous `$XDG_CONFIG_HOME/pokemongo-toolbox/settings.json` (`POGO_SETTINGS`).
 
 Pour forcer une mise à jour : supprimer le répertoire de cache (classements) ou relancer
@@ -130,452 +131,20 @@ Seuls les **classements** sont téléchargés à l'exécution, derrière le cach
 
 ---
 
-## 4. Feature 1 — `app:pvp:rank`
-
-### 4.1 Interface
-
-```bash
-app:pvp:rank ectoplasma          # nom FR
-app:pvp:rank gengar              # nom EN
-app:pvp:rank 94                  # n° de dex
-app:pvp:rank ectoplasma 1/15/14  # avec IVs atk/def/sta
-app:pvp:rank ectoplasma 1/x/14 --cp=1478  # IV inconnu déduit du PC
-```
-
-Options : `--league` (répétable : `great`, `ultra`, `master`, `mega-great`,
-`mega-ultra`, `mega-master`), `--shadow`, `--mega1` à `--mega4`,
-`--floor` (plancher d'IV, §4.3 bis), `--cp` (PC affiché en jeu), `--best-buddy`
-(niveau 51), `--format=text|json`, `--locale=fr|en`.
-
-**Le PC contrôle les IVs, et complète ceux qu'on ignore.** `--cp` donne le PC lu dans le
-jeu ; un `x` à la place d'un IV le laisse déduire (seul `x` est accepté : `?` et `*` sont des
-jokers du shell et devraient être entre guillemets). Le niveau est
-inconnu : `IvDeducer` essaie chaque niveau jusqu'au plafond pour chaque spread qui suit le
-motif et respecte le plancher, soit au plus 4096 × 101 calculs (0,13 s). Trois issues :
-aucun spread ne donne ce PC → erreur, code 2 ; plusieurs le donnent → erreur, code 2, et
-liste des candidats avec leur niveau (dix au plus) ; un seul → classement normal, précédé
-de `Deduced 1/15/14 from CP 1478 (level 19).` (ou `CP 1478 checks out for …` quand les
-trois IVs étaient tapés) et de la clé `deduction` en JSON. Un joker sans `--cp`, ou
-`--cp` sans IVs, est refusé.
-
-Un nom saisi dans **l'une ou l'autre langue** résout : l'index de recherche contient les
-noms de toutes les locales embarquées, indépendamment de la langue d'affichage. Les
-formes aussi : « Raichu (d'Alola) » et « Raichu (Alolan) » désignent la même espèce.
-
-**La langue de la réponse est celle de la question.** Sans `--locale`, demander
-« Ectoplasma » répond en français, « Gengar » ou « 94 » en anglais — qui est le défaut,
-car c'est la langue du méta et des noms d'attaques. 165 des 1025 espèces s'écrivent
-pareil dans les deux langues (Pikachu, les Nidoran…) : deviner y serait un pile ou face,
-donc le défaut s'applique et `--locale=fr` reste là pour trancher.
-
-Le coût de cette détection est nul : deux lectures dans un catalogue déjà chargé
-(0,26 s avec ou sans, mesuré). C'est pourquoi elle est préférée à un drapeau `--fr`, qui
-ferait doublon avec `--locale` tout en obligeant à le taper à chaque fois.
-
-Sortie d'erreur : identifiant inconnu → code 1 ; identifiant ambigu → liste des formes
-candidates et code 1 ; IVs invalides → code 2 (`Command::INVALID`).
-
-La résolution de l'identifiant est **insensible à la casse et aux accents**
-(`ectoplasma` = `Ectoplasma`). Un nom ambigu liste les candidats au lieu de deviner.
-
-**Une faute de frappe est corrigée, et la réponse le dit.** Quand ni le nom exact ni un
-début de nom ne trouvent rien, on prend le nom le plus proche par distance de Levenshtein
-(`levenshtein()` natif, `TypoTolerance`) : « flozizarre » donne Florizarre, avec
-`Interpreted "flozizarre" as Florizarre.` avant les tableaux et `guessedFrom` en JSON.
-La tolérance croît avec la longueur — 0 faute jusqu'à 3 lettres, 1 jusqu'à 5, 2 jusqu'à
-9, 3 au-delà — et un numéro de Pokédex n'est jamais corrigé. Les noms entiers passent
-avant les débuts de nom (« Giratima » atteint les deux Giratina par leur début) ; deux
-noms à égalité sont listés comme un nom ambigu. La langue de la réponse suit le nom le
-plus proche : « flozizarre » répond en français.
-
-**Méga et obscur ne se demandent pas par leur nom.** « Ectoplasma (Méga) » et « Gengar
-(Shadow) » ne résolvent rien. La méga s'affiche d'elle-même, comme évolution de la forme
-tapée (§4.1 ter) ; l'obscur se demande avec `--shadow`. Offrir les deux voies ferait deux
-orthographes à connaître par langue pour le même résultat.
-
-Les formes **sans drapeau** gardent leur nom comme seule voie d'accès : régionales
-(`Raichu (d'Alola)`), Origine/Alternative, Totémique… Elles se combinent aux drapeaux :
-`"Giratina (Alternative)" --shadow` donne bien la forme alternative obscure.
-
-### 4.1 bis — Mégas et Mega Editions
-
-Depuis la saison *Twilight Trails* (8 septembre 2026), les méga-évolutions sont admises
-en combat de ligue, mais **uniquement dans les Mega Editions** — elles restent interdites
-dans les ligues standard. Une Mega Edition admet une méga par équipe, le reste de
-l'équipe étant des Pokémon ordinaires, classés eux aussi. Par défaut chaque forme reçoit
-donc ses trois ligues : Mega Editions pour une méga, ligues standard sinon. Avec
-`--league`, une méga n'est classée que dans les Mega Editions demandées — la classer en
-Great League ne répondrait jamais que « non classé » — et les autres formes dans toutes
-les ligues demandées.
-
-**Seize mégas portent le tag `supermega`** : une attaque chargée supplémentaire,
-exclusive, suffixée `_PLUS` dans les données et marquée `isMegaMove`. Le moveset les
-affiche naturellement à trois attaques chargées, et une note le signale.
-
-**Les niveaux de méga sont binaires, pas progressifs.** `--mega1` à `--mega4` choisissent
-le niveau auquel les mégas de la famille sont classées, 3 par défaut (le niveau qu'on vise
-en PvP). Mais d'après le game master,
-relevé sur les 139 templates `MEGA_EVOLUTION_LEVEL_*` :
-
-| | niv. 1 | niv. 2 | niv. 3 | niv. 4 |
-|---|---|---|---|---|
-| `selfCpBoostAdditionalLevel` | absent | absent | absent | **2** |
-| `sameTypeAttackBoost` | 1,3 | 1,3 | 1,3 | 1,3 |
-| Rechargement | 7 j | 5 j | 3 j | 1 j |
-| Bonbons | 1 | 1 | 2 | 3 |
-
-Donc **seul le niveau 4 change le CP**, et `--mega2` affiche légitimement la même cible
-que `--mega3`. Le `sameTypeAttackBoost` ne varie à aucun niveau et s'applique aux
-**coéquipiers en raid**, pas à la méga.
-
-**En revanche le niveau multiplie la puissance de base de l'attaque exclusive** —
-×1,0 / ×1,1 / ×1,2 / ×1,3 du niveau 1 au niveau 4. C'est la seule progression qui se voie
-en combat. Le pied de tableau l'affiche en **valeur de base + bonus** (« Rafale Psy+,
-puissance 60 + 12 ») plutôt qu'en multiplicateur : on lit le gain sans faire la
-multiplication de tête.
-
-L'attaque est reconnue par le drapeau `isMegaMove` du jeu, pas par le « + » de son nom.
-Sa puissance et son coût en énergie vivent dans `data/moves.json`, généré au build — la
-même donnée servira à comparer le DPE d'une `_PLUS` à sa version de base.
-
-⚠️ **Cette valeur est la seule du projet qu'aucun fichier amont ne confirme.** La liste
-exhaustive des clés de `MEGA_EVOLUTION_LEVEL_*` n'en contient aucune trace ; elle vient
-de [pokemongo.fandom.com](https://pokemongo.fandom.com/wiki/Mega_Evolution#Additional_Charged_Attacks),
-qui cite une analyse Silph Road. Elle est donc écrite en constante documentée dans
-`MegaLevelTableBuilder`, pas déduite des données — à revérifier si le méta bouge.
-
-**Une méga n'a pas d'option : elle suit la forme tapée.** `altaria` affiche Altaria puis
-Méga-Altaria ; `dracaufeu` affiche ses deux mégas X et Y, sans rien à départager. Seule la
-forme de base méga-évolue : une forme régionale qui partage le n° de dex d'une méga
-(Flagadoss de Galar) ne l'atteint pas, et un obscur doit d'abord être purifié — ce qui
-retire les IVs classés.
-
-**CP de montée.** Une Mega Edition plafonne le CP de la **forme méga**, pas de la forme
-de base. Le nombre affiché en jeu pendant la montée est donc celui de la forme de base,
-plus bas : c'est la colonne de montée du §4.1 ter, qui donne 916 CP pour Méga Altaria en
-Mega Great. Un pas avant la méga seulement, elle ajoute ce que méga-évoluer rapporte à ce
-niveau (+64 %).
-
-**Une ligue sans plafond n'affiche ni CP de montée ni niveau.** Sans cap, il n'y a aucun
-CP à viser, et tous les spreads atteignent le niveau plafond : le répéter à chaque ligne
-ne dirait rien. En Master on lit donc « CP 3576 » et un tiret dans la colonne de montée.
-
-Cette mécanique est **déduite des données de pvpoke**, pas lue dans une documentation :
-en recalculant leurs mégas sous plafond, notre résultat tombe à 1,5 % du leur, l'écart
-résiduel venant de ce que leur `stats` décrit leur build recommandé et non le stat
-product maximal. Plafonner la forme de base à la place donnait 70 % d'écart — hypothèse
-écartée.
-
-### 4.1 ter — Évolutions
-
-On connaît souvent la forme qu'on a en main, pas celle qui combattra. **La commande classe
-donc la forme tapée et tout ce qu'elle peut devenir**, en profondeur d'abord, chaque forme
-suivie de sa méga : `ralts` donne Gallame, Méga-Gallame, Gardevoir, Méga-Gardevoir —
-un tableau par forme, titré de son seul nom et de son n° de dex (« Gallame — #475 ») :
-la forme en main est déjà nommée par la colonne de montée. Le titre d'une méga précise le
-niveau de méga auquel elle est classée (« Malamar (Méga, level 3) — #687 »), puisque ce
-niveau déplace le CP où s'arrêter. Une forme finale n'affiche que sa méga, s'il y en a
-une.
-
-**Une forme qui évolue encore et qu'aucune ligue ne classe est masquée**, la forme tapée
-comprise : Tarsal et Kirlia ne rempliraient qu'un tableau de « unranked », et la colonne
-de montée des tableaux suivants répond déjà pour la forme en main. Celles qu'une ligue
-classe restent (Bulbizarre, Herbizarre, Galifeu en Great). Les formes finales restent
-toujours, y compris « non classé » : elles sont la réponse, et une forme finale tapée ne
-laisserait rien à afficher. Une méga ne compte pas comme évolution suivante : Gardevoir
-est finale. Le test ne lit que le
-classement (une recherche en mémoire), donc une forme masquée ne coûte pas ses 4096
-spreads.
-
-**Évoluer garde les IVs et le niveau.** Le CP à atteindre avant d'évoluer est donc celui
-de la forme en main, au niveau où l'évolution est classée. Il occupe la colonne de
-montée, **nommée d'après la forme tapée** (« Ralts CP », en anglais comme le reste de
-l'interface, le nom suivant `--locale`) : c'est le nombre qu'on lit à l'écran pendant
-la montée. Une seule colonne pour les évolutions et les mégas, puisque c'est la même
-question. La note de pied le rappelle une fois pour toute la famille.
-
-**L'arbre vient des liens « vers l'avant » de pvpoke** (`family.evolutions`), seuls
-conservés au build : les liens arrière (`parent`) les contredisent à une douzaine
-d'endroits (Rattatac a pour parent le Rattata d'Alola alors que le Rattata ordinaire le
-liste). Un lien vers une forme absente du catalogue est ignoré.
-
-**Un obscur évolue en obscur, et n'a pas de méga.** pvpoke omet les liens de certains
-obscurs (Évoli) : un obscur suit ceux de sa forme ordinaire. Une évolution sans entrée
-obscure est écartée plutôt que remplacée par la forme ordinaire, qui répondrait pour un
-Pokémon que l'obscur ne peut pas devenir.
-
-Coût : chaque forme affichée classe les 4096 spreads dans chaque ligue. Mesuré à 1,7 s
-pour la famille de Tarsal (4 formes affichées) et 2,5 s pour Évoli (9 formes).
-
----
-
-### 4.2 Sans IVs — rang d'espèce
-
-Position de l'espèce dans le classement de chaque ligue, telle que publiée par pvpoke :
-Great (cap 1500), Ultra (2500), Master (10000). On affiche le rang, le score et le
-**moveset recommandé** (clé `moveset` du classement : l'attaque rapide, puis les
-chargées).
-
-Une attaque figurant dans les `eliteMoves` de l'espèce est marquée `*` : elle coûte un
-TM Élite, ce qu'il vaut mieux savoir avant de viser le moveset. Une légende n'apparaît
-que si au moins une attaque affichée l'est.
-
-### 4.3 Avec IVs — rang interne à l'espèce
-
-Calcul local, sans réseau :
-
-1. Pour chacune des **4096** combinaisons d'IV (atk, def, sta ∈ [0,15]) :
-   - trouver le **niveau maximal** (pas de 0,5 ; plafond 50, ou 51 en best buddy)
-     tel que `CP ≤ cap` de la ligue ;
-   - `CP = max(10, floor( (base_atk+iva) × (base_def+ivd)^0.5 × (base_sta+ivs)^0.5 × CPM² / 10 ))` ;
-   - `statProduct = (base_atk+iva)×CPM × (base_def+ivd)×CPM × floor((base_sta+ivs)×CPM)`.
-2. Trier par `statProduct` décroissant, **puis par total d'IVs décroissant**. Les
-   égalités parfaites sont fréquentes (au plafond, 15/15/15 et 15/15/14 plafonnent aux
-   mêmes PV, donc au même stat product au bit près) : les spreads sont alors
-   interchangeables en jeu, et c'est celui que le joueur reconnaît qui l'emporte.
-3. Sortie par ligue : le **rang** des IVs demandés avec `% du rang 1`, CP et niveau,
-   **et le meilleur spread de la ligue** — celui qu'il faut chercher. Ce dernier est
-   calculé même sans IVs fournis, et masqué en sortie texte quand les IVs demandés sont
-   déjà le rang 1, puisque la ligne ne ferait que se répéter. En `--format=json` il est
-   toujours présent : un consommateur machine ne veut pas d'un champ conditionnel.
-
-En Master League le meilleur est 15/15/15 : la donnée dit d'elle-même qu'une ligue sans
-plafond ne récompense pas la recherche de spreads, sans avoir à l'expliquer en prose.
-
-Les demi-niveaux ne sont pas dans la table PokeMiners : ils s'interpolent par
-`CPM(L+0.5) = sqrt( (CPM(L)² + CPM(L+1)²) / 2 )`.
-
-### 4.3 bis — Plancher d'IV
-
-L'origine du Pokémon fixe l'IV minimum de chacune des trois stats. `--floor` le prend
-comme un entier, ou par un alias de source : `wild` 0, `good` 1, `great` 2, `ultra` 3,
-`weather` 4, `best` 5, `shadow` et `giovanni` 6, `raid`, `egg` et
-`research` 10, `lucky` 12. Défaut : `wild`, qui ne change rien au classement.
-
-- Le classement des 4096 n'est **pas** refait : le meilleur spread possible
-  (`IvRanking::bestFrom`) garde son rang absolu, puisque c'est ce que le plancher coûte
-  (« le mieux qu'un échange Best Friend puisse donner est #180 / 4096 »).
-- Les IVs donnés gardent aussi leur rang absolu, et gagnent leur rang parmi les spreads
-  que le plancher laisse possibles (`withinFloor`, « #4 / 1331 »). Le texte ne l'affiche
-  que sous un plancher non nul ; le JSON l'a toujours (`ivRankWithinFloor`, `ivFloor`).
-- Des IVs sous le plancher sont refusés (code 2) : ils ne peuvent pas venir de là.
-- Si aucun spread au-dessus du plancher ne tient sous le cap de CP, la ligue est
-  `ineligible`, comme pour une espèce trop forte.
-
-Sources des valeurs : Bulbapedia et GamePress pour les échanges (Good 1, Great 2, Ultra 3,
-Best 5, chanceux 12). `shadow` vise le raid obscur et Giovanni (6, dittobase et Pokémon
-GO Hub), pas les sbires dont le plancher est incertain : ceux-là passent par un nombre.
-Pas d'alias `purified`, à la demande de l'utilisateur.
-
-### 4.4 Tests attendus
-
-- CP connus de référence (ex. : Ectoplasma 15/15/15 niv. 40) → valeurs exactes ;
-- rang 1 en Great d'une espèce documentée (ex. : Azumarill 0/15/15-ish) ;
-- résolution des trois formes d'identifiant vers la même espèce ;
-- les 4096 combos produisent 4096 rangs sans trou ni doublon de position.
-
----
-
-## 4 bis. Feature 2 — `app:weather:forecast`
-
-### Question
-
-« Quand allumer l'Encens d'aventure du jour ? » Sa prise rare, ce sont les trois oiseaux
-de Galar (annonce de Niantic : le game master décrit l'objet, 15 min, livré à minuit, mais
-ne porte aucune table d'apparition). La météo ne change pas — à notre connaissance — la
-probabilité de les voir ; elle change **ce qu'on peut capturer**.
-
-### Le boost joue dans les deux sens
-
-Une rencontre sauvage boostée a chaque IV ≥ 4 (`guaranteedIndividualValues` du game
-master). Or les meilleurs spreads de ligues plafonnées des trois oiseaux ont tous une
-attaque de 0 à 3 : impossibles en boosté. Le bon créneau est donc celui qui laisse le plus
-d'oiseaux **non** boostés. La commande coche (✔, en vert) chaque oiseau boosté, met un tiret aux autres, et
-surligne en vert l'heure qui en booste au moins un (décision 70) : le vert veut toujours
-dire « boost ».
-
-Mesuré en octobre 2026, le meilleur spread encore accessible en boosté atteint 98,6 à
-99,9 % du rang 1 selon l'oiseau et la ligue : le boost est une préférence, pas un
-interdit. La commande ne l'affiche plus (décision 69), mais `app:pvp:rank` donne les
-spreads de chaque oiseau.
-
-Artikodin (Psy/Vol) est boosté par Venteux ; Électhor (Combat/Vol) par Venteux et
-Nuageux ; Sulfura (Ténèbres/Vol) par Venteux et Brouillard. Ces associations ne sont pas
-écrites dans le code : elles découlent des types (`species.json`) et des affinités
-(`weather.json`).
-
-### Prévoir la météo du jeu
-
-Le jeu lit les prévisions horaires d'**AccuWeather**, qui n'a plus d'offre gratuite. La
-source retenue est donc **Open-Meteo** (gratuit, sans clé, rafales incluses) : un autre
-modèle, donc une heure peut différer de la météo du jeu — la commande le dit.
-
-Niantic ne publie aucune traduction prévision → météo du jeu. La communauté en a établi
-une pour AccuWeather (thornleaf/pgo-weatherbot, un an de relevés à Lindsay, Ontario) ;
-celle de `WmoConditions` est la **nôtre**, tracée par analogie : chaque ciel sec garde
-son nom, la précipitation l'emporte sur le nuage, et seul un ciel sec devient Venteux,
-au-delà de 24 km/h de vent **ou** 35 km/h de rafales (seuils du README de
-pgo-weatherbot). Elle n'a été comparée au jeu par personne : comme le multiplicateur
-d'attaque méga (§4.1 bis), c'est une valeur qu'aucun fichier du jeu ne confirme, isolée
-dans une classe avec sa provenance — à recaler sur des relevés en jeu dès qu'on en a. Un
-code hors table WMO reste `null`, et une heure inconnue n'a pas de verdict.
-
-### Où
-
-`--at="Ville, Pays"` passe le nom au géocodeur d'Open-Meteo (qui ne cherche que par nom)
-et la partie après la virgule départage les homonymes, par nom de pays ou code ISO. Sans
-`--at`, la position est devinée par IP (ipinfo) : précise à la ville au mieux, fausse
-derrière un VPN ou en 4G — le lieu trouvé est affiché en tête. Les coordonnées sont
-arrondies à ~100 m pour que le cache serve.
-
----
-
-## 4 ter. Feature 3 — inventaire (`app:inventory:*`)
-
-### Question
-
-« Quels Pokémon je garde pour chaque ligue, et ce que je tiens là vaut-il mieux ? »
-Première itération : l'inventaire seul. `app:pvp:rank` ne le consulte pas encore.
-
-```bash
-app:inventory:add minidraco 0/15/15 -l great -l ultra   # une entrée par ligue
-app:inventory:list [-l great] [--format=json]
-app:inventory:remove 3                                   # numéro affiché par list
-app:inventory:add azurill 5/15/14 -l great -a snoob2555
-```
-
-### Comptes
-
-Chaque compte du jeu a son inventaire, numéroté à part : un fichier
-`inventory/<compte>.json`. `-a, --account` le choisit, sinon le réglage
-`inventory.account`, sinon le compte `default`. Le nom passe en minuscules (le jeu ignore la casse des noms de
-dresseur) et se limite à ce qui peut nommer un fichier.
-
-L'ajout prend trois IVs connus, sans `--cp` ni `--floor` (décision 110) : l'inventaire
-ne s'intéresse qu'aux rangs. Déduire des IVs ou peser un plancher se fait avec
-`app:pvp:rank`.
-
-### Modèle
-
-Une **entrée** = une forme (l'id porte l'obscur), des IVs complets, **une ligue**, une
-date. Le même Pokémon gardé pour deux ligues fait deux entrées : chaque ligue est une
-équipe, et chaque Mega Edition est une ligue à part entière. Les numéros ne sont jamais
-réutilisés après une suppression. Même forme, mêmes IVs, même ligue → refusé (doublon),
-tout ou rien quand plusieurs ligues sont données.
-
-### Classer une entrée
-
-Une entrée est classée comme **la forme de sa famille que sa ligue classe le mieux**
-(rang d'espèce de pvpoke), pas comme sa dernière évolution : un Minidraco gardé en Super
-compte comme Draco, en Hyper comme Dracolosse. Une méga n'est candidate qu'en Mega
-Edition. Puis ses IVs sont classés comme cette forme, au plafond 50. `InventoryRanker`
-garde chaque classement de 4096 spreads en mémoire le temps d'une commande : une famille
-ne se calcule qu'une fois par ligue.
-
-### Comparer
-
-À l'ajout, l'entrée est comparée aux autres de **sa ligue** qui peuvent devenir la même
-forme (ou le sont déjà) : la meilleure n'est nommée que si elle la bat. Un Dracolosse
-gardé ne bat pas un Minidraco en Super, puisqu'il ne peut plus être Draco.
-
-### Stockage
-
-Un fichier JSON versionné (`InventoryDocument`), écrit par fichier temporaire puis
-`rename()`. Un fichier illisible est une **erreur**, jamais un inventaire vide : la
-sauvegarde suivante effacerait ce que le joueur a gardé. Une forme que les données du
-jeu ne connaissent plus reste listée, signalée, plutôt que de faire échouer la commande.
-
-### 4 ter bis — Réglages (`app:settings:*`)
-
-```bash
-app:settings:wizard                      # alias : wizard
-app:settings:show [--all]                # alias : settings
-app:settings:set pvp.floor best          # cachée (décision 109)
-app:settings:set pvp.floor               # sans valeur : retire le réglage
-```
-
-```json
-{"inventory": {"account": "snoob2555"}, "pvp": {"floor": "5"}, "weather": {"at": "Villemomble, France"}}
-```
-
-**La clé JSON est l'option de la commande.** Un objet par famille (le milieu de
-`app:pvp:rank`), une clé par option longue : `pvp.floor` est le défaut de `--floor` de
-toutes les commandes `app:pvp:*`. Rien n'est déclaré option par option : toute option à
-valeur d'une commande est réglable dès qu'elle existe, et `settings --all` les liste en
-lisant les définitions des commandes.
-
-- **Couche UI seulement.** Un réglage n'est que le défaut d'une option de ligne de
-  commande : ni le domaine ni les handlers ne le voient. `ApplySettings` écoute
-  `console.command` et remplace le **défaut** de chaque option réglée dans la définition
-  de la commande. Pas `setOption()` : `Command::run()` relie l'input une seconde fois
-  après l'événement et l'effacerait. Effet de bord utile : ce qui est tapé l'emporte sans
-  rien détecter.
-- **Pas de drapeaux** (`--shadow`, `--mega4`…) : réglés, on ne pourrait plus les retirer en
-  ligne de commande. Ni les options de l'application (`--env`, `--verbose`), ni `--format`
-  et `--cp`, qui tiennent à une exécution (`ConfigurableOptions::NEVER`).
-- **`global.locale`** : la langue d'affichage se règle une fois pour toutes les commandes
-  qui ont `--locale` ; une famille ne la règle pas seule (`pvp.locale` n'existe pas).
-  L'entrée reste bilingue : l'index de recherche couvre les deux langues quel que soit
-  l'affichage.
-- Une option répétable prend une liste ; une liste pour une option à valeur unique est
-  une erreur. Chaîne ou liste vide = non réglé.
-- La valeur est vérifiée à l'enregistrement par `SettingValues`, avec le parseur que les
-  commandes utilisent pour cette option (`IvFloor`, `LeagueOption`, `Account`, `CpOption`,
-  `text|json`, `fr|en`) ; une option sans vérification (`--at`, texte libre) est prise
-  telle quelle. `settings` signale les valeurs fausses ou orphelines d'un fichier édité à
-  la main (code 1). Chaque exécution nomme les réglages qu'elle a pris (« From your settings: … »). `pvp.league great ultra master` masque
-  ainsi les Mega Editions de `pvp`, sans option dédiée.
-- **`wizard`** sert d'installation et d'accueil : chaque question est précédée de ce
-  qu'elle règle, des commandes qui s'en servent et de la façon de passer outre (un
-  exemple en ligne de commande), et la fin propose les premières commandes à essayer —
-  pour ne pas avoir à lire la doc avant de commencer. Il liste d'abord tous les réglages
-  en place, puis pose quatre questions — `global.locale`,
-  `inventory.account`, `pvp.league`, `weather.at` — avec la valeur actuelle (ou une
-  proposition : `default`, `great ultra master`) ; Entrée la garde, `-` la retire. Les
-  ligues sont des cases à cocher (`LeaguePicker`, `laravel/prompts`) dans un terminal ;
-  ailleurs (entrée fournie par un test ou un pipe, Windows), la même liste se tape, noms
-  séparés par des virgules. Rien de coché = réglage retiré. Chaque réponse passe par `SettingValues`, le lieu par le port
-  `PlaceSearch` (hors ligne, gardé tel quel). Rien n'est écrit avant la fin ; refusé hors
-  terminal. Sans compte réglé, `inventory:add` et `:list` le rappellent (`AccountHint`).
-- Fichier illisible : erreur, comme l'inventaire — retomber sur les défauts de l'outil
-  rangerait des Pokémon dans un autre compte sans le dire.
-
----
-
-## 4 quater. Feature 4 — poussière par source (`app:stardust:info`)
-
-### Question
-
-« Combien de poussière me rapporte chaque source, avec et sans Pièce étoile ? »
-
-```bash
-app:stardust:info                # alias : stardust
-app:stardust:info --format=json
-```
-
-Aucun argument : la réponse est la même pour tout le monde, un tableau par source.
-
-### Règles
-
-- **Captures** : 100 par capture, 125 sous boost météo ; affichées pour 1, 10, 50 et 100.
-  Les formes évoluées capturées dans la nature rapportent plus et sont laissées de côté.
-- **Combat GO** : une série paie 3 600 à sa première victoire, 7 200 à sa cinquième et
-  3 600 à sa fin ; les victoires intermédiaires ne donnent pas de poussière. Série à une
-  victoire : 7 200 ; à cinq : 14 400. Fin de saison par rang : 20 → 90 000, As → 110 000,
-  Vétéran → 134 000, Expert → 164 000, Légende → 200 000.
-- **Baies en arène** : une baie rapporte 30 poussières fois son rang dans la série, sans
-  plafond : 30, 60, … 300 pour le premier défenseur. Un défenseur prend 10 baies ; passer
-  vite au suivant garde la série (330 … 600 pour le deuxième), donc chaque défenseur paie
-  plus que le précédent : 1 650, 4 650, 7 650… Arène pleine (6) : 54 900. L'arène est
-  toujours montrée pleine, avec le cumul défenseur par défenseur.
-- **Pièce étoile** : ajoute la moitié à chaque récompense, partout, fin de saison
-  comprise. L'arrondi se fait par récompense, vers le bas : une capture boostée paie 187,
-  pas 187,5.
-
-**Provenance : relevés de l'utilisateur en jeu**, aucun fichier du jeu ne les donne. Ils
-vivent dans `CatchStardust`, `BattleLeagueStardust` et `BerryStardust` (constantes
-commentées) ; à recaler si les montants observés divergent. L'arrondi de la Pièce étoile
-sur 125 n'a pas encore été vérifié en jeu.
+## 4. Features — `specs/`
+
+Chaque feature a sa spec dans [`specs/`](specs/README.md), un fichier par feature : la
+question du joueur, l'interface, les règles, leur provenance et les tests attendus. Ce
+document-ci garde ce qui vaut pour toutes : principes, architecture, conventions et
+journal des décisions (§12).
+
+| Feature | Commande | Spec |
+|---|---|---|
+| Classement PvP | `app:pvp:rank` | [specs/pvp-rank.md](specs/pvp-rank.md) |
+| Météo du jeu | `app:weather:forecast` | [specs/weather-forecast.md](specs/weather-forecast.md) |
+| Inventaire | `app:inventory:*` | [specs/inventory.md](specs/inventory.md) |
+| Réglages | `app:settings:*` | [specs/settings.md](specs/settings.md) |
+| Poussière par source | `app:stardust:info` | [specs/stardust.md](specs/stardust.md) |
 
 ---
 
@@ -621,6 +190,7 @@ src/
     Ipinfo/               # IpinfoPlaceLocator
     Inventory/            # JsonFileInventoryRepository, InventoryDocument, InventoryFile
     Settings/             # SettingsFile, SettingsDocument, SettingValue
+    Json/                 # … JsonDocumentFile (fichiers du joueur : inventaire, réglages)
     Environment/          # UserDirectory (répertoires XDG)
     Encounter/            # JsonFileWeatherBoostTable (data/weather.json)
     PokeMiners/           # PokeMinersCpMultiplierTable
@@ -838,7 +408,9 @@ Règles d'usage :
 2. **`.gitignore` d'abord** : `vendor/` est actuellement commité. `git rm -r --cached vendor`
    avant d'ajouter la moindre dépendance, sinon chaque `composer require` produit un diff
    de plusieurs milliers de fichiers.
-3. Une feature = domaine + cas d'usage + adapters + tests, dans le même commit.
+3. Une feature = spec + domaine + cas d'usage + adapters + tests, dans le même commit.
+   La spec (`specs/<feature>.md`) s'écrit ou se met à jour **avant** le code ; un
+   changement de comportement la modifie dans le même commit.
 4. **Aligner la version de PHP au bootstrap** : `composer.json` déclare encore
    `"php": ">=8.4"` alors que le projet tourne en 8.5. Passer à `">=8.5"` (et régénérer
    le `platform` du `composer.lock`) en même temps que l'ajout des dépendances, pour que
@@ -966,3 +538,4 @@ Règles d'usage :
 | 110 | `app:inventory:add` sans `--cp` ni `--floor` ; `format` jamais réglable | Choix de l'utilisateur : l'inventaire ne sert qu'aux rangs, la déduction et le plancher restent à `app:pvp:rank`. Les IVs doivent être complets, avec un message propre à l'inventaire plutôt que celui qui renvoie à `--cp`. `format` est exclu des réglages pour toutes les commandes (`ConfigurableOptions::NEVER`) : la sortie se choisit à chaque exécution, un JSON par défaut surprendrait au terminal |
 | 111 | Langue d'affichage en réglage global (`global.locale`), `cp` jamais réglable | Choix de l'utilisateur : c'est la langue de l'application, pas d'une commande. Une section `global` garde la forme `famille.option` du fichier ; seules les options listées dans `APPLICATION_WIDE` y vont. Un PC décrit un Pokémon, pas un défaut |
 | 112 | Chaque commande nomme, sur une ligne, les réglages qu'elle a pris ; sur la sortie d'erreur | Demande de l'utilisateur : un résultat ne doit pas dépendre d'un défaut oublié. Seules les options laissées de côté sont citées (une option tapée l'emporte, la citer tromperait). La sortie d'erreur garde le JSON et les pipes propres ; `-q` la tait. Remplace l'affichage réservé à `-v` |
+| 113 | Lecture et écriture des fichiers du joueur partagées dans `JsonDocumentFile`, sur `symfony/filesystem` (dépendance directe) ; contraintes Symfony en `^8.1`, la version tenue par `extra.symfony.require` | Inventaire et réglages recopiaient le même code ; `dumpFile` y gagne un nom temporaire aléatoire (deux exécutions ne se marchent plus dessus) et une vraie erreur de lecture. Revers assumés : un crash entre écriture et renommage peut laisser un fichier temporaire, et un lien symbolique est suivi plutôt que remplacé (un fichier gardé dans un dépôt de dotfiles y reste). Le dossier reste créé en 0775 quel que soit l'umask. Flex fixe déjà toute la famille Symfony à `8.1.*` : passer en 8.2 ne demandera que cette ligne |

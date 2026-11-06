@@ -6,6 +6,7 @@ namespace App\UI\Cli\Command;
 
 use App\Infrastructure\Settings\SettingsFile;
 use App\UI\Cli\Settings\ConfigurableOptions;
+use App\UI\Cli\Settings\SettingsTable;
 use App\UI\Cli\Settings\SettingValues;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -60,19 +61,16 @@ final class SettingsShowCommand extends Command
 
         $problems = [];
 
-        foreach ($sections as $section => $options) {
-            foreach ($options as $option => $value) {
-                $key = $section . '.' . $option;
-                $problem = self::problem($key, $option, (array) $value, $configurable);
-                $rows[$key] = [
-                    null === $problem ? $key : \sprintf('<comment>%s</>', $key),
-                    implode(' ', (array) $value),
-                    '',
-                ];
+        foreach (SettingsTable::flatten($sections) as $key => $value) {
+            $problem = self::problem($key, explode('.', $key, 2)[1] ?? $key, (array) $value, $configurable);
+            $rows[$key] = [
+                null === $problem ? $key : \sprintf('<comment>%s</>', $key),
+                implode(' ', (array) $value),
+                '',
+            ];
 
-                if (null !== $problem) {
-                    $problems[] = \sprintf('%s: %s', $key, $problem);
-                }
+            if (null !== $problem) {
+                $problems[] = \sprintf('%s: %s', $key, $problem);
             }
         }
 

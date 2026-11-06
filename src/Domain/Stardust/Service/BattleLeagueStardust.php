@@ -15,7 +15,7 @@ use App\Domain\Stardust\Model\Stardust;
  * once it ends; the wins between pay no Stardust. The season pays once more on its last
  * day, by the rank reached.
  *
- * Provenance: the player's observations in the game, no upstream file — see GUIDELINES §4 quater.
+ * Provenance: the player's observations in the game, no upstream file — see specs/stardust.md.
  */
 final readonly class BattleLeagueStardust
 {

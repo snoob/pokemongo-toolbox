@@ -16,7 +16,7 @@ use App\Domain\Stardust\Model\Stardust;
  * second one goes on from 330 to 600, and every defender added pays more than the last.
  * A defender takes 10 berries at most.
  *
- * Provenance: the player's observations in the game, no upstream file — see GUIDELINES §4 quater.
+ * Provenance: the player's observations in the game, no upstream file — see specs/stardust.md.
  */
 final readonly class BerryStardust
 {

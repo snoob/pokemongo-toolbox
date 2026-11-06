@@ -101,8 +101,7 @@ final class SettingsWizardCommand extends Command
                 'Which language should names be shown in by default, fr or en?',
                 $sections[ConfigurableOptions::GLOBAL]['locale'] ?? null,
                 null,
-                /** @return string|list<string> */
-                static fn(string $answer): string|array => SettingValues::fromAnswer('locale', strtolower($answer)),
+                static fn(string $answer): string => SettingValues::fromAnswer('locale', strtolower($answer)),
             ),
             'inventory.account' => SettingQuestion::ask(
                 $this->explain($io, '2/4 · Account', [
@@ -114,8 +113,7 @@ final class SettingsWizardCommand extends Command
                 'Which game account is the inventory for by default?',
                 $sections['inventory']['account'] ?? null,
                 'default',
-                /** @return string|list<string> */
-                static fn(string $answer): string|array => SettingValues::fromAnswer('account', $answer),
+                static fn(string $answer): string => SettingValues::fromAnswer('account', $answer),
             ),
             'pvp.league' => LeaguePicker::pick($input, $this->explain($io, '3/4 · Leagues', [
                 'The "pvp" command ranks a Pokémon and its evolutions in these leagues whenever',
