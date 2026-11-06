@@ -9,6 +9,7 @@ use App\Application\Inventory\RemoveFromInventory\RemoveFromInventoryHandler;
 use App\Domain\Inventory\Exception\EntryNotFound;
 use App\Infrastructure\Json\JsonValue;
 use App\Infrastructure\Naming\SpeciesNameResolver;
+use App\UI\Cli\Input\AccountOption;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -39,6 +40,7 @@ final class InventoryRemoveCommand extends Command
             InputArgument::REQUIRED,
             'Number of the entry, as "inventory:list" shows it',
         )->addOption('locale', null, InputOption::VALUE_REQUIRED, 'Language of species names: fr or en');
+        AccountOption::addTo($this);
     }
 
     #[\Override]
@@ -56,7 +58,15 @@ final class InventoryRemoveCommand extends Command
         }
 
         try {
-            $result = ($this->handler)(new RemoveFromInventoryCommand((int) $number));
+            $account = AccountOption::parse($input);
+        } catch (\InvalidArgumentException $e) {
+            $io->error($e->getMessage());
+
+            return Command::INVALID;
+        }
+
+        try {
+            $result = ($this->handler)(new RemoveFromInventoryCommand((int) $number, $account));
         } catch (EntryNotFound $e) {
             $io->error($e->getMessage());
 
@@ -64,13 +74,14 @@ final class InventoryRemoveCommand extends Command
         }
 
         $io->success(\sprintf(
-            'Removed #%d %s %s from the %s.',
+            'Removed #%d %s %s from the %s (%s).',
             $result->entry->id,
             null === $result->species
                 ? $result->entry->species->value
                 : $this->names->name($result->species, JsonValue::asString($input->getOption('locale'))),
             $result->entry->iv,
             $result->entry->league->label(),
+            $account,
         ));
 
         return Command::SUCCESS;

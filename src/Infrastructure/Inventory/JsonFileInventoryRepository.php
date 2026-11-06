@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Inventory;
 
+use App\Domain\Inventory\Model\Account;
 use App\Domain\Inventory\Model\Inventory;
 use App\Domain\Inventory\Port\InventoryRepository;
 
 /**
- * The inventory as a JSON file the player can read, back up or edit by hand.
+ * Each account's inventory as a JSON file the player can read, back up or edit by hand.
  *
  * Unlike a cache, a file that cannot be read is an error, never an empty inventory: the
  * next save would otherwise wipe what the player kept. A save goes through a temporary
@@ -17,16 +18,16 @@ use App\Domain\Inventory\Port\InventoryRepository;
 final readonly class JsonFileInventoryRepository implements InventoryRepository
 {
     /**
-     * @param ?string $file null keeps it where `InventoryFile` says
+     * @param ?string $directory null keeps them where `InventoryFile` says
      */
     public function __construct(
-        private ?string $file = null,
+        private ?string $directory = null,
     ) {}
 
     #[\Override]
-    public function load(): Inventory
+    public function load(Account $account): Inventory
     {
-        $file = $this->file();
+        $file = $this->file($account);
 
         if (!is_file($file)) {
             return new Inventory();
@@ -49,9 +50,9 @@ final readonly class JsonFileInventoryRepository implements InventoryRepository
     }
 
     #[\Override]
-    public function save(Inventory $inventory): void
+    public function save(Account $account, Inventory $inventory): void
     {
-        $file = $this->file();
+        $file = $this->file($account);
         $directory = \dirname($file);
 
         if (!is_dir($directory) && !mkdir($directory, 0o775, true) && !is_dir($directory)) {
@@ -68,8 +69,8 @@ final readonly class JsonFileInventoryRepository implements InventoryRepository
         }
     }
 
-    private function file(): string
+    private function file(Account $account): string
     {
-        return $this->file ?? InventoryFile::path($_SERVER);
+        return InventoryFile::in($this->directory ?? InventoryFile::directory($_SERVER), $account);
     }
 }

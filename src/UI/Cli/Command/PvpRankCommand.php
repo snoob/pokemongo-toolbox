@@ -14,6 +14,7 @@ use App\Domain\Pvp\Model\IvDeduction;
 use App\Infrastructure\Json\JsonValue;
 use App\Infrastructure\Naming\InputLocale;
 use App\Infrastructure\Naming\SpeciesNameResolver;
+use App\UI\Cli\Input\FloorOption;
 use App\UI\Cli\Input\RankPokemonQueryFactory;
 use App\UI\Cli\Presenter\IvDeductionFormatter;
 use App\UI\Cli\Presenter\PvpRankJsonPresenter;
@@ -73,15 +74,9 @@ final class PvpRankCommand extends Command
                 null,
                 InputOption::VALUE_NONE,
                 'Rank the megas at Mega Level 4 (Super Mega: +2 levels)',
-            )
-            ->addOption(
-                'floor',
-                null,
-                InputOption::VALUE_REQUIRED,
-                'Lowest IV the Pokémon can have, as a number or a source: wild, weather, good, great,'
-                . ' ultra, best (friend trades), shadow, giovanni, raid, egg, research, lucky',
-                'wild',
-            )
+            );
+        FloorOption::addTo($this);
+        $this
             ->addOption(
                 'cp',
                 null,
@@ -105,6 +100,11 @@ final class PvpRankCommand extends Command
                   <info>%command.full_name% gengar --league=great</info> a single league, megas left out
                   <info>%command.full_name% azurill --floor=best</info>  the best a Best Friend trade can give
                   <info>%command.full_name% 94 1/x/14 --cp=1432</info>   the defense deduced from the CP
+
+                --floor takes a number from 0 to 15, or the source the Pokémon comes from:
+
+                  wild 0 · good 1 · great 2 · ultra 3 (friend trades) · weather 4 (boosted catch)
+                  best 5 (Best Friend trade) · shadow, giovanni 6 · raid, egg, research 10 · lucky 12
                 HELP);
     }
 

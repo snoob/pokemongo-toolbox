@@ -56,6 +56,14 @@ sudo mv pogo.phar /usr/local/bin/pogo
 PHP 8.5 with the `zlib` extension is the only requirement. Game data ships inside the
 archive, so it works offline apart from refreshing the league rankings.
 
+Then let the wizard walk you through the rest — the language names are shown in, your game
+account, the leagues you play, where you play — explaining what each one does and how to
+override it on a command:
+
+```bash
+pogo wizard
+```
+
 ## Usage
 
 ```bash
@@ -190,12 +198,16 @@ $ pogo pvp azurill 5/15/14 --floor=best --league=great
 
 IVs under the floor are refused: they cannot come from that source.
 
+The floor of your trades depends on the friendship level you trade at: set it once as
+`"pvp": {"floor": "best"}` in your settings file (see [Settings](#settings-your-defaults)).
+
 ### Weather and the Daily Adventure Incense
 
 ```bash
-pogo weather                           # where your IP address says you are
+pogo weather                           # the weather.at setting, else where your IP says you are
 pogo weather --at="Villemomble, France"
 pogo weather --at="Paris, United States"   # the country picks among namesakes
+pogo weather --at=auto                 # where your IP says you are, whatever is set
 ```
 
 The in-game weather for the next 12 hours, and for each hour which of the incense's rare
@@ -208,7 +220,9 @@ The forecast comes from **[Open-Meteo](https://open-meteo.com)**: free, no key, 
 configure. The game itself reads AccuWeather, which no longer offers a free plan, so an
 hour can disagree with what the game shows — treat the table as a forecast, not a promise.
 
-Without `--at`, the place is guessed from your public IP address. That is good to the town
+Set the place you usually play once with `pogo wizard`; away
+from home, `--at=auto` forecasts where you are now, setting or not. `auto` is also the
+default without a setting: the place is guessed from your public IP address. That is good to the town
 at best, and far off behind a VPN or a mobile connection — the place found is printed
 first, so check it. Name the place where you will actually play, since the weather is
 computed per area some 10 to 20 kilometres across.
@@ -217,11 +231,11 @@ computed per area some 10 to 20 kilometres across.
 
 ```bash
 pogo inventory:add minidraco 0/15/15 -l great -l ultra   # one entry per league
-pogo inventory:add gengar 1/x/14 --cp=1478 -l mega-great # IVs deduced from the CP
 pogo inventory:add gengar 2/14/15 --shadow -l great
-pogo inventory:list                     # every league, best first
+pogo inventory                          # every league, best first (= inventory:list)
 pogo inventory:list -l great --format=json
 pogo inventory:remove 3                 # by the number the list shows
+pogo inventory:add azurill 5/15/14 -l great -a snoob2555  # another account
 ```
 
 `inv:add`, `inv:list` and `inv:remove` work too: Symfony accepts any unambiguous
@@ -234,10 +248,67 @@ League counts as a Dragonair, the same Dratini kept for the Ultra League as a Dr
 When you add one, it is compared with what you already keep in that league that can
 become the same form, and the best of those is named if it beats the newcomer.
 
-The inventory is a JSON file under `~/.local/share/pokemongo-toolbox/inventory.json` (or
-`$XDG_DATA_HOME`), the same whether you run the PHAR or a checkout. Set `POGO_INVENTORY`
-to keep it elsewhere. It is yours to back up or edit; a file that cannot be read is
-reported and left untouched, never overwritten.
+**Several game accounts**: each has its own inventory, numbered on its own. `-a,
+--account` picks one; without it the commands use the `inventory.account` setting, else an
+account named `default`. Give all three IVs: the inventory ranks spreads, so it takes
+neither `--cp` nor `--floor` — `pvp` is where to deduce IVs or weigh a floor.
+
+Each account is a JSON file under `~/.local/share/pokemongo-toolbox/inventory/<account>.json`
+(or `$XDG_DATA_HOME`), the same whether you run the PHAR or a checkout. Set
+`POGO_INVENTORY` to another directory to keep them elsewhere. They are yours to back up or
+edit; a file that cannot be read is reported and left untouched, never overwritten.
+
+### Settings: your defaults
+
+The quickest start is the wizard, which doubles as a tour of the tool. It lists what is
+set, then asks for the display language, your account, the leagues `pvp` ranks in and
+where you play — each question saying what it is for, which commands use it and how to
+override it — checks each answer, and ends on the commands to try first. The leagues are boxes to
+tick with the arrows and the space bar — leave the Mega Editions unticked to keep megas out
+of sight; tick nothing for each species' own leagues. Enter keeps the value shown, `-`
+removes it.
+
+```bash
+pogo wizard
+```
+
+Until an account is set, the inventory commands say they use `default`.
+
+Beyond those four, any option that takes a value can get your own default. A setting is
+named after the command family and the option: `pvp.floor` is `--floor` of `pvp`,
+`inventory.account` is `--account` of every inventory command. The display language is
+set once for the whole tool, as `global.locale` (`fr` or `en`); whichever it is, you can
+still type names in either language.
+
+```bash
+pogo settings          # what is set
+pogo settings --all    # everything that can be set
+```
+
+They are kept in `~/.config/pokemongo-toolbox/settings.json` (or `$XDG_CONFIG_HOME`;
+`POGO_SETTINGS` points elsewhere), which you edit by hand for what the wizard does not ask:
+
+```json
+{
+    "global": { "locale": "fr" },
+    "inventory": { "account": "snoob2555" },
+    "pvp": { "floor": "best", "league": ["great", "ultra", "master"] },
+    "weather": { "at": "Villemomble, France" }
+}
+```
+
+What you type always wins over a setting. A repeatable option takes a list, an empty
+value counts as unset. Flags (`--shadow`, `--best-buddy`…) cannot be set: there would be no
+way to turn them off on the command line. Nor can `--format` and `--cp`, which belong to
+one run. The wizard refuses a value the command would
+refuse, `settings` flags those edited by hand (`pvp.floor bestie`, `pvp.league hyper`),
+and every command names the settings it took on a grey line of its own — only those of
+options you left out, on the error output so that `--format=json` stays clean:
+
+```
+$ pogo pvp gengar
+ From your settings: --league=great,ultra,master --locale=fr
+```
 
 ### Stardust: what each source pays
 

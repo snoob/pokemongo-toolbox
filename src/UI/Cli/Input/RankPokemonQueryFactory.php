@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\UI\Cli\Input;
 
 use App\Application\Pvp\RankPokemon\RankPokemonQuery;
-use App\Domain\Pokemon\Model\IvFloor;
 use App\Domain\Pokemon\Model\IvPattern;
 use App\Domain\Pvp\Model\Cp;
 use App\Domain\Pvp\Model\MegaLevel;
@@ -37,7 +36,7 @@ final readonly class RankPokemonQueryFactory
                 : PokemonLevel::regularCap(),
             shadow: true === $input->getOption('shadow'),
             megaLevel: $this->parseMegaLevel($input),
-            floor: IvFloor::fromString(JsonValue::asString($input->getOption('floor')) ?? 'wild'),
+            floor: FloorOption::parse($input),
             cp: $this->parseCp(JsonValue::asString($input->getOption('cp')), $ivs),
         );
     }

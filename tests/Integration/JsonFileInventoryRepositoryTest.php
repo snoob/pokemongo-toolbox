@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
+use App\Domain\Inventory\Model\Account;
 use App\Domain\Inventory\Model\Inventory;
 use App\Domain\Pokemon\Model\IvSpread;
 use App\Domain\Pokemon\Model\SpeciesId;
@@ -20,7 +21,7 @@ final class JsonFileInventoryRepositoryTest extends TestCase
     protected function setUp(): void
     {
         $this->directory = sys_get_temp_dir() . '/pogo-inventory-' . bin2hex(random_bytes(6));
-        $this->file = $this->directory . '/nested/inventory.json';
+        $this->file = $this->directory . '/nested/snoob2555.json';
     }
 
     #[\Override]
@@ -32,12 +33,17 @@ final class JsonFileInventoryRepositoryTest extends TestCase
 
     public function testNoFileYetIsAnEmptyInventory(): void
     {
-        self::assertSame([], new JsonFileInventoryRepository($this->file)->load()->entries());
+        self::assertSame(
+            [],
+            new JsonFileInventoryRepository(\dirname($this->file))
+                ->load(new Account('snoob2555'))
+                ->entries(),
+        );
     }
 
     public function testWhatIsSavedIsLoadedBackWithItsNumbering(): void
     {
-        $repository = new JsonFileInventoryRepository($this->file);
+        $repository = new JsonFileInventoryRepository(\dirname($this->file));
         $inventory = new Inventory();
         $at = new \DateTimeImmutable('2026-11-04T12:00:00+01:00');
         $inventory->add(
@@ -48,8 +54,8 @@ final class JsonFileInventoryRepositoryTest extends TestCase
         );
         $inventory->remove(2);
 
-        $repository->save($inventory);
-        $loaded = $repository->load();
+        $repository->save(new Account('Snoob2555'), $inventory);
+        $loaded = $repository->load(new Account('snoob2555'));
         $entry = $loaded->entries()[0] ?? null;
 
         self::assertNotNull($entry);
@@ -60,6 +66,7 @@ final class JsonFileInventoryRepositoryTest extends TestCase
         self::assertEquals($at, $entry->addedAt);
         self::assertSame(3, $loaded->nextId(), 'the removed number stays used');
         self::assertFileDoesNotExist($this->file . '.tmp');
+        self::assertSame([], $repository->load(Account::default())->entries(), 'each account has its own');
     }
 
     public function testAnUnreadableFileIsAnErrorAndIsLeftAsItIs(): void
@@ -68,7 +75,7 @@ final class JsonFileInventoryRepositoryTest extends TestCase
         file_put_contents($this->file, '{"version": 1, "entries": [');
 
         try {
-            new JsonFileInventoryRepository($this->file)->load();
+            new JsonFileInventoryRepository(\dirname($this->file))->load(new Account('snoob2555'));
             self::fail('a broken file must not read as an empty inventory');
         } catch (\RuntimeException $e) {
             self::assertStringContainsString('unreadable', $e->getMessage());
@@ -94,7 +101,7 @@ final class JsonFileInventoryRepositoryTest extends TestCase
 
         $this->expectException(\RuntimeException::class);
 
-        new JsonFileInventoryRepository($this->file)->load();
+        new JsonFileInventoryRepository(\dirname($this->file))->load(new Account('snoob2555'));
     }
 
     public function testAnotherVersionIsAnError(): void
@@ -104,6 +111,6 @@ final class JsonFileInventoryRepositoryTest extends TestCase
 
         $this->expectException(\RuntimeException::class);
 
-        new JsonFileInventoryRepository($this->file)->load();
+        new JsonFileInventoryRepository(\dirname($this->file))->load(new Account('snoob2555'));
     }
 }

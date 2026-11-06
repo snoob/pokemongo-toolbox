@@ -12,8 +12,10 @@ rank within the species, the spread worth hunting, the recommended moveset — f
 in hand and everything it evolves into, megas included — and the CP to stop at before
 evolving. A second command forecasts the in-game weather
 to time the Daily Adventure Incense. A third family (`app:inventory:*`) keeps the
-player's Pokémon league by league, in a JSON file under `$XDG_DATA_HOME`. A fourth
-(`app:stardust:info`) tells what catches, GO Battle League and gym berries pay in Stardust.
+player's Pokémon league by league, one JSON file per game account under `$XDG_DATA_HOME`.
+A fourth (`app:stardust:info`) tells what catches, GO Battle League and gym berries pay in
+Stardust. `app:settings:*` gives any command option the player's own default (`pvp.floor`,
+`inventory.account`…), kept under `$XDG_CONFIG_HOME`.
 
 **`GUIDELINES.md` is the reference**: conventions, architecture, and a numbered decision
 log explaining *why* each choice was made. Read it before writing code; add a row to the
@@ -24,7 +26,8 @@ log when you decide something structural, including when you reverse an earlier 
 ```bash
 bin/console app:pvp:rank <pokemon> [ivs]   # PvP ranking (alias: pvp)
 bin/console app:weather:forecast [--at=…]  # in-game weather (alias: weather)
-bin/console app:inventory:add|list|remove  # per-league inventory (alias: inventory:*)
+bin/console app:inventory:add|list|remove  # per-league inventory (alias: inventory:*, inventory = list)
+bin/console app:settings:show|wizard       # option defaults (alias: settings, wizard; settings:set hidden)
 bin/console app:stardust:info              # Stardust by source (alias: stardust)
 bin/console app:data:build                 # refresh game data from upstream (~3 s)
 

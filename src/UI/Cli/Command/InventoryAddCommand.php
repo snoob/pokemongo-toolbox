@@ -13,16 +13,15 @@ use App\Domain\Pokemon\Exception\AmbiguousSpecies;
 use App\Domain\Pokemon\Exception\InvalidIv;
 use App\Domain\Pokemon\Exception\SpeciesNotFound;
 use App\Domain\Pokemon\Model\IvPattern;
+use App\Domain\Pokemon\Model\IvSpread;
 use App\Domain\Pokemon\Model\Species;
-use App\Domain\Pvp\Exception\IvMismatch;
-use App\Domain\Pvp\Model\IvDeduction;
 use App\Infrastructure\Json\JsonValue;
 use App\Infrastructure\Naming\InputLocale;
 use App\Infrastructure\Naming\SpeciesNameResolver;
-use App\UI\Cli\Input\CpOption;
+use App\UI\Cli\Input\AccountOption;
 use App\UI\Cli\Input\LeagueOption;
-use App\UI\Cli\Presenter\IvDeductionFormatter;
 use App\UI\Cli\Presenter\StandingFormatter;
+use App\UI\Cli\Settings\AccountHint;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -42,8 +41,8 @@ final class InventoryAddCommand extends Command
         private readonly AddToInventoryHandler $handler,
         private readonly SpeciesNameResolver $names,
         private readonly InputLocale $inputLocale,
-        private readonly IvDeductionFormatter $deductions,
         private readonly StandingFormatter $standings,
+        private readonly AccountHint $hint,
     ) {
         parent::__construct();
     }
@@ -53,11 +52,7 @@ final class InventoryAddCommand extends Command
     {
         $this
             ->addArgument('pokemon', InputArgument::REQUIRED, 'French name, English name or Pokédex number')
-            ->addArgument(
-                'ivs',
-                InputArgument::REQUIRED,
-                'IVs as attack/defense/stamina, e.g. 1/15/14; "x" for one to deduce from --cp',
-            )
+            ->addArgument('ivs', InputArgument::REQUIRED, 'IVs as attack/defense/stamina, e.g. 1/15/14')
             ->addOption(
                 'league',
                 'l',
@@ -65,12 +60,6 @@ final class InventoryAddCommand extends Command
                 'League to keep it for (repeatable): great, ultra, master, mega-great, mega-ultra, mega-master',
             )
             ->addOption('shadow', 's', InputOption::VALUE_NONE, 'Shadow form')
-            ->addOption(
-                'cp',
-                null,
-                InputOption::VALUE_REQUIRED,
-                'CP shown in the game: refuses IVs that cannot give it, settles those typed "x"',
-            )
             ->addOption('locale', null, InputOption::VALUE_REQUIRED, 'Language of species names: fr or en')
             ->setHelp(<<<'HELP'
                 Keeps the Pokémon in hand for each league given. It is ranked as the form of
@@ -79,8 +68,9 @@ final class InventoryAddCommand extends Command
 
                   <info>%command.full_name% gengar 1/15/14 -l great</info>
                   <info>%command.full_name% minidraco 0/14/15 -l great -l ultra</info>
-                  <info>%command.full_name% 94 1/x/14 --cp=1478 -l mega-great</info>
+                  <info>%command.full_name% 94 1/15/14 -l mega-great -a snoob2555</info>
                 HELP);
+        AccountOption::addTo($this);
     }
 
     #[\Override]
@@ -99,20 +89,12 @@ final class InventoryAddCommand extends Command
             $result = ($this->handler)(
                 new AddToInventoryCommand(
                     $identifier,
-                    IvPattern::fromString(JsonValue::asString($input->getArgument('ivs')) ?? ''),
+                    self::spread(JsonValue::asString($input->getArgument('ivs')) ?? ''),
                     $leagues,
                     true === $input->getOption('shadow'),
-                    CpOption::parse(JsonValue::asString($input->getOption('cp'))),
+                    AccountOption::parse($input),
                 ),
             );
-        } catch (IvMismatch $e) {
-            $io->error($e->getMessage());
-
-            if ([] !== $e->candidates) {
-                $io->listing(array_map($this->deductions->candidate(...), $e->candidates));
-            }
-
-            return Command::INVALID;
         } catch (InvalidIv|\InvalidArgumentException $e) {
             $io->error($e->getMessage());
 
@@ -147,8 +129,24 @@ final class InventoryAddCommand extends Command
         );
 
         $this->present($io, $result, $locale);
+        $this->hint->show($input, $io);
 
         return Command::SUCCESS;
+    }
+
+    /**
+     * The three IVs, all known: the inventory ranks a spread, so none is left to deduce.
+     *
+     * @throws InvalidIv
+     */
+    private static function spread(string $ivs): IvSpread
+    {
+        return (
+            IvPattern::fromString($ivs)->toSpread() ?? throw new \InvalidArgumentException(\sprintf(
+                'IVs %s leave some unknown; the inventory needs all three, e.g. 1/15/14.',
+                $ivs,
+            ))
+        );
     }
 
     private function present(SymfonyStyle $io, AddToInventoryResult $result, string $locale): void
@@ -159,13 +157,9 @@ final class InventoryAddCommand extends Command
             $io->text(\sprintf('<comment>Interpreted "%s" as %s.</comment>', $result->guessedFrom, $name));
         }
 
-        if ($result->deduction instanceof IvDeduction) {
-            $io->text(\sprintf('<comment>%s</comment>', $this->deductions->summary($result->deduction)));
-        }
-
         foreach ($result->added as $added) {
             $io->newLine();
-            $io->text($this->lines($added, $name, (string) $result->iv, $locale));
+            $io->text($this->lines($added, $name, (string) $result->iv, (string) $result->account, $locale));
         }
 
         $io->newLine();
@@ -174,16 +168,17 @@ final class InventoryAddCommand extends Command
     /**
      * @return list<string>
      */
-    private function lines(AddedEntry $added, string $name, string $iv, string $locale): array
+    private function lines(AddedEntry $added, string $name, string $iv, string $account, string $locale): array
     {
         $standing = $added->standing;
         $lines = [
             \sprintf(
-                '<info>Kept #%d</info> %s %s for the <options=bold>%s</>.',
+                '<info>Kept #%d</info> %s %s for the <options=bold>%s</> <fg=gray>(%s)</>.',
                 $added->entry->id,
                 $name,
                 $iv,
                 $added->entry->league->label(),
+                $account,
             ),
             \sprintf(
                 '  As %s: %s in the league — IVs %s',

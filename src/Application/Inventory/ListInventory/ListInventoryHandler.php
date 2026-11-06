@@ -20,11 +20,11 @@ final readonly class ListInventoryHandler
 
     public function __invoke(ListInventoryQuery $query): ListInventoryResult
     {
-        $lines = array_map($this->line(...), $this->repository->load()->entries($query->league));
+        $lines = array_map($this->line(...), $this->repository->load($query->account)->entries($query->league));
 
         usort($lines, static fn(InventoryLine $a, InventoryLine $b): int => self::sortKey($a) <=> self::sortKey($b));
 
-        return new ListInventoryResult($lines);
+        return new ListInventoryResult($lines, $query->account);
     }
 
     private function line(InventoryEntry $entry): InventoryLine

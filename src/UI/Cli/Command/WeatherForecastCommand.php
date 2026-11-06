@@ -10,6 +10,7 @@ use App\Domain\Pokemon\Exception\SpeciesNotFound;
 use App\Domain\Weather\Exception\PlaceNotFound;
 use App\Domain\Weather\Exception\WeatherUnavailable;
 use App\Infrastructure\Json\JsonValue;
+use App\UI\Cli\Input\PlaceOption;
 use App\UI\Cli\Presenter\WeatherForecastJsonPresenter;
 use App\UI\Cli\Presenter\WeatherForecastTextPresenter;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -42,7 +43,8 @@ final class WeatherForecastCommand extends Command
                 'at',
                 'a',
                 InputOption::VALUE_REQUIRED,
-                'Where you will play, e.g. "Villemomble, France" (defaults to a guess from your IP address)',
+                'Where you will play, e.g. "Villemomble, France"; "auto" guesses it from your IP address',
+                PlaceOption::AUTO,
             )
             ->addOption('format', 'f', InputOption::VALUE_REQUIRED, 'Output format: text or json', 'text')
             ->addOption('locale', null, InputOption::VALUE_REQUIRED, 'Language of Pokémon names: fr or en')
@@ -52,8 +54,9 @@ final class WeatherForecastCommand extends Command
 
                 Examples:
 
-                  <info>%command.full_name%</info>                             where your IP address says you are
+                  <info>%command.full_name%</info>                             the "weather.at" setting, else where your IP address says you are
                   <info>%command.full_name% --at="Villemomble, France"</info>  a place you name
+                  <info>%command.full_name% --at=auto</info>                   where your IP address says you are, whatever is set
                 HELP);
     }
 
@@ -63,7 +66,9 @@ final class WeatherForecastCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         try {
-            $result = ($this->handler)(new ForecastIncenseQuery(JsonValue::asString($input->getOption('at'))));
+            $result = ($this->handler)(new ForecastIncenseQuery(PlaceOption::parse(JsonValue::asString($input->getOption(
+                'at',
+            )))));
         } catch (PlaceNotFound|WeatherUnavailable|SpeciesNotFound $e) {
             $io->error($e->getMessage());
 

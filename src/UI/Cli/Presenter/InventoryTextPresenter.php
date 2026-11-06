@@ -22,6 +22,8 @@ final readonly class InventoryTextPresenter
 
     public function present(SymfonyStyle $io, ListInventoryResult $result, ?string $locale = null): void
     {
+        $io->text(\sprintf('Account <options=bold>%s</>', $result->account));
+
         if ([] === $result->lines) {
             $io->text('Nothing kept yet; "inventory:add" keeps a Pokémon for a league.');
 

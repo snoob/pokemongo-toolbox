@@ -98,9 +98,11 @@ dont l'implémentation décide de servir le cache ou de rafraîchir. Si la sourc
 injoignable, la copie périmée est servie plutôt que d'échouer.
 
 **Données du joueur — à part.** L'inventaire (§4 ter) n'est ni généré ni un cache : c'est
-ce que le joueur a saisi, sans autre copie. Il vit dans `$XDG_DATA_HOME/pokemongo-toolbox/`
-(défaut `~/.local/share/…`), le même fichier depuis le PHAR et depuis un checkout, sans
-TTL ; `POGO_INVENTORY` le déplace.
+ce que le joueur a saisi, sans autre copie. Il vit dans
+`$XDG_DATA_HOME/pokemongo-toolbox/inventory/`, un fichier par compte (défaut
+`~/.local/share/…`), le même depuis le PHAR et depuis un checkout, sans TTL ;
+`POGO_INVENTORY` nomme un autre répertoire. Les réglages (§4 ter bis) suivent la même
+règle sous `$XDG_CONFIG_HOME/pokemongo-toolbox/settings.json` (`POGO_SETTINGS`).
 
 Pour forcer une mise à jour : supprimer le répertoire de cache (classements) ou relancer
 `app:data:build` (données de jeu).
@@ -437,10 +439,21 @@ Première itération : l'inventaire seul. `app:pvp:rank` ne le consulte pas enco
 
 ```bash
 app:inventory:add minidraco 0/15/15 -l great -l ultra   # une entrée par ligue
-app:inventory:add 94 1/x/14 --cp=1478 -l mega-great      # IVs déduits comme pour pvp
 app:inventory:list [-l great] [--format=json]
 app:inventory:remove 3                                   # numéro affiché par list
+app:inventory:add azurill 5/15/14 -l great -a snoob2555
 ```
+
+### Comptes
+
+Chaque compte du jeu a son inventaire, numéroté à part : un fichier
+`inventory/<compte>.json`. `-a, --account` le choisit, sinon le réglage
+`inventory.account`, sinon le compte `default`. Le nom passe en minuscules (le jeu ignore la casse des noms de
+dresseur) et se limite à ce qui peut nommer un fichier.
+
+L'ajout prend trois IVs connus, sans `--cp` ni `--floor` (décision 110) : l'inventaire
+ne s'intéresse qu'aux rangs. Déduire des IVs ou peser un plancher se fait avec
+`app:pvp:rank`.
 
 ### Modèle
 
@@ -471,6 +484,61 @@ Un fichier JSON versionné (`InventoryDocument`), écrit par fichier temporaire 
 `rename()`. Un fichier illisible est une **erreur**, jamais un inventaire vide : la
 sauvegarde suivante effacerait ce que le joueur a gardé. Une forme que les données du
 jeu ne connaissent plus reste listée, signalée, plutôt que de faire échouer la commande.
+
+### 4 ter bis — Réglages (`app:settings:*`)
+
+```bash
+app:settings:wizard                      # alias : wizard
+app:settings:show [--all]                # alias : settings
+app:settings:set pvp.floor best          # cachée (décision 109)
+app:settings:set pvp.floor               # sans valeur : retire le réglage
+```
+
+```json
+{"inventory": {"account": "snoob2555"}, "pvp": {"floor": "5"}, "weather": {"at": "Villemomble, France"}}
+```
+
+**La clé JSON est l'option de la commande.** Un objet par famille (le milieu de
+`app:pvp:rank`), une clé par option longue : `pvp.floor` est le défaut de `--floor` de
+toutes les commandes `app:pvp:*`. Rien n'est déclaré option par option : toute option à
+valeur d'une commande est réglable dès qu'elle existe, et `settings --all` les liste en
+lisant les définitions des commandes.
+
+- **Couche UI seulement.** Un réglage n'est que le défaut d'une option de ligne de
+  commande : ni le domaine ni les handlers ne le voient. `ApplySettings` écoute
+  `console.command` et remplace le **défaut** de chaque option réglée dans la définition
+  de la commande. Pas `setOption()` : `Command::run()` relie l'input une seconde fois
+  après l'événement et l'effacerait. Effet de bord utile : ce qui est tapé l'emporte sans
+  rien détecter.
+- **Pas de drapeaux** (`--shadow`, `--mega4`…) : réglés, on ne pourrait plus les retirer en
+  ligne de commande. Ni les options de l'application (`--env`, `--verbose`), ni `--format`
+  et `--cp`, qui tiennent à une exécution (`ConfigurableOptions::NEVER`).
+- **`global.locale`** : la langue d'affichage se règle une fois pour toutes les commandes
+  qui ont `--locale` ; une famille ne la règle pas seule (`pvp.locale` n'existe pas).
+  L'entrée reste bilingue : l'index de recherche couvre les deux langues quel que soit
+  l'affichage.
+- Une option répétable prend une liste ; une liste pour une option à valeur unique est
+  une erreur. Chaîne ou liste vide = non réglé.
+- La valeur est vérifiée à l'enregistrement par `SettingValues`, avec le parseur que les
+  commandes utilisent pour cette option (`IvFloor`, `LeagueOption`, `Account`, `CpOption`,
+  `text|json`, `fr|en`) ; une option sans vérification (`--at`, texte libre) est prise
+  telle quelle. `settings` signale les valeurs fausses ou orphelines d'un fichier édité à
+  la main (code 1). Chaque exécution nomme les réglages qu'elle a pris (« From your settings: … »). `pvp.league great ultra master` masque
+  ainsi les Mega Editions de `pvp`, sans option dédiée.
+- **`wizard`** sert d'installation et d'accueil : chaque question est précédée de ce
+  qu'elle règle, des commandes qui s'en servent et de la façon de passer outre (un
+  exemple en ligne de commande), et la fin propose les premières commandes à essayer —
+  pour ne pas avoir à lire la doc avant de commencer. Il liste d'abord tous les réglages
+  en place, puis pose quatre questions — `global.locale`,
+  `inventory.account`, `pvp.league`, `weather.at` — avec la valeur actuelle (ou une
+  proposition : `default`, `great ultra master`) ; Entrée la garde, `-` la retire. Les
+  ligues sont des cases à cocher (`LeaguePicker`, `laravel/prompts`) dans un terminal ;
+  ailleurs (entrée fournie par un test ou un pipe, Windows), la même liste se tape, noms
+  séparés par des virgules. Rien de coché = réglage retiré. Chaque réponse passe par `SettingValues`, le lieu par le port
+  `PlaceSearch` (hors ligne, gardé tel quel). Rien n'est écrit avant la fin ; refusé hors
+  terminal. Sans compte réglé, `inventory:add` et `:list` le rappellent (`AccountHint`).
+- Fichier illisible : erreur, comme l'inventaire — retomber sur les défauts de l'outil
+  rangerait des Pokémon dans un autre compte sans le dire.
 
 ---
 
@@ -532,7 +600,7 @@ src/
       Port/               # WeatherBoostTable (interface)
       Service/            # WeatherBoost
     Inventory/
-      Model/              # Inventory, InventoryEntry
+      Model/              # Inventory, InventoryEntry, Account
       Port/               # InventoryRepository (interface)
       Exception/          # DuplicateEntry, EntryNotFound
     Stardust/
@@ -552,11 +620,15 @@ src/
     OpenMeteo/            # OpenMeteoForecast, OpenMeteoPlaceSearch, WmoConditions
     Ipinfo/               # IpinfoPlaceLocator
     Inventory/            # JsonFileInventoryRepository, InventoryDocument, InventoryFile
+    Settings/             # SettingsFile, SettingsDocument, SettingValue
+    Environment/          # UserDirectory (répertoires XDG)
     Encounter/            # JsonFileWeatherBoostTable (data/weather.json)
     PokeMiners/           # PokeMinersCpMultiplierTable
     Catalog/              # JsonFileSpeciesCatalog (data/names.json)
     Cache/                # décorateurs de cache disque
   UI/Cli/Command/         # #[AsCommand] : parse, délègue, affiche
+  UI/Cli/Settings/        # ApplySettings (écouteur console.command), ConfigurableOptions, SettingKey,
+                          # SettingValues, SettingQuestion, LeaguePicker, SettingsTable, AccountHint
 ```
 
 **Règle de dépendance, non négociable :** `UI → Application → Domain` et
@@ -882,3 +954,15 @@ Règles d'usage :
 | 98 | Barèmes (capture 100 / 125 boostée ; série 3 600 + 7 200 + 3 600 ; fin de saison par rang ; baies 30 × rang de série sans plafond, 10 par défenseur) pris des relevés de l'utilisateur | Aucun fichier du jeu ne les expose ; isolés dans `CatchStardust`, `BattleLeagueStardust` et `BerryStardust` comme `MegaLevelTableBuilder` et `WmoConditions` le sont pour leurs tables |
 | 99 | Pièce étoile × 1,5 sur chaque récompense, arrondi vers le bas par récompense, affichée partout en `total (+ gain)` | Choix de l'utilisateur : le gain se lit sans soustraire. La Pièce s'applique récompense par récompense, d'où l'arrondi sur chacune et non sur le total (100 captures boostées : 18 700, pas 18 750) |
 | 100 | `app:data:build` masquée (`hidden`) et exclue du PHAR par `box.json` | Elle ne tourne que depuis un checkout (dev, puis la CI juste avant `box compile`) : dans l'archive en lecture seule elle ne pouvait qu'échouer. L'exclure retire aussi `Infrastructure/Build`, et la garde `PharEnvironment` de la commande disparaît. Préféré à `when@dev`, qui l'aurait liée à l'environnement plutôt qu'au checkout. `GameDataPaths` passe en `#[Autowire]` : une définition YAML nommerait une classe absente de l'archive et ferait échouer le conteneur |
+| 101 | Un fichier d'inventaire par compte (`inventory/<compte>.json`), choisi par `--account` | Choix de l'utilisateur : un fichier corrompu ne touche qu'un compte, et chacun garde sa numérotation. Le format du fichier ne change pas ; `POGO_INVENTORY` nomme désormais un répertoire. Pas de migration : aucun inventaire n'existait encore |
+| 102 | Réglages = défauts des options de commande, clé JSON `famille.option`, dans `$XDG_CONFIG_HOME` ; `app:settings:show/set` | Demande de l'utilisateur : chaque option potentiellement réglable, sans liste à tenir à jour. La clé se lit sur la ligne de commande, le fichier s'édite à la main. « settings » plutôt que « config », à sa demande |
+| 103 | Pas de `--traded` | Retiré à la demande de l'utilisateur : `pvp.floor` / `inventory.floor` règlent le plancher habituel, `--floor` reste pour l'exception |
+| 104 | Réglages appliqués par un écouteur `console.command` qui change le défaut de l'option, couche UI seule | Domaine et handlers ignorent les réglages ; changer la valeur de l'input ne tient pas, `Command::run()` le relie à nouveau. Les drapeaux restent hors réglage, faute de pouvoir les retirer en ligne de commande |
+| 105 | Réglage vérifié à l'enregistrement, par nom d'option, avec le parseur de la commande | Demande de l'utilisateur : une faute doit tomber à `settings:set`, pas à la commande suivante. Le nom d'option suffit (`--floor` a le même sens partout) ; une option sans vérification connue est acceptée, pour ne pas bloquer une option nouvelle |
+| 106 | `app:settings:wizard` plutôt qu'une question au premier usage de l'inventaire | Choix de l'utilisateur : lancé quand on veut, il ne surprend pas au milieu d'une commande, et c'est l'endroit pour expliquer qu'une option tapée l'emporte. Il n'écrit que des réglages existants ; sans compte réglé, l'inventaire le rappelle d'une ligne au lieu de demander. « wizard » plutôt que « setup », à sa demande |
+| 107 | `laravel/prompts` pour les cases à cocher des ligues du wizard, avec repli sur `ChoiceQuestion` | Demande de l'utilisateur. Symfony Console n'a pas de sélection multiple aux flèches. Le paquet est maintenu, ne dépend que de `symfony/console` (déjà là) et ne sert qu'à `LeaguePicker`, en couche UI. Le repli couvre ce qu'il ne gère pas : pas de TTY, Windows (`stty`), et les tests — son `Prompt::fake()` exige Mockery, absent du projet |
+| 108 | `--at=auto` : la position devinée par l'IP, défaut de l'option et réponse proposée par le wizard | Demande de l'utilisateur : une fois le lieu habituel réglé, il fallait pouvoir revenir à la position courante en déplacement. Une valeur de `--at` plutôt qu'un drapeau `--here` (essayé puis retiré) : une seule option, pas de conflit entre deux, et la même valeur sert de réglage (`weather.at: auto`) et de défaut visible dans l'aide. « auto » plutôt que « here », qui promettrait une précision de GPS ; seul le mot exact compte, « Autun » reste un lieu (`PlaceOption`) |
+| 109 | `app:settings:set` cachée (`hidden`), mais gardée dans le PHAR | Choix de l'utilisateur : pour l'instant, on règle par le wizard, et à la main dans le fichier pour ce qu'il ne demande pas. Contrairement à `app:data:build` (décision 100), elle n'est pas retirée du PHAR : elle ne coûte rien, sert aux scripts, et revenir en arrière ne demandera que d'enlever `hidden`. Plus aucun message visible n'y renvoie |
+| 110 | `app:inventory:add` sans `--cp` ni `--floor` ; `format` jamais réglable | Choix de l'utilisateur : l'inventaire ne sert qu'aux rangs, la déduction et le plancher restent à `app:pvp:rank`. Les IVs doivent être complets, avec un message propre à l'inventaire plutôt que celui qui renvoie à `--cp`. `format` est exclu des réglages pour toutes les commandes (`ConfigurableOptions::NEVER`) : la sortie se choisit à chaque exécution, un JSON par défaut surprendrait au terminal |
+| 111 | Langue d'affichage en réglage global (`global.locale`), `cp` jamais réglable | Choix de l'utilisateur : c'est la langue de l'application, pas d'une commande. Une section `global` garde la forme `famille.option` du fichier ; seules les options listées dans `APPLICATION_WIDE` y vont. Un PC décrit un Pokémon, pas un défaut |
+| 112 | Chaque commande nomme, sur une ligne, les réglages qu'elle a pris ; sur la sortie d'erreur | Demande de l'utilisateur : un résultat ne doit pas dépendre d'un défaut oublié. Seules les options laissées de côté sont citées (une option tapée l'emporte, la citer tromperait). La sortie d'erreur garde le JSON et les pipes propres ; `-q` la tait. Remplace l'affichage réservé à `-v` |

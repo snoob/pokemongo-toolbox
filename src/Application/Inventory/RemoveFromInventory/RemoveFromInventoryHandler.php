@@ -20,9 +20,9 @@ final readonly class RemoveFromInventoryHandler
      */
     public function __invoke(RemoveFromInventoryCommand $command): RemoveFromInventoryResult
     {
-        $inventory = $this->repository->load();
+        $inventory = $this->repository->load($command->account);
         $removed = $inventory->remove($command->id);
-        $this->repository->save($inventory);
+        $this->repository->save($command->account, $inventory);
 
         return new RemoveFromInventoryResult($removed, $this->catalog->find($removed->species));
     }

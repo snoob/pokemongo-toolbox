@@ -11,15 +11,9 @@ use App\Domain\Inventory\Exception\DuplicateEntry;
 use App\Domain\Inventory\Model\Inventory;
 use App\Domain\Inventory\Model\InventoryEntry;
 use App\Domain\Inventory\Port\InventoryRepository;
-use App\Domain\Pokemon\Model\IvFloor;
-use App\Domain\Pokemon\Model\IvSpread;
 use App\Domain\Pokemon\Model\Species;
 use App\Domain\Pokemon\Port\SpeciesCatalog;
 use App\Domain\Pokemon\Service\SpeciesResolver;
-use App\Domain\Pvp\Exception\IvMismatch;
-use App\Domain\Pvp\Model\IvDeduction;
-use App\Domain\Pvp\Model\PokemonLevel;
-use App\Domain\Pvp\Service\IvDeducer;
 use Psr\Clock\ClockInterface;
 
 final readonly class AddToInventoryHandler
@@ -27,14 +21,12 @@ final readonly class AddToInventoryHandler
     public function __construct(
         private SpeciesResolver $resolver,
         private SpeciesCatalog $catalog,
-        private IvDeducer $deducer,
         private InventoryRepository $repository,
         private InventoryRanker $ranker,
         private ClockInterface $clock,
     ) {}
 
     /**
-     * @throws IvMismatch     when the CP does not settle the IVs
      * @throws DuplicateEntry when that Pokémon is already kept for one of the leagues
      */
     public function __invoke(AddToInventoryCommand $command): AddToInventoryResult
@@ -44,11 +36,11 @@ final readonly class AddToInventoryHandler
             : $this->resolver->resolve($command->identifier);
         $species = $match->species;
 
-        [$iv, $deduction] = $this->read($species, $command);
+        $iv = $command->iv;
 
-        $inventory = $this->repository->load();
+        $inventory = $this->repository->load($command->account);
         $entries = $inventory->add($species->id, $iv, $command->leagues, $this->clock->now());
-        $this->repository->save($inventory);
+        $this->repository->save($command->account, $inventory);
 
         $added = array_map(fn(InventoryEntry $entry): AddedEntry => $this->compare(
             $entry,
@@ -60,32 +52,9 @@ final readonly class AddToInventoryHandler
             $species,
             $iv,
             $added,
+            $command->account,
             $match->guessed ? $command->identifier : null,
-            $deduction,
         );
-    }
-
-    /**
-     * @return array{IvSpread, ?IvDeduction}
-     */
-    private function read(Species $species, AddToInventoryCommand $command): array
-    {
-        $spread = $command->iv->toSpread();
-
-        if (null === $command->cp) {
-            // The command refuses an incomplete pattern without a CP.
-            return [$spread ?? throw new \LogicException('IVs left unknown without a CP.'), null];
-        }
-
-        $deduction = $this->deducer->deduce(
-            $species->baseStats,
-            $command->iv,
-            $command->cp,
-            IvFloor::wild(),
-            PokemonLevel::regularCap(),
-        );
-
-        return [$deduction->iv, $deduction];
     }
 
     /**

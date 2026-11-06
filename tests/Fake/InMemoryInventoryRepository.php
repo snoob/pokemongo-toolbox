@@ -4,33 +4,33 @@ declare(strict_types=1);
 
 namespace App\Tests\Fake;
 
+use App\Domain\Inventory\Model\Account;
 use App\Domain\Inventory\Model\Inventory;
 use App\Domain\Inventory\Port\InventoryRepository;
 
 /**
- * Keeps a copy, as a file would: what the caller changes after a save is not saved.
+ * Keeps a copy per account, as a file would: what the caller changes after a save is not
+ * saved.
  */
 final class InMemoryInventoryRepository implements InventoryRepository
 {
     public int $saves = 0;
 
-    private Inventory $stored;
+    /** @var array<string, Inventory> */
+    private array $stored = [];
 
-    public function __construct(?Inventory $inventory = null)
+    #[\Override]
+    public function load(Account $account): Inventory
     {
-        $this->stored = $inventory ?? new Inventory();
+        $stored = $this->stored[$account->name] ?? null;
+
+        return null === $stored ? new Inventory() : clone $stored;
     }
 
     #[\Override]
-    public function load(): Inventory
+    public function save(Account $account, Inventory $inventory): void
     {
-        return clone $this->stored;
-    }
-
-    #[\Override]
-    public function save(Inventory $inventory): void
-    {
-        $this->stored = clone $inventory;
+        $this->stored[$account->name] = clone $inventory;
         ++$this->saves;
     }
 }

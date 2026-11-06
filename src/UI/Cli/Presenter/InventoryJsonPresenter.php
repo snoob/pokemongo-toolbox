@@ -20,7 +20,7 @@ final readonly class InventoryJsonPresenter
         return json_encode(
             array_map(
                 /** @return array<string, mixed> */
-                fn(InventoryLine $line): array => $this->line($line, $locale),
+                fn(InventoryLine $line): array => ['account' => $result->account->name, ...$this->line($line, $locale)],
                 $result->lines,
             ),
             \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE | \JSON_UNESCAPED_SLASHES | \JSON_THROW_ON_ERROR,
