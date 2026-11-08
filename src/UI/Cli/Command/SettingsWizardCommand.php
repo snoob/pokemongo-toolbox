@@ -50,7 +50,7 @@ final class SettingsWizardCommand extends Command
             explaining what it is for, which commands use it and how to override it.
 
               1. the language Pokémon and moves are shown in      (global.locale)
-              2. the game account the inventory commands use      (inventory.account)
+              2. the game account the inventory commands use      (global.account)
               3. the leagues "pvp" ranks in, megas or not          (pvp.league)
               4. the friendship you reroll IVs at, for the floor  (pvp.floor)
               5. where you play, for the weather forecast          (weather.at)
@@ -105,15 +105,16 @@ final class SettingsWizardCommand extends Command
                 null,
                 static fn(string $answer): string => SettingValues::fromAnswer('locale', strtolower($answer)),
             ),
-            'inventory.account' => SettingQuestion::ask(
+            'global.account' => SettingQuestion::ask(
                 $this->explain($io, '2/5 · Account', [
                     'Your inventory is kept per game account. This one is used by every inventory',
                     'command — inventory:add, inventory:list, inventory:remove — whenever you leave',
-                    'out --account. For another account, pass it as an option:',
+                    'out --account. To change it later, "switch"; for one command, pass it as an option:',
+                    '  <info>pogo switch snoob2</info>',
                     '  <info>pogo inventory:list -a snoob2</info>',
                 ]),
                 'Which game account is the inventory for by default?',
-                $sections['inventory']['account'] ?? null,
+                $sections[ConfigurableOptions::GLOBAL]['account'] ?? null,
                 'default',
                 static fn(string $answer): string => SettingValues::fromAnswer('account', $answer),
             ),

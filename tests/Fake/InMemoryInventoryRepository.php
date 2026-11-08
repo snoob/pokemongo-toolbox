@@ -31,6 +31,13 @@ final class InMemoryInventoryRepository implements InventoryRepository
     public function save(Account $account, Inventory $inventory): void
     {
         $this->stored[$account->name] = clone $inventory;
+        ksort($this->stored);
         ++$this->saves;
+    }
+
+    #[\Override]
+    public function accounts(): array
+    {
+        return array_map(static fn(string $name): Account => new Account($name), array_keys($this->stored));
     }
 }

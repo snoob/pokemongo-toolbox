@@ -8,7 +8,7 @@ app:settings:set pvp.floor               # sans valeur : retire le réglage
 ```
 
 ```json
-{"inventory": {"account": "snoob2555"}, "pvp": {"floor": "5"}, "weather": {"at": "Villemomble, France"}}
+{"global": {"account": "snoob2555"}, "pvp": {"floor": "5"}, "weather": {"at": "Villemomble, France"}}
 ```
 
 **La clé JSON est l'option de la commande.** Un objet par famille (le milieu de
@@ -30,6 +30,16 @@ lisant les définitions des commandes.
   qui ont `--locale` ; une famille ne la règle pas seule (`pvp.locale` n'existe pas).
   L'entrée reste bilingue : l'index de recherche couvre les deux langues quel que soit
   l'affichage.
+- **`global.account`** : de même pour le compte du jeu (décision 118). `app:account:switch`
+  (alias `switch`) le change sans retenir sa clé : `switch snoob2`, ou sans nom un choix
+  parmi les comptes qui ont un inventaire (`AccountPicker`, flèches dans un terminal,
+  liste à taper ailleurs ; « Another account… » pour en taper un nouveau). Hors terminal
+  et sans nom, il affiche le compte courant et la liste. Un compte sans inventaire est
+  accepté, avec un rappel (faute de frappe possible).
+- **Une clé qui ne remplit aucune option arrête toute commande** (décision 119) : faute de
+  frappe ou clé d'une version antérieure (`inventory.account`). `ApplySettings` refuse
+  l'exécution en nommant les clés et le fichier ; seules `settings:*` et `account:*`, qui
+  écrivent les réglages, tournent quand même, pour les corriger.
 - Une option répétable prend une liste ; une liste pour une option à valeur unique est
   une erreur. Chaîne ou liste vide = non réglé.
 - La valeur est vérifiée à l'enregistrement par `SettingValues`, avec le parseur que les
@@ -43,7 +53,7 @@ lisant les définitions des commandes.
   exemple en ligne de commande), et la fin propose les premières commandes à essayer —
   pour ne pas avoir à lire la doc avant de commencer. Il liste d'abord tous les réglages
   en place, puis pose cinq questions — `global.locale`,
-  `inventory.account`, `pvp.league`, `pvp.floor`, `weather.at` — avec la valeur actuelle
+  `global.account`, `pvp.league`, `pvp.floor`, `weather.at` — avec la valeur actuelle
   (ou une proposition : `default`, `great ultra master`, `no`) ; Entrée la garde, `-` la retire. Les
   ligues sont des cases à cocher (`LeaguePicker`, `laravel/prompts`) dans un terminal ;
   ailleurs (entrée fournie par un test ou un pipe, Windows), la même liste se tape, noms

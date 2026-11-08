@@ -20,7 +20,7 @@ correction des fautes comprise, et se complète de la même façon avec Tab
 
 Chaque compte du jeu a son inventaire, numéroté à part : un fichier
 `inventory/<compte>.json`. `-a, --account` le choisit, sinon le réglage
-`inventory.account`, sinon le compte `default`. Le nom passe en minuscules (le jeu ignore la casse des noms de
+`global.account` (que `switch` change), sinon le compte `default`. Le nom passe en minuscules (le jeu ignore la casse des noms de
 dresseur) et se limite à ce qui peut nommer un fichier.
 
 L'ajout prend trois IVs connus, sans `--cp` ni `--floor` (décision 110) : l'inventaire

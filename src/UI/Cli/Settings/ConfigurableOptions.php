@@ -18,7 +18,11 @@ use Symfony\Component\Console\Input\InputOption;
  */
 final readonly class ConfigurableOptions
 {
-    private const string OWN_SECTION = 'settings';
+    /**
+     * The families of the commands that write the settings rather than read them: they
+     * must run whatever the file holds, to put it right.
+     */
+    private const array OWN_SECTIONS = ['settings', 'account'];
 
     /**
      * Options a setting never fills, whatever the command: the output format is chosen
@@ -33,10 +37,11 @@ final readonly class ConfigurableOptions
     public const string GLOBAL = 'global';
 
     /**
-     * Options set once for the whole application, under "global": the display language is
-     * the same whatever the command. A family never sets them on its own.
+     * Options set once for the whole application, under "global": the display language
+     * and the game account are the same whatever the command. A family never sets them
+     * on its own.
      */
-    public const array APPLICATION_WIDE = ['locale'];
+    public const array APPLICATION_WIDE = ['locale', 'account'];
 
     /**
      * The family of a command, null when settings do not apply to it.
@@ -49,9 +54,9 @@ final readonly class ConfigurableOptions
             return null;
         }
 
-        $section = $parts[1] ?? self::OWN_SECTION;
+        $section = $parts[1] ?? null;
 
-        return self::OWN_SECTION === $section ? null : $section;
+        return null === $section || \in_array($section, self::OWN_SECTIONS, true) ? null : $section;
     }
 
     /**
@@ -114,6 +119,23 @@ final readonly class ConfigurableOptions
         ksort($keys);
 
         return $keys;
+    }
+
+    /**
+     * The keys of a settings file that fill no option: a typo, or a key an earlier version
+     * read. Left alone they would be skipped without a word — an account setting under its
+     * old name would send the inventory to "default".
+     *
+     * @param array<string, array<string, string|list<string>>> $sections as the settings file holds them
+     *
+     * @return list<string>
+     */
+    public static function unknown(Application $application, array $sections): array
+    {
+        return array_values(array_diff(
+            array_keys(SettingsTable::flatten($sections)),
+            array_keys(self::all($application)),
+        ));
     }
 
     private static function familyOf(string $option, string $section): string

@@ -16,4 +16,11 @@ interface InventoryRepository
     public function load(Account $account): Inventory;
 
     public function save(Account $account, Inventory $inventory): void;
+
+    /**
+     * The accounts something was ever saved for, by name.
+     *
+     * @return list<Account>
+     */
+    public function accounts(): array;
 }

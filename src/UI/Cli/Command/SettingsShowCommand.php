@@ -34,8 +34,8 @@ final class SettingsShowCommand extends Command
         $this->addOption('all', null, InputOption::VALUE_NONE, 'Also list the options that can be set')->setHelp(
             <<<'HELP'
                 A setting is the default of a command option, named by the command family and
-                the option: <info>pvp.floor</info> is --floor of "pvp", <info>inventory.account</info> is
-                --account of the inventory commands. What you type always wins.
+                the option: <info>pvp.floor</info> is --floor of "pvp", <info>global.account</info> is
+                --account of every command having it. What you type always wins.
 
                   <info>%command.full_name% --all</info>
                 HELP,

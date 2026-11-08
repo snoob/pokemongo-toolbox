@@ -33,6 +33,7 @@ bin/console app:pvp:rank <pokemon> [ivs]   # PvP ranking (alias: pvp)
 bin/console app:weather:forecast [--at=…]  # in-game weather (alias: weather)
 bin/console app:inventory:add|list|remove  # per-league inventory (alias: inventory:*, inventory = list)
 bin/console app:settings:show|wizard       # option defaults (alias: settings, wizard; settings:set hidden)
+bin/console app:account:switch [account]   # default game account (alias: switch)
 bin/console app:stardust:info              # Stardust by source (alias: stardust)
 bin/console app:data:build                 # refresh game data from upstream (~3 s)
 

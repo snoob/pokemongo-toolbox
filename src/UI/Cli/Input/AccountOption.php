@@ -11,8 +11,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 
 /**
- * The `--account` option of the inventory commands. Set `inventory.account` to change
- * the default.
+ * The `--account` option of the inventory commands. Set `global.account` — or run
+ * `switch` — to change the default.
  */
 final readonly class AccountOption
 {

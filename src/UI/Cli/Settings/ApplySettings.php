@@ -11,6 +11,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
 /**
@@ -41,9 +42,19 @@ final readonly class ApplySettings
             return;
         }
 
+        $sections = $this->settings->load();
+        $unknown = UnknownSettings::message($command->getApplication(), $sections, $this->settings->path());
+
+        if (null !== $unknown) {
+            new SymfonyStyle($event->getInput(), self::errors($event->getOutput()))->error($unknown);
+            $event->disableCommand();
+
+            return;
+        }
+
         $used = [];
 
-        foreach (self::applicable($section, $this->settings->load()) as $name => $value) {
+        foreach (self::applicable($section, $sections) as $name => $value) {
             $option = ConfigurableOptions::of($command, $name, $command->getApplication());
 
             if (null === $option) {
@@ -79,8 +90,12 @@ final readonly class ApplySettings
             return;
         }
 
-        $errors = $output instanceof ConsoleOutputInterface ? $output->getErrorOutput() : $output;
-        $errors->writeln(\sprintf(' <fg=gray>From your settings: %s</>', implode(' ', $used)));
+        self::errors($output)->writeln(\sprintf(' <fg=gray>From your settings: %s</>', implode(' ', $used)));
+    }
+
+    private static function errors(OutputInterface $output): OutputInterface
+    {
+        return $output instanceof ConsoleOutputInterface ? $output->getErrorOutput() : $output;
     }
 
     /**

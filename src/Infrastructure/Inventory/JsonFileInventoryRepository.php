@@ -40,8 +40,37 @@ final readonly class JsonFileInventoryRepository implements InventoryRepository
         JsonDocumentFile::write($this->file($account), 'inventory', InventoryDocument::encode($inventory));
     }
 
+    /**
+     * A file whose name cannot be an account — one written by hand — is left out.
+     */
+    #[\Override]
+    public function accounts(): array
+    {
+        $files = is_dir($this->directory()) ? scandir($this->directory()) : false;
+        $accounts = [];
+
+        foreach (false === $files ? [] : $files as $file) {
+            if (!str_ends_with($file, '.json')) {
+                continue;
+            }
+
+            try {
+                $accounts[] = new Account(substr($file, 0, -5));
+            } catch (\InvalidArgumentException) {
+                continue;
+            }
+        }
+
+        return $accounts;
+    }
+
     private function file(Account $account): string
     {
-        return InventoryFile::in($this->directory ?? InventoryFile::directory($_SERVER), $account);
+        return InventoryFile::in($this->directory(), $account);
+    }
+
+    private function directory(): string
+    {
+        return $this->directory ?? InventoryFile::directory($_SERVER);
     }
 }

@@ -21,11 +21,14 @@ final readonly class AccountHint
 
     public function show(InputInterface $input, SymfonyStyle $io): void
     {
-        if (AccountOption::typed($input) || null !== ($this->settings->load()['inventory']['account'] ?? null)) {
+        if (
+            AccountOption::typed($input)
+            || null !== ($this->settings->load()[ConfigurableOptions::GLOBAL]['account'] ?? null)
+        ) {
             return;
         }
 
-        $io->text('<fg=gray>No account set, so "default" is used; "wizard" sets yours.</>');
+        $io->text('<fg=gray>No account set, so "default" is used; "switch" sets yours.</>');
         $io->newLine();
     }
 }

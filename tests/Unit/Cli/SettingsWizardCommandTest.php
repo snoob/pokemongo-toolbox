@@ -37,8 +37,7 @@ final class SettingsWizardCommandTest extends TestCase
         self::assertSame(Command::SUCCESS, $tester->getStatusCode());
         self::assertSame(
             [
-                'global' => ['locale' => 'fr'],
-                'inventory' => ['account' => 'Snoob2555'],
+                'global' => ['locale' => 'fr', 'account' => 'Snoob2555'],
                 'pvp' => ['league' => ['great', 'ultra'], 'floor' => 'best'],
                 'weather' => ['at' => 'Villemomble, France'],
             ],
@@ -50,7 +49,8 @@ final class SettingsWizardCommandTest extends TestCase
     public function testEnterKeepsTheValueAndADashRemovesIt(): void
     {
         new SettingsFile($this->file)->save([
-            'inventory' => ['account' => 'snoob2555', 'floor' => 'best'],
+            'global' => ['account' => 'snoob2555'],
+            'inventory' => ['floor' => 'best'],
             'weather' => ['at' => 'Villemomble, France'],
         ]);
 
@@ -63,7 +63,7 @@ final class SettingsWizardCommandTest extends TestCase
         );
 
         self::assertSame(
-            ['inventory' => ['account' => 'snoob2555', 'floor' => 'best']],
+            ['global' => ['account' => 'snoob2555'], 'inventory' => ['floor' => 'best']],
             new SettingsFile($this->file)->load(),
             'the settings it does not ask about stay',
         );
@@ -75,7 +75,7 @@ final class SettingsWizardCommandTest extends TestCase
 
         self::assertSame(
             [
-                'inventory' => ['account' => 'default'],
+                'global' => ['account' => 'default'],
                 'pvp' => ['league' => ['great', 'ultra', 'master']],
                 'weather' => ['at' => 'auto'],
             ],
@@ -100,7 +100,7 @@ final class SettingsWizardCommandTest extends TestCase
         ]);
 
         self::assertSame(Command::SUCCESS, $tester->getStatusCode());
-        self::assertSame('snoob2555', new SettingsFile($this->file)->load()['inventory']['account'] ?? null);
+        self::assertSame('snoob2555', new SettingsFile($this->file)->load()['global']['account'] ?? null);
         self::assertStringContainsString('"hyper" is invalid', $tester->getDisplay());
         self::assertStringContainsString('Unknown locale "de"', $tester->getDisplay());
         self::assertStringContainsString('"lucky" is invalid', $tester->getDisplay());

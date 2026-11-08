@@ -44,7 +44,7 @@ final class SettingsSetCommand extends Command
                 'Its default; several for a repeatable option; none to unset it',
             )
             ->setHelp(<<<'HELP'
-                  <info>%command.full_name% inventory.account snoob2555</info>
+                  <info>%command.full_name% global.account snoob2555</info>
                   <info>%command.full_name% pvp.floor best</info>
                   <info>%command.full_name% pvp.league great ultra master</info>   the Mega Editions left out
                   <info>%command.full_name% weather.at "Villemomble, France"</info>

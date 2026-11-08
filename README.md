@@ -257,8 +257,9 @@ When you add one, it is compared with what you already keep in that league that 
 become the same form, and the best of those is named if it beats the newcomer.
 
 **Several game accounts**: each has its own inventory, numbered on its own. `-a,
---account` picks one; without it the commands use the `inventory.account` setting, else an
-account named `default`. Give all three IVs: the inventory ranks spreads, so it takes
+--account` picks one; without it the commands use the `global.account` setting, else an
+account named `default`. `pogo switch snoob2` changes that setting; `pogo switch` alone
+lists the accounts you keep Pokémon for, to pick one with the arrows. Give all three IVs: the inventory ranks spreads, so it takes
 neither `--cp` nor `--floor` — `pvp` is where to deduce IVs or weigh a floor.
 
 Each account is a JSON file under `~/.local/share/pokemongo-toolbox/inventory/<account>.json`
@@ -284,9 +285,11 @@ Until an account is set, the inventory commands say they use `default`.
 
 Beyond those four, any option that takes a value can get your own default. A setting is
 named after the command family and the option: `pvp.floor` is `--floor` of `pvp`,
-`inventory.account` is `--account` of every inventory command. The display language is
-set once for the whole tool, as `global.locale` (`fr` or `en`); whichever it is, you can
-still type names in either language.
+`global.locale` is `--locale` of every command. The display language (`fr` or `en`) and
+the game account (`global.account`) are set once for the whole tool; whichever language it
+is, you can still type names in either. A key that fills no option — a typo, or
+`inventory.account` from an earlier version — stops every command with an error naming
+it, rather than being skipped without a word.
 
 ```bash
 pogo settings          # what is set

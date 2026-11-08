@@ -61,35 +61,40 @@ final class ApplySettingsTest extends TestCase
         self::assertSame(['ultra'], $input->getOption('league'));
     }
 
-    public function testAnotherFamilyAndFlagsAreLeftAlone(): void
-    {
-        $input = $this->applyTo(
-            'app:pvp:rank',
-            [],
-            [
-                'inventory' => ['floor' => 'best'],
-                'pvp' => ['shadow' => 'yes'],
-            ],
-        );
-
-        self::assertSame('wild', $input->getOption('floor'));
-        self::assertFalse($input->getOption('shadow'));
-    }
-
     public function testTheLocaleIsSetOnceForTheWholeApplication(): void
     {
-        $input = $this->applyTo(
+        $input = $this->applyTo('app:pvp:rank', [], ['global' => ['locale' => 'fr']]);
+
+        self::assertSame('fr', $input->getOption('locale'));
+        self::assertSame('wild', $input->getOption('floor'), 'only the locale is global');
+    }
+
+    public function testAKeyFillingNoOptionStopsTheCommand(): void
+    {
+        $output = new BufferedOutput();
+        $event = $this->eventFor(
             'app:pvp:rank',
             [],
             [
-                'global' => ['locale' => 'fr', 'floor' => 'raid'],
-                'pvp' => ['locale' => 'en', 'cp' => '1500'],
+                'inventory' => ['account' => 'snoob2555'],
+                'pvp' => ['floor' => 'best', 'locale' => 'en', 'shadow' => 'yes', 'cp' => '1500'],
             ],
+            $output,
         );
 
-        self::assertSame('fr', $input->getOption('locale'), 'a family does not set it on its own');
-        self::assertSame('wild', $input->getOption('floor'), 'only the locale is global');
-        self::assertNull($input->getOption('cp'), 'a CP is never a setting');
+        self::assertFalse($event->commandShouldRun(), 'it would run on a default the player believes changed');
+        self::assertSame('wild', $event->getInput()->getOption('floor'), 'nothing is applied');
+        self::assertStringContainsString(
+            'The settings "inventory.account", "pvp.locale", "pvp.shadow", "pvp.cp"',
+            $output->fetch(),
+        );
+    }
+
+    public function testTheSettingsCommandsRunWhateverTheFileHolds(): void
+    {
+        $event = $this->eventFor('app:settings:set', [], ['inventory' => ['account' => 'snoob2555']]);
+
+        self::assertTrue($event->commandShouldRun(), 'they are how the file gets put right');
     }
 
     public function testTheRunNamesTheSettingsItTookAndOnlyThose(): void
@@ -137,17 +142,32 @@ final class ApplySettingsTest extends TestCase
      */
     private function applyTo(string $name, array $typed, array $settings, ?OutputInterface $output = null): ArrayInput
     {
+        $input = $this->eventFor($name, $typed, $settings, $output)->getInput();
+        self::assertInstanceOf(ArrayInput::class, $input);
+
+        return $input;
+    }
+
+    /**
+     * @param array<string, mixed>                                 $typed
+     * @param array<string, array<string, string|list<string>>> $settings
+     */
+    private function eventFor(
+        string $name,
+        array $typed,
+        array $settings,
+        ?OutputInterface $output = null,
+    ): ConsoleCommandEvent {
         new SettingsFile($this->file)->save($settings);
         $command = $this->application->find($name);
         $command->mergeApplicationDefinition();
         $input = new ArrayInput($typed);
         $input->bind($command->getDefinition());
+        $event = new ConsoleCommandEvent($command, $input, $output ?? new NullOutput());
 
-        (new ApplySettings(new SettingsFile($this->file)))(
-            new ConsoleCommandEvent($command, $input, $output ?? new NullOutput()),
-        );
+        (new ApplySettings(new SettingsFile($this->file)))($event);
 
-        return $input;
+        return $event;
     }
 
     private function command(string $name): Command
