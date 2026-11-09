@@ -419,6 +419,9 @@ Règles d'usage :
    (Flex écrit les recettes dans `config/packages/`).
 6. Les caches d'exécution ne sont **jamais** commités ; les données générées stables
    (`data/*.json`, `translations/*.xlf`) le sont.
+7. **Une branche et une pull request par issue** (décision 121) : `issue-N-<slug>`, PR
+   qui dit `Closes #N`, fusionnée une fois la CI verte. Rien ne se commite directement
+   sur `main` : une release publie `main` tel quel, donc seulement ce qui a été fusionné.
 
 ---
 
@@ -546,3 +549,4 @@ Règles d'usage :
 | 118 | Le compte devient un réglage global (`global.account`), changé par `switch` | Le compte n'est pas une affaire de famille : la même personne joue le même compte quelle que soit la commande, comme la langue. `switch` évite de retenir la clé et liste les comptes qui ont un inventaire (port `InventoryRepository::accounts()`) |
 | 119 | Une clé de réglage inconnue arrête la commande, sauf `settings:*` et `account:*` | Renommer `inventory.account` en `global.account` aurait sinon renvoyé l'inventaire sur `default` sans un mot. Une faute de frappe a le même effet. Les commandes qui écrivent les réglages tournent quand même, pour les corriger |
 | 120 | Les renommages de réglages passent par une table de migrations tenue à la main (`SettingMigrations`), appliquée par `settings --fix` seulement | Issue #2. Deviner la nouvelle clé (distance d'édition, même option ailleurs) se tromperait sans le dire ; migrer en silence au démarrage écrirait dans le fichier du joueur sans qu'il l'ait demandé. Le plan est montré par l'erreur, puis appliqué tel quel, d'un seul calcul (`SettingsRepair`) |
+| 121 | Une branche et une PR par issue, plus de commit direct sur `main` | Choix de l'utilisateur, après une release v3.2.0 qui a embarqué une feature pas prête, commitée sur `main` en attendant : il a fallu réécrire `main` et republier. `main` ne porte plus que ce qui est fusionné, et la CI (`ci.yml`, déjà sur `pull_request`) tourne avant la fusion |
