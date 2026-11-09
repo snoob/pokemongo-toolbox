@@ -289,7 +289,9 @@ named after the command family and the option: `pvp.floor` is `--floor` of `pvp`
 the game account (`global.account`) are set once for the whole tool; whichever language it
 is, you can still type names in either. A key that fills no option — a typo, or
 `inventory.account` from an earlier version — stops every command with an error naming
-it, rather than being skipped without a word.
+it, rather than being skipped without a word. The error says what `pogo settings --fix`
+will do: a renamed key keeps its value under its new name, any other is removed with its
+value quoted so you can set it again.
 
 ```bash
 pogo settings          # what is set

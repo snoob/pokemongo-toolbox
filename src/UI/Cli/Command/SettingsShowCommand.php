@@ -6,8 +6,10 @@ namespace App\UI\Cli\Command;
 
 use App\Infrastructure\Settings\SettingsFile;
 use App\UI\Cli\Settings\ConfigurableOptions;
-use App\UI\Cli\Settings\SettingsTable;
-use App\UI\Cli\Settings\SettingValues;
+use App\UI\Cli\Settings\SettingsOverview;
+use App\UI\Cli\Settings\SettingsRepair;
+use App\UI\Cli\Settings\SettingsRepairPlan;
+use App\UI\Cli\Settings\SettingsRepairReport;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -24,6 +26,7 @@ final class SettingsShowCommand extends Command
 {
     public function __construct(
         private readonly SettingsFile $settings,
+        private readonly SettingsRepair $repair,
     ) {
         parent::__construct();
     }
@@ -31,21 +34,29 @@ final class SettingsShowCommand extends Command
     #[\Override]
     protected function configure(): void
     {
-        $this->addOption('all', null, InputOption::VALUE_NONE, 'Also list the options that can be set')->setHelp(
-            <<<'HELP'
+        $this
+            ->addOption('all', null, InputOption::VALUE_NONE, 'Also list the options that can be set')
+            ->addOption('fix', null, InputOption::VALUE_NONE, 'Put right the keys this version no longer reads')
+            ->setHelp(<<<'HELP'
                 A setting is the default of a command option, named by the command family and
                 the option: <info>pvp.floor</info> is --floor of "pvp", <info>global.account</info> is
                 --account of every command having it. What you type always wins.
 
                   <info>%command.full_name% --all</info>
-                HELP,
-        );
+
+                When a version renames or removes an option, the old key stops every command
+                and is listed here with what --fix will do: a renamed key keeps its value under
+                its new name, any other is removed with its value quoted.
+
+                  <info>%command.full_name% --fix</info>
+                HELP);
     }
 
     #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
+        $application = $this->getApplication();
 
         try {
             $sections = $this->settings->load();
@@ -55,71 +66,65 @@ final class SettingsShowCommand extends Command
             return Command::FAILURE;
         }
 
-        $rows = [];
-        $application = $this->getApplication();
+        $repair = null === $application ? null : $this->repair->plan($application, $sections);
+
+        if (true === $input->getOption('fix')) {
+            $fixed = $this->fix($io, $repair);
+
+            if (null === $fixed) {
+                return Command::FAILURE;
+            }
+
+            $sections = $fixed;
+            $repair = null;
+        }
+
         $configurable = null === $application ? [] : ConfigurableOptions::all($application);
+        $warned = SettingsOverview::render(
+            $io,
+            $sections,
+            $configurable,
+            true === $input->getOption('all') ? $configurable : [],
+            $this->settings->path(),
+        );
 
-        $problems = [];
-
-        foreach (SettingsTable::flatten($sections) as $key => $value) {
-            $problem = self::problem($key, explode('.', $key, 2)[1] ?? $key, (array) $value, $configurable);
-            $rows[$key] = [
-                null === $problem ? $key : \sprintf('<comment>%s</>', $key),
-                implode(' ', (array) $value),
-                '',
-            ];
-
-            if (null !== $problem) {
-                $problems[] = \sprintf('%s: %s', $key, $problem);
-            }
-        }
-
-        if (true === $input->getOption('all')) {
-            foreach ($configurable as $key => $options) {
-                $rows[$key] = [$key, $rows[$key][1] ?? '', $options[0]->getDescription()];
-            }
-
-            ksort($rows);
-        }
-
-        [] === $rows
-            ? $io->text('Nothing set yet; "wizard" sets the usual defaults. "--all" lists what can be set.')
-            : $io->table(['Setting', 'Value', true === $input->getOption('all') ? 'Option' : ''], array_values($rows));
-
-        $io->text(\sprintf('<fg=gray>Kept in %s</>', $this->settings->path()));
-
-        if ([] !== $rows) {
-            $io->text('<fg=gray>"wizard" sets them up again, question by question.</>');
-        }
-        $io->newLine();
-
-        if ([] !== $problems) {
-            $io->warning($problems);
+        if (null !== $repair && !$repair->isEmpty()) {
+            SettingsRepairReport::explain(
+                $io,
+                $repair,
+                $this->settings->path(),
+                SettingsRepairReport::binary($_SERVER),
+            );
 
             return Command::FAILURE;
         }
 
-        return Command::SUCCESS;
+        return $warned ? Command::FAILURE : Command::SUCCESS;
     }
 
     /**
-     * What is wrong with a setting edited by hand, null when nothing is.
+     * Writes the repaired settings, all at once, and says what was done.
      *
-     * @param list<string>                      $values
-     * @param array<string, list<InputOption>> $configurable
+     * @return ?array<string, array<string, string|list<string>>> the settings now kept, null when they could not be written
      */
-    private static function problem(string $key, string $option, array $values, array $configurable): ?string
+    private function fix(SymfonyStyle $io, ?SettingsRepairPlan $repair): ?array
     {
-        if (!\array_key_exists($key, $configurable)) {
-            return 'no such option; remove it from the file.';
+        if (null === $repair || $repair->isEmpty()) {
+            $io->success('Nothing to fix.');
+
+            return $this->settings->load();
         }
 
         try {
-            SettingValues::check($option, $values);
-        } catch (\InvalidArgumentException $e) {
-            return $e->getMessage();
+            $this->settings->save($repair->fixed);
+        } catch (\RuntimeException $e) {
+            $io->error($e->getMessage());
+
+            return null;
         }
 
-        return null;
+        SettingsRepairReport::done($io, $repair);
+
+        return $repair->fixed;
     }
 }

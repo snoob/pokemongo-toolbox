@@ -3,6 +3,7 @@
 ```bash
 app:settings:wizard                      # alias : wizard
 app:settings:show [--all]                # alias : settings
+app:settings:show --fix                  # remet d'aplomb un fichier refusé (issue #2)
 app:settings:set pvp.floor best          # cachée (décision 109)
 app:settings:set pvp.floor               # sans valeur : retire le réglage
 ```
@@ -37,9 +38,9 @@ lisant les définitions des commandes.
   et sans nom, il affiche le compte courant et la liste. Un compte sans inventaire est
   accepté, avec un rappel (faute de frappe possible).
 - **Une clé qui ne remplit aucune option arrête toute commande** (décision 119) : faute de
-  frappe ou clé d'une version antérieure (`inventory.account`). `ApplySettings` refuse
-  l'exécution en nommant les clés et le fichier ; seules `settings:*` et `account:*`, qui
-  écrivent les réglages, tournent quand même, pour les corriger.
+  frappe ou clé d'une version antérieure (`inventory.account`). Seules `settings:*` et
+  `account:*`, qui écrivent les réglages, tournent quand même, pour les corriger.
+  L'erreur explique le problème avant toute correction (voir « `settings --fix` »).
 - Une option répétable prend une liste ; une liste pour une option à valeur unique est
   une erreur. Chaîne ou liste vide = non réglé.
 - La valeur est vérifiée à l'enregistrement par `SettingValues`, avec le parseur que les
@@ -69,3 +70,46 @@ lisant les définitions des commandes.
   terminal. Sans compte réglé, `inventory:add` et `:list` le rappellent (`AccountHint`).
 - Fichier illisible : erreur, comme l'inventaire — retomber sur les défauts de l'outil
   rangerait des Pokémon dans un autre compte sans le dire.
+
+## `settings --fix` — après un renommage d'option
+
+« Mon fichier de réglages est refusé : comment je le remets d'aplomb sans perdre mes
+valeurs ? » (issue #2). Hors périmètre : une valeur fausse sous une clé valide, que
+`settings` signale déjà et qui ne bloque pas les commandes.
+
+```
+ [ERROR] Your settings file ~/.config/pokemongo-toolbox/settings.json holds keys this version no longer reads.
+
+  inventory.account   renamed global.account in v3.2.0
+  pvp.flor            no option has this name
+
+ settings --fix will:
+  - set global.account to snoob2555, the value of inventory.account
+  - remove inventory.account
+  - remove pvp.flor — its value "best" is lost; set it again under its right name
+
+ Run: pogo settings --fix
+```
+
+- **Le problème s'explique avant toute correction** : l'erreur qui bloque une commande et
+  `settings` sans option disent la même chose — chaque clé et pourquoi, chaque action que
+  `--fix` fera, la commande à taper. `settings` affiche aussi le tableau et sort en code 1.
+- **`--fix` applique ce plan, rien d'autre**, puis dit « Done: » suivi des mêmes actions
+  au passé et affiche les réglages corrigés. Un fichier sain : « Nothing to fix », code
+  0, fichier non réécrit. Pas de confirmation : le plan a été montré avant.
+- **Table des migrations** (`SettingMigrations`, décision 120), tenue à la main, une ligne
+  par changement : ancienne clé, nouvelle clé (aucune = option supprimée), version.
+  - Renommage : la valeur passe telle quelle (liste comprise), l'ancienne clé est retirée.
+  - Nouvelle clé déjà réglée : elle est gardée, l'ancienne retirée — « keep
+    global.account = main, drop inventory.account = snoob2555 ».
+  - Valeur refusée par la nouvelle option (`SettingValues`, ou une liste pour une option
+    à valeur unique) : l'ancienne clé est retirée, le plan cite l'erreur et la valeur
+    perdue.
+  - Option supprimée, ou clé hors table (faute de frappe, édition à la main) : la clé est
+    retirée, le plan cite la valeur perdue pour qu'elle puisse être réglée à nouveau.
+- **Un seul calcul** (`SettingsRepair`) : le plan affiché par l'erreur, celui de
+  `settings` et ce que `--fix` écrit en viennent. Le fichier corrigé est calculé avec le
+  plan puis écrit en une fois (écriture atomique de `JsonDocumentFile`) ; un fichier
+  illisible reste une erreur, `--fix` n'y touche pas.
+- La commande proposée reprend le binaire tel qu'il a été lancé (`pogo`,
+  `./pogo.phar`, `bin/console`).

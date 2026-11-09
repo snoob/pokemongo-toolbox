@@ -11,7 +11,7 @@ use App\Infrastructure\Json\JsonDocumentFile;
  * The player's defaults for command options, one object per command family:
  *
  *     {"pvp": {"floor": "5", "league": ["great", "ultra", "master"]},
- *      "inventory": {"account": "snoob2555"}}
+ *      "global": {"account": "snoob2555"}}
  *
  * Under the XDG config directory, readable and editable by hand; `POGO_SETTINGS` points
  * elsewhere. A file that cannot be read is an error, never "no settings": the commands

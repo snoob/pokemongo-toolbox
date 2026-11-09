@@ -11,7 +11,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
 /**
@@ -31,6 +30,7 @@ final readonly class ApplySettings
 {
     public function __construct(
         private SettingsFile $settings,
+        private SettingsGuard $guard,
     ) {}
 
     public function __invoke(ConsoleCommandEvent $event): void
@@ -43,19 +43,16 @@ final readonly class ApplySettings
         }
 
         $sections = $this->settings->load();
-        $unknown = UnknownSettings::message($command->getApplication(), $sections, $this->settings->path());
+        $application = $command->getApplication();
 
-        if (null !== $unknown) {
-            new SymfonyStyle($event->getInput(), self::errors($event->getOutput()))->error($unknown);
-            $event->disableCommand();
-
+        if ($this->guard->stops($event, $application, $sections)) {
             return;
         }
 
         $used = [];
 
         foreach (self::applicable($section, $sections) as $name => $value) {
-            $option = ConfigurableOptions::of($command, $name, $command->getApplication());
+            $option = ConfigurableOptions::of($command, $name, $application);
 
             if (null === $option) {
                 continue;
