@@ -8,6 +8,7 @@ use App\Domain\Inventory\Model\Account;
 use App\Domain\Pokemon\Model\IvFloor;
 use App\UI\Cli\Input\CpOption;
 use App\UI\Cli\Input\LeagueOption;
+use Symfony\Component\Console\Input\InputOption;
 
 /**
  * Checks a setting before it is saved, with the parser the commands use for that option,
@@ -39,6 +40,27 @@ final readonly class SettingValues
                 default => null,
             };
         }
+    }
+
+    /**
+     * Why a value cannot fill an option, null when it can: a list for an option taking one
+     * value, or a value its parser refuses.
+     *
+     * @param string|list<string> $value
+     */
+    public static function refusal(InputOption $option, string|array $value): ?string
+    {
+        if (\is_array($value) && !$option->isArray()) {
+            return \sprintf('--%s takes one value', $option->getName());
+        }
+
+        try {
+            self::check($option->getName(), (array) $value);
+        } catch (\InvalidArgumentException $e) {
+            return $e->getMessage();
+        }
+
+        return null;
     }
 
     /**

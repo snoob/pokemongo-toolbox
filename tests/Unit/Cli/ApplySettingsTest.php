@@ -7,6 +7,8 @@ namespace App\Tests\Unit\Cli;
 use App\Infrastructure\Settings\SettingsFile;
 use App\UI\Cli\Settings\ApplySettings;
 use App\UI\Cli\Settings\ConfigurableOptions;
+use App\UI\Cli\Settings\SettingsGuard;
+use App\UI\Cli\Settings\SettingsRepair;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
@@ -84,10 +86,11 @@ final class ApplySettingsTest extends TestCase
 
         self::assertFalse($event->commandShouldRun(), 'it would run on a default the player believes changed');
         self::assertSame('wild', $event->getInput()->getOption('floor'), 'nothing is applied');
-        self::assertStringContainsString(
-            'The settings "inventory.account", "pvp.locale", "pvp.shadow", "pvp.cp"',
-            $output->fetch(),
-        );
+        $told = $output->fetch();
+        self::assertMatchesRegularExpression('/holds keys this\s+version no longer reads/', $told);
+        self::assertMatchesRegularExpression('/pvp\.shadow\s+no option has this name/', $told);
+        self::assertStringContainsString('settings --fix will:', $told, 'the plan comes with the error');
+        self::assertStringContainsString('settings --fix', $told);
     }
 
     public function testTheSettingsCommandsRunWhateverTheFileHolds(): void
@@ -165,7 +168,8 @@ final class ApplySettingsTest extends TestCase
         $input->bind($command->getDefinition());
         $event = new ConsoleCommandEvent($command, $input, $output ?? new NullOutput());
 
-        (new ApplySettings(new SettingsFile($this->file)))($event);
+        $settings = new SettingsFile($this->file);
+        (new ApplySettings($settings, new SettingsGuard($settings, new SettingsRepair())))($event);
 
         return $event;
     }

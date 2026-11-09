@@ -121,23 +121,6 @@ final readonly class ConfigurableOptions
         return $keys;
     }
 
-    /**
-     * The keys of a settings file that fill no option: a typo, or a key an earlier version
-     * read. Left alone they would be skipped without a word — an account setting under its
-     * old name would send the inventory to "default".
-     *
-     * @param array<string, array<string, string|list<string>>> $sections as the settings file holds them
-     *
-     * @return list<string>
-     */
-    public static function unknown(Application $application, array $sections): array
-    {
-        return array_values(array_diff(
-            array_keys(SettingsTable::flatten($sections)),
-            array_keys(self::all($application)),
-        ));
-    }
-
     private static function familyOf(string $option, string $section): string
     {
         return \in_array($option, self::APPLICATION_WIDE, true) ? self::GLOBAL : $section;
