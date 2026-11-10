@@ -36,7 +36,7 @@ final readonly class InventoryOrder
             ),
         );
 
-        return new ListInventoryResult($lines, $result->account);
+        return new ListInventoryResult($lines, $result->account, $result->species, $result->guessedFrom);
     }
 
     private function name(InventoryLine $line, ?string $locale): string

@@ -10,7 +10,7 @@ app:inventory:add <pokemon> <league> <ivs|rang> [--cp=…] [-s] [-a compte]
 app:inventory:add minidraco great 0/15/15
 app:inventory:add minidraco great 6 --cp=815      # rang 6, refusé si Draco dépasse 1500
 app:inventory:list [-l great] [--format=json]
-app:inventory:remove 3                              # numéro affiché par list
+app:inventory:remove [pokemon] [league] [ivs|rang] [-s] # comme add ; choix aux flèches
 ```
 
 L'argument `pokemon` de `app:inventory:add` se résout comme celui de `app:pvp:rank`,
@@ -69,8 +69,9 @@ L'ajout ne prend pas de `--floor` (décision 110) : peser un plancher se fait av
 
 Une **entrée** = une forme (l'id porte l'obscur), des IVs complets, **une ligue**, une
 date. Le même Pokémon gardé pour deux ligues fait deux entrées : chaque ligue est une
-équipe, et chaque Mega Edition est une ligue à part entière. Les numéros ne sont jamais
-réutilisés après une suppression. Même forme, mêmes IVs, même ligue → refusé (doublon).
+équipe, et chaque Mega Edition est une ligue à part entière. Chaque entrée porte un numéro, jamais
+réutilisé après une suppression ; il reste dans le fichier et la sortie JSON, mais ne
+s'affiche plus (décision 124) : le joueur désigne un Pokémon par ce qu'il lit en jeu. Même forme, mêmes IVs, même ligue → refusé (doublon).
 
 ## Classer une entrée
 
@@ -90,6 +91,20 @@ sous le plafond descend en bas de sa ligue. À rangs égaux (le plus souvent deu
 de la même famille, comptés comme la même forme), **l'ordre alphabétique** du nom affiché
 départage, dans la langue d'affichage, sans compter accents ni majuscules. Ce dernier
 départage se fait à l'affichage (`InventoryOrder`) : le handler ne connaît pas les noms.
+
+## Retirer
+
+`remove` prend **les arguments de `add`**, tous facultatifs, chacun réduisant la
+recherche : Pokémon, ligue, IVs ou rang (lu comme à l'ajout, ce qui demande Pokémon et
+ligue — l'ordre des arguments les impose). Un nom seul trouve aussi la forme obscure ;
+`-s` ne garde que l'obscure. Une seule entrée trouvée → retirée, sans confirmation : le
+message la nomme, et la rajouter suffit à défaire. Plusieurs → choix aux flèches
+(`laravel/prompts`, tapé hors terminal comme le wizard), dans l'ordre de `list` ; sans
+interaction (`-n`), la liste est affichée et rien n'est retiré (code 1). Rien → erreur.
+Sans argument, le choix porte sur tout l'inventaire du compte.
+
+Une entrée se décrit sans son numéro : « Dratini 0/15/15, Great League — IVs #6 as
+Dragonair », au choix comme au message de retrait (`KeptPokemonLabel`).
 
 ## Comparer
 

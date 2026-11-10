@@ -243,7 +243,8 @@ pogo inventory:add minidraco great 6 --cp=815   # by its rank; refused if the Dr
 pogo inventory:add gengar great 2/14/15 --shadow
 pogo inventory                          # every league, best first (= inventory:list)
 pogo inventory:list -l great --format=json
-pogo inventory:remove 3                 # by the number the list shows
+pogo inventory:remove minidraco great 0/15/15   # as you added it; or its rank
+pogo inventory:remove minidraco         # several kept: pick one with the arrows
 pogo inventory:add azurill great 5/15/14 -a snoob2555  # another account
 ```
 
@@ -256,6 +257,11 @@ family its league ranks best**, not as its last evolution: a Dratini kept for th
 League counts as a Dragonair, the same Dratini kept for the Ultra League as a Dragonite.
 When you add one, it is compared with what you already keep in that league that can
 become the same form, and the best of those is named if it beats the newcomer.
+
+**Removing** takes what `inventory:add` takes, each argument optional: whatever is
+left out widens the search. One match is removed; several are offered to pick from with
+the arrows, in the order of the list (with `-n`, they are listed and nothing is
+removed). A name alone finds the shadow form too; `-s` keeps only the shadow.
 
 **Several game accounts**: each has its own inventory, numbered on its own. `-a,
 --account` picks one; without it the commands use the `global.account` setting, else an

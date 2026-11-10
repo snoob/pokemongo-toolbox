@@ -287,6 +287,46 @@ final class InventoryHandlersTest extends TestCase
         self::assertCount(1, $this->list(League::Ultra)->lines);
     }
 
+    public function testAPokemonIsFoundByWhatInventoryAddTakes(): void
+    {
+        $this->add('Minidraco', '0/15/15', League::Great);
+        $this->add('Minidraco', '0/15/15', League::Ultra);
+        $this->add('Minidraco', '1/14/15', League::Great);
+        $this->add('Draco', '0/15/15', League::Great);
+
+        self::assertSame([1, 3, 2], self::ids($this->find(new ListInventoryQuery(pokemon: 'minidraco'))));
+        self::assertSame([1, 3], self::ids($this->find(new ListInventoryQuery(League::Great, pokemon: 'minidraco'))));
+        self::assertSame(
+            [1],
+            self::ids($this->find(
+                new ListInventoryQuery(League::Great, pokemon: 'minidraco', ivs: IvSpread::fromString('0/15/15')),
+            )),
+        );
+    }
+
+    public function testARankFindsTheSpreadAsInventoryAddReadsIt(): void
+    {
+        $this->add('Minidraco', '0/15/15', League::Great);
+        $this->add('Minidraco', '1/14/15', League::Great);
+
+        // 0/15/15 is the 6th best Dragonair in the Great League.
+        self::assertSame(
+            [1],
+            self::ids($this->find(new ListInventoryQuery(League::Great, pokemon: 'minidraco', ivs: 6))),
+        );
+    }
+
+    public function testANameAloneFindsItsShadowTooTheFlagOnlyTheShadow(): void
+    {
+        $this->add('gengar', '1/15/14', League::Great);
+        $this->addHandler()(
+            new AddToInventoryCommand('gengar', IvSpread::fromString('2/15/14'), League::Great, shadow: true),
+        );
+
+        self::assertCount(2, $this->find(new ListInventoryQuery(pokemon: 'ectoplasma'))->lines);
+        self::assertSame([2], self::ids($this->find(new ListInventoryQuery(pokemon: 'ectoplasma', shadow: true))));
+    }
+
     public function testAFormTheGameDataNoLongerKnowsIsStillListed(): void
     {
         $inventory = new Inventory();
@@ -309,7 +349,7 @@ final class InventoryHandlersTest extends TestCase
         );
 
         self::assertSame('dratini', $result->species?->id->value);
-        self::assertSame([2], array_map(static fn(InventoryLine $l): int => $l->entry->id, $this->list()->lines));
+        self::assertSame([2], self::ids($this->list()));
     }
 
     private function add(string $identifier, string $ivs, League $league, ?int $cp = null): AddToInventoryResult
@@ -347,9 +387,25 @@ final class InventoryHandlersTest extends TestCase
 
     private function list(?League $league = null): ListInventoryResult
     {
-        return (new ListInventoryHandler($this->repository, $this->catalog, $this->ranker))(
-            new ListInventoryQuery($league),
-        );
+        return $this->find(new ListInventoryQuery($league));
+    }
+
+    private function find(ListInventoryQuery $query): ListInventoryResult
+    {
+        return (new ListInventoryHandler(
+            $this->repository,
+            $this->catalog,
+            $this->ranker,
+            new SpeciesResolver($this->catalog),
+        ))($query);
+    }
+
+    /**
+     * @return list<int>
+     */
+    private static function ids(ListInventoryResult $result): array
+    {
+        return array_map(static fn(InventoryLine $l): int => $l->entry->id, $result->lines);
     }
 
     /**

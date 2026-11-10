@@ -7,6 +7,7 @@ namespace App\Application\Inventory;
 use App\Domain\Pokemon\Model\IvSpread;
 use App\Domain\Pokemon\Model\Species;
 use App\Domain\Pokemon\Service\EvolutionTree;
+use App\Domain\Pvp\Exception\RankOutOfRange;
 use App\Domain\Pvp\Exception\SpeciesIneligibleForLeague;
 use App\Domain\Pvp\Model\IvRanking;
 use App\Domain\Pvp\Model\League;
@@ -62,6 +63,25 @@ final class InventoryRanker
         }
 
         return [$form, $best];
+    }
+
+    /**
+     * The spread a rank names, read as `list` shows it: as the form the league ranks
+     * best, at level 50 — Dragonair's rank for a Dratini kept for the Great League.
+     *
+     * @throws RankOutOfRange
+     */
+    public function spreadRanked(Species $inHand, League $league, int $rank): IvSpread
+    {
+        [$form] = $this->bestFormIn($inHand, $league);
+        $ranking = $this->rankingAs($form, $league);
+        $spread = $ranking?->at($rank);
+
+        if (null === $spread) {
+            throw new RankOutOfRange($form, $league, $rank, $ranking?->best()->total);
+        }
+
+        return $spread->iv;
     }
 
     /**

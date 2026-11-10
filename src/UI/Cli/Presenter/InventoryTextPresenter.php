@@ -39,7 +39,7 @@ final readonly class InventoryTextPresenter
         foreach ($byLeague as $label => $lines) {
             $io->section($label);
             $io->table(
-                ['#', 'Pokémon', 'IVs', 'Ranked as', 'League rank', 'IV rank'],
+                ['Pokémon', 'IVs', 'Ranked as', 'League rank', 'IV rank'],
                 array_map(
                     /** @return list<string> */
                     fn(InventoryLine $line): array => $this->row($line, $locale),
@@ -58,7 +58,6 @@ final readonly class InventoryTextPresenter
 
         if (null === $line->species || null === $line->standing) {
             return [
-                (string) $entry->id,
                 \sprintf('<comment>%s — unknown to the game data</comment>', $entry->species),
                 (string) $entry->iv,
                 '',
@@ -71,7 +70,6 @@ final readonly class InventoryTextPresenter
         $form = $this->standings->form($line->standing, $locale);
 
         return [
-            (string) $entry->id,
             $name,
             (string) $entry->iv,
             $form === $name ? '<fg=gray>itself</>' : $form,

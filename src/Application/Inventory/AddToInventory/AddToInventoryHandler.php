@@ -54,7 +54,9 @@ final readonly class AddToInventoryHandler
         $species = $match->species;
         $league = $command->league;
 
-        $iv = $command->ivs instanceof IvSpread ? $command->ivs : $this->spreadRanked($species, $league, $command->ivs);
+        $iv = $command->ivs instanceof IvSpread
+            ? $command->ivs
+            : $this->ranker->spreadRanked($species, $league, $command->ivs);
         $standing = $this->ranker->standing($species, $iv, $league);
 
         if (null !== $command->cp) {
@@ -71,24 +73,6 @@ final readonly class AddToInventoryHandler
             $command->account,
             $match->guessed ? $command->identifier : null,
         );
-    }
-
-    /**
-     * The rank is read as `list` shows it: as the form the league ranks best.
-     *
-     * @throws RankOutOfRange
-     */
-    private function spreadRanked(Species $inHand, League $league, int $rank): IvSpread
-    {
-        [$form] = $this->ranker->bestFormIn($inHand, $league);
-        $ranking = $this->ranker->rankingAs($form, $league);
-        $spread = $ranking?->at($rank);
-
-        if (null === $spread) {
-            throw new RankOutOfRange($form, $league, $rank, $ranking?->best()->total);
-        }
-
-        return $spread->iv;
     }
 
     /**

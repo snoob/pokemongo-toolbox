@@ -21,7 +21,7 @@ final readonly class InventoryAddTextPresenter
         private StandingFormatter $standings,
     ) {}
 
-    public function refusal(RankOutOfRange|EvolvesOverCap $e, string $locale): string
+    public function refusal(RankOutOfRange|EvolvesOverCap $e, ?string $locale): string
     {
         $form = $this->names->name($e->form, $locale);
 
@@ -69,8 +69,7 @@ final readonly class InventoryAddTextPresenter
         $standing = $added->standing;
         $lines = [
             \sprintf(
-                '<info>Kept #%d</info> %s %s for the <options=bold>%s</> <fg=gray>(%s)</>.',
-                $added->entry->id,
+                '<info>Kept</info> %s %s for the <options=bold>%s</> <fg=gray>(%s)</>.',
                 $name,
                 $added->entry->iv,
                 $added->entry->league->label(),
@@ -92,8 +91,7 @@ final readonly class InventoryAddTextPresenter
         $lines[] = null === $better
             ? '  <fg=green>Your best for that form in this league.</>'
             : \sprintf(
-                '  <comment>You already keep better: #%d %s %s, IVs #%d as %s.</comment>',
-                $better->entry->id,
+                '  <comment>You already keep better: %s %s, IVs #%d as %s.</comment>',
                 $this->names->name($better->species, $locale),
                 $better->entry->iv,
                 $better->spread->position,

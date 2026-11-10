@@ -122,11 +122,7 @@ final class InventoryAddCommand extends Command
 
             return Command::FAILURE;
         } catch (DuplicateEntry $e) {
-            $io->warning(\sprintf(
-                'Already kept for the %s as #%d; nothing added.',
-                $e->existing->league->label(),
-                $e->existing->id,
-            ));
+            $io->warning(\sprintf('Already kept for the %s; nothing added.', $e->existing->league->label()));
 
             return Command::FAILURE;
         } catch (SpeciesNotFound|IvMismatch $e) {
