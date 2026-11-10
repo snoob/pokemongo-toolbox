@@ -419,9 +419,9 @@ Règles d'usage :
    (Flex écrit les recettes dans `config/packages/`).
 6. Les caches d'exécution ne sont **jamais** commités ; les données générées stables
    (`data/*.json`, `translations/*.xlf`) le sont.
-7. **Une branche et une pull request par issue** (décision 121) : `issue-N-<slug>`, PR
-   qui dit `Closes #N`, fusionnée une fois la CI verte. Rien ne se commite directement
-   sur `main` : une release publie `main` tel quel, donc seulement ce qui a été fusionné.
+7. **Commit direct sur `main`, sans pull request** (décision 122) : une release publie
+   `main` tel quel, donc on n'y commite que du travail fini. Un commit qui règle une issue
+   le dit dans son corps : `Closes #N`.
 
 ---
 
@@ -550,3 +550,5 @@ Règles d'usage :
 | 119 | Une clé de réglage inconnue arrête la commande, sauf `settings:*` et `account:*` | Renommer `inventory.account` en `global.account` aurait sinon renvoyé l'inventaire sur `default` sans un mot. Une faute de frappe a le même effet. Les commandes qui écrivent les réglages tournent quand même, pour les corriger |
 | 120 | Les renommages de réglages passent par une table de migrations tenue à la main (`SettingMigrations`), appliquée par `settings --fix` seulement | Issue #2. Deviner la nouvelle clé (distance d'édition, même option ailleurs) se tromperait sans le dire ; migrer en silence au démarrage écrirait dans le fichier du joueur sans qu'il l'ait demandé. Le plan est montré par l'erreur, puis appliqué tel quel, d'un seul calcul (`SettingsRepair`) |
 | 121 | Une branche et une PR par issue, plus de commit direct sur `main` | Choix de l'utilisateur, après une release v3.2.0 qui a embarqué une feature pas prête, commitée sur `main` en attendant : il a fallu réécrire `main` et republier. `main` ne porte plus que ce qui est fusionné, et la CI (`ci.yml`, déjà sur `pull_request`) tourne avant la fusion |
+| 122 | Retour au commit direct sur `main`, sans branche ni PR ; `Closes #N` dans le message du commit qui règle une issue | Choix de l'utilisateur, qui annule la décision 121 : il ne relit pas le code, une PR n'ajoutait qu'une étape. Le risque de la v3.2.0 se traite autrement : on ne commite sur `main` que du travail fini, et la release montre la liste des commits embarqués avant de taguer |
+| 123 | `app:inventory:add <pokemon> <league> <ivs\|rang> [--cp]` : la ligue en argument, une seule ; un nombre seul est un rang ; `--cp` refuse un Pokémon trop monté pour sa forme retenue. Révise la décision 110 | Demande de l'utilisateur, qui note le rang dans le surnom en jeu et ne veut pas réévaluer le Pokémon. Un rang ne vaut que pour une ligue, et un Pokémon monté n'entre que dans une : le garder pour deux se fait en deux ajouts. Le rang est celui de la forme retenue par l'inventaire au plafond 50, le seul que `list` affiche ensuite ; le départage des égalités en fait un seul spread, et seuls les IVs sont écrits. `#12` a été écarté : le shell avale tout ce qui suit un `#` en début de mot, sans erreur. Le PC n'est pas gardé, il ne sert qu'à vérifier à l'ajout |

@@ -27,7 +27,7 @@ final class AccountSwitchCommandTest extends TestCase
         $this->file = sys_get_temp_dir() . '/pogo-switch-' . bin2hex(random_bytes(6)) . '.json';
         $this->inventories = new InMemoryInventoryRepository();
         $inventory = new Inventory();
-        $inventory->add(new SpeciesId('gengar'), new IvSpread(1, 15, 14), [League::Great], new \DateTimeImmutable());
+        $inventory->add(new SpeciesId('gengar'), new IvSpread(1, 15, 14), League::Great, new \DateTimeImmutable());
         $this->inventories->save(new Account('snoob2'), $inventory);
     }
 

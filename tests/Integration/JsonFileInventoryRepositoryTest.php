@@ -46,12 +46,8 @@ final class JsonFileInventoryRepositoryTest extends TestCase
         $repository = new JsonFileInventoryRepository(\dirname($this->file));
         $inventory = new Inventory();
         $at = new \DateTimeImmutable('2026-11-04T12:00:00+01:00');
-        $inventory->add(
-            new SpeciesId('gengar_shadow'),
-            new IvSpread(1, 15, 14),
-            [League::Great, League::MegaGreat],
-            $at,
-        );
+        $inventory->add(new SpeciesId('gengar_shadow'), new IvSpread(1, 15, 14), League::Great, $at);
+        $inventory->add(new SpeciesId('gengar_shadow'), new IvSpread(1, 15, 14), League::MegaGreat, $at);
         $inventory->remove(2);
 
         $repository->save(new Account('Snoob2555'), $inventory);

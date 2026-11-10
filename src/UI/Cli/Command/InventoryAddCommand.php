@@ -4,24 +4,25 @@ declare(strict_types=1);
 
 namespace App\UI\Cli\Command;
 
-use App\Application\Inventory\AddToInventory\AddedEntry;
 use App\Application\Inventory\AddToInventory\AddToInventoryCommand;
 use App\Application\Inventory\AddToInventory\AddToInventoryHandler;
-use App\Application\Inventory\AddToInventory\AddToInventoryResult;
 use App\Domain\Inventory\Exception\DuplicateEntry;
 use App\Domain\Pokemon\Exception\AmbiguousSpecies;
 use App\Domain\Pokemon\Exception\InvalidIv;
 use App\Domain\Pokemon\Exception\SpeciesNotFound;
-use App\Domain\Pokemon\Model\IvPattern;
-use App\Domain\Pokemon\Model\IvSpread;
 use App\Domain\Pokemon\Model\Species;
+use App\Domain\Pvp\Exception\EvolvesOverCap;
+use App\Domain\Pvp\Exception\IvMismatch;
+use App\Domain\Pvp\Exception\RankOutOfRange;
 use App\Infrastructure\Json\JsonValue;
 use App\Infrastructure\Naming\InputLocale;
 use App\Infrastructure\Naming\SpeciesNameResolver;
 use App\UI\Cli\Input\AccountOption;
+use App\UI\Cli\Input\CpOption;
 use App\UI\Cli\Input\LeagueOption;
 use App\UI\Cli\Input\PokemonCompletion;
-use App\UI\Cli\Presenter\StandingFormatter;
+use App\UI\Cli\Input\SpreadOrRankArgument;
+use App\UI\Cli\Presenter\InventoryAddTextPresenter;
 use App\UI\Cli\Settings\AccountHint;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -34,7 +35,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(
     name: 'app:inventory:add',
     aliases: ['inventory:add'],
-    description: 'Keep a Pokémon for a league, and see whether you already keep better',
+    description: 'Keep a Pokémon for a league by its IVs or their rank, and see whether you already keep better',
 )]
 final class InventoryAddCommand extends Command
 {
@@ -42,7 +43,7 @@ final class InventoryAddCommand extends Command
         private readonly AddToInventoryHandler $handler,
         private readonly SpeciesNameResolver $names,
         private readonly InputLocale $inputLocale,
-        private readonly StandingFormatter $standings,
+        private readonly InventoryAddTextPresenter $presenter,
         private readonly AccountHint $hint,
         private readonly PokemonCompletion $completion,
     ) {
@@ -59,23 +60,38 @@ final class InventoryAddCommand extends Command
                 'French name, English name or Pokédex number',
                 suggestedValues: $this->completion->suggest(...),
             )
-            ->addArgument('ivs', InputArgument::REQUIRED, 'IVs as attack/defense/stamina, e.g. 1/15/14')
-            ->addOption(
+            ->addArgument(
                 'league',
-                'l',
-                InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-                'League to keep it for (repeatable): great, ultra, master, mega-great, mega-ultra, mega-master',
+                InputArgument::REQUIRED,
+                'League to keep it for: ' . implode(', ', LeagueOption::names()),
+                suggestedValues: LeagueOption::names(),
+            )
+            ->addArgument(
+                'ivs|rank',
+                InputArgument::REQUIRED,
+                'IVs as attack/defense/stamina, e.g. 1/15/14, or a number alone: their rank as the form ranked in the league, e.g. 6',
+            )
+            ->addOption(
+                'cp',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'CP shown in the game: refuses a Pokémon powered up past what the league allows',
             )
             ->addOption('shadow', 's', InputOption::VALUE_NONE, 'Shadow form')
             ->addOption('locale', null, InputOption::VALUE_REQUIRED, 'Language of species names: fr or en')
             ->setHelp(<<<'HELP'
-                Keeps the Pokémon in hand for each league given. It is ranked as the form of
-                its family that league ranks best — a Dratini kept for the Great League counts
-                as a Dragonair — and compared with what you already keep there.
+                Keeps the Pokémon in hand for a league. It is ranked as the form of its family
+                that league ranks best — a Dratini kept for the Great League counts as a
+                Dragonair — and compared with what you already keep there. To keep it for
+                two leagues, add it twice.
 
-                  <info>%command.full_name% gengar 1/15/14 -l great</info>
-                  <info>%command.full_name% minidraco 0/14/15 -l great -l ultra</info>
-                  <info>%command.full_name% 94 1/15/14 -l mega-great -a snoob2555</info>
+                Give its three IVs, or a number alone: the rank of its IVs as that form, at
+                level 50 — the rank <info>inventory:list</info> shows. With <info>--cp</info>, a Pokémon
+                already powered up past what the league allows once evolved is refused.
+
+                  <info>%command.full_name% gengar great 1/15/14</info>
+                  <info>%command.full_name% minidraco great 6 --cp=815</info>
+                  <info>%command.full_name% 94 mega-great 1/15/14 -a snoob2555</info>
                 HELP);
         AccountOption::addTo($this);
     }
@@ -87,17 +103,12 @@ final class InventoryAddCommand extends Command
         $identifier = JsonValue::asString($input->getArgument('pokemon')) ?? '';
 
         try {
-            $leagues = LeagueOption::parse($input->getOption('league'));
-
-            if ([] === $leagues) {
-                throw new \InvalidArgumentException('Say which league to keep it for: --league=great, for one.');
-            }
-
             $result = ($this->handler)(
                 new AddToInventoryCommand(
                     $identifier,
-                    self::spread(JsonValue::asString($input->getArgument('ivs')) ?? ''),
-                    $leagues,
+                    SpreadOrRankArgument::parse(JsonValue::asString($input->getArgument('ivs|rank')) ?? ''),
+                    LeagueOption::one(JsonValue::asString($input->getArgument('league')) ?? ''),
+                    CpOption::parse(JsonValue::asString($input->getOption('cp'))),
                     true === $input->getOption('shadow'),
                     AccountOption::parse($input),
                 ),
@@ -106,6 +117,10 @@ final class InventoryAddCommand extends Command
             $io->error($e->getMessage());
 
             return Command::INVALID;
+        } catch (RankOutOfRange|EvolvesOverCap $e) {
+            $io->error($this->presenter->refusal($e, $this->locale($input, $identifier, $e->form)));
+
+            return Command::FAILURE;
         } catch (DuplicateEntry $e) {
             $io->warning(\sprintf(
                 'Already kept for the %s as #%d; nothing added.',
@@ -114,7 +129,7 @@ final class InventoryAddCommand extends Command
             ));
 
             return Command::FAILURE;
-        } catch (SpeciesNotFound $e) {
+        } catch (SpeciesNotFound|IvMismatch $e) {
             $io->error($e->getMessage());
 
             return Command::FAILURE;
@@ -130,87 +145,16 @@ final class InventoryAddCommand extends Command
             return Command::FAILURE;
         }
 
-        $locale = JsonValue::asString($input->getOption('locale')) ?? $this->inputLocale->detect(
-            $identifier,
-            $result->species,
-        );
+        $locale = $this->locale($input, $identifier, $result->species);
 
-        $this->present($io, $result, $locale);
+        $this->presenter->present($io, $result, $locale);
         $this->hint->show($input, $io);
 
         return Command::SUCCESS;
     }
 
-    /**
-     * The three IVs, all known: the inventory ranks a spread, so none is left to deduce.
-     *
-     * @throws InvalidIv
-     */
-    private static function spread(string $ivs): IvSpread
+    private function locale(InputInterface $input, string $identifier, Species $species): string
     {
-        return (
-            IvPattern::fromString($ivs)->toSpread() ?? throw new \InvalidArgumentException(\sprintf(
-                'IVs %s leave some unknown; the inventory needs all three, e.g. 1/15/14.',
-                $ivs,
-            ))
-        );
-    }
-
-    private function present(SymfonyStyle $io, AddToInventoryResult $result, string $locale): void
-    {
-        $name = $this->names->name($result->species, $locale);
-
-        if (null !== $result->guessedFrom) {
-            $io->text(\sprintf('<comment>Interpreted "%s" as %s.</comment>', $result->guessedFrom, $name));
-        }
-
-        foreach ($result->added as $added) {
-            $io->newLine();
-            $io->text($this->lines($added, $name, (string) $result->iv, (string) $result->account, $locale));
-        }
-
-        $io->newLine();
-    }
-
-    /**
-     * @return list<string>
-     */
-    private function lines(AddedEntry $added, string $name, string $iv, string $account, string $locale): array
-    {
-        $standing = $added->standing;
-        $lines = [
-            \sprintf(
-                '<info>Kept #%d</info> %s %s for the <options=bold>%s</> <fg=gray>(%s)</>.',
-                $added->entry->id,
-                $name,
-                $iv,
-                $added->entry->league->label(),
-                $account,
-            ),
-            \sprintf(
-                '  As %s: %s in the league — IVs %s',
-                $this->standings->form($standing, $locale),
-                $this->standings->speciesRank($standing->speciesRank),
-                $this->standings->spread($standing->spread),
-            ),
-        ];
-
-        if (null === $standing->spread) {
-            return $lines;
-        }
-
-        $better = $added->better;
-        $lines[] = null === $better
-            ? '  <fg=green>Your best for that form in this league.</>'
-            : \sprintf(
-                '  <comment>You already keep better: #%d %s %s, IVs #%d as %s.</comment>',
-                $better->entry->id,
-                $this->names->name($better->species, $locale),
-                $better->entry->iv,
-                $better->spread->position,
-                $this->standings->form($standing, $locale),
-            );
-
-        return $lines;
+        return JsonValue::asString($input->getOption('locale')) ?? $this->inputLocale->detect($identifier, $species);
     }
 }

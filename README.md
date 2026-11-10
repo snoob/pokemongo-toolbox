@@ -238,19 +238,20 @@ computed per area some 10 to 20 kilometres across.
 ### Inventory: what you keep, league by league
 
 ```bash
-pogo inventory:add minidraco 0/15/15 -l great -l ultra   # one entry per league
-pogo inventory:add gengar 2/14/15 --shadow -l great
+pogo inventory:add minidraco great 0/15/15
+pogo inventory:add minidraco great 6 --cp=815   # by its rank; refused if the Dragonair busts 1500
+pogo inventory:add gengar great 2/14/15 --shadow
 pogo inventory                          # every league, best first (= inventory:list)
 pogo inventory:list -l great --format=json
 pogo inventory:remove 3                 # by the number the list shows
-pogo inventory:add azurill 5/15/14 -l great -a snoob2555  # another account
+pogo inventory:add azurill great 5/15/14 -a snoob2555  # another account
 ```
 
 `inv:add`, `inv:list` and `inv:remove` work too: Symfony accepts any unambiguous
 abbreviation.
 
-Each Pokémon is kept for **one league**; give `-l` several times to keep it for several.
-The Mega Editions are leagues of their own. A kept Pokémon is ranked as **the form of its
+Each Pokémon is kept for **one league**, the second argument; add it again to keep it
+for another. The Mega Editions are leagues of their own. A kept Pokémon is ranked as **the form of its
 family its league ranks best**, not as its last evolution: a Dratini kept for the Great
 League counts as a Dragonair, the same Dratini kept for the Ultra League as a Dragonite.
 When you add one, it is compared with what you already keep in that league that can
@@ -259,8 +260,15 @@ become the same form, and the best of those is named if it beats the newcomer.
 **Several game accounts**: each has its own inventory, numbered on its own. `-a,
 --account` picks one; without it the commands use the `global.account` setting, else an
 account named `default`. `pogo switch snoob2` changes that setting; `pogo switch` alone
-lists the accounts you keep Pokémon for, to pick one with the arrows. Give all three IVs: the inventory ranks spreads, so it takes
-neither `--cp` nor `--floor` — `pvp` is where to deduce IVs or weigh a floor.
+lists the accounts you keep Pokémon for, to pick one with the arrows.
+
+**IVs or rank**: give the three IVs, or a number alone — the rank of those IVs as the
+form the league ranks best, at level 50, the rank `inventory:list` shows (Dragonair's
+table in `pvp`, without `--best-buddy`, for a Dratini kept for the Great League). Only
+the IVs are saved. No `#` in front: the shell would take the rest of the line for a
+comment. `--cp`, the CP shown in the game, refuses a Pokémon already powered up past what
+its league allows once evolved, and a CP that no level gives with those IVs. To deduce
+IVs from the CP or weigh a floor, use `pvp`.
 
 Each account is a JSON file under `~/.local/share/pokemongo-toolbox/inventory/<account>.json`
 (or `$XDG_DATA_HOME`), the same whether you run the PHAR or a checkout. Set

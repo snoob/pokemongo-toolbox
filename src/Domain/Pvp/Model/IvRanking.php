@@ -38,6 +38,15 @@ final readonly class IvRanking
     }
 
     /**
+     * The spread at that rank, null outside the ranking: ties are broken, so a rank
+     * names one spread.
+     */
+    public function at(int $position): ?RankedSpread
+    {
+        return $this->spreads[$position - 1] ?? null;
+    }
+
+    /**
      * The best spread the floor leaves possible, still placed among all 4096: that
      * position is what the floor costs. Null when every spread above the floor busts the
      * CP cap even at level 1.

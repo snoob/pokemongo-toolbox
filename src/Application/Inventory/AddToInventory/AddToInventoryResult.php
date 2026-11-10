@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Application\Inventory\AddToInventory;
 
 use App\Domain\Inventory\Model\Account;
-use App\Domain\Pokemon\Model\IvSpread;
 use App\Domain\Pokemon\Model\Species;
 
 /**
@@ -13,14 +12,9 @@ use App\Domain\Pokemon\Model\Species;
  */
 final readonly class AddToInventoryResult
 {
-    /**
-     * @param non-empty-list<AddedEntry> $added
-     */
     public function __construct(
         public Species $species,
-        public IvSpread $iv,
-        /** @var non-empty-list<AddedEntry> */
-        public array $added,
+        public AddedEntry $added,
         public Account $account,
         public ?string $guessedFrom = null,
     ) {}

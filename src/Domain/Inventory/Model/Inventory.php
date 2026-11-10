@@ -29,35 +29,22 @@ final class Inventory
     }
 
     /**
-     * One entry per league, all or none: a duplicate in any league adds nothing.
-     *
-     * @param non-empty-list<League> $leagues
+     * One entry, for one league: a Pokémon kept for two is added twice.
      *
      * @throws DuplicateEntry
-     *
-     * @return non-empty-list<InventoryEntry>
      */
-    public function add(SpeciesId $species, IvSpread $iv, array $leagues, \DateTimeImmutable $at): array
+    public function add(SpeciesId $species, IvSpread $iv, League $league, \DateTimeImmutable $at): InventoryEntry
     {
-        $leagues = array_values(array_unique($leagues, \SORT_REGULAR));
-
-        foreach ($leagues as $league) {
-            foreach ($this->entries as $entry) {
-                if ($entry->isSameAs($species, $iv, $league)) {
-                    throw DuplicateEntry::of($entry);
-                }
+        foreach ($this->entries as $entry) {
+            if ($entry->isSameAs($species, $iv, $league)) {
+                throw DuplicateEntry::of($entry);
             }
         }
 
-        $added = [];
+        $entry = new InventoryEntry($this->nextId++, $species, $iv, $league, $at);
+        $this->entries[] = $entry;
 
-        foreach ($leagues as $league) {
-            $entry = new InventoryEntry($this->nextId++, $species, $iv, $league, $at);
-            $this->entries[] = $entry;
-            $added[] = $entry;
-        }
-
-        return $added;
+        return $entry;
     }
 
     /**

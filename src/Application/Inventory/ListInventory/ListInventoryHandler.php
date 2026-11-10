@@ -8,7 +8,6 @@ use App\Application\Inventory\InventoryRanker;
 use App\Domain\Inventory\Model\InventoryEntry;
 use App\Domain\Inventory\Port\InventoryRepository;
 use App\Domain\Pokemon\Port\SpeciesCatalog;
-use App\Domain\Pvp\Model\League;
 
 final readonly class ListInventoryHandler
 {
@@ -22,7 +21,9 @@ final readonly class ListInventoryHandler
     {
         $lines = array_map($this->line(...), $this->repository->load($query->account)->entries($query->league));
 
-        usort($lines, static fn(InventoryLine $a, InventoryLine $b): int => self::sortKey($a) <=> self::sortKey($b));
+        // A stable sort: equal ranks keep the order they were added in. The display breaks
+        // those ties by name, which only it knows in the language shown.
+        usort($lines, static fn(InventoryLine $a, InventoryLine $b): int => $a->rankOrder() <=> $b->rankOrder());
 
         return new ListInventoryResult($lines, $query->account);
     }
@@ -36,20 +37,5 @@ final readonly class ListInventoryHandler
             $species,
             null === $species ? null : $this->ranker->standing($species, $entry->iv, $entry->league),
         );
-    }
-
-    /**
-     * Unranked forms and spreads that bust the cap sink to the bottom of their league.
-     *
-     * @return list<int>
-     */
-    private static function sortKey(InventoryLine $line): array
-    {
-        return [
-            (int) array_search($line->entry->league, League::cases(), true),
-            $line->standing->speciesRank->position ?? \PHP_INT_MAX,
-            $line->standing->spread->position ?? \PHP_INT_MAX,
-            $line->entry->id,
-        ];
     }
 }

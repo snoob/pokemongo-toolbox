@@ -8,7 +8,8 @@ use App\Domain\Pvp\Model\League;
 use App\Infrastructure\Json\JsonValue;
 
 /**
- * Reads a repeatable `--league` option, shared by every command that takes one.
+ * Reads a repeatable `--league` option, shared by every command that takes one, and a
+ * league given as an argument.
  */
 final readonly class LeagueOption
 {
@@ -21,22 +22,28 @@ final readonly class LeagueOption
             return [];
         }
 
-        $leagues = [];
+        return array_map(self::one(...), JsonValue::asStringList($option));
+    }
 
-        foreach (JsonValue::asStringList($option) as $value) {
-            $league = League::tryFrom(strtolower(trim($value)));
+    /**
+     * One league by its name, as an argument takes it.
+     */
+    public static function one(string $value): League
+    {
+        return (
+            League::tryFrom(strtolower(trim($value))) ?? throw new \InvalidArgumentException(\sprintf(
+                'Unknown league "%s"; expected %s.',
+                $value,
+                implode(', ', self::names()),
+            ))
+        );
+    }
 
-            if (null === $league) {
-                throw new \InvalidArgumentException(\sprintf(
-                    'Unknown league "%s"; expected %s.',
-                    $value,
-                    implode(', ', array_map(static fn(League $l): string => $l->value, League::cases())),
-                ));
-            }
-
-            $leagues[] = $league;
-        }
-
-        return $leagues;
+    /**
+     * @return list<string>
+     */
+    public static function names(): array
+    {
+        return array_map(static fn(League $l): string => $l->value, League::cases());
     }
 }

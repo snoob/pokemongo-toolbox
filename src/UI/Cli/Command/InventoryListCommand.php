@@ -10,6 +10,7 @@ use App\Infrastructure\Json\JsonValue;
 use App\UI\Cli\Input\AccountOption;
 use App\UI\Cli\Input\LeagueOption;
 use App\UI\Cli\Presenter\InventoryJsonPresenter;
+use App\UI\Cli\Presenter\InventoryOrder;
 use App\UI\Cli\Presenter\InventoryTextPresenter;
 use App\UI\Cli\Settings\AccountHint;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -31,6 +32,7 @@ final class InventoryListCommand extends Command
         private readonly InventoryTextPresenter $text,
         private readonly InventoryJsonPresenter $json,
         private readonly AccountHint $hint,
+        private readonly InventoryOrder $order,
     ) {
         parent::__construct();
     }
@@ -65,8 +67,11 @@ final class InventoryListCommand extends Command
             return Command::INVALID;
         }
 
-        $result = ($this->handler)(new ListInventoryQuery($leagues[0] ?? null, $account));
         $locale = JsonValue::asString($input->getOption('locale'));
+        $result = $this->order->sorted(
+            ($this->handler)(new ListInventoryQuery($leagues[0] ?? null, $account)),
+            $locale,
+        );
 
         if ('json' === $input->getOption('format')) {
             $output->writeln($this->json->present($result, $locale));

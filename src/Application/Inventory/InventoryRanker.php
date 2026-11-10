@@ -12,6 +12,7 @@ use App\Domain\Pvp\Model\IvRanking;
 use App\Domain\Pvp\Model\League;
 use App\Domain\Pvp\Model\PokemonLevel;
 use App\Domain\Pvp\Model\RankedSpread;
+use App\Domain\Pvp\Model\SpeciesRank;
 use App\Domain\Pvp\Port\PvpRankingCatalog;
 use App\Domain\Pvp\Service\IvRankCalculator;
 
@@ -35,6 +36,19 @@ final class InventoryRanker
 
     public function standing(Species $inHand, IvSpread $iv, League $league): Standing
     {
+        [$form, $rank] = $this->bestFormIn($inHand, $league);
+
+        return new Standing($form, $rank, $this->spreadAs($form, $iv, $league));
+    }
+
+    /**
+     * The form of the family the league ranks best, from the one in hand, with that
+     * rank; the form in hand itself, unranked, when the league ranks none of them.
+     *
+     * @return array{Species, ?SpeciesRank}
+     */
+    public function bestFormIn(Species $inHand, League $league): array
+    {
         $form = $inHand;
         $best = null;
 
@@ -47,7 +61,28 @@ final class InventoryRanker
             }
         }
 
-        return new Standing($form, $best, $this->spreadAs($form, $iv, $league));
+        return [$form, $best];
+    }
+
+    /**
+     * Every spread of that form ranked for the league; null when the form cannot get
+     * under the CP cap.
+     */
+    public function rankingAs(Species $form, League $league): ?IvRanking
+    {
+        $key = $league->value . '|' . $form->id->value;
+
+        if (!\array_key_exists($key, $this->rankings)) {
+            try {
+                $this->rankings[$key] = $this->ivRanker->rank($form->baseStats, $league, PokemonLevel::regularCap());
+            } catch (SpeciesIneligibleForLeague) {
+                $this->rankings[$key] = false;
+            }
+        }
+
+        $ranking = $this->rankings[$key];
+
+        return false === $ranking ? null : $ranking;
     }
 
     /**
@@ -55,7 +90,7 @@ final class InventoryRanker
      */
     public function spreadAs(Species $form, IvSpread $iv, League $league): ?RankedSpread
     {
-        return $this->ranking($form, $league)?->for($iv);
+        return $this->rankingAs($form, $league)?->for($iv);
     }
 
     /**
@@ -91,22 +126,5 @@ final class InventoryRanker
         }
 
         return array_values($forms);
-    }
-
-    private function ranking(Species $form, League $league): ?IvRanking
-    {
-        $key = $league->value . '|' . $form->id->value;
-
-        if (!\array_key_exists($key, $this->rankings)) {
-            try {
-                $this->rankings[$key] = $this->ivRanker->rank($form->baseStats, $league, PokemonLevel::regularCap());
-            } catch (SpeciesIneligibleForLeague) {
-                $this->rankings[$key] = false;
-            }
-        }
-
-        $ranking = $this->rankings[$key];
-
-        return false === $ranking ? null : $ranking;
     }
 }

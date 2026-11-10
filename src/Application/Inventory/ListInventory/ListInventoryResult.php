@@ -8,7 +8,7 @@ use App\Domain\Inventory\Model\Account;
 
 /**
  * Lines grouped by league, in the order of `League::cases()`, then best first: the form's
- * place in the league, then the IVs' place as that form.
+ * place in the league, then the IVs' place as that form (`InventoryLine::rankOrder()`).
  */
 final readonly class ListInventoryResult
 {
