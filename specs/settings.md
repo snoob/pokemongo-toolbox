@@ -37,6 +37,11 @@ lisant les définitions des commandes.
   liste à taper ailleurs ; « Another account… » pour en taper un nouveau). Hors terminal
   et sans nom, il affiche le compte courant et la liste. Un compte sans inventaire est
   accepté, avec un rappel (faute de frappe possible).
+- **Options empruntées** (décision 125, `SettingFamily`) : `app:inventory:check` prend
+  `--floor` et `--league` de `pvp.floor` et `pvp.league`, pas de `inventory.*`. Le
+  plancher décrit le compte d'échange du joueur et les ligues celles qu'il joue : le
+  wizard les demande une fois pour les deux commandes. `inventory.league` reste le
+  défaut du filtre de `inventory:list`, à valeur unique.
 - **Une clé qui ne remplit aucune option arrête toute commande** (décision 119) : faute de
   frappe ou clé d'une version antérieure (`inventory.account`). Seules `settings:*` et
   `account:*`, qui écrivent les réglages, tournent quand même, pour les corriger.

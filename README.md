@@ -245,6 +245,7 @@ pogo inventory                          # every league, best first (= inventory:
 pogo inventory:list -l great --format=json
 pogo inventory:remove minidraco great 0/15/15   # as you added it; or its rank
 pogo inventory:remove minidraco         # several kept: pick one with the arrows
+pogo inventory:check                    # which a trade can still improve, and how likely
 pogo inventory:add azurill great 5/15/14 -a snoob2555  # another account
 ```
 
@@ -262,6 +263,14 @@ become the same form, and the best of those is named if it beats the newcomer.
 left out widens the search. One match is removed; several are offered to pick from with
 the arrows, in the order of the list (with `-n`, they are listed and nothing is
 removed). A name alone finds the shadow form too; `-s` keeps only the shadow.
+
+**Checking what a trade can improve**: `inventory:check` weighs each kept Pokémon, as the
+form its league ranks best, against every spread a trade under your floor can roll. Each
+is as likely, so the share that beats it is the chance one trade does better: "0.8 %
+(11 / 1331)", with the best spread a trade can give. Those no trade can beat are named
+on one line — they are done, a wild catch under the floor included. The floor and the
+leagues default to what the wizard asks (`pvp.floor`, `pvp.league`); `--floor=lucky` or
+`-l great` weigh another trade or league.
 
 **Several game accounts**: each has its own inventory, numbered on its own. `-a,
 --account` picks one; without it the commands use the `global.account` setting, else an

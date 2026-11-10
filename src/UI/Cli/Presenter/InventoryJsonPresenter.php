@@ -28,9 +28,11 @@ final readonly class InventoryJsonPresenter
     }
 
     /**
+     * One kept Pokémon as `inventory:list --format=json` writes it.
+     *
      * @return array<string, mixed>
      */
-    private function line(InventoryLine $line, ?string $locale): array
+    public function line(InventoryLine $line, ?string $locale): array
     {
         $standing = $line->standing;
         $spread = $standing?->spread;

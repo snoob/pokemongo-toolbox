@@ -85,6 +85,34 @@ final readonly class IvRanking
         return null === $position ? null : new RankWithinFloor($position, $total);
     }
 
+    /**
+     * How the spread fares against what a trade under this floor could roll; null when
+     * no spread above the floor fits under the cap. A tie in stat product does not beat
+     * it: the two are interchangeable in play.
+     */
+    public function tradeOdds(IvSpread $iv, IvFloor $floor): ?TradeOdds
+    {
+        $statProduct = $this->for($iv)->statProduct;
+        $best = null;
+        $total = 0;
+        $beatenBy = 0;
+
+        foreach ($this->spreads as $spread) {
+            if (!$floor->allows($spread->iv)) {
+                continue;
+            }
+
+            $best ??= $spread;
+            ++$total;
+
+            if ($spread->statProduct > $statProduct) {
+                ++$beatenBy;
+            }
+        }
+
+        return null === $best ? null : new TradeOdds($beatenBy, $total, $best);
+    }
+
     /** @return list<RankedSpread> */
     public function top(int $count): array
     {

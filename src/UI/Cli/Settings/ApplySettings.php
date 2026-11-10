@@ -51,7 +51,7 @@ final readonly class ApplySettings
 
         $used = [];
 
-        foreach (self::applicable($section, $sections) as $name => $value) {
+        foreach (SettingFamily::applicable($command, $section, $sections) as $name => $value) {
             $option = ConfigurableOptions::of($command, $name, $application);
 
             if (null === $option) {
@@ -110,22 +110,5 @@ final readonly class ApplySettings
         ];
 
         return $input->hasParameterOption($spellings, true);
-    }
-
-    /**
-     * The settings that apply to a command of this family: its own, and the global ones.
-     *
-     * @param array<string, array<string, string|list<string>>> $sections as the settings file holds them
-     *
-     * @return array<string, string|list<string>> by option name
-     */
-    private static function applicable(string $section, array $sections): array
-    {
-        $global = array_flip(ConfigurableOptions::APPLICATION_WIDE);
-
-        return [
-            ...array_diff_key($sections[$section] ?? [], $global),
-            ...array_intersect_key($sections[ConfigurableOptions::GLOBAL] ?? [], $global),
-        ];
     }
 }

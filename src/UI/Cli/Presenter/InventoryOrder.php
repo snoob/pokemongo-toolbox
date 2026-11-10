@@ -25,18 +25,20 @@ final readonly class InventoryOrder
     {
         $lines = $result->lines;
 
-        usort(
-            $lines,
-            fn(InventoryLine $a, InventoryLine $b): int => (
-                [...$a->rankOrder(), $this->name($a, $locale), $a->entry->id] <=> [
-                    ...$b->rankOrder(),
-                    $this->name($b, $locale),
-                    $b->entry->id,
-                ]
-            ),
-        );
+        usort($lines, fn(InventoryLine $a, InventoryLine $b): int => $this->compare($a, $b, $locale));
 
         return new ListInventoryResult($lines, $result->account, $result->species, $result->guessedFrom);
+    }
+
+    /**
+     * By rank, then by the name shown, then in the order added.
+     */
+    public function compare(InventoryLine $a, InventoryLine $b, ?string $locale): int
+    {
+        $left = [...$a->rankOrder(), $this->name($a, $locale), $a->entry->id];
+        $right = [...$b->rankOrder(), $this->name($b, $locale), $b->entry->id];
+
+        return $left <=> $right;
     }
 
     private function name(InventoryLine $line, ?string $locale): string

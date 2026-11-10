@@ -131,6 +131,36 @@ final class ApplySettingsTest extends TestCase
         $this->applyTo('app:pvp:rank', [], ['pvp' => ['floor' => ['best', 'raid']]]);
     }
 
+    public function testInventoryCheckTakesTheFloorAndLeaguesSetForPvp(): void
+    {
+        $this->application->addCommand($this->command('app:inventory:check'));
+
+        $input = $this->applyTo(
+            'app:inventory:check',
+            [],
+            [
+                'pvp' => ['floor' => 'best', 'league' => ['great', 'ultra']],
+            ],
+        );
+
+        self::assertSame('best', $input->getOption('floor'));
+        self::assertSame(['great', 'ultra'], $input->getOption('league'));
+        self::assertSame(
+            ['global.locale', 'pvp.floor', 'pvp.league'],
+            array_keys(ConfigurableOptions::all($this->application)),
+            'no inventory.floor: the key is pvp.floor',
+        );
+    }
+
+    public function testInventoryCheckTypedFloorWinsOverPvpFloor(): void
+    {
+        $this->application->addCommand($this->command('app:inventory:check'));
+
+        $input = $this->applyTo('app:inventory:check', ['--floor' => '3'], ['pvp' => ['floor' => 'best']]);
+
+        self::assertSame('3', $input->getOption('floor'));
+    }
+
     public function testTheSettableKeysAreTheValuedOptionsOfEachFamily(): void
     {
         self::assertSame(

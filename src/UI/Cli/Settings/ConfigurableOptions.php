@@ -112,18 +112,13 @@ final readonly class ConfigurableOptions
             }
 
             foreach (self::settable($command, $application) as $option) {
-                $keys[self::familyOf($option->getName(), $section) . '.' . $option->getName()][] = $option;
+                $keys[SettingFamily::of($command, $option->getName(), $section) . '.' . $option->getName()][] = $option;
             }
         }
 
         ksort($keys);
 
         return $keys;
-    }
-
-    private static function familyOf(string $option, string $section): string
-    {
-        return \in_array($option, self::APPLICATION_WIDE, true) ? self::GLOBAL : $section;
     }
 
     /**

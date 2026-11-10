@@ -2,14 +2,16 @@
 
 ## Question
 
-« Quels Pokémon je garde pour chaque ligue, et ce que je tiens là vaut-il mieux ? »
-Première itération : l'inventaire seul. `app:pvp:rank` ne le consulte pas encore.
+« Quels Pokémon je garde pour chaque ligue, ce que je tiens là vaut-il mieux, et
+lesquels un échange peut-il encore améliorer ? » `app:pvp:rank` ne consulte pas encore
+l'inventaire.
 
 ```bash
 app:inventory:add <pokemon> <league> <ivs|rang> [--cp=…] [-s] [-a compte]
 app:inventory:add minidraco great 0/15/15
 app:inventory:add minidraco great 6 --cp=815      # rang 6, refusé si Draco dépasse 1500
 app:inventory:list [-l great] [--format=json]
+app:inventory:check [-l great …] [--floor=best] [--format=json]   # issue #1
 app:inventory:remove [pokemon] [league] [ivs|rang] [-s] # comme add ; choix aux flèches
 ```
 
@@ -119,3 +121,48 @@ commun aux réglages (décision 113) : écriture dans un fichier temporaire au n
 puis renommage (`Filesystem::dumpFile`), dossier créé en 0775. Un fichier illisible est une **erreur**, jamais un inventaire vide : la
 sauvegarde suivante effacerait ce que le joueur a gardé. Une forme que les données du
 jeu ne connaissent plus reste listée, signalée, plutôt que de faire échouer la commande.
+
+## Vérifier ce qu'un échange peut améliorer — `check`
+
+Question (issue #1) : « Parmi ce que je garde, lesquels un échange peut-il encore
+améliorer, avec quelle chance, et lesquels sont finis ? »
+
+- **`--floor`** : le plancher de l'échange envisagé, comme `app:pvp:rank` (entier ou
+  alias `best`, `lucky`…). Pas de raccourci : `-f` est `--format` partout. **`-l`**,
+  répétable : les ligues à vérifier. Par défaut, les deux viennent de **`pvp.floor`** et
+  **`pvp.league`**, ce que demande le wizard (décision 125, `specs/settings.md`). Sans
+  plancher, ou plancher nul : erreur (code 2), la question n'a pas de sens.
+- **Peser une entrée** : classée comme dans l'inventaire (forme retenue, plafond 50), elle
+  est comparée à **chaque spread dont les trois IVs sont ≥ plancher** et qui passe sous
+  le plafond. Un échange tire chaque IV uniformément du plancher à 15 : ces spreads sont
+  équiprobables, et la part de ceux dont le stat product est **strictement** supérieur
+  est la **chance qu'un échange fasse mieux** (`TradeOdds`, `IvRanking::tradeOdds`).
+  Une égalité ne bat pas : les deux sont interchangeables en jeu, comme pour l'ordre du
+  classement. Une capture sauvage sous le plancher peut être finie.
+- **Sortie texte** : un tableau par ligue des entrées qu'un échange peut améliorer
+  (Pokémon, IVs, forme retenue, rang d'IV, « 0.8 % (11 / 1331) », meilleur spread du
+  plancher avec son rang), dans l'ordre de `list`. Puis, par ligue, une ligne qui nomme
+  celles qu'aucun échange ne bat (« No trade can beat — Great League: … »), et une pour
+  celles qui ne se pèsent pas : forme inconnue des données, forme hors plafond, plancher
+  qui ne laisse rien sous le plafond. Inventaire vide pour ces ligues : un message, code 0.
+- **JSON** : chaque entrée comme `list --format=json`, plus `beatenWithinFloor`,
+  `spreadsWithinFloor` et `bestWithinFloor` (`iv`, `position`) ; `null` quand elle ne se
+  pèse pas.
+
+## Tests attendus
+
+- Ajout : par IVs, par rang (lu comme la forme retenue : `0/15/15` est le rang 6 de Draco
+  en Super), rang d'une forme qui ne passe pas sous le plafond refusé ; `--cp` qui laisse
+  l'évolution sous le plafond accepté (Minidraco 0/15/15 à 815 PC : Draco à 1490),
+  au-dessus refusé sans rien écrire (822 PC : 1502), PC qu'aucun niveau ne donne refusé,
+  ligue sans plafond qui ne vérifie que la cohérence ; doublon refusé.
+- Liste : par ligue, rang d'espèce puis rang d'IV ; à rangs égaux, l'ordre alphabétique
+  dans la langue d'affichage (Haunter avant Raichu, Raichu avant Spectrum).
+- Retrait : les trois arguments désignent une entrée ; plusieurs correspondances
+  choisies (tapé hors terminal) ou, avec `-n`, listées sans rien retirer ; un nom seul
+  trouve aussi l'obscur, `-s` seulement l'obscur ; rien ne correspond → erreur.
+- Échange (`check`) : le meilleur spread du plancher n'est battu par rien ; une entrée sous
+  le plancher est pesée contre les spreads du plancher (nombre, meilleur) ; une égalité
+  ne bat pas ; plancher et ligues pris de `pvp.floor` / `pvp.league`, `--floor` tapé
+  l'emporte ; plancher nul refusé ; forme inconnue non pesée ; inventaire vide : un
+  message, code 0.

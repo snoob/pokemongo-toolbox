@@ -159,6 +159,52 @@ final class IvRankCalculatorTest extends TestCase
         );
     }
 
+    public function testTheBestATradeCanRollBeatsNothingAbove(): void
+    {
+        $ranking = $this->calculator->rank($this->gengar(), League::Great, PokemonLevel::regularCap());
+        $floor = IvFloor::fromString('best');
+        $best = $ranking->bestFrom($floor) ?? self::fail('some spread above floor 5 fits');
+
+        $odds = $ranking->tradeOdds($best->iv, $floor);
+
+        self::assertSame(0, $odds?->beatenBy);
+        self::assertFalse($odds->canBeBeaten());
+        self::assertSame(11 ** 3, $odds->total);
+    }
+
+    public function testAWildCatchUnderTheFloorIsWeighedAgainstWhatATradeCanRoll(): void
+    {
+        $ranking = $this->calculator->rank($this->gengar(), League::Great, PokemonLevel::regularCap());
+        $floor = IvFloor::fromString('best');
+
+        // The overall best, out of a trade's reach: nothing a trade rolls beats it.
+        self::assertSame(0, $ranking->tradeOdds($ranking->best()->iv, $floor)?->beatenBy);
+
+        // A poor wild catch: beaten by every spread above the best one under it.
+        $poor = new IvSpread(15, 0, 0);
+        $odds = $ranking->tradeOdds($poor, $floor) ?? self::fail('spreads above the floor fit');
+        $beating = array_filter(
+            $ranking->spreads,
+            static fn(RankedSpread $s): bool => (
+                $floor->allows($s->iv)
+                && $s->statProduct > $ranking->for($poor)->statProduct
+            ),
+        );
+
+        self::assertSame(\count($beating), $odds->beatenBy);
+        self::assertGreaterThan(0, $odds->chance());
+        self::assertSame((string) $ranking->bestFrom($floor)?->iv, (string) $odds->best->iv);
+    }
+
+    public function testATieInStatProductIsNotBeaten(): void
+    {
+        // In the Master League 15/15/15 and 15/15/14 tie: a trade rolling 15/15/15 does
+        // not beat a 15/15/14 kept.
+        $ranking = $this->calculator->rank($this->gengar(), League::Master, PokemonLevel::regularCap());
+
+        self::assertSame(0, $ranking->tradeOdds(new IvSpread(15, 15, 14), IvFloor::fromString('lucky'))?->beatenBy);
+    }
+
     public function testASpeciesTooStrongForTheCapIsReportedAsIneligible(): void
     {
         $this->expectException(SpeciesIneligibleForLeague::class);

@@ -7,6 +7,9 @@ namespace App\Tests\Unit\Application\Inventory;
 use App\Application\Inventory\AddToInventory\AddToInventoryCommand;
 use App\Application\Inventory\AddToInventory\AddToInventoryHandler;
 use App\Application\Inventory\AddToInventory\AddToInventoryResult;
+use App\Application\Inventory\CheckInventory\CheckInventoryHandler;
+use App\Application\Inventory\CheckInventory\CheckInventoryQuery;
+use App\Application\Inventory\CheckInventory\CheckInventoryResult;
 use App\Application\Inventory\InventoryRanker;
 use App\Application\Inventory\ListInventory\InventoryLine;
 use App\Application\Inventory\ListInventory\ListInventoryHandler;
@@ -19,6 +22,7 @@ use App\Domain\Inventory\Model\Account;
 use App\Domain\Inventory\Model\Inventory;
 use App\Domain\Pokemon\Model\BaseStats;
 use App\Domain\Pokemon\Model\DexNumber;
+use App\Domain\Pokemon\Model\IvFloor;
 use App\Domain\Pokemon\Model\IvSpread;
 use App\Domain\Pokemon\Model\Species;
 use App\Domain\Pokemon\Model\SpeciesId;
@@ -327,6 +331,42 @@ final class InventoryHandlersTest extends TestCase
         self::assertSame([2], self::ids($this->find(new ListInventoryQuery(pokemon: 'ectoplasma', shadow: true))));
     }
 
+    public function testACheckWeighsEachPokemonAsTheFormItsLeagueRanksBest(): void
+    {
+        $this->add('Minidraco', '0/15/15', League::Great);
+        $this->add('Minidraco', '0/15/15', League::Ultra);
+        $floor = IvFloor::fromString('best');
+
+        $checked = $this->check(new CheckInventoryQuery($floor, [League::Great]))->checked;
+        $dragonair = $this->catalog->find(new SpeciesId('dragonair')) ?? self::fail('in the catalog');
+        $expected = $this->ranker->rankingAs($dragonair, League::Great)?->tradeOdds(new IvSpread(0, 15, 15), $floor);
+
+        $odds = ($checked[0] ?? self::fail('the Great League entry is checked'))->odds;
+
+        self::assertCount(1, $checked, 'only the leagues asked');
+        self::assertNotNull($expected);
+        self::assertSame($expected->beatenBy, $odds?->beatenBy, 'weighed as a Dragonair');
+        self::assertSame(11 ** 3, $odds->total);
+    }
+
+    public function testACheckWithoutATradeFloorIsRefused(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $this->check(new CheckInventoryQuery(IvFloor::wild()));
+    }
+
+    public function testACheckCannotWeighAFormTheGameDataNoLongerKnows(): void
+    {
+        $inventory = new Inventory();
+        $inventory->add(new SpeciesId('missingno'), new IvSpread(1, 2, 3), League::Great, new \DateTimeImmutable());
+        $this->repository->save(Account::default(), $inventory);
+
+        $checked = $this->check(new CheckInventoryQuery(IvFloor::fromString('best')))->checked;
+
+        self::assertNull(($checked[0] ?? self::fail('the entry is checked'))->odds);
+    }
+
     public function testAFormTheGameDataNoLongerKnowsIsStillListed(): void
     {
         $inventory = new Inventory();
@@ -388,6 +428,11 @@ final class InventoryHandlersTest extends TestCase
     private function list(?League $league = null): ListInventoryResult
     {
         return $this->find(new ListInventoryQuery($league));
+    }
+
+    private function check(CheckInventoryQuery $query): CheckInventoryResult
+    {
+        return (new CheckInventoryHandler($this->repository, $this->catalog, $this->ranker))($query);
     }
 
     private function find(ListInventoryQuery $query): ListInventoryResult
